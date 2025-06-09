@@ -1,0 +1,35 @@
+name: genesis_admin_dashboard_template
+description: This is an admin dashboard template for Flutter.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  adaptive_theme:
+  collection:
+  cupertino_icons:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  gap:
+  go_router:
+  google_fonts:
+  intersperse:
+  recase:
+  responsive_framework:
+  simple_logger:
+  two_dimensional_scrollables:
+
+dev_dependencies:
+  build_runner:
+  build_verify:
+  flutter_test:
+    sdk: flutter
+  go_router_builder:
+  pedantic_mono:
+
+flutter:
+  uses-material-design: true
