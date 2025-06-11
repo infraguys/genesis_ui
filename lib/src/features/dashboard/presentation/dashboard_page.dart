@@ -4,7 +4,6 @@ import 'package:genesis/src/features/dashboard/presentation/widgets/table_view/t
 import 'package:genesis/src/widgets/active_users_card.dart';
 import 'package:genesis/src/widgets/page_header.dart';
 import 'package:genesis/src/widgets/summary_card.dart';
-import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});

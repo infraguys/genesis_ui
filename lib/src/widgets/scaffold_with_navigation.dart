@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/extensions/localized_build_context.dart';
 import 'package:genesis/src/extensions/string_extension.dart';
-import 'package:genesis/src/widgets/custom_navigation_rail.dart';
 import 'package:go_router/go_router.dart';
 
 class ScaffoldWithNavigation extends StatelessWidget {
@@ -17,54 +17,44 @@ class ScaffoldWithNavigation extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final textTheme = TextTheme.of(context);
     return Scaffold(
-      body: Row(
-        children: [
-          CustomNavigationRail(
-            extended: true,
-            leading: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                children: [
-                  Text(
-                    'Genesis',
-                    style: textTheme.headlineSmall,
-                  ),
-                ],
-              ),
-            ),
-            selectedIndex: navigationShell.currentIndex,
-            onDestinationSelected: goBranch,
-            destinations: [
-              NavigationRailDestination(
-                icon: Icon(Icons.dashboard),
-                label: Text('Dashboard'.hardcoded),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.laptop),
-                label: Text('Monitoring'.hardcoded),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.person),
-                label: Text('Users'.hardcoded),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.vpn_key),
-                label: Text('Vpn'.hardcoded),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton<void>(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: const Text('Sign out'),
+                onTap: () {
+                  // Sign out logic
+                },
               ),
             ],
+            child: const Icon(Icons.notifications_none_outlined),
           ),
-          VerticalDivider(
-            color: Colors.grey.shade300,
-            thickness: 1,
-            width: 1,
-            indent: 20,
-            endIndent: 20,
+          const SizedBox(width: 24),
+          PopupMenuButton<void>(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: const Text('Sign out'),
+                onTap: () {
+                  // Sign out logic
+                },
+              ),
+            ],
+            child: const Icon(Icons.account_circle_outlined),
           ),
-          Expanded(child: navigationShell),
         ],
       ),
+      drawer: NavigationDrawer(
+        tilePadding: EdgeInsetsGeometry.zero,
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: goBranch,
+        children: [
+          NavigationDrawerDestination(icon: Icon(Icons.dashboard), label: Text(context.$.dashboard)),
+          NavigationDrawerDestination(icon: Icon(Icons.laptop), label: Text('Monitoring'.hardcoded)),
+        ],
+      ),
+      body: navigationShell,
     );
   }
 }

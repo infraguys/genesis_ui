@@ -1,4 +1,6 @@
 {
   "@@locale" : "ru",
-  "helloWorld": "Привет, Мир!"
+  "helloWorld": "Привет, Мир!",
+  "signOut": "Выход",
+  "dashboard": "Дашборд"
 }
