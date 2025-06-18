@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/features/auth/presentation/login_screen/login_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
 import 'package:genesis/src/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,14 @@ import 'package:go_router/go_router.dart';
 part './routes.dart';
 
 final appRouter = GoRouter(
+  initialLocation: '/login',
   routes: [
+    GoRoute(
+      path: '/login',
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: LoginScreen());
+      },
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ScaffoldWithNavigation(navigationShell: navigationShell);
@@ -18,9 +26,7 @@ final appRouter = GoRouter(
               name: AppRoutes.dashboard.name,
               path: '/',
               pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  child: DashboardPage()
-                );
+                return NoTransitionPage(child: DashboardPage());
               },
             ),
           ],
