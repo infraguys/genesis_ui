@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
 import 'package:genesis/src/features/auth/domain/i_iam_client_repository.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
 import 'package:genesis/src/features/auth/domain/use_case/create_token_by_password.dart';
@@ -35,5 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ttl: 0,
       ),
     );
+    if (iamClient != null) {
+      emit(Authenticated(iamClient));
+    }
   }
 }

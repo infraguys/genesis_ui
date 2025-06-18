@@ -5,6 +5,8 @@ sealed class AuthEvent {
     required String username,
     required String password,
   }) = _SingIn;
+
+  factory AuthEvent.signOut() = _SingOut;
 }
 
 final class _SingIn implements AuthEvent {
@@ -14,4 +16,4 @@ final class _SingIn implements AuthEvent {
   final String password;
 }
 
-// class SingIn implements AuthEvent {}
+final class _SingOut implements AuthEvent {}
