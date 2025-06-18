@@ -31,14 +31,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(),
       ),
       cardTheme: CardThemeData(color: Colors.white),
-      // navigationRailTheme: NavigationRailThemeData(
-      //   useIndicator: false,
-      //   selectedIconTheme: IconThemeData(color: Colors.blue),
-      //   selectedLabelTextStyle: TextStyle(color: Colors.blue),
-      //   minExtendedWidth: 170,
-      //   backgroundColor: Colors.grey.shade50.withValues(alpha: .99),
-      // ),
-      // textTheme: _lightTextTheme,
+      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()),
     );
   }
 
