@@ -25,7 +25,4 @@ class IamClient {
     "token_type": "Bearer"
     }
  *
- *
- *
- *
  */
