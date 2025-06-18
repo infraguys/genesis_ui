@@ -1,0 +1,39 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/auth/domain/i_iam_client_repository.dart';
+import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
+import 'package:genesis/src/features/auth/domain/use_case/create_token_by_password.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
+
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc(this._iamClientRepository) : super(AuthState.init()) {
+    on<_SingIn>(_signIn);
+  }
+
+  final IIamClientRepository _iamClientRepository;
+
+  Future<void> _signIn(_SingIn event, Emitter<AuthState> emit) async {
+    final useCase = CreateTokenUseCase(_iamClientRepository);
+    /**
+     * grantType: 'password',
+        clientId: 'GenesisCoreClientId',
+        clientSecret: 'GenesisCoreClientSecret',
+        username: 'admin',
+        password: 'admin',
+     *
+     */
+    final iamClient = await useCase(
+      CreateTokenParams(
+        iamClientUuid: '00000000-0000-0000-0000-000000000000',
+        grantType: 'password',
+        clientId: 'GenesisCoreClientId',
+        clientSecret: 'GenesisCoreClientSecret',
+        username: event.username,
+        password: event.password,
+        refreshTtl: 0,
+        ttl: 0,
+      ),
+    );
+  }
+}
