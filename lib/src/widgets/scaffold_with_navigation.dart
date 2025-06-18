@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/extensions/localized_build_context.dart';
 import 'package:genesis/src/extensions/string_extension.dart';
-import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ScaffoldWithNavigation extends StatelessWidget {
@@ -21,7 +21,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
   Widget build(context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is SignInSuccess) {
+        if (state is Authenticated) {
           final snackBar = SnackBar(
             content: const Text('Yay! SignIn was Success!'),
             action: SnackBarAction(

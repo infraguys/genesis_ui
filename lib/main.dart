@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/di/di_container.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
-import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
 import 'package:genesis/src/theming/app_theme.dart';
+import 'package:go_router/go_router.dart';
 
-void main() {
+void main() async {
   configureAppUrlStrategy();
-  runApp(const MyApp());
+  runApp(const App());
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatefulWidget {
+  const App({super.key});
 
+  @override
+  State<App> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return DiContainer(
       child: Builder(
         builder: (context) {
-          final router = getRouter(context);
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            routerConfig: router,
+            routerConfig: context.read<GoRouter>(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             theme: AppTheme().light,
