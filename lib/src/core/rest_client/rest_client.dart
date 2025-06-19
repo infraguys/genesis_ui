@@ -4,15 +4,13 @@ import 'package:dio/dio.dart';
 
 /// [RestClient] is Singleton
 class RestClient {
-  factory RestClient() => _instance ??= RestClient._();
-
-  RestClient._() {
-    _dio = RestClient._createDio();
-  }
-
-  static RestClient? _instance;
+  RestClient() : _dio = _createDio();
 
   late final Dio _dio;
+
+  void addInterceptor(Interceptor interceptor) {
+    _dio.interceptors.add(interceptor);
+  }
 
   Future<Response<T>> get<T>(
     String path, {
