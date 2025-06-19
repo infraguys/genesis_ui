@@ -13,7 +13,7 @@ class IamClientRepository implements IIamClientRepository {
   @override
   Future<IamClient?> fetchCurrentClient(CreateTokenParams params) async {
     await iamApi.createTokenByPassword(params);
-    final dto = await iamApi.fetchCurrentClient();
+    final dto = await iamApi.fetchCurrentClient(params.iamClientUuid);
     if (dto == null) {
       return null;
     }

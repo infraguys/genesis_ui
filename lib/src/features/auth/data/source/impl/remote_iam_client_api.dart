@@ -37,8 +37,8 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   }
 
   @override
-  Future<IamClientDto?> fetchCurrentClient() async {
-    final url = '$_iamClientUrl/00000000-0000-0000-0000-000000000000/actions/me';
+  Future<IamClientDto?> fetchCurrentClient(String iamClientUuid) async {
+    final url = '$_iamClientUrl/$iamClientUuid/actions/me';
 
     try {
       final response = await _client.get<Map<String, dynamic>>(url);
