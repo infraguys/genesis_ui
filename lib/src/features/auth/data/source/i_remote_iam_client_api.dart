@@ -4,7 +4,7 @@ import 'package:genesis/src/features/auth/domain/params/create_token_params.dart
 abstract interface class IRemoteIamClientApi {
   Future<void> createTokenByPassword(CreateTokenParams params);
 
-  Future<void> resetPasswordIamClient();
+  Future<void> resetPasswordIamClient(String iamClientUuid);
 
-  Future<IamClientDto?> fetchCurrentClient();
+  Future<IamClientDto?> fetchCurrentClient(String iamClientUuid);
 }
