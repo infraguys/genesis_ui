@@ -1,9 +1,11 @@
+import 'package:genesis/src/features/auth/domain/entity/organization.dart';
+import 'package:genesis/src/interfaces/i_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_dto.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
-class OrganizationDto {
+class OrganizationDto implements IDto<Organization> {
   OrganizationDto({
     required this.uuid,
     required this.name,
@@ -23,4 +25,16 @@ class OrganizationDto {
   final String updatedAt;
   final String status;
   final dynamic info;
+
+  @override
+  Organization toEntity() {
+    return Organization(
+      uuid: uuid,
+      name: name,
+      description: description,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      status: status,
+    );
+  }
 }
