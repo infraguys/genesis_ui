@@ -5,6 +5,8 @@ sealed class AuthState {
 
   factory AuthState.authenticated(IamClient iamClient) = Authenticated;
 
+  factory AuthState.unauthenticated() = Unauthenticated;
+
   factory AuthState.loading() = AuthStateLoading;
 }
 
