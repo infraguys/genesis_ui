@@ -24,7 +24,7 @@ class UserDto implements IDto<User> {
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 
-  final int uuid;
+  final String uuid;
   final String name;
   final String description;
   final String createdAt;

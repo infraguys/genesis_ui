@@ -15,7 +15,7 @@ class User {
     required this.otpEnabled,
   });
 
-  final int uuid;
+  final String uuid;
   final String name;
   final String description;
   final String createdAt;
