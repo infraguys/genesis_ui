@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/core/rest_client/token_interceptor.dart';
 import 'package:genesis/src/features/auth/data/dto/iam_client_dto.dart';
+import 'package:genesis/src/features/auth/data/dto/token_dto.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
 
@@ -9,9 +11,11 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
 
   final RestClient _client;
 
+  static const _iamClientUrl = '/v1/iam/clients';
+
   @override
-  Future<IamClientDto> createTokenByPassword(CreateTokenParams req) async {
-    final url = '/v1/iam/clients/${req.iamClientUuid}/actions/get_token/invoke';
+  Future<void> createTokenByPassword(CreateTokenParams req) async {
+    final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
     final response = await _client.post<Map<String, dynamic>>(
       url,
@@ -22,13 +26,26 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
         },
       ),
     );
-    final dto = IamClientDto.fromJson(response.data!);
-    return dto;
+    final dto = TokenDto.fromJson(response.data!);
+    _client.addInterceptor(TokenInterceptor(dto.accessToken));
   }
 
   @override
   Future<void> resetPasswordIamClient() {
     // TODO: implement resetPasswordIamClient
     throw UnimplementedError();
+  }
+
+  @override
+  Future<IamClientDto?> fetchCurrentClient() async {
+    final url = '$_iamClientUrl/00000000-0000-0000-0000-000000000000/actions/me';
+
+    try {
+      final response = await _client.get<Map<String, dynamic>>(url);
+      if (response.data != null) {
+        return IamClientDto.fromJson(response.data!);
+      }
+    } on Exception catch (e) {}
+    return null;
   }
 }
