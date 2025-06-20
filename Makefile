@@ -48,7 +48,7 @@ gen:
 	flutter pub run build_runner build --delete-conflicting-outputs
 
 # Run dev web app
-run-dev-web:
+dev-web:
 	@echo "🌐 Building development debug web app..."
 	flutter run -d chrome
 
