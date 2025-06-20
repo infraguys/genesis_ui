@@ -16,18 +16,22 @@ GoRouter createRouter(BuildContext context) {
   return GoRouter(
     initialLocation: '/login',
     refreshListenable: _GoRouterRefreshStream(authBloc.stream),
+    redirect: (context, state) {
+      final bloc = context.read<AuthBloc>();
+      if (bloc.state is Authenticated) {
+        return '/';
+      }
+
+      if (bloc.state is Unauthenticated) {
+        return '/login';
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/login',
         pageBuilder: (context, state) {
           return NoTransitionPage(child: LoginScreen());
-        },
-        redirect: (context, state) {
-          final bloc = context.read<AuthBloc>();
-          if (bloc.state is Authenticated) {
-            return '/';
-          }
-          return null;
         },
       ),
       StatefulShellRoute.indexedStack(
