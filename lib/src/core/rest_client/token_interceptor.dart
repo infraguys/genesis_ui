@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 
 class TokenInterceptor extends Interceptor {
-  TokenInterceptor(this.token);
+  var _token = '';
 
-  final String token;
+  set token(String accessToken) => _token = accessToken;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers['Authorization'] = 'Bearer $token';
+    options.headers['Authorization'] = 'Bearer $_token';
     handler.next(options);
   }
 }
