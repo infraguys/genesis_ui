@@ -47,7 +47,7 @@ class DashboardPage extends StatelessWidget {
           const SizedBox(
             height: 20.0,
           ),
-          Expanded(child: AppTableView())
+          Expanded(child: AppTableView()),
         ],
       ),
     );

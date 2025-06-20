@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class AppTableView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -77,8 +76,7 @@ class AppTableView extends StatelessWidget {
           }
           return TableViewCell(
             child: ColoredBox(
-              color:
-              isStickyHeader ? Colors.transparent : colorScheme.background,
+              color: isStickyHeader ? Colors.transparent : colorScheme.background,
               child: Align(
                 alignment: alignment,
                 child: FittedBox(
@@ -102,15 +100,12 @@ class AppTableView extends StatelessWidget {
   }
 }
 
-
-
 List<Inventory> dummyInventories = _json.map((json) {
-  if (json
-  case {
-  'event': final String event,
-  'description': final String description,
-  'time': final String time,
-  'status': final String status,
+  if (json case {
+    'event': final String event,
+    'description': final String description,
+    'time': final String time,
+    'status': final String status,
   }) {
     return Inventory(
       event: event,
@@ -234,7 +229,6 @@ const _json = [
     'status': 'NEW',
   },
 ];
-
 
 class Inventory {
   Inventory({

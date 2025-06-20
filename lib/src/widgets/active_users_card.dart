@@ -5,7 +5,6 @@ class ActiveUsersCard extends StatelessWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);

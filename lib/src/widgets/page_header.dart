@@ -22,14 +22,14 @@ class PageHeader extends StatelessWidget {
           style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
         ),
         Text(description),
-        const SizedBox(height: 20,),
+        const SizedBox(height: 20),
         Divider(
           color: Colors.grey.shade300,
           thickness: 1,
           height: 1,
           indent: 20,
           endIndent: 20,
-        )
+        ),
       ],
     );
   }

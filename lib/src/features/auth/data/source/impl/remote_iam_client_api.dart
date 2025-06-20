@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
-import 'package:genesis/src/core/rest_client/token_interceptor.dart';
 import 'package:genesis/src/features/auth/data/dto/iam_client_dto.dart';
 import 'package:genesis/src/features/auth/data/dto/token_dto.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_iam_client_api.dart';
@@ -27,13 +26,15 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       ),
     );
     final dto = TokenDto.fromJson(response.data!);
-    _client.addInterceptor(TokenInterceptor(dto.accessToken));
+    _client.updateAccessToken(dto.accessToken);
   }
 
   @override
-  Future<void> resetPasswordIamClient() {
-    // TODO: implement resetPasswordIamClient
-    throw UnimplementedError();
+  Future<void> resetPasswordIamClient(String iamClientUuid) async {
+    final url = '$_iamClientUrl/$iamClientUuid/actions/reset_password/invoke';
+
+    // TODO(E.Koretsky): заменить возвращаемый тип
+    await _client.post<dynamic>(url);
   }
 
   @override

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-
 const double _kCircularIndicatorDiameter = 56;
 const double _kIndicatorHeight = 32;
 
