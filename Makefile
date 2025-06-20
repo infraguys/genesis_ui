@@ -50,7 +50,7 @@ gen:
 # Run dev web app
 dev-web:
 	@echo "🌐 Running development debug web app..."
-	flutter run -d --debug chrome
+	flutter run -d chrome
 
 # Run prod web app
 prod-web:
