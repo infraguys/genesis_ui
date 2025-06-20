@@ -109,6 +109,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dashboard'**
   String get dashboard;
+
+  /// No description provided for @genesis.
+  ///
+  /// In en, this message translates to:
+  /// **'Genesis'**
+  String get genesis;
+
+  /// No description provided for @core.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get core;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
