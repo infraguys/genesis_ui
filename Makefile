@@ -12,9 +12,10 @@ help:
 	@echo "Available targets:"
 	@echo "  clean              - 🧹 Clean build artifacts and get dependencies"
 	@echo "  analyze            - 🔍 Run static code analysis"
-	@echo "  format             - Format Dart code"
+	@echo "  format             - 🖌️ Format Dart code"
 	@echo "  run-dev-web        - 🌐 Run dev web app"
 	@echo "  run-prod-web       - 🚀 Run prod web app"
+	@echo "  gen       			- 🛠 Generating code with build_runner…"
 	@echo "  all                - ⚙️ Run clean, analyze, format"
 	@#echo "  cp                 - Copy apk file to Download folder"
 	@echo "  help               - Display this help message"
@@ -34,7 +35,7 @@ analyze:
 
 # Format Dart code
 format:
-	@echo "Formatting Dart code..."
+	@echo "🖌️ Formatting Dart code..."
 	dart format lib
 
 #------------------------------------------------------
@@ -42,7 +43,7 @@ format:
 #------------------------------------------------------
 
 # Generating code
-generate:
+gen:
 	@echo "🛠 Generating code with build_runner…"
 	flutter pub run build_runner build --delete-conflicting-outputs
 
