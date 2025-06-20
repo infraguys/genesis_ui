@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/rest_client/token_interceptor.dart';
 
 /// [RestClient] is Singleton
 class RestClient {
@@ -8,8 +9,9 @@ class RestClient {
 
   late final Dio _dio;
 
-  void addInterceptor(Interceptor interceptor) {
-    _dio.interceptors.add(interceptor);
+  void updateAccessToken(String token) {
+    final interceptor = _dio.interceptors.whereType<TokenInterceptor>();
+    interceptor.single.token = token;
   }
 
   Future<Response<T>> get<T>(
@@ -57,9 +59,10 @@ class RestClient {
         connectTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
       )
-      ..interceptors.add(
+      ..interceptors.addAll([
         LogInterceptor(request: false, requestHeader: false, responseHeader: false),
-      );
+        TokenInterceptor(),
+      ]);
 
     return dio;
   }
