@@ -50,7 +50,7 @@ gen:
 # Run dev web app
 run-dev-web:
 	@echo "🌐 Building development debug web app..."
-	flutter run web --debug --web-port=9999 --dart-define=flavor=.development
+	flutter run -d chrome
 
 # Run prod web app
 run-prod-web:
