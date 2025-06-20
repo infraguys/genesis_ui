@@ -14,10 +14,9 @@ help:
 	@echo "  analyze            - 🔍 Run static code analysis"
 	@echo "  format             - 🖌️ Format Dart code"
 	@echo "  dev-web        	- 🌐 Run dev web app"
-	@echo "  run-prod-web       - 🚀 Run prod web app"
+	@echo "  prod-web       	- 🚀 Run prod web app"
 	@echo "  gen       			- 🛠 Generating code with build_runner…"
 	@echo "  all                - ⚙️ Run clean, analyze, format"
-	@#echo "  cp                 - Copy apk file to Download folder"
 	@echo "  help               - Display this help message"
 
 # Clean build artifacts and get dependencies
@@ -50,7 +49,7 @@ gen:
 # Run dev web app
 dev-web:
 	@echo "🌐 Running development debug web app..."
-	flutter run -d chrome
+	flutter run -d chrome --debug
 
 # Run prod web app
 prod-web:
@@ -64,7 +63,3 @@ all:
 	analyze
 	format
 	@echo "✅ All development tasks completed!"
-#
-#cp:
-#	@echo "Copy app-development-release.apk to 'Downloads' folder"
-#	cp build/app/outputs/flutter-apk/*.apk ~/Downloads/
