@@ -13,7 +13,7 @@ help:
 	@echo "  clean              - 🧹 Clean build artifacts and get dependencies"
 	@echo "  analyze            - 🔍 Run static code analysis"
 	@echo "  format             - 🖌️ Format Dart code"
-	@echo "  run-dev-web        - 🌐 Run dev web app"
+	@echo "  dev-web        	- 🌐 Run dev web app"
 	@echo "  run-prod-web       - 🚀 Run prod web app"
 	@echo "  gen       			- 🛠 Generating code with build_runner…"
 	@echo "  all                - ⚙️ Run clean, analyze, format"
@@ -49,13 +49,13 @@ gen:
 
 # Run dev web app
 dev-web:
-	@echo "🌐 Building development debug web app..."
-	flutter run -d chrome
+	@echo "🌐 Running development debug web app..."
+	flutter run -d --debug chrome
 
 # Run prod web app
-run-prod-web:
+prod-web:
 	@echo "🚀 Building production web app..."
-	flutter run web --release --base-href "/"
+	flutter build web --release --base-href "/"
 
 # Default target when running just 'make'
 all:
