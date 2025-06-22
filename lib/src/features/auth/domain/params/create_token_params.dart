@@ -1,4 +1,4 @@
-import 'package:genesis/src/interfaces/i_req.dart';
+import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_token_params.g.dart';

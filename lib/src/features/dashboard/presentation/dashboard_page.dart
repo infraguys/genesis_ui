@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/extensions/string_extension.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dashboard/presentation/widgets/table_view/table_view.dart';
-import 'package:genesis/src/widgets/active_users_card.dart';
-import 'package:genesis/src/widgets/page_header.dart';
-import 'package:genesis/src/widgets/summary_card.dart';
+import 'package:genesis/src/shared/widgets/active_users_card.dart';
+import 'package:genesis/src/shared/widgets/page_header.dart';
+import 'package:genesis/src/shared/widgets/summary_card.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});

@@ -1,8 +1,8 @@
+import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/auth/data/dto/organization_dto.dart';
 import 'package:genesis/src/features/auth/data/dto/user_dto.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
 import 'package:genesis/src/features/auth/domain/entity/organization.dart';
-import 'package:genesis/src/interfaces/i_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'iam_client_dto.g.dart';
