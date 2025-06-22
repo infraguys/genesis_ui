@@ -1,5 +1,5 @@
+import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/auth/domain/entity/organization.dart';
-import 'package:genesis/src/interfaces/i_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_dto.g.dart';
