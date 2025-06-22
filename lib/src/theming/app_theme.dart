@@ -31,7 +31,12 @@ class AppTheme {
         shape: RoundedRectangleBorder(),
       ),
       cardTheme: CardThemeData(color: Colors.white),
-      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(),
+        outlineBorder: BorderSide(
+          color: Color(0xFF3C3E3F),
+        ),
+      ),
     );
   }
 
