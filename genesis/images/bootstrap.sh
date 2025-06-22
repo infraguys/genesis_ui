@@ -19,27 +19,3 @@
 set -eu
 set -x
 set -o pipefail
-
-INSTALL_PATH="/opt/"
-WORK_DIR="/opt/genesis_ui"
-WEB_DIR="/var/www/html"
-FLUTTER_SDK_PATH="/opt/flutter"
-FLUTTER_SDK_VERSION="3.32.4"
-
-apt update
-apt install -y nginx
-
-[[ "$EUID" == 0 ]] || exec sudo -s "$0" "$@"
-
-cd "/tmp"
-wget -q "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$FLUTTER_SDK_VERSION-stable.tar.xz"
-tar -xf "flutter_linux_$FLUTTER_SDK_VERSION-stable.tar.xz" -C "$INSTALL_PATH"
-
-ln -sv "$FLUTTER_SDK_PATH/bin/flutter" "/usr/local/bin/flutter"
-
-cd "$WORK_DIR"
-make ci
-make prod-web
-
-rm -fv "$WEB_DIR/index.nginx-debian.html"
-find "build/web/" -maxdepth 1 -type f -exec mv -t "$WEB_DIR/" {} +
