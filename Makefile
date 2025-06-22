@@ -1,5 +1,5 @@
 # Declare all targets as phony (not representing files)
-.PHONY: help clean analyze format run-dev-web run-prod-web all cp
+.PHONY: help clean format gen loc dev-web prod-web ci
 
 #------------------------------------------------------
 # Development Commands
@@ -14,7 +14,7 @@ help:
 	@printf "  %-20s - 🌎  %s\n" "loc" "Project localization"
 	@printf "  %-20s - 🌐  %s\n" "dev-web" "Run dev web app"
 	@printf "  %-20s - 🚀  %s\n" "prod-web" "Run prod web app"
-	@printf "  %-20s - ⚙️  %s\n" "all" "Run clean, format"
+	@printf "  %-20s - 🤖  %s\n" "ci" "Run CI/CD pipeline (cleaning, localization, generation)"
 	@printf "  %-20s - ℹ️  %s\n" "help" "Display this help message"
 
 # Clean build artifacts and get dependencies
@@ -61,9 +61,9 @@ prod-web:
 	@echo "🚀 Building production web app..."
 	flutter build web --release --base-href "/"
 
-# Default target when running just 'make'
-all:
-	@echo "⚙️ Start cleaning, formatting.."
+ci:
+	echo "🤖Running CI/CD pipeline (cleaning, localization, generation)"
 	$(MAKE) clean
-	$(MAKE) format
+	$(MAKE) loc
+	$(MAKE) gen
 	@echo "✅ All development tasks completed!"
