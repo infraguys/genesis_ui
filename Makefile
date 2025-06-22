@@ -7,30 +7,23 @@
 
 # Display help information
 help:
-	@echo "Flutter Development Makefile"
-	@echo ""
 	@echo "Available targets:"
-	@echo "  clean              - 🧹 Clean build artifacts and get dependencies"
-	@echo "  analyze            - 🔍 Run static code analysis"
-	@echo "  format             - 🖌️ Format Dart code"
-	@echo "  dev-web        	- 🌐 Run dev web app"
-	@echo "  prod-web       	- 🚀 Run prod web app"
-	@echo "  gen       			- 🛠 Generating code with build_runner…"
-	@echo "  all                - ⚙️ Run clean, analyze, format"
-	@echo "  help               - Display this help message"
+	@printf "  %-20s - 🧹  %s\n" "clean" "Clean build artifacts and get dependencies"
+	@printf "  %-20s - 🖌️  %s\n" "format" "Format Dart code"
+	@printf "  %-20s - 🛠  %s\n" "gen" "Generating code with build_runner…"
+	@printf "  %-20s - 🌎  %s\n" "loc" "Project localization"
+	@printf "  %-20s - 🌐  %s\n" "dev-web" "Run dev web app"
+	@printf "  %-20s - 🚀  %s\n" "prod-web" "Run prod web app"
+	@printf "  %-20s - ⚙️  %s\n" "all" "Run clean, format"
+	@printf "  %-20s - ℹ️  %s\n" "help" "Display this help message"
 
 # Clean build artifacts and get dependencies
 clean:
 	@echo "🧹 Cleaning Flutter project..."
 	flutter clean
-	flutter pub cache clean
+	yes | flutter pub cache clean
 	@echo "Getting dependencies..."
 	flutter pub get
-
-# Run static code analysis
-analyze:
-	@echo "🔍 Running Flutter analyzer..."
-	flutter analyze
 
 # Format Dart code
 format:
@@ -46,6 +39,18 @@ gen:
 	@echo "🛠 Generating code with build_runner…"
 	flutter pub run build_runner build --delete-conflicting-outputs
 
+# Localization project
+loc:
+	@echo "🛠 Localization project with l10n…"
+	flutter gen-l10n \
+		--arb-dir lib/src/l10n \
+		--output-dir lib/src/l10n/generated \
+		--output-localization-file app_localizations.dart \
+		--untranslated-messages-file lib/src/l10n/untranslated.txt \
+		--no-nullable-getter \
+		--format
+	@echo "✅ localization completed successfully!"
+
 # Run dev web app
 dev-web:
 	@echo "🌐 Running development debug web app..."
@@ -58,8 +63,7 @@ prod-web:
 
 # Default target when running just 'make'
 all:
-	@echo "⚙️ Start cleaning, analyzing, formatting.."
-	clean
-	analyze
-	format
+	@echo "⚙️ Start cleaning, formatting.."
+	$(MAKE) clean
+	$(MAKE) format
 	@echo "✅ All development tasks completed!"
