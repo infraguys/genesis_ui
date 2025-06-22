@@ -1,0 +1,75 @@
+name: build & deploy
+
+on:
+  push:
+  pull_request:
+
+env:
+  REPO_ENDPOINT: http://10.20.0.1:8081
+  CORE_ENDPOINT: http://10.20.0.2:11010
+  NODE_UUID: 624cd1a1-3e9f-4d00-82a3-46daa01a7401
+  PROJECT_ID: d4ef38ee-2667-4931-90fd-c858d4bc5f1c
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Genesis UI
+        env:
+            DEV_KEYS: ${{ secrets.DEV_KEYS }}
+        run: |
+          set -eux
+
+          # Install DevTools
+          rm -fr venv
+          python3 -m venv venv
+          source venv/bin/activate
+
+          echo "${DEV_KEYS}" > dev-keys.txt
+
+          genesis build $(pwd) -i dev-keys.txt
+
+          # Temporary upload step is done in the build script
+          VERSION="$(genesis get-version .)"
+          echo "${VERSION}" > version.txt
+          ELEMENT_PATH="/var/lib/repository/genesis_ui"
+
+          rm -fr "${ELEMENT_PATH}/${VERSION}"
+          mkdir -p "${ELEMENT_PATH}/${VERSION}"
+          mv output/genesis-ui.raw "${ELEMENT_PATH}/${VERSION}/"
+          cd ${ELEMENT_PATH}/${VERSION}/ && \
+            sha256sum genesis-ui.raw >> ${ELEMENT_PATH}/${VERSION}/SHA256SUMS
+      - name: Upload the image version
+        uses: actions/upload-artifact@v4
+        with:
+          name: image_version
+          path: version.txt
+  deploy:
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - name: Download image version for deployment
+        uses: actions/download-artifact@v4
+        with:
+          name: image_version
+      - name: Deploy Genesis UI
+        env:
+          CORE_USER: ${{ secrets.CORE_USER }}
+          CORE_PASSWORD: ${{ secrets.CORE_PASSWORD }}
+        run: |
+          set -eux
+
+          VERSION=$(cat version.txt)
+
+          # Install CI tools
+          rm -fr venv
+          python3 -m venv venv
+          source venv/bin/activate
+
+          genesis-ci -e $CORE_ENDPOINT -u $CORE_USER -p $CORE_PASSWORD nodes add-or-update \
+            -u $NODE_UUID \
+            -p $PROJECT_ID \
+            -i "${REPO_ENDPOINT}/genesis_ui/${VERSION}/genesis-ui.raw"
