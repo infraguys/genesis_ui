@@ -2,5 +2,7 @@
   "@@locale" : "ru",
   "helloWorld": "Привет, Мир!",
   "signOut": "Выход",
-  "dashboard": "Дашборд"
+  "dashboard": "Дашборд",
+  "pageNotFound": "Страница не найдена",
+  "goBack": "Назад"
 }

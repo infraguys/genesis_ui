@@ -3,6 +3,8 @@
   "helloWorld": "Hello World!",
   "signOut": "Sign out",
   "dashboard": "Dashboard",
+  "pageNotFound": "Page not found",
+  "goBack": "Go back",
   "genesis": "Genesis",
   "core": "Core"
 }
