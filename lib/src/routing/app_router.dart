@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/login_screen/login_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
-import 'package:genesis/src/widgets/scaffold_with_navigation.dart';
+import 'package:genesis/src/shared/widgets/page_not_found.dart';
+import 'package:genesis/src/shared/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
 
 part './routes.dart';
@@ -98,6 +99,7 @@ GoRouter createRouter(BuildContext context) {
         ],
       ),
     ],
+    errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
   );
 }
 
