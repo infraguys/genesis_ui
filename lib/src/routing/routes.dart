@@ -7,4 +7,4 @@
 
 part of 'app_router.dart';
 
-enum AppRoutes { login, dashboard, users, monitoring, vpn }
+enum AppRoutes { signIn, signUp, dashboard, users, monitoring, vpn }
