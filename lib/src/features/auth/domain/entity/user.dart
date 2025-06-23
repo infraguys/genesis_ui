@@ -23,26 +23,9 @@ class User {
   final String status;
   final String firstName;
   final String lastName;
-  final String surname;
+  final String? surname;
   final String? phone;
   final String email;
   final bool emailVerified;
   final bool otpEnabled;
 }
-
-///{
-//     "user": {
-//     "uuid": "00000000-0000-0000-0000-000000000000",
-//     "name": "admin",
-//     "description": "System administrator",
-//     "created_at": "2025-05-15 11:01:57.056852",
-//     "updated_at": "2025-05-15 11:01:57.056852",
-//     "status": "ACTIVE",
-//     "first_name": "Admin",
-//     "last_name": "User",
-//     "surname": "",
-//     "phone": null,
-//     "email": "admin@example.com",
-//     "email_verified": false,
-//     "otp_enabled": false
-//     },
