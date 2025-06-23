@@ -34,6 +34,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+output
 
 # Flutter generated files
 app_localizations_*.dart

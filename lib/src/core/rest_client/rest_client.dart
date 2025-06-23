@@ -55,7 +55,7 @@ class RestClient {
   static Dio _createDio() {
     final dio = Dio()
       ..options = BaseOptions(
-        baseUrl: 'http://10.130.4.45:11010',
+        baseUrl: 'https://console.genesis-core.tech/api',
         connectTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
       )
