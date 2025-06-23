@@ -1,12 +1,10 @@
 import 'package:genesis/src/features/auth/domain/entity/user.dart';
-import 'package:genesis/src/features/auth/domain/use_case/i_user_repository.dart';
+import 'package:genesis/src/features/auth/domain/params/sign_up_params.dart';
+import 'package:genesis/src/features/auth/domain/repositories/i_user_repository.dart';
 
 final class UserRepository implements IUserRepository {
   @override
-  Future<User> createUser() {
-    // TODO: implement createUser
-    throw UnimplementedError();
-  }
+  Future<User> singUp(SignUpParams params) {}
 
   @override
   Future<User> changeUserPassword() {

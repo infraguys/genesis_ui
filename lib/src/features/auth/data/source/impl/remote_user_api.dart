@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
+import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_user_api.dart';
 
 final class RemoteUserApi implements IRemoteUserApi {
@@ -10,10 +11,10 @@ final class RemoteUserApi implements IRemoteUserApi {
   static const _usersUrl = '/v1/iam/users';
 
   @override
-  Future<UserDto> createUser() async {
-    // const url = _usersUrl;
-    // await _client.post<Map<String, dynamic>>(url, data: dto);
-    throw UnimplementedError();
+  Future<UserDto> signUp(SignUpReq req) async {
+    const url = _usersUrl;
+    final response = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
+    return UserDto.fromJson(response.data!);
   }
 
   @override

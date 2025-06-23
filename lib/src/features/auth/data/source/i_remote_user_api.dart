@@ -1,7 +1,8 @@
 import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
+import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
 
 abstract interface class IRemoteUserApi {
-  Future<UserDto> createUser();
+  Future<UserDto> signUp(SignUpReq req);
 
   Future<UserDto> getUser();
 

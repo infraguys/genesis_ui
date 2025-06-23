@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
-import 'package:genesis/src/features/auth/domain/i_iam_client_repository.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
+import 'package:genesis/src/features/auth/domain/repositories/i_iam_client_repository.dart';
 import 'package:genesis/src/features/auth/domain/use_case/sign_in_use_case.dart';
 
 part 'auth_event.dart';

@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'iam_client_dto.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+@JsonSerializable(createToJson: false)
 class IamClientDto implements IDto<IamClient> {
   IamClientDto({
     required this.user,

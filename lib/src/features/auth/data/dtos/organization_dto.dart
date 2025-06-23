@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_dto.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+@JsonSerializable(createToJson: false)
 class OrganizationDto implements IDto<Organization> {
   OrganizationDto({
     required this.uuid,

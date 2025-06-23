@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'token_dto.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+@JsonSerializable(createToJson: false)
 class TokenDto {
   TokenDto({
     required this.accessToken,

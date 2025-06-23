@@ -1,8 +1,8 @@
 import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
-import 'package:genesis/src/features/auth/domain/i_iam_client_repository.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
+import 'package:genesis/src/features/auth/domain/repositories/i_iam_client_repository.dart';
 
 class IamClientRepository implements IIamClientRepository {
   IamClientRepository(this._iamApi);
