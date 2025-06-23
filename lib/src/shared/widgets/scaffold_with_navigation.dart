@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ScaffoldWithNavigation extends StatelessWidget {

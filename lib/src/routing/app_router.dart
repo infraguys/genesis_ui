@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
