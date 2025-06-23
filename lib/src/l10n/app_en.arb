@@ -6,5 +6,10 @@
   "pageNotFound": "Page not found",
   "goBack": "Go back",
   "genesis": "Genesis",
-  "core": "Core"
+  "core": "Core",
+  "loading": "Loading",
+  "password": "Password",
+  "signIn": "Sign in",
+  "signOut": "Sign out",
+  "signUp": "Sign up"
 }

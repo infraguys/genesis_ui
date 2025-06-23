@@ -4,5 +4,10 @@
   "signOut": "Выход",
   "dashboard": "Дашборд",
   "pageNotFound": "Страница не найдена",
-  "goBack": "Назад"
+  "goBack": "Назад",
+  "loading": "Загрузка",
+  "password": "Пароль",
+  "signIn": "Войти",
+  "signOut": "Выйти",
+  "signUp": "Зарегистрироваться"
 }
