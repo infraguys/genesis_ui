@@ -18,9 +18,9 @@ class User {
   final String uuid;
   final String name;
   final String description;
-  final String createdAt;
-  final String updatedAt;
-  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final UserStatus status;
   final String firstName;
   final String lastName;
   final String? surname;
@@ -29,3 +29,5 @@ class User {
   final bool emailVerified;
   final bool otpEnabled;
 }
+
+enum UserStatus { active }

@@ -28,9 +28,11 @@ class UserDto implements IDto<User> {
   final String uuid;
   final String name;
   final String description;
-  final String createdAt;
-  final String updatedAt;
-  final String status;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime createdAt;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime updatedAt;
+  final UserDtoStatus status;
   final String firstName;
   final String lastName;
   final String surname;
@@ -38,6 +40,8 @@ class UserDto implements IDto<User> {
   final String email;
   final bool emailVerified;
   final bool otpEnabled;
+
+  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   User toEntity() {
@@ -47,7 +51,7 @@ class UserDto implements IDto<User> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status,
+      status: status.toUserStatus(),
       firstName: firstName,
       lastName: lastName,
       surname: surname,
@@ -57,4 +61,13 @@ class UserDto implements IDto<User> {
       otpEnabled: otpEnabled,
     );
   }
+}
+
+@JsonEnum()
+enum UserDtoStatus {
+  active;
+
+  UserStatus toUserStatus() => switch (this) {
+    active => UserStatus.active,
+  };
 }
