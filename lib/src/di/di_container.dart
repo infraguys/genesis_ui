@@ -28,9 +28,7 @@ class DiContainer extends StatelessWidget {
         RepositoryProvider<IIamClientRepository>(
           create: (context) {
             final iamApi = RemoteIamClientApi(context.read<RestClient>());
-            return IamClientRepository(
-              iamApi: iamApi,
-            );
+            return IamClientRepository(iamApi);
           },
         ),
         BlocProvider(
