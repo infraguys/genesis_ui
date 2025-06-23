@@ -4,5 +4,5 @@ import 'package:genesis/src/features/auth/domain/params/create_token_params.dart
 abstract interface class IIamClientRepository {
   Future<void> resetPasswordIamClient();
 
-  Future<IamClient?> fetchCurrentClient(CreateTokenParams params);
+  Future<IamClient?> getCurrentClient(CreateTokenParams params);
 }
