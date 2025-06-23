@@ -47,7 +47,7 @@ class PageNotFound extends StatelessWidget {
                     TextStyle(fontSize: 24),
                   ),
                   padding: WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(vertical: 24),
+                    EdgeInsets.symmetric(vertical: 18),
                   ),
                   side: WidgetStatePropertyAll(
                     BorderSide(color: Color(0xFF2E2E2E).hardcoded),
