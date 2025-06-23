@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
-import 'package:genesis/src/features/auth/data/dto/iam_client_dto.dart';
-import 'package:genesis/src/features/auth/data/dto/token_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/iam_client_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/token_dto.dart';
+import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_iam_client_api.dart';
-import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
 
 final class RemoteIamClientApi implements IRemoteIamClientApi {
   RemoteIamClientApi(this._client);
@@ -13,7 +13,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   static const _iamClientUrl = '/v1/iam/clients';
 
   @override
-  Future<void> createTokenByPassword(CreateTokenParams req) async {
+  Future<void> createTokenByPassword(CreateTokenReq req) async {
     final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
     final response = await _client.post<Map<String, dynamic>>(

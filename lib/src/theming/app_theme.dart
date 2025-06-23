@@ -55,9 +55,7 @@ class AppTheme {
           ),
         ),
       ),
-        textSelectionTheme: TextSelectionThemeData(
-            cursorColor: Colors.white
-        )
+      textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
     );
   }
 

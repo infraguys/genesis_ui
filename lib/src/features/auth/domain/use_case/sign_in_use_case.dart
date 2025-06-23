@@ -8,6 +8,6 @@ class SignInUseCase {
   final IIamClientRepository _repo;
 
   Future<IamClient?> call(CreateTokenParams params) async {
-    return await _repo.fetchCurrentClient(params);
+    return await _repo.getCurrentClient(params);
   }
 }

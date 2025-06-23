@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/rest_client/rest_client.dart';
-import 'package:genesis/src/features/auth/data/dto/user_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
 import 'package:genesis/src/features/auth/data/source/i_remote_user_api.dart';
 
 final class RemoteUserApi implements IRemoteUserApi {
