@@ -1,10 +1,4 @@
-import 'package:genesis/src/core/interfaces/i_req.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'create_token_params.g.dart';
-
-@JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
-class CreateTokenParams implements IReq {
+class CreateTokenParams {
   CreateTokenParams({
     required this.iamClientUuid,
     required this.grantType,
@@ -17,7 +11,6 @@ class CreateTokenParams implements IReq {
     this.refreshTtl,
   });
 
-  @JsonKey(includeToJson: false)
   final String iamClientUuid;
   final String grantType;
   final String clientId;
@@ -27,7 +20,4 @@ class CreateTokenParams implements IReq {
   final String? scope;
   final int? ttl;
   final int? refreshTtl;
-
-  @override
-  Map<String, dynamic> toJson() => _$CreateTokenParamsToJson(this);
 }
