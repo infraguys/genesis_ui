@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/auth/presentation/login_screen/login_screen.dart';
+import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
+import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
 import 'package:genesis/src/shared/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/widgets/scaffold_with_navigation.dart';
@@ -15,7 +16,7 @@ GoRouter createRouter(BuildContext context) {
   print('router');
   final authBloc = context.read<AuthBloc>();
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/sign_in',
     refreshListenable: _GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
       final bloc = context.read<AuthBloc>();
@@ -24,16 +25,20 @@ GoRouter createRouter(BuildContext context) {
       }
 
       if (bloc.state is Unauthenticated) {
-        return '/login';
+        return '/sign_in';
       }
       return null;
     },
     routes: [
       GoRoute(
-        path: '/login',
-        pageBuilder: (context, state) {
-          return NoTransitionPage(child: LoginScreen());
-        },
+        name: AppRoutes.signIn.name,
+        path: '/sign_in',
+        pageBuilder: (_, _) => NoTransitionPage(child: SignInScreen()),
+      ),
+      GoRoute(
+        name: AppRoutes.signUp.name,
+        path: '/sign_up',
+        pageBuilder: (_, _) => NoTransitionPage(child: SignUpScreen()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
