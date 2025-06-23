@@ -50,6 +50,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
             ),
             const SizedBox(width: 24),
             AccountButtoon(),
+            // ShowFollowerButtontton(adjustmentLabel: 'ececec', adjustFollower: adjustFollower)
           ],
         ),
         drawer: NavigationDrawer(
@@ -124,6 +125,43 @@ class _AccountButtoonState extends State<AccountButtoon> {
       onTapDown: (details) {
         g = details.globalPosition;
       },
+    );
+  }
+}
+
+// todo(E.Koretsky): Временное решение.
+class ShowFollowerButton extends StatelessWidget {
+  final LayerLink layerLink = LayerLink();
+  final Widget Function(CompositedTransformFollower follower) adjustFollower;
+  final String adjustmentLabel;
+
+  ShowFollowerButton({required this.adjustmentLabel, required this.adjustFollower});
+
+  @override
+  Widget build(BuildContext context) {
+    return CompositedTransformTarget(
+      link: layerLink,
+      child: ElevatedButton(
+        onPressed: () async {
+          var follower = CompositedTransformFollower(
+            link: layerLink,
+            targetAnchor: Alignment.bottomLeft,
+            child: Container(
+              width: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [Text('Привет, Joe')],
+                ),
+              ),
+            ),
+          );
+          var entry = OverlayEntry(builder: (context) => adjustFollower(follower));
+          Overlay.of(context).insert(entry);
+          Future.delayed(Duration(seconds: 1), () => entry.remove());
+        },
+        child: Text('Show $adjustmentLabel Follower'),
+      ),
     );
   }
 }
