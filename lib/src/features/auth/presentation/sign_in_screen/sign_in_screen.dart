@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 TextFormField(
                   controller: _usernameController,
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.onUnfocus,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(hintText: 'Login'.hardcoded),
                   validator: (value) {
@@ -68,7 +68,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 TextFormField(
                   controller: _passwordController,
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.onUnfocus,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(hintText: $.password),
                   validator: (value) {
