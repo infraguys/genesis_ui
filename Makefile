@@ -66,4 +66,5 @@ ci:
 	$(MAKE) clean
 	$(MAKE) loc
 	$(MAKE) gen
+	$(MAKE) prod-web
 	@echo "✅ All development tasks completed!"

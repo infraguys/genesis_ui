@@ -39,7 +39,6 @@ ln -sv "$FLUTTER_SDK_PATH/bin/flutter" "/usr/local/bin/flutter"
 
 cd "$WORK_DIR"
 make ci
-make prod-web
 
 rm -fv "$WEB_DIR/index.nginx-debian.html"
 find "build/web/" -maxdepth 1 -type f -exec mv -t "$WEB_DIR/" {} +
