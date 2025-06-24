@@ -40,7 +40,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
             PopupMenuButton<void>(
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: const Text('Sign out'),
+                  child: const Text('Notification'),
                   onTap: () {
                     // Sign out logic
                   },
@@ -49,7 +49,18 @@ class ScaffoldWithNavigation extends StatelessWidget {
               child: const Icon(Icons.notifications_none_outlined),
             ),
             const SizedBox(width: 24),
-            AccountButtoon(),
+            PopupMenuButton<void>(
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  onTap: () {
+                    context.read<AuthBloc>().add(AuthEvent.signOut());
+                  },
+                  child: Text('Sign Out'),
+                ),
+              ],
+              child: const Icon(Icons.account_circle_outlined),
+            ),
+            // AccountButtoon(),
             // ShowFollowerButtontton(adjustmentLabel: 'ececec', adjustFollower: adjustFollower)
           ],
         ),
@@ -68,66 +79,66 @@ class ScaffoldWithNavigation extends StatelessWidget {
   }
 }
 
-class AccountButtoon extends StatefulWidget {
-  const AccountButtoon({super.key});
-
-  @override
-  State<AccountButtoon> createState() => _AccountButtoonState();
-}
-
-class _AccountButtoonState extends State<AccountButtoon> {
-  late Offset g;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: IconButton(
-        onPressed: () {
-          final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-          final position = RelativeRect.fromLTRB(
-            g.dx,
-            g.dy,
-            overlay.size.width - g.dx,
-            overlay.size.height - g.dy,
-          );
-          showMenu<Widget>(
-            context: context,
-            position: position,
-            items: [
-              PopupMenuItem(
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) {
-                    final user = (state as Authenticated).iamClient.user;
-                    return Container(
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [Text('Привет, ${user.name}')],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              PopupMenuItem(
-                onTap: () {
-                  context.read<AuthBloc>().add(AuthEvent.signOut());
-                },
-                child: Text('Sign Out'),
-              ),
-            ],
-          );
-        },
-        icon: Icon(Icons.account_circle_outlined),
-      ),
-
-      onTapDown: (details) {
-        g = details.globalPosition;
-      },
-    );
-  }
-}
+// class AccountButtoon extends StatefulWidget {
+//   const AccountButtoon({super.key});
+//
+//   @override
+//   State<AccountButtoon> createState() => _AccountButtoonState();
+// }
+//
+// class _AccountButtoonState extends State<AccountButtoon> {
+//   late Offset g;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       child: IconButton(
+//         onPressed: () {
+//           final overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+//           final position = RelativeRect.fromLTRB(
+//             g.dx,
+//             g.dy,
+//             overlay.size.width - g.dx,
+//             overlay.size.height - g.dy,
+//           );
+//           showMenu<Widget>(
+//             context: context,
+//             position: position,
+//             items: [
+//               PopupMenuItem(
+//                 child: BlocBuilder<AuthBloc, AuthState>(
+//                   builder: (context, state) {
+//                     final user = (state as Authenticated).iamClient.user;
+//                     return Container(
+//                       width: 200,
+//                       child: Padding(
+//                         padding: const EdgeInsets.all(8.0),
+//                         child: Column(
+//                           children: [Text('Привет, ${user.name}')],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               ),
+//               PopupMenuItem(
+//                 onTap: () {
+//                   context.read<AuthBloc>().add(AuthEvent.signOut());
+//                 },
+//                 child: Text('Sign Out'),
+//               ),
+//             ],
+//           );
+//         },
+//         icon: Icon(Icons.account_circle_outlined),
+//       ),
+//
+//       onTapDown: (details) {
+//         g = details.globalPosition;
+//       },
+//     );
+//   }
+// }
 
 // todo(E.Koretsky): Временное решение.
 class ShowFollowerButton extends StatelessWidget {

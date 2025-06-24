@@ -65,6 +65,7 @@ class UserDto implements IDto<User> {
 
 @JsonEnum()
 enum UserDtoStatus {
+  @JsonValue('ACTIVE')
   active;
 
   UserStatus toUserStatus() => switch (this) {

@@ -27,12 +27,11 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
           },
         ),
       );
+      final dto = TokenDto.fromJson(response.data!);
+      _client.updateAccessToken(dto.accessToken);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
-    final Map<String, dynamic> response = {};
-    final dto = TokenDto.fromJson(response);
-    _client.updateAccessToken(dto.accessToken);
   }
 
   @override
