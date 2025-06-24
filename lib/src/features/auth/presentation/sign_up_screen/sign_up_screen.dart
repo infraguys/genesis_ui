@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -20,12 +22,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   bool get isSignUpBtnEnabled {
     return _firstNameController.text.isNotEmpty &&
         _lastNameController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
-        _usernameController.text.isNotEmpty;
+        _usernameController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty;
   }
 
   @override
@@ -46,12 +50,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 20,
               children: [
-                Center(
-                  child: CustomPaint(
-                    size: const Size(200, 200),
-                    painter: LogoPainter(),
-                  ),
-                ),
                 Text(
                   '${context.$.genesis} ${context.$.core}',
                   style: textTheme.headlineLarge?.copyWith(color: Colors.white),
@@ -102,8 +100,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   },
                 ),
+                TextFormField(
+                  controller: _passwordController,
+                  autovalidateMode: AutovalidateMode.onUnfocus,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(hintText: 'password'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'required'.hardcoded;
+                    }
+                    return null;
+                  },
+                ),
                 ListenableBuilder(
-                  listenable: Listenable.merge([_firstNameController, _lastNameController, _emailController]),
+                  listenable: Listenable.merge([
+                    _firstNameController,
+                    _lastNameController,
+                    _emailController,
+                    _passwordController,
+                    _usernameController,
+                  ]),
                   builder: (context, _) {
                     return ElevatedButton(
                       onPressed: isSignUpBtnEnabled ? () => signIn(context) : null,
@@ -124,7 +140,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signIn(BuildContext context) {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      final event = UserEvent.singUp(
+        username: _usernameController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      context.read<UserBloc>().add(event);
+    }
   }
 }
 

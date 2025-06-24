@@ -31,72 +31,83 @@ class _SignInScreenState extends State<SignInScreen> {
     final textTheme = TextTheme.of(context);
     final $ = context.$;
 
-    return Scaffold(
-      backgroundColor: Color(0xFF1B1B1D).hardcoded,
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 300),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 20,
-              children: [
-                Center(
-                  child: CustomPaint(
-                    size: const Size(200, 200),
-                    painter: LogoPainter(),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthStateFailure) {
+          final snack = SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(state.message),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snack);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xFF1B1B1D).hardcoded,
+        body: Center(
+          child: Form(
+            key: _formKey,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 300),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 20,
+                children: [
+                  Center(
+                    child: CustomPaint(
+                      size: const Size(200, 200),
+                      painter: LogoPainter(),
+                    ),
                   ),
-                ),
-                Text(
-                  '${context.$.genesis} ${context.$.core}',
-                  style: textTheme.headlineLarge?.copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                TextFormField(
-                  controller: _usernameController,
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(hintText: 'Login'.hardcoded),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'required'.hardcoded;
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(hintText: $.password),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'required'.hardcoded;
-                    }
-                    return null;
-                  },
-                ),
-                ListenableBuilder(
-                  listenable: Listenable.merge([
-                    _usernameController,
-                    _passwordController,
-                  ]),
-                  builder: (context, _) {
-                    return ElevatedButton(
-                      onPressed: isSignInBtnEnabled ? () => signIn(context) : null,
-                      child: Text($.signIn),
-                    );
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.pushNamed(AppRoutes.signUp.name);
-                  },
-                  child: Text($.signUp),
-                ),
-              ],
+                  Text(
+                    '${context.$.genesis} ${context.$.core}',
+                    style: textTheme.headlineLarge?.copyWith(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  TextFormField(
+                    controller: _usernameController,
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(hintText: 'Login'.hardcoded),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'required'.hardcoded;
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _passwordController,
+                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(hintText: $.password),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'required'.hardcoded;
+                      }
+                      return null;
+                    },
+                  ),
+                  ListenableBuilder(
+                    listenable: Listenable.merge([
+                      _usernameController,
+                      _passwordController,
+                    ]),
+                    builder: (context, _) {
+                      return ElevatedButton(
+                        onPressed: isSignInBtnEnabled ? () => signIn(context) : null,
+                        child: Text($.signIn),
+                      );
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.pushNamed(AppRoutes.signUp.name);
+                    },
+                    child: Text($.signUp),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
