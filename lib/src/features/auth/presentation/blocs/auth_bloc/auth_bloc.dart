@@ -9,7 +9,7 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._iamClientRepository) : super(AuthState.init()) {
+  AuthBloc(this._iamClientRepository) : super(AuthState.unauthenticated()) {
     on<_SingIn>(_signIn);
     on<_SingOut>(_signOut);
   }

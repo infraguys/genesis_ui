@@ -1,8 +1,6 @@
 part of 'auth_bloc.dart';
 
 sealed class AuthState {
-  factory AuthState.init() = AuthStateInit;
-
   factory AuthState.authenticated(IamClient iamClient) = Authenticated;
 
   factory AuthState.unauthenticated() = Unauthenticated;
@@ -11,8 +9,6 @@ sealed class AuthState {
 
   factory AuthState.failure(String message) = AuthStateFailure;
 }
-
-final class AuthStateInit implements AuthState {}
 
 final class AuthStateLoading implements AuthState {}
 
