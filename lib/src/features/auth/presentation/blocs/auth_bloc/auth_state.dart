@@ -8,11 +8,19 @@ sealed class AuthState {
   factory AuthState.unauthenticated() = Unauthenticated;
 
   factory AuthState.loading() = AuthStateLoading;
+
+  factory AuthState.failure(String message) = AuthStateFailure;
 }
 
 final class AuthStateInit implements AuthState {}
 
 final class AuthStateLoading implements AuthState {}
+
+final class AuthStateFailure implements AuthState {
+  AuthStateFailure(this.message);
+
+  final String message;
+}
 
 final class Authenticated implements AuthState {
   Authenticated(this.iamClient);
