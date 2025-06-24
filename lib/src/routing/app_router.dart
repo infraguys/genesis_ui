@@ -12,22 +12,27 @@ import 'package:go_router/go_router.dart';
 
 part './routes.dart';
 
+final _authRoutes = [
+  '/sign_in',
+  '/sign_up',
+];
+
 GoRouter createRouter(BuildContext context) {
   print('router');
   final authBloc = context.read<AuthBloc>();
   return GoRouter(
-    initialLocation: '/sign_in',
+    debugLogDiagnostics: true,
     refreshListenable: _GoRouterRefreshStream(authBloc.stream),
     redirect: (context, state) {
       final bloc = context.read<AuthBloc>();
-      if (bloc.state is Authenticated) {
-        return '/';
-      }
+      final isAuthRoute = _authRoutes.contains(state.matchedLocation);
 
-      if (bloc.state is Unauthenticated) {
-        return '/sign_in';
-      }
-      return null;
+      return switch (bloc.state) {
+        Authenticated() when isAuthRoute => '/',
+        Authenticated() => '/',
+        Unauthenticated() when !isAuthRoute => '/sign_in',
+        _ => null,
+      };
     },
     routes: [
       GoRoute(
