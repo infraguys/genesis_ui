@@ -8,7 +8,7 @@ final class RemoteUserApi implements IRemoteUserApi {
 
   final RestClient _client;
 
-  static const _usersUrl = '/v1/iam/users';
+  static const _usersUrl = '/v1/iam/users/';
 
   @override
   Future<UserDto> signUp(SignUpReq req) async {
