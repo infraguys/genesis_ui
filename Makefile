@@ -59,7 +59,7 @@ dev-web:
 # Run prod web app
 prod-web:
 	@echo "🚀 Building production web app..."
-	flutter build web --release --base-href "/"
+	flutter build web --release --dart-define-from-file=env.json --base-href "/"
 
 ci:
 	echo "🤖Running CI/CD pipeline (cleaning, localization, generation)"
