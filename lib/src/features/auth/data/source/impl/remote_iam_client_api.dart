@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/data/dtos/iam_client_dto.dart';
 import 'package:genesis/src/features/auth/data/dtos/token_dto.dart';
@@ -16,16 +17,21 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   Future<void> createTokenByPassword(CreateTokenReq req) async {
     final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
-    final response = await _client.post<Map<String, dynamic>>(
-      url,
-      data: req.toJson(),
-      options: Options(
-        headers: {
-          Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
-        },
-      ),
-    );
-    final dto = TokenDto.fromJson(response.data!);
+    try {
+      final response = await _client.post<Map<String, dynamic>>(
+        url,
+        data: req.toJson(),
+        options: Options(
+          headers: {
+            Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+    final Map<String, dynamic> response = {};
+    final dto = TokenDto.fromJson(response);
     _client.updateAccessToken(dto.accessToken);
   }
 
@@ -46,7 +52,9 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       if (response.data != null) {
         return IamClientDto.fromJson(response.data!);
       }
-    } on Exception catch (e) {}
+    } on Exception catch (e) {
+      print('cecec');
+    }
     return null;
   }
 }
