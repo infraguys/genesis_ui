@@ -11,17 +11,9 @@ class Organization {
   final String uuid;
   final String name;
   final String description;
-  final String createdAt;
-  final String updatedAt;
-  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final OrganizationStatus status;
 }
 
-//{
-//     "uuid": "00000000-0000-0000-0000-000000000000",
-//     "name": "admin",
-//     "description": "Admin Organization",
-//     "created_at": "2025-05-15 11:01:57.056852",
-//     "updated_at": "2025-05-15 11:01:57.056852",
-//     "status": "ACTIVE",
-//     "info": "{}"
-//     },
+enum OrganizationStatus { active }

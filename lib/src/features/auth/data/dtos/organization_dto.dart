@@ -21,10 +21,14 @@ class OrganizationDto implements IDto<Organization> {
   final String uuid;
   final String name;
   final String description;
-  final String createdAt;
-  final String updatedAt;
-  final String status;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime createdAt;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime updatedAt;
+  final OrganizationDtoStatus status;
   final dynamic info;
+
+  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   Organization toEntity() {
@@ -34,7 +38,16 @@ class OrganizationDto implements IDto<Organization> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status,
+      status: status.toOrganizationStatus(),
     );
   }
+}
+
+@JsonEnum()
+enum OrganizationDtoStatus {
+  active;
+
+  OrganizationStatus toOrganizationStatus() => switch (this) {
+    active => OrganizationStatus.active,
+  };
 }
