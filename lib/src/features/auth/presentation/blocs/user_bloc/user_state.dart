@@ -6,6 +6,8 @@ sealed class UserState {
   factory UserState.loading() = UserStateLoading;
 
   factory UserState.signUpSuccess() = UserStateSignUpSuccess;
+
+  factory UserState.signUpFailure(String message) = UserStateSignUpFailure;
 }
 
 final class UserStateInit implements UserState {}
@@ -13,3 +15,9 @@ final class UserStateInit implements UserState {}
 final class UserStateLoading implements UserState {}
 
 final class UserStateSignUpSuccess implements UserState {}
+
+final class UserStateSignUpFailure implements UserState {
+  UserStateSignUpFailure(this.message);
+
+  final String message;
+}

@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
 import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
@@ -13,8 +15,12 @@ final class RemoteUserApi implements IRemoteUserApi {
   @override
   Future<UserDto> signUp(SignUpReq req) async {
     const url = _usersUrl;
-    final response = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
-    return UserDto.fromJson(response.data!);
+    try {
+      final Response(:data) = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
+      return UserDto.fromJson(data!);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override

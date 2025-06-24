@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/features/auth/domain/params/sign_up_params.dart';
 import 'package:genesis/src/features/auth/domain/repositories/i_user_repository.dart';
 
@@ -25,8 +26,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ),
       );
       emit(UserState.signUpSuccess());
-    } on Exception catch (e) {
-      // TODO
+    } on NetworkException catch (e) {
+      emit(UserStateSignUpFailure(e.message));
     }
   }
 }

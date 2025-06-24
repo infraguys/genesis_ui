@@ -18,7 +18,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
     final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
     try {
-      final response = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
         url,
         data: req.toJson(),
         options: Options(
@@ -27,7 +27,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
           },
         ),
       );
-      final dto = TokenDto.fromJson(response.data!);
+      final dto = TokenDto.fromJson(data!);
       _client.updateAccessToken(dto.accessToken);
     } on DioException catch (e) {
       throw NetworkException(e);
@@ -47,9 +47,9 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
     final url = '$_iamClientUrl/$iamClientUuid/actions/me';
 
     try {
-      final response = await _client.get<Map<String, dynamic>>(url);
-      if (response.data != null) {
-        return IamClientDto.fromJson(response.data!);
+      final Response(:data) = await _client.get<Map<String, dynamic>>(url);
+      if (data != null) {
+        return IamClientDto.fromJson(data);
       }
     } on Exception catch (e) {
       print('cecec');

@@ -36,8 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } on NetworkException catch (e) {
       emit(AuthState.failure(e.message));
-    } on Exception catch (e) {
-      print('ce');
+    } on Exception catch (_) {
+      rethrow;
     }
   }
 
