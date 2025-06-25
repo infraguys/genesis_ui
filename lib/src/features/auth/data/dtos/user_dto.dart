@@ -22,7 +22,11 @@ class UserDto implements IDto<User> {
     required this.otpEnabled,
   });
 
-  factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
+  factory UserDto.fromJson(Map<String, dynamic> json) {
+    final modifiedJson = Map.of(json);
+    modifiedJson['username'] ??= json['name'];
+    return _$UserDtoFromJson(modifiedJson);
+  }
 
   @JsonKey(required: true)
   final String uuid;

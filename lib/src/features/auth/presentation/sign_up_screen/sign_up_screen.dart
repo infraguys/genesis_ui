@@ -125,6 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'password'),
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
