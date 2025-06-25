@@ -8,6 +8,14 @@ env:
   CORE_ENDPOINT: http://10.20.0.2:11010
   NODE_UUID: 624cd1a1-3e9f-4d00-82a3-46daa01a7401
   PROJECT_ID: d4ef38ee-2667-4931-90fd-c858d4bc5f1c
+  # All vars you need to pass to build the flutter app goes here with prefix "UI_BUILD_ENV_".
+  # There is a build python script `make_ui_build_env.py` that handles these variables and
+  # form a json file. For instance, if you need to pass `api_url="https://console.genesis-core.tech/api"`
+  # variable, you need to set `UI_BUILD_ENV_api_url` environment variable and the result file will be:
+  # {
+  #   "api_url": "https://console.genesis-core.tech/api"
+  # }
+  UI_BUILD_ENV_api_url: https://console.genesis-core.tech/api
 
 jobs:
   build:
@@ -26,6 +34,7 @@ jobs:
           rm -fr venv
           python3 -m venv venv
           source venv/bin/activate
+          pip install genesis-devtools
 
           echo "${DEV_KEYS}" > dev-keys.txt
 
