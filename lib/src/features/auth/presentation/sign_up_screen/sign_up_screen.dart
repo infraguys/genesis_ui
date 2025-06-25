@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -149,8 +150,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   ElevatedButton(
-                    onPressed: context.pop,
-                    child: Text('Go Back'),
+                    onPressed: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.goNamed(AppRoutes.signIn.name);
+                      }
+                    },
+                    child: Text($.goBack),
                   ),
                 ],
               ),

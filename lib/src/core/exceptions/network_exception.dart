@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 
 class NetworkException implements Exception {
   factory NetworkException(DioException exception) {
-    final statusCode = exception.response!.statusCode!;
-    final data = exception.response!.data!;
+    final statusCode = exception.response?.statusCode!;
+    final data = exception.response?.data;
 
     late final String? message;
     if (data case {'type': String _, 'code': int _, 'message': String msg}) {
@@ -13,6 +13,7 @@ class NetworkException implements Exception {
     }
 
     final errorMessage = switch (exception.type) {
+      DioExceptionType.connectionError => message ?? 'Connection error',
       DioExceptionType.cancel => message ?? 'Request to API server was cancelled',
       DioExceptionType.connectionTimeout => message ?? 'Connection timeout with API server',
       DioExceptionType.unknown => message ?? 'Connection to API server failed due to internet connection',
