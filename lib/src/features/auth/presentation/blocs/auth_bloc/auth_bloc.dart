@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
+import 'package:genesis/src/features/auth/domain/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
-import 'package:genesis/src/features/auth/domain/repositories/i_iam_client_repository.dart';
 import 'package:genesis/src/features/auth/domain/use_case/sign_in_use_case.dart';
 
 part 'auth_event.dart';
@@ -14,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<_SingOut>(_signOut);
   }
 
-  final IIamClientRepository _iamClientRepository;
+  final IAuthRepository _iamClientRepository;
 
   Future<void> _signIn(_SingIn event, Emitter<AuthState> emit) async {
     final useCase = SignInUseCase(_iamClientRepository);

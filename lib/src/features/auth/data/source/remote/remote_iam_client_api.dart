@@ -4,7 +4,7 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/data/dtos/iam_client_dto.dart';
 import 'package:genesis/src/features/auth/data/dtos/token_dto.dart';
 import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
-import 'package:genesis/src/features/auth/data/source/i_remote_iam_client_api.dart';
+import 'package:genesis/src/features/auth/data/source/remote/i_remote_iam_client_api.dart';
 
 final class RemoteIamClientApi implements IRemoteIamClientApi {
   RemoteIamClientApi(this._client);
@@ -35,14 +35,6 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   }
 
   @override
-  Future<void> resetPasswordIamClient(String iamClientUuid) async {
-    final url = '$_iamClientUrl/$iamClientUuid/actions/reset_password/invoke';
-
-    // TODO(E.Koretsky): заменить возвращаемый тип
-    await _client.post<dynamic>(url);
-  }
-
-  @override
   Future<IamClientDto?> fetchCurrentClient(String iamClientUuid) async {
     final url = '$_iamClientUrl/$iamClientUuid/actions/me';
 
@@ -51,8 +43,8 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       if (data != null) {
         return IamClientDto.fromJson(data);
       }
-    } on Exception catch (e) {
-      print('cecec');
+    } on DioException catch (e) {
+      throw NetworkException(e);
     }
     return null;
   }
