@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/rest_client/token_interceptor.dart';
 
 /// [RestClient] is Singleton
@@ -55,7 +56,7 @@ class RestClient {
   static Dio _createDio() {
     final dio = Dio()
       ..options = BaseOptions(
-        baseUrl: 'https://console.genesis-core.tech/api',
+        baseUrl: Env.apiUrl,
         connectTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
       )
