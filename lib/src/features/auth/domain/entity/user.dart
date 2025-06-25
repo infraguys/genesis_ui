@@ -1,7 +1,7 @@
 class User {
   User({
     required this.uuid,
-    required this.name,
+    required this.username,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
@@ -16,7 +16,7 @@ class User {
   });
 
   final String uuid;
-  final String name;
+  final String username;
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;

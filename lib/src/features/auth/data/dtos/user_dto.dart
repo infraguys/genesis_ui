@@ -8,7 +8,7 @@ part 'user_dto.g.dart';
 class UserDto implements IDto<User> {
   UserDto({
     required this.uuid,
-    required this.name,
+    required this.username,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
@@ -26,13 +26,13 @@ class UserDto implements IDto<User> {
 
   @JsonKey(required: true)
   final String uuid;
-  final String name;
   final String description;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime createdAt;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime updatedAt;
   final UserDtoStatus status;
+  final String username;
   final String firstName;
   final String lastName;
   final String surname;
@@ -47,7 +47,7 @@ class UserDto implements IDto<User> {
   User toEntity() {
     return User(
       uuid: uuid,
-      name: name,
+      username: username,
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,

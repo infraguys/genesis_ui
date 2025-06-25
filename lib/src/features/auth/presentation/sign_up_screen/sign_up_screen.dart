@@ -43,6 +43,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
             content: Text(state.message),
           );
           ScaffoldMessenger.of(context).showSnackBar(snack);
+        } else if (state is UserStateSignUpSuccess) {
+          final navigator = GoRouter.of(context);
+          final snack = SnackBar(
+            backgroundColor: Colors.green,
+            content: Text('Success!'),
+          );
+          ScaffoldMessenger.of(context)
+              .showSnackBar(snack)
+              .closed
+              .then(
+                (_) => navigator.pop(),
+              );
         }
       },
       child: Scaffold(
