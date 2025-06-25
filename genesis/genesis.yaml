@@ -15,6 +15,8 @@ build:
     - images:
       - name: genesis-ui
         format: raw
+        envs:
+          - UI_BUILD_ENV_*
         
         # OS profile for the image
         profile: genesis_base

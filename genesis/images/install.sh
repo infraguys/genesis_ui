@@ -38,6 +38,12 @@ tar -xf "flutter_linux_$FLUTTER_SDK_VERSION-stable.tar.xz" -C "$INSTALL_PATH"
 ln -sv "$FLUTTER_SDK_PATH/bin/flutter" "/usr/local/bin/flutter"
 
 cd "$WORK_DIR"
+
+# Prepare the environment
+python3 genesis/images/make_ui_build_env.py
+cat env.json
+
+# Build the application
 make ci
 
 rm -fv "$WEB_DIR/index.nginx-debian.html"
