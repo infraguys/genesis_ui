@@ -56,6 +56,12 @@ class AppTheme {
         ),
       ),
       textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
+        expansionTileTheme: ExpansionTileThemeData(
+          childrenPadding: EdgeInsets.only(left: 12),
+          shape: OutlineInputBorder(
+              borderSide: BorderSide.none
+          ),
+        )
     );
   }
 
