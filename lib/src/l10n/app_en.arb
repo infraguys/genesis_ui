@@ -11,5 +11,8 @@
   "password": "Password",
   "signIn": "Sign in",
   "signOut": "Sign out",
-  "signUp": "Sign up"
+  "signUp": "Sign up",
+  "users": "Users",
+  "projects": "Projects",
+  "roles": "Roles"
 }
