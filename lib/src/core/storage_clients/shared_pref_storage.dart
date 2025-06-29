@@ -1,4 +1,4 @@
-import 'package:genesis/src/core/secure_storage_client/i_simple_storage_client.dart';
+import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class SharedPrefStorage implements ISimpleStorageClient {
