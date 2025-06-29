@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -20,15 +21,15 @@ class CreateTokenReq implements IReq {
 
   factory CreateTokenReq.fromParams(CreateTokenParams params) {
     return CreateTokenReq(
-      iamClientUuid: params.iamClientUuid,
-      clientId: params.clientId,
+      iamClientUuid: Env.iamClientUuid,
+      clientId: Env.clientId,
+      clientSecret: Env.clientSecret,
+      grantType: Env.grantType,
+      ttl: Env.ttl,
+      refreshTtl: Env.refreshTtl,
+      scope: Env.scope,
       username: params.username,
       password: params.password,
-      clientSecret: params.clientSecret,
-      grantType: params.grantType,
-      ttl: params.ttl,
-      refreshTtl: params.refreshTtl,
-      scope: params.scope,
     );
   }
 

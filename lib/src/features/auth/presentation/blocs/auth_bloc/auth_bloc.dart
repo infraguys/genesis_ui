@@ -18,16 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signIn(_SingIn event, Emitter<AuthState> emit) async {
     final useCase = SignInUseCase(_iamClientRepository);
-    final params = CreateTokenParams(
-      iamClientUuid: '00000000-0000-0000-0000-000000000000',
-      grantType: 'password',
-      clientId: 'GenesisCoreClientId',
-      clientSecret: 'GenesisCoreClientSecret',
-      username: event.username,
-      password: event.password,
-      refreshTtl: 0,
-      ttl: 31536000,
-    );
+    final params = CreateTokenParams(username: event.username, password: event.password);
 
     try {
       final iamClient = await useCase(params);

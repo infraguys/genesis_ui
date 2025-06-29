@@ -25,10 +25,11 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<IamClient?> signIn(CreateTokenParams params) async {
     final req = CreateTokenReq.fromParams(params);
+
     final tokenDto = await _iamApi.createTokenByPassword(req);
     await _tokenDao.writeToken(tokenDto.accessToken);
 
-    final dto = await _iamApi.getCurrentIamClient(params.iamClientUuid);
+    final dto = await _iamApi.getCurrentIamClient(req.iamClientUuid);
     return dto?.toEntity();
   }
 
