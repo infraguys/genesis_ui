@@ -6,5 +6,5 @@ import 'package:genesis/src/features/auth/domain/params/sign_up_params.dart';
 abstract interface class IAuthRepository {
   Future<User> singUp(SignUpParams params);
 
-  Future<IamClient?> getCurrentClient(CreateTokenParams params);
+  Future<IamClient?> signIn(CreateTokenParams params);
 }
