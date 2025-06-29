@@ -6,7 +6,9 @@ import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc
 import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
-import 'package:genesis/src/features/iam/presentation/iam_page.dart';
+import 'package:genesis/src/features/projects/presentation/projects_page.dart';
+import 'package:genesis/src/features/roles/presentation/roles_page.dart';
+import 'package:genesis/src/features/users/presentation/users_page.dart';
 import 'package:genesis/src/shared/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -68,21 +70,21 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.users.name,
                 path: '/users',
                 pageBuilder: (_, _) {
-                  return NoTransitionPage(child: IamPage());
+                  return NoTransitionPage(child: UsersPage());
                 },
               ),
               GoRoute(
                 name: AppRoutes.projects.name,
                 path: '/projects',
                 pageBuilder: (_, _) {
-                  return NoTransitionPage(child: IamPage());
+                  return NoTransitionPage(child: ProjectsPage());
                 },
               ),
               GoRoute(
                 name: AppRoutes.roles.name,
                 path: '/roles',
                 pageBuilder: (_, _) {
-                  return NoTransitionPage(child: IamPage());
+                  return NoTransitionPage(child: RolesPage());
                 },
               ),
             ],
