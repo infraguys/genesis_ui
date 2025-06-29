@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
+import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
-import 'package:genesis/src/core/secure_storage_client/i_simple_storage_client.dart';
-import 'package:genesis/src/core/secure_storage_client/shared_pref_storage.dart';
+import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
+import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/auth/data/auth_repository.dart';
+import 'package:genesis/src/features/auth/data/dao/token_dao.dart';
 import 'package:genesis/src/features/auth/data/source/remote/remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/data/source/remote/remote_me_api.dart';
 import 'package:genesis/src/features/auth/domain/i_auth_repository.dart';
@@ -24,14 +27,21 @@ class DiContainer extends StatelessWidget {
         Provider<ISimpleStorageClient>(
           create: (_) => SharedPrefStorage(),
         ),
+        Provider<SecureStorageClient>(
+          create: (_) => FlutterSecureStorageClient(),
+        ),
         Provider<RestClient>(
-          create: (_) => RestClient(),
+          create: (context) {
+            final secureStorage = context.read<SecureStorageClient>();
+            return RestClient(secureStorage);
+          },
         ),
         RepositoryProvider<IAuthRepository>(
           create: (context) {
+            final tokenDao = TokenDao(context.read<SecureStorageClient>());
             final iamApi = RemoteIamClientApi(context.read<RestClient>());
             final meApi = RemoteMeApi(context.read<RestClient>());
-            return AuthRepository(iamApi: iamApi, meApi: meApi);
+            return AuthRepository(iamApi: iamApi, meApi: meApi, tokenDao: tokenDao);
           },
         ),
         BlocProvider(
