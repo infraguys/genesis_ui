@@ -1,3 +1,4 @@
+import 'package:genesis/src/features/auth/data/dao/token_dao.dart';
 import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
 import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
 import 'package:genesis/src/features/auth/data/source/remote/i_remote_iam_client_api.dart';
@@ -12,18 +13,22 @@ class AuthRepository implements IAuthRepository {
   AuthRepository({
     required IRemoteIamClientApi iamApi,
     required IRemoteMeApi meApi,
+    required TokenDao tokenDao,
   }) : _iamApi = iamApi,
-       _meApi = meApi;
+       _meApi = meApi,
+       _tokenDao = tokenDao;
 
   final IRemoteIamClientApi _iamApi;
   final IRemoteMeApi _meApi;
+  final TokenDao _tokenDao;
 
   @override
-  Future<IamClient?> getCurrentClient(CreateTokenParams params) async {
+  Future<IamClient?> signIn(CreateTokenParams params) async {
     final req = CreateTokenReq.fromParams(params);
-    await _iamApi.createTokenByPassword(req);
+    final tokenDto = await _iamApi.createTokenByPassword(req);
+    await _tokenDao.writeToken(tokenDto.accessToken);
 
-    final dto = await _iamApi.fetchCurrentClient(params.iamClientUuid);
+    final dto = await _iamApi.getCurrentIamClient(params.iamClientUuid);
     return dto?.toEntity();
   }
 
