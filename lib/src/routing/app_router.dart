@@ -6,6 +6,7 @@ import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc
 import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
+import 'package:genesis/src/features/iam/presentation/iam_page.dart';
 import 'package:genesis/src/shared/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -23,13 +24,13 @@ GoRouter createRouter(BuildContext context) {
   return GoRouter(
     debugLogDiagnostics: true,
     refreshListenable: _GoRouterRefreshStream(authBloc.stream),
+    errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
     redirect: (context, state) {
       final bloc = context.read<AuthBloc>();
       final isAuthRoute = _authRoutes.contains(state.matchedLocation);
 
       return switch (bloc.state) {
         Authenticated() when isAuthRoute => '/',
-        Authenticated() => '/',
         Unauthenticated() when !isAuthRoute => '/sign_in',
         _ => null,
       };
@@ -46,7 +47,7 @@ GoRouter createRouter(BuildContext context) {
         pageBuilder: (_, _) => NoTransitionPage(child: SignUpScreen()),
       ),
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
+        builder: (_, _, navigationShell) {
           return ScaffoldWithNavigation(navigationShell: navigationShell);
         },
         branches: [
@@ -55,23 +56,8 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.dashboard.name,
                 path: '/',
-                pageBuilder: (context, state) {
+                pageBuilder: (_, _) {
                   return NoTransitionPage(child: DashboardPage());
-                },
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: AppRoutes.monitoring.name,
-                path: '/monitoring',
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Scaffold(
-                      body: Center(child: Text('monitoring')),
-                    ),
-                  );
                 },
               ),
             ],
@@ -81,27 +67,22 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.users.name,
                 path: '/users',
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Scaffold(
-                      body: Center(child: Text('user')),
-                    ),
-                  );
+                pageBuilder: (_, _) {
+                  return NoTransitionPage(child: IamPage());
                 },
               ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
               GoRoute(
-                name: AppRoutes.vpn.name,
-                path: '/vpn',
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Scaffold(
-                      body: Center(child: Text('user')),
-                    ),
-                  );
+                name: AppRoutes.projects.name,
+                path: '/projects',
+                pageBuilder: (_, _) {
+                  return NoTransitionPage(child: IamPage());
+                },
+              ),
+              GoRoute(
+                name: AppRoutes.roles.name,
+                path: '/roles',
+                pageBuilder: (_, _) {
+                  return NoTransitionPage(child: IamPage());
                 },
               ),
             ],
@@ -109,7 +90,6 @@ GoRouter createRouter(BuildContext context) {
         ],
       ),
     ],
-    errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
   );
 }
 
