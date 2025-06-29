@@ -14,7 +14,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   static const _iamClientUrl = '/v1/iam/clients';
 
   @override
-  Future<void> createTokenByPassword(CreateTokenReq req) async {
+  Future<TokenDto> createTokenByPassword(CreateTokenReq req) async {
     final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
     try {
@@ -27,15 +27,14 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
           },
         ),
       );
-      final dto = TokenDto.fromJson(data!);
-      _client.updateAccessToken(dto.accessToken);
+      return TokenDto.fromJson(data!);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
   }
 
   @override
-  Future<IamClientDto?> fetchCurrentClient(String iamClientUuid) async {
+  Future<IamClientDto?> getCurrentIamClient(String iamClientUuid) async {
     final url = '$_iamClientUrl/$iamClientUuid/actions/me';
 
     try {
