@@ -55,19 +55,20 @@ class RestClient {
         connectTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
       )
-      ..interceptors.addAll([
-        LogInterceptor(request: false, requestHeader: false, responseHeader: false),
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            final token = await secureStorage.read('access_token');
-            if (token != null) {
-              options.headers['Authorization'] = 'Bearer $token';
-            }
-            return handler.next(options);
-          },
-        ),
-        // TokenInterceptor(),
-      ]);
+      ..interceptors.addAll(
+        [
+          LogInterceptor(request: false, requestHeader: false, responseHeader: false),
+          InterceptorsWrapper(
+            onRequest: (options, handler) async {
+              final token = await secureStorage.read('access_token');
+              if (token != null) {
+                options.headers['Authorization'] = 'Bearer $token';
+              }
+              return handler.next(options);
+            },
+          ),
+        ],
+      );
 
     return dio;
   }
