@@ -2,18 +2,13 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/core/rest_client/token_interceptor.dart';
+import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 
 /// [RestClient] is Singleton
 class RestClient {
-  RestClient() : _dio = _createDio();
+  RestClient(SecureStorageClient secureStorage) : _dio = _createDio(secureStorage);
 
   late final Dio _dio;
-
-  void updateAccessToken(String token) {
-    final interceptor = _dio.interceptors.whereType<TokenInterceptor>();
-    interceptor.single.token = token;
-  }
 
   Future<Response<T>> get<T>(
     String path, {
@@ -53,7 +48,7 @@ class RestClient {
     );
   }
 
-  static Dio _createDio() {
+  static Dio _createDio(SecureStorageClient secureStorage) {
     final dio = Dio()
       ..options = BaseOptions(
         baseUrl: Env.apiUrl,
@@ -62,7 +57,16 @@ class RestClient {
       )
       ..interceptors.addAll([
         LogInterceptor(request: false, requestHeader: false, responseHeader: false),
-        TokenInterceptor(),
+        InterceptorsWrapper(
+          onRequest: (options, handler) async {
+            final token = await secureStorage.read('access_token');
+            if (token != null) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
+            return handler.next(options);
+          },
+        ),
+        // TokenInterceptor(),
       ]);
 
     return dio;
