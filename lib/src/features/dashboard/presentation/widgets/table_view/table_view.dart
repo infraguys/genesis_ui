@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class AppTableView extends StatelessWidget {
+  const AppTableView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
