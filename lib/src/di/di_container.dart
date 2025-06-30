@@ -6,7 +6,7 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/auth/data/auth_repository.dart';
-import 'package:genesis/src/features/auth/data/dao/token_dao.dart';
+import 'package:genesis/src/features/auth/data/source/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/source/remote/remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/data/source/remote/remote_me_api.dart';
 import 'package:genesis/src/features/auth/domain/i_auth_repository.dart';

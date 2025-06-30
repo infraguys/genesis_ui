@@ -1,6 +1,6 @@
-import 'package:genesis/src/features/auth/data/dao/token_dao.dart';
 import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
 import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
+import 'package:genesis/src/features/auth/data/source/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/source/remote/i_remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/data/source/remote/i_remote_me_api.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
