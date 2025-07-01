@@ -16,21 +16,7 @@ env:
   #   "api_url": "https://console.genesis-core.tech/api"
   # }
   UI_BUILD_ENV_api_url: https://console.genesis-core.tech/api
-  UI_BUILD_ENV_iam_client_uuid: 00000000-0000-0000-0000-000000000000
-  UI_BUILD_ENV_client_id: GenesisCoreClientId
-  UI_BUILD_ENV_client_secret: GenesisCoreClientSecret
-  UI_BUILD_ENV_grant_type: password
-  UI_BUILD_ENV_ttl: 31536000
-  UI_BUILD_ENV_refresh_ttl: 0
   UI_BUILD_ENV_scope: ""
-
-  #"iam_client_uuid": "00000000-0000-0000-0000-000000000000",
-  #  "client_id": "GenesisCoreClientId",
-  #  "client_secret": "GenesisCoreClientSecret",
-  #  "ttl": 31536000,
-  #  "refresh_ttl": 0,
-  #  "grant_type": "password",
-  #  "scope": ""
 
 jobs:
   build:
@@ -42,6 +28,12 @@ jobs:
       - name: Build Genesis UI
         env:
             DEV_KEYS: ${{ secrets.DEV_KEYS }}
+            UI_BUILD_ENV_iam_client_uuid: ${{ secrets.IAM_CLIENT_UUID }}
+            UI_BUILD_ENV_client_id: ${{ secrets.CLIENT_ID }}
+            UI_BUILD_ENV_client_secret: ${{ secrets.CLIENT_SECRET }}
+            UI_BUILD_ENV_grant_type: ${{ secrets.GRANT_TYPE }}
+            UI_BUILD_ENV_ttl: ${{ secrets.TTL }}
+            UI_BUILD_ENV_refresh_ttl: ${{ secrets.REFRESH_TTL }}
         run: |
           set -eux
 
