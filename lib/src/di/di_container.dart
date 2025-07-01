@@ -8,7 +8,6 @@ import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/auth/data/auth_repository.dart';
 import 'package:genesis/src/features/auth/data/source/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/source/remote/remote_iam_client_api.dart';
-import 'package:genesis/src/features/auth/data/source/remote/remote_me_api.dart';
 import 'package:genesis/src/features/auth/domain/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/user_bloc/user_bloc.dart';
@@ -40,8 +39,7 @@ class DiContainer extends StatelessWidget {
           create: (context) {
             final tokenDao = TokenDao(context.read<SecureStorageClient>());
             final iamApi = RemoteIamClientApi(context.read<RestClient>());
-            final meApi = RemoteMeApi(context.read<RestClient>());
-            return AuthRepository(iamApi: iamApi, meApi: meApi, tokenDao: tokenDao);
+            return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
           },
         ),
         BlocProvider(
