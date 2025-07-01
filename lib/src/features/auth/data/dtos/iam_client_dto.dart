@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/auth_user_dto.dart';
 import 'package:genesis/src/features/auth/data/dtos/organization_dto.dart';
-import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
 import 'package:genesis/src/features/auth/domain/entity/iam_client.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,7 +15,7 @@ class IamClientDto implements IDto<IamClient> {
 
   factory IamClientDto.fromJson(Map<String, dynamic> json) => _$IamClientDtoFromJson(json);
 
-  final UserDto user;
+  final AuthUserDto user;
   @JsonKey(name: 'organization')
   final List<OrganizationDto> organizations;
 

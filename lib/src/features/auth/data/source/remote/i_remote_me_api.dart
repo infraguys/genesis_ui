@@ -1,8 +1,8 @@
-import 'package:genesis/src/features/auth/data/dtos/user_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/auth_user_dto.dart';
 import 'package:genesis/src/features/auth/data/requests/sign_up_req.dart';
 
 abstract interface class IRemoteMeApi {
-  Future<UserDto> signUp(SignUpReq req);
+  Future<AuthUserDto> signUp(SignUpReq req);
 
   // Future<UserDto> getUser();
   //

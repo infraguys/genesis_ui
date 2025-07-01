@@ -35,7 +35,7 @@ class UserDto implements IDto<User> {
   final DateTime createdAt;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime updatedAt;
-  final UserDtoStatus status;
+  final AuthUserDtoStatus status;
   final String username;
   final String firstName;
   final String lastName;
@@ -68,7 +68,7 @@ class UserDto implements IDto<User> {
 }
 
 @JsonEnum()
-enum UserDtoStatus {
+enum AuthUserDtoStatus {
   @JsonValue('ACTIVE')
   active;
 
