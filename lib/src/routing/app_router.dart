@@ -69,7 +69,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.users.name,
                 path: '/users',
-                pageBuilder: (_, _) {
+                pageBuilder: (context, _) {
                   return NoTransitionPage(child: UsersPage());
                 },
               ),

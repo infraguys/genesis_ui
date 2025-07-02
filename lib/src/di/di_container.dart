@@ -11,6 +11,10 @@ import 'package:genesis/src/features/auth/data/source/remote/remote_iam_client_a
 import 'package:genesis/src/features/auth/domain/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/features/users/data/source/remote/users_api.dart';
+import 'package:genesis/src/features/users/data/users_repository.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -30,35 +34,52 @@ class DiContainer extends StatelessWidget {
           create: (_) => FlutterSecureStorageClient(),
         ),
         Provider<RestClient>(
-          create: (context) {
-            final secureStorage = context.read<SecureStorageClient>();
-            return RestClient(secureStorage);
-          },
-        ),
-        RepositoryProvider<IAuthRepository>(
-          create: (context) {
-            final tokenDao = TokenDao(context.read<SecureStorageClient>());
-            final iamApi = RemoteIamClientApi(context.read<RestClient>());
-            return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
-          },
-        ),
-        BlocProvider(
-          create: (context) {
-            final repository = context.read<IAuthRepository>();
-            return AuthBloc(repository);
-          },
-        ),
-        BlocProvider(
-          create: (context) {
-            final repository = context.read<IAuthRepository>();
-            return UserBloc(repository);
-          },
-        ),
-        Provider(
-          create: (context) => createRouter(context),
+          create: (context) => RestClient(context.read<SecureStorageClient>()),
         ),
       ],
-      child: child,
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<IAuthRepository>(
+            create: (context) {
+              final tokenDao = TokenDao(context.read<SecureStorageClient>());
+              final iamApi = RemoteIamClientApi(context.read<RestClient>());
+              return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
+            },
+          ),
+          RepositoryProvider<IUsersRepository>(
+            create: (context) {
+              final usersApi = UsersApi(context.read<RestClient>());
+              return UsersRepository(usersApi: usersApi);
+            },
+          ),
+        ],
+        child: MultiProvider(
+          providers: [
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IAuthRepository>();
+                return AuthBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IAuthRepository>();
+                return UserBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IUsersRepository>();
+                return UsersBloc(repository);
+              },
+            ),
+            Provider(
+              create: (context) => createRouter(context),
+            ),
+          ],
+          child: child,
+        ),
+      ),
     );
   }
 }
