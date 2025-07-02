@@ -48,3 +48,7 @@ make ci
 
 rm -fv "$WEB_DIR/index.nginx-debian.html"
 find "build/web/" -maxdepth 1 -type f -exec mv -t "$WEB_DIR/" {} +
+cp -r "build/web/assets" "$WEB_DIR/"
+
+# Configure Nginx for single page application
+cp genesis/images/nginx.conf /etc/nginx/sites-available/default
