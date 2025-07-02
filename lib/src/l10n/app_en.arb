@@ -14,5 +14,10 @@
   "signUp": "Sign up",
   "users": "Users",
   "projects": "Projects",
-  "roles": "Roles"
+  "roles": "Roles",
+  "description": "Description",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "email",
+  "uuid": "uuid"
 }

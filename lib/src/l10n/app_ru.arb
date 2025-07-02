@@ -12,5 +12,9 @@
   "signUp": "Зарегистрироваться",
   "users": "Пользователи",
   "projects": "Проекты",
-  "roles": "Роли"
+  "roles": "Роли",
+  "roles": "Roles",
+  "description": "Описание",
+  "firstName": "Имя",
+  "lastName": "Фамилия"
 }
