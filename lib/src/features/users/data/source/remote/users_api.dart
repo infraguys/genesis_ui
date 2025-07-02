@@ -46,9 +46,10 @@ final class UsersApi implements IUsersApi {
     const url = _usersUrl;
 
     try {
-      final Response(:data) = await _client.get<List<Map<String, dynamic>>>(url);
+      final Response(:data) = await _client.get<List<dynamic>>(url);
       if (data != null) {
-        return data.map((it) => UserDto.fromJson(it)).toList();
+        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data!);
+        return castedData.map((it) => UserDto.fromJson(it)).toList();
       }
     } on DioException catch (e) {
       throw NetworkException(e);
