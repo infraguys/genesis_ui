@@ -45,6 +45,7 @@ class OrganizationDto implements IDto<Organization> {
 
 @JsonEnum()
 enum OrganizationDtoStatus {
+  @JsonValue('ACTIVE')
   active;
 
   OrganizationStatus toOrganizationStatus() => switch (this) {
