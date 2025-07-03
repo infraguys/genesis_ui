@@ -6,6 +6,7 @@ import 'package:genesis/src/core/extensions/color_extension.dart';
 // part './dark_text_theme.dart';
 
 part './input_decoration_theme.dart';
+part './navigation_drawer_theme_data.dart';
 
 class AppTheme {
   ThemeData get light {
@@ -16,25 +17,13 @@ class AppTheme {
         color: Colors.transparent,
         actionsPadding: EdgeInsets.only(right: 16),
       ),
-      navigationDrawerTheme: NavigationDrawerThemeData(
-        backgroundColor: Colors.grey.shade50.withValues(alpha: .99),
-        indicatorShape: RoundedRectangleBorder(),
-        indicatorColor: Colors.transparent,
-        iconTheme: WidgetStateProperty.fromMap({
-          WidgetState.selected: IconThemeData(color: Colors.blue),
-          WidgetState.any: IconThemeData(color: Colors.grey),
-        }),
-        labelTextStyle: WidgetStateTextStyle.fromMap({
-          WidgetState.selected: TextStyle(color: Colors.blue),
-          WidgetState.any: TextStyle(color: Colors.grey),
-        }),
-      ),
+      navigationDrawerTheme: _navigationDrawerThemeData,
       drawerTheme: DrawerThemeData(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(),
       ),
       cardTheme: CardThemeData(color: Colors.white),
-      inputDecorationTheme: _inputDecorationTheme,
+      inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           foregroundColor: WidgetStatePropertyAll(Colors.white),
@@ -56,12 +45,10 @@ class AppTheme {
         ),
       ),
       textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
-        expansionTileTheme: ExpansionTileThemeData(
-          childrenPadding: EdgeInsets.only(left: 12),
-          shape: OutlineInputBorder(
-              borderSide: BorderSide.none
-          ),
-        )
+      expansionTileTheme: ExpansionTileThemeData(
+        childrenPadding: EdgeInsets.only(left: 12),
+        shape: OutlineInputBorder(borderSide: BorderSide.none),
+      ),
     );
   }
 
