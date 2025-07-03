@@ -86,6 +86,10 @@ GoRouter createRouter(BuildContext context) {
                   ),
                 ],
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
               GoRoute(
                 name: AppRoutes.projects.name,
                 path: '/projects',
@@ -93,6 +97,10 @@ GoRouter createRouter(BuildContext context) {
                   return NoTransitionPage(child: ProjectsPage());
                 },
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
               GoRoute(
                 name: AppRoutes.roles.name,
                 path: '/roles',

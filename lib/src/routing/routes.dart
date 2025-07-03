@@ -14,6 +14,7 @@ enum AppRoutes {
 
   /// iam
   users,
+  user,
   projects,
   roles,
   //

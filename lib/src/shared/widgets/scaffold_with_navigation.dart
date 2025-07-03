@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -92,28 +93,31 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     height: 100,
                     child: Container(
                       decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
+                      margin: EdgeInsets.zero,
                       child: SvgPicture.asset(
                         'assets/images/logo.svg',
                         width: 50,
                         height: 50,
                       ),
-                      margin: EdgeInsets.zero,
                     ),
                   ),
-                  ListTile(title: Text('dashboard'.hardcoded)),
+                  ListTile(
+                    title: Text('dashboard'.hardcoded),
+                    onTap: () => context.goNamed(AppRoutes.dashboard.name),
+                  ),
                   ExpansionTile(
                     title: Text('iam'.hardcoded),
                     children: [
                       ListTile(
-                        title: Text('Пользователи'.hardcoded),
+                        title: Text(context.$.users),
                         onTap: () => context.goNamed(AppRoutes.users.name),
                       ),
                       ListTile(
-                        title: Text('Проекты'.hardcoded),
+                        title: Text(context.$.projects),
                         onTap: () => context.goNamed(AppRoutes.projects.name),
                       ),
                       ListTile(
-                        title: Text('Роли'.hardcoded),
+                        title: Text(context.$.roles),
                         onTap: () => context.goNamed(AppRoutes.roles.name),
                       ),
                     ],
@@ -136,10 +140,20 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         spacing: 20,
-                        children: [const Icon(Icons.notifications_none_outlined), MeAppbarWidget()],
+                        children: [
+                          const Icon(Icons.notifications_none_outlined),
+                          MeAppbarWidget(),
+                        ],
                       ),
                     ),
                   ),
+                  // AppBar(
+                  //   actions: [
+                  //     const Icon(Icons.notifications_none_outlined),
+                  //     SizedBox(width: 20.0),
+                  //     MeAppbarWidget(),
+                  //   ],
+                  // ),
                   Expanded(
                     child: Container(
                       child: navigationShell,
