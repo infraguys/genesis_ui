@@ -122,9 +122,6 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ListTile(
-                    title: Text('dashboard'.hardcoded),
-                  ),
                 ],
               ),
             ),
