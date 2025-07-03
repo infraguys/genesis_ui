@@ -1,6 +1,5 @@
 {
   "@@locale" : "ru",
-  "helloWorld": "Привет, Мир!",
   "signOut": "Выход",
   "dashboard": "Дашборд",
   "pageNotFound": "Страница не найдена",

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/widgets/me_appbar_widget.dart';
@@ -102,11 +101,11 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('dashboard'.hardcoded),
+                    title: Text(context.$.dashboard),
                     onTap: () => context.goNamed(AppRoutes.dashboard.name),
                   ),
                   ExpansionTile(
-                    title: Text('iam'.hardcoded),
+                    title: Text(context.$.iam),
                     children: [
                       ListTile(
                         title: Text(context.$.users),
