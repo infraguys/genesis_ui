@@ -19,5 +19,6 @@
   "firstName": "First name",
   "lastName": "Last name",
   "email": "email",
-  "uuid": "uuid"
+  "uuid": "uuid",
+  "iam": "Iam"
 }

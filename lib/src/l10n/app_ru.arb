@@ -15,5 +15,6 @@
   "roles": "Роли",
   "description": "Описание",
   "firstName": "Имя",
-  "lastName": "Фамилия"
+  "lastName": "Фамилия",
+  "iam": "Управление"
 }

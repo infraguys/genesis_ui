@@ -205,6 +205,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'uuid'**
   String get uuid;
+
+  /// No description provided for @iam.
+  ///
+  /// In en, this message translates to:
+  /// **'Iam'**
+  String get iam;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
