@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 class UsersListDetails extends StatelessWidget {
   const UsersListDetails({
@@ -21,7 +23,12 @@ class UsersListDetails extends StatelessWidget {
         ],
       ),
       leading: Icon(Icons.play_arrow, color: Colors.green),
-      trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+      trailing: IconButton(
+        onPressed: () {
+          context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid});
+        },
+        icon: Icon(Icons.more_vert),
+      ),
       expandedAlignment: Alignment.centerLeft,
       childrenPadding: EdgeInsets.only(left: 50),
       children: [
@@ -66,23 +73,4 @@ class UsersListDetails extends StatelessWidget {
       ],
     );
   }
-}
-
-class _TableLayoutDelegate extends MultiChildLayoutDelegate {
-  @override
-  Size getSize(BoxConstraints constraints) {
-    return Size(200, 20);
-  }
-
-  @override
-  void performLayout(Size size) {
-    final icon = layoutChild(1, BoxConstraints.tight(size));
-    final username = layoutChild(2, BoxConstraints.tight(size));
-
-    positionChild(username, Offset(500, 5));
-    positionChild(icon, Offset(10, 5));
-  }
-
-  @override
-  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) => true;
 }

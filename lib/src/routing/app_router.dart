@@ -9,6 +9,7 @@ import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart'
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
 import 'package:genesis/src/features/roles/presentation/roles_page.dart';
 import 'package:genesis/src/features/users/presentation/users_page.dart';
+import 'package:genesis/src/features/users/presentation/widgets/user_page.dart';
 import 'package:genesis/src/shared/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -72,6 +73,18 @@ GoRouter createRouter(BuildContext context) {
                 pageBuilder: (context, _) {
                   return NoTransitionPage(child: UsersPage());
                 },
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.user.name,
+                    path: ':uuid',
+                    pageBuilder: (_, state) {
+                      final userId = state.pathParameters['uuid']!;
+                      return NoTransitionPage(
+                        child: UserPage(userId: userId),
+                      );
+                    },
+                  ),
+                ],
               ),
               GoRoute(
                 name: AppRoutes.projects.name,

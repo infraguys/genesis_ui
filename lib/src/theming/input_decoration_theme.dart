@@ -1,6 +1,6 @@
 part of './app_theme.dart';
 
-final _inputDecorationTheme = InputDecorationTheme(
+final _inputDecorationThemeData = InputDecorationTheme(
   filled: true,
   fillColor: Color(0xFF1C1C1E).hardcoded,
   hintStyle: TextStyle(color: Color(0xFF7A7B7D).hardcoded),
