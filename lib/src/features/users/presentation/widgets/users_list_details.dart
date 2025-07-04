@@ -15,19 +15,31 @@ class UsersListDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
+
     return ExpansionTile(
       title: Row(
         children: [
           SizedBox(width: 250, child: Text(user.username)),
-          Text(user.status.name),
+          SizedBox(
+            width: 250,
+            child: Text(
+              user.status.name,
+              style: TextStyle(color: user.status == UserStatus.active ? Colors.green : Colors.red),
+            ),
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid}, extra: user);
+            },
+            child: Icon(Icons.remove_red_eye),
+          ),
         ],
       ),
       leading: Icon(Icons.play_arrow, color: Colors.green),
       trailing: IconButton(
-        onPressed: () {
-          context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid});
-        },
         icon: Icon(Icons.more_vert),
+        onPressed: () {},
       ),
       expandedAlignment: Alignment.centerLeft,
       childrenPadding: EdgeInsets.only(left: 50),

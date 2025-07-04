@@ -89,7 +89,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) {
-                      final userId = state.pathParameters['uuid']!;
+                      final _ = state.pathParameters['uuid']!;
                       return NoTransitionPage(
                         child: UserPage(user: state.extra as User),
                       );
