@@ -143,13 +143,6 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // AppBar(
-                  //   actions: [
-                  //     const Icon(Icons.notifications_none_outlined),
-                  //     SizedBox(width: 20.0),
-                  //     MeAppbarWidget(),
-                  //   ],
-                  // ),
                   Expanded(
                     child: Container(
                       child: navigationShell,
