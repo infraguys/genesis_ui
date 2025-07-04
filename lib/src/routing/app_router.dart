@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/auth/domain/entity/user.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
@@ -24,10 +25,18 @@ final _authRoutes = [
 GoRouter createRouter(BuildContext context) {
   print('router');
   final authBloc = context.read<AuthBloc>();
+
+  final rootNavKey = GlobalKey<NavigatorState>();
+  final dashboardNavKey = GlobalKey<NavigatorState>();
+  final usersNavKey = GlobalKey<NavigatorState>();
+  final projectsNavKey = GlobalKey<NavigatorState>();
+  final rolesNavKey = GlobalKey<NavigatorState>();
+
   return GoRouter(
     debugLogDiagnostics: true,
     refreshListenable: _GoRouterRefreshStream(authBloc.stream),
     errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
+    navigatorKey: rootNavKey,
     redirect: (context, state) {
       final bloc = context.read<AuthBloc>();
       final isAuthRoute = _authRoutes.contains(state.matchedLocation);
@@ -55,6 +64,7 @@ GoRouter createRouter(BuildContext context) {
         },
         branches: [
           StatefulShellBranch(
+            navigatorKey: dashboardNavKey,
             routes: [
               GoRoute(
                 name: AppRoutes.dashboard.name,
@@ -66,6 +76,7 @@ GoRouter createRouter(BuildContext context) {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: usersNavKey,
             routes: [
               GoRoute(
                 name: AppRoutes.users.name,
@@ -80,7 +91,7 @@ GoRouter createRouter(BuildContext context) {
                     pageBuilder: (_, state) {
                       final userId = state.pathParameters['uuid']!;
                       return NoTransitionPage(
-                        child: UserPage(userId: userId),
+                        child: UserPage(user: state.extra as User),
                       );
                     },
                   ),
@@ -89,6 +100,7 @@ GoRouter createRouter(BuildContext context) {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: projectsNavKey,
             routes: [
               GoRoute(
                 name: AppRoutes.projects.name,
@@ -100,6 +112,7 @@ GoRouter createRouter(BuildContext context) {
             ],
           ),
           StatefulShellBranch(
+            navigatorKey: rolesNavKey,
             routes: [
               GoRoute(
                 name: AppRoutes.roles.name,
