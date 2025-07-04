@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/features/shared/user.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 

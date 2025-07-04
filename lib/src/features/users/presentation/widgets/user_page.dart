@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/features/shared/user.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({required this.user, super.key});

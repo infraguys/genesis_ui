@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/features/auth/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
 import 'package:genesis/src/features/roles/presentation/roles_page.dart';
+import 'package:genesis/src/features/shared/user.dart';
 import 'package:genesis/src/features/users/presentation/users_page.dart';
 import 'package:genesis/src/features/users/presentation/widgets/user_page.dart';
 import 'package:genesis/src/shared/widgets/page_not_found.dart';

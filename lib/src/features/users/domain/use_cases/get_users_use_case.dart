@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/features/shared/user.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 
 class GetUsersUseCase {

@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/features/shared/user.dart';
 
 abstract interface class IUsersRepository {
   Future<List<User>> getUsers();

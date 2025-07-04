@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/auth/domain/entity/user.dart';
+import 'package:genesis/src/features/shared/user.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 
 part 'users_event.dart';
