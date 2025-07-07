@@ -42,6 +42,7 @@ linter:
     - sort_constructors_first
     - sort_unnamed_constructors_first
     - unnecessary_breaks
+    - always_use_package_imports
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

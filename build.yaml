@@ -2,5 +2,8 @@ targets:
   $default:
     builders:
       json_serializable:
+        generate_for:
+          - lib/src/data/**/dtos/*.dart
+          - lib/src/data/**/requests/*.dart
         options:
           field_rename: snake

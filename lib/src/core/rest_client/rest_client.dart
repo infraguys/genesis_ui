@@ -48,6 +48,22 @@ class RestClient {
     );
   }
 
+  Future<Response<T>> delete<T>(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    return await _dio.delete(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
+  }
+
   static Dio _createDio(SecureStorageClient secureStorage) {
     final dio = Dio()
       ..options = BaseOptions(
