@@ -37,7 +37,22 @@ class User extends Equatable {
   final List<Role> roles;
 
   @override
-  List<Object?> get props => [uuid];
+  List<Object?> get props => [
+    uuid,
+    username,
+    description,
+    createdAt,
+    updatedAt,
+    status,
+    firstName,
+    lastName,
+    surname,
+    phone,
+    email,
+    emailVerified,
+    otpEnabled,
+    roles,
+  ];
 }
 
 // Copyable extension ----------
