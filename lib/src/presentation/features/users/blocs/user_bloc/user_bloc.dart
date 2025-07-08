@@ -4,8 +4,8 @@ import 'package:genesis/src/domain/features/users/params/change_user_password_pa
 import 'package:genesis/src/domain/features/users/params/create_user_params.dart';
 import 'package:genesis/src/domain/features/users/repository/i_users_repository.dart';
 import 'package:genesis/src/domain/features/users/use_cases/change_user_password_usecase.dart';
-import 'package:genesis/src/domain/features/users/use_cases/create_user.dart';
-import 'package:genesis/src/domain/features/users/use_cases/delete_user_use_case.dart';
+import 'package:genesis/src/domain/features/users/use_cases/create_user_usecase.dart';
+import 'package:genesis/src/domain/features/users/use_cases/delete_user_usecase.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/domain/entities/user.dart';
 import 'package:genesis/src/domain/features/users/repository/i_users_repository.dart';
-import 'package:genesis/src/domain/features/users/use_cases/get_users_use_case.dart';
+import 'package:genesis/src/domain/features/users/use_cases/get_users_usecase.dart';
 
 part 'users_event.dart';
 part 'users_state.dart';
