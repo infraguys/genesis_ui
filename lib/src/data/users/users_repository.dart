@@ -14,9 +14,9 @@ class UsersRepository implements IUsersRepository {
   final IUsersApi _usersApi;
 
   @override
-  Future<User> changeUserPassword() {
-    // TODO: implement changeUserPassword
-    throw UnimplementedError();
+  Future<User> changeUserPassword(String userUuid) async {
+    final dto = await _usersApi.changeUserPassword(userUuid);
+    return dto.toEntity();
   }
 
   @override
