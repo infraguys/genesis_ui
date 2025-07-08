@@ -16,6 +16,8 @@ sealed class UserEvent {
     required String oldPassword,
     required String newPassword,
   }) = _ChangeUserPassword;
+
+  factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 }
 
 final class _CreateUser implements UserEvent {
@@ -50,4 +52,10 @@ class _ChangeUserPassword implements UserEvent {
   final String uuid;
   final String oldPassword;
   final String newPassword;
+}
+
+class _ResetUserPassword implements UserEvent {
+  _ResetUserPassword(this.userUuid);
+
+  final String userUuid;
 }
