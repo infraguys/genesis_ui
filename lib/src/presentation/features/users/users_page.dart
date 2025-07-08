@@ -24,7 +24,7 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if (state is DeleteSuccessUserState) {
+        if (state is UserStateDeleteSuccess) {
           context.read<UsersBloc>().add(UsersEvent.getUsers());
         }
       },
