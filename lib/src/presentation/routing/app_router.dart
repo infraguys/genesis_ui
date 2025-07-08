@@ -7,8 +7,8 @@ import 'package:genesis/src/presentation/features/auth/blocs/auth_bloc/auth_bloc
 import 'package:genesis/src/presentation/features/auth/sign_in_screen/sign_in_screen.dart';
 import 'package:genesis/src/presentation/features/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:genesis/src/presentation/features/dashboard/presentation/dashboard_page.dart';
+import 'package:genesis/src/presentation/features/users/user_page.dart';
 import 'package:genesis/src/presentation/features/users/users_page.dart';
-import 'package:genesis/src/presentation/features/users/widgets/user_page.dart';
 import 'package:genesis/src/presentation/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/presentation/shared_widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
