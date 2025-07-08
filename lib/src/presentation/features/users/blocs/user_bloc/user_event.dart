@@ -10,6 +10,12 @@ sealed class UserEvent {
   }) = _CreateUser;
 
   factory UserEvent.deleteUser(String userUuid) = _DeleteUser;
+
+  factory UserEvent.changePassword({
+    required String uuid,
+    required String oldPassword,
+    required String newPassword,
+  }) = _ChangeUserPassword;
 }
 
 final class _CreateUser implements UserEvent {
@@ -32,4 +38,16 @@ final class _DeleteUser implements UserEvent {
   _DeleteUser(this.userUuid);
 
   final String userUuid;
+}
+
+class _ChangeUserPassword implements UserEvent {
+  _ChangeUserPassword({
+    required this.uuid,
+    required this.oldPassword,
+    required this.newPassword,
+  });
+
+  final String uuid;
+  final String oldPassword;
+  final String newPassword;
 }
