@@ -5,7 +5,6 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/data/users/dtos/user_dto.dart';
 import 'package:genesis/src/data/users/dtos/users_role_dto.dart';
 import 'package:genesis/src/data/users/source/remote/i_users_api.dart';
-import 'package:genesis/src/data/users/source/requests/create_user_req.dart';
 
 final class UsersApi implements IUsersApi {
   UsersApi(this._client);
@@ -15,11 +14,14 @@ final class UsersApi implements IUsersApi {
   static const _usersUrl = '/v1/iam/users/';
 
   @override
-  Future<UserDto> changeUserPassword(String userUuid) async {
-    final url = '$_usersUrl/$userUuid/actions/change_password/invoke';
+  Future<UserDto> changeUserPassword(req) async {
+    final url = '$_usersUrl/${req.uuid}/actions/change_password/invoke';
 
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        url,
+        data: req.toJson(),
+      );
       if (data == null) {
         throw DataNotFoundException(requestOptions.uri.path);
       }
@@ -45,7 +47,7 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
-  Future<UserDto> createUser(CreateUserReq req) async {
+  Future<UserDto> createUser(req) async {
     const url = _usersUrl;
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
