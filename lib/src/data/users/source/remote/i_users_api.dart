@@ -1,5 +1,6 @@
 import 'package:genesis/src/data/users/dtos/user_dto.dart';
 import 'package:genesis/src/data/users/dtos/users_role_dto.dart';
+import 'package:genesis/src/data/users/source/requests/change_user_password_req.dart';
 import 'package:genesis/src/data/users/source/requests/create_user_req.dart';
 
 abstract interface class IUsersApi {
@@ -13,7 +14,7 @@ abstract interface class IUsersApi {
 
   Future<void> deleteUser(String userUuid);
 
-  Future<UserDto> changeUserPassword(String userUuid);
+  Future<UserDto> changeUserPassword(ChangeUserPasswordReq req);
 
   Future<UserDto> resetUserPassword();
 
