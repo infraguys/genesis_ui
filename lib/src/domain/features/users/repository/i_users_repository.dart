@@ -1,4 +1,5 @@
 import 'package:genesis/src/domain/entities/user.dart';
+import 'package:genesis/src/domain/features/users/params/change_user_password_params.dart';
 import 'package:genesis/src/domain/features/users/params/create_user_params.dart';
 
 abstract interface class IUsersRepository {
@@ -12,7 +13,7 @@ abstract interface class IUsersRepository {
 
   Future<void> deleteUser(String userUuid);
 
-  Future<User> changeUserPassword(String userUuid);
+  Future<User> changeUserPassword(ChangeUserPasswordParams params);
 
   Future<User> resetUserPassword();
 
