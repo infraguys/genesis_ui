@@ -15,9 +15,18 @@ final class UsersApi implements IUsersApi {
   static const _usersUrl = '/v1/iam/users/';
 
   @override
-  Future<UserDto> changeUserPassword() {
-    // TODO: implement changeUserPassword
-    throw UnimplementedError();
+  Future<UserDto> changeUserPassword(String userUuid) async {
+    final url = '$_usersUrl/$userUuid/actions/change_password/invoke';
+
+    try {
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+      return UserDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override

@@ -13,7 +13,7 @@ abstract interface class IUsersApi {
 
   Future<void> deleteUser(String userUuid);
 
-  Future<UserDto> changeUserPassword();
+  Future<UserDto> changeUserPassword(String userUuid);
 
   Future<UserDto> resetUserPassword();
 
