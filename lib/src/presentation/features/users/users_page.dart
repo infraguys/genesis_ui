@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/presentation/features/users/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/presentation/features/users/widgets/users_list_details.dart';
+import 'package:provider/provider.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -37,7 +38,10 @@ class _UsersPageState extends State<UsersPage> {
               itemCount: usersState.users.length,
               itemBuilder: (context, index) {
                 final currentUser = usersState.users[index];
-                return UsersListDetails(user: currentUser);
+                return Provider.value(
+                  value: currentUser,
+                  child: UsersListDetails(),
+                );
               },
               separatorBuilder: (context, index) {
                 return Divider(color: Colors.white, indent: 100, endIndent: 100);
