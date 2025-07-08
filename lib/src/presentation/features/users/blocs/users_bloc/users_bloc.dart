@@ -9,7 +9,6 @@ part 'users_state.dart';
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UsersBloc(this._usersRepository) : super(InitUsersState()) {
     on(_getUsers);
-    on(_blockUser);
   }
 
   final IUsersRepository _usersRepository;
@@ -20,6 +19,4 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     final users = await useCase();
     emit(SuccessUsersState(users));
   }
-
-  Future<void> _blockUser(_BlockUser event, Emitter<UsersState> emit) async {}
 }
