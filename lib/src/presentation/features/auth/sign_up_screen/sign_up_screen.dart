@@ -170,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void signIn(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final event = UserEvent.singUp(
+      final event = UserEvent.createUser(
         username: _usernameController.text,
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,

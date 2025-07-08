@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:genesis/src/data/users/source/remote/i_users_api.dart';
 import 'package:genesis/src/data/users/source/requests/create_user_req.dart';
 import 'package:genesis/src/domain/entities/user.dart';
@@ -36,12 +38,6 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<User> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<User>> getUsers() async {
     final listOfUserDto = await _usersApi.getUsers();
     return listOfUserDto.map((it) => it.toEntity()).toList();
@@ -56,6 +52,12 @@ class UsersRepository implements IUsersRepository {
   @override
   Future<User> updateUser() {
     // TODO: implement updateUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<User> getUser() {
+    // TODO: implement getUser
     throw UnimplementedError();
   }
 }

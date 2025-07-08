@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/presentation/features/users/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/presentation/features/users/widgets/users_list_details.dart';
 
@@ -20,24 +21,31 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UsersBloc, UsersState>(
-      builder: (context, usersState) {
-        if (usersState is! SuccessUsersState) {
-          return Center(child: CupertinoActivityIndicator());
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state is DeleteSuccessUserState) {
+          context.read<UsersBloc>().add(UsersEvent.getUsers());
         }
-        return Center(
-          child: ListView.separated(
-            itemCount: usersState.users.length,
-            itemBuilder: (context, index) {
-              final currentUser = usersState.users[index];
-              return UsersListDetails(user: currentUser);
-            },
-            separatorBuilder: (context, index) {
-              return Divider(color: Colors.white, indent: 100, endIndent: 100);
-            },
-          ),
-        );
       },
+      child: BlocBuilder<UsersBloc, UsersState>(
+        builder: (context, usersState) {
+          if (usersState is! SuccessUsersState) {
+            return Center(child: CupertinoActivityIndicator());
+          }
+          return Center(
+            child: ListView.separated(
+              itemCount: usersState.users.length,
+              itemBuilder: (context, index) {
+                final currentUser = usersState.users[index];
+                return UsersListDetails(user: currentUser);
+              },
+              separatorBuilder: (context, index) {
+                return Divider(color: Colors.white, indent: 100, endIndent: 100);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

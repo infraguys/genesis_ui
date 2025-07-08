@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/domain/entities/user.dart';
-import 'package:genesis/src/presentation/features/users/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -53,7 +53,7 @@ class UsersListDetails extends StatelessWidget {
               labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
               child: Text('Удалить'.hardcoded),
               onTap: () {
-                context.read<UsersBloc>().add(UsersEvent.deleteUser(user.uuid));
+                context.read<UserBloc>().add(UserEvent.deleteUser(user.uuid));
               },
             ),
           ];

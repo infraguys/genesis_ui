@@ -1,17 +1,19 @@
 part of 'user_bloc.dart';
 
 sealed class UserEvent {
-  factory UserEvent.singUp({
+  factory UserEvent.createUser({
     required String username,
     required String firstName,
     required String lastName,
     required String email,
     required String password,
-  }) = _SignUp;
+  }) = _CreateUser;
+
+  factory UserEvent.deleteUser(String userUuid) = _DeleteUser;
 }
 
-final class _SignUp implements UserEvent {
-  _SignUp({
+final class _CreateUser implements UserEvent {
+  _CreateUser({
     required this.username,
     required this.firstName,
     required this.lastName,
@@ -24,4 +26,10 @@ final class _SignUp implements UserEvent {
   final String lastName;
   final String email;
   final String password;
+}
+
+final class _DeleteUser implements UserEvent {
+  _DeleteUser(this.userUuid);
+
+  final String userUuid;
 }
