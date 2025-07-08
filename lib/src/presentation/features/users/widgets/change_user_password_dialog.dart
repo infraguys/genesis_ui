@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/domain/entities/user.dart';
 import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
@@ -30,12 +31,12 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
           spacing: 12,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Сменить пароль'),
+            Text(context.$.changeUserPassword),
             TextFormField(
               controller: _oldPasswordController,
               autovalidateMode: AutovalidateMode.onUnfocus,
               style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(hintText: 'password'),
+              decoration: InputDecoration(hintText: context.$.oldPassword),
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -48,7 +49,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
               controller: _newPasswordController,
               autovalidateMode: AutovalidateMode.onUnfocus,
               style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(hintText: 'password'),
+              decoration: InputDecoration(hintText: context.$.newPassword),
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -61,13 +62,13 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: context.pop, child: Text('Отмена')),
+        TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
         ListenableBuilder(
           listenable: Listenable.merge([_oldPasswordController, _newPasswordController]),
           builder: (context, _) {
             return TextButton(
               onPressed: null,
-              child: Text('Ок'),
+              child: Text(context.$.ok),
             );
           },
         ),

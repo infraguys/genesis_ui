@@ -15,5 +15,10 @@
   "description": "Описание",
   "firstName": "Имя",
   "lastName": "Фамилия",
-  "iam": "Управление"
+  "iam": "Управление",
+  "changePassword": "Сменить пароль",
+  "oldPassword": "Старый пароль",
+  "newPassword": "Новый пароль",
+  "cancel": "Отмена",
+  "ok": "Подтвердить"
 }

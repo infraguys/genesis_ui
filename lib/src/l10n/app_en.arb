@@ -19,5 +19,10 @@
   "lastName": "Last name",
   "email": "email",
   "uuid": "uuid",
-  "iam": "Iam"
+  "iam": "Iam",
+  "changeUserPassword": "Change password",
+  "oldPassword": "Old password",
+  "newPassword": "New password",
+  "cancel": "Cancel",
+  "ok": "Ok"
 }

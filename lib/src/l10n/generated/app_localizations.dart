@@ -92,12 +92,6 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
 
-  /// No description provided for @helloWorld.
-  ///
-  /// In en, this message translates to:
-  /// **'Hello World!'**
-  String get helloWorld;
-
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:
@@ -211,6 +205,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Iam'**
   String get iam;
+
+  /// No description provided for @changeUserPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changeUserPassword;
+
+  /// No description provided for @oldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Old password'**
+  String get oldPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPassword;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'Ok'**
+  String get ok;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
