@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:genesis/src/data/users/source/remote/i_users_api.dart';
+import 'package:genesis/src/data/users/source/requests/change_user_password_req.dart';
 import 'package:genesis/src/data/users/source/requests/create_user_req.dart';
 import 'package:genesis/src/domain/entities/user.dart';
+import 'package:genesis/src/domain/features/users/params/change_user_password_params.dart';
 import 'package:genesis/src/domain/features/users/params/create_user_params.dart';
 import 'package:genesis/src/domain/features/users/repository/i_users_repository.dart';
 
@@ -14,8 +16,9 @@ class UsersRepository implements IUsersRepository {
   final IUsersApi _usersApi;
 
   @override
-  Future<User> changeUserPassword(String userUuid) async {
-    final dto = await _usersApi.changeUserPassword(userUuid);
+  Future<User> changeUserPassword(ChangeUserPasswordParams params) async {
+    final req = ChangeUserPasswordReq.fromParams(params);
+    final dto = await _usersApi.changeUserPassword(req);
     return dto.toEntity();
   }
 
