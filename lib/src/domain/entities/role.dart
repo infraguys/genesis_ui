@@ -1,5 +1,7 @@
-class Role {
-  Role({
+import 'package:equatable/equatable.dart';
+
+class Role extends Equatable {
+  const Role({
     required this.uuid,
     required this.name,
     required this.description,
@@ -16,6 +18,17 @@ class Role {
   final DateTime updatedAt;
   final RoleStatus status;
   final dynamic projectId;
+
+  @override
+  List<Object?> get props => [
+    uuid,
+    name,
+    description,
+    createdAt,
+    updatedAt,
+    status,
+    projectId,
+  ];
 }
 
 enum RoleStatus { active }
