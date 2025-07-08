@@ -6,7 +6,7 @@ class ChangePasswordUseCase {
 
   final IUsersRepository _repository;
 
-  Future<User> call() async {
-    return await _repository.changeUserPassword();
+  Future<User> call(String userUuid) async {
+    return await _repository.changeUserPassword(userUuid);
   }
 }

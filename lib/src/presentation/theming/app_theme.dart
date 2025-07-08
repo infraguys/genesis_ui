@@ -25,6 +25,9 @@ class AppTheme {
         childrenPadding: EdgeInsets.only(left: 12),
         shape: OutlineInputBorder(borderSide: BorderSide.none),
       ),
+        dialogTheme: DialogThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        )
     );
   }
 

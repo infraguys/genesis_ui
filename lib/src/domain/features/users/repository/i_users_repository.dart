@@ -12,7 +12,7 @@ abstract interface class IUsersRepository {
 
   Future<void> deleteUser(String userUuid);
 
-  Future<User> changeUserPassword();
+  Future<User> changeUserPassword(String userUuid);
 
   Future<User> resetUserPassword();
 

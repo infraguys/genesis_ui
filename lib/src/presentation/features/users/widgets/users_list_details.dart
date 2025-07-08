@@ -53,7 +53,24 @@ class UsersListDetails extends StatelessWidget {
               labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
               child: Text('Удалить'.hardcoded),
               onTap: () {
-                context.read<UserBloc>().add(UserEvent.deleteUser(user.uuid));
+                showDialog<void>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text('Удалить пользователя ${user.username}?'),
+                      actions: [
+                        TextButton(onPressed: context.pop, child: Text('Отмена')),
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                            context.read<UserBloc>().add(UserEvent.deleteUser(user.uuid));
+                          },
+                          child: Text('Ок'),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           ];
