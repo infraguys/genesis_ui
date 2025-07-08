@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/domain/entities/user.dart';
-import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/presentation/features/users/widgets/users_actions_popup_menu_button.dart';
 import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
 class UsersListDetails extends StatelessWidget {
   const UsersListDetails({
-    required this.user,
     super.key,
   });
 
-  final User user;
-
   @override
   Widget build(BuildContext context) {
+    final user = context.read<User>();
     final textTheme = TextTheme.of(context);
 
     return ExpansionTile(
@@ -40,42 +37,7 @@ class UsersListDetails extends StatelessWidget {
         ],
       ),
       leading: Icon(Icons.play_arrow, color: Colors.green),
-      trailing: PopupMenuButton<int>(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        useRootNavigator: true,
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem(child: Text('Подтвердить email'.hardcoded)),
-            PopupMenuItem(child: Text('Сменить пароль'.hardcoded)),
-            PopupMenuItem(child: Text('Сменить email'.hardcoded)),
-            PopupMenuItem(child: Text('Блокировать'.hardcoded)),
-            PopupMenuItem(
-              labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
-              child: Text('Удалить'.hardcoded),
-              onTap: () {
-                showDialog<void>(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Text('Удалить пользователя ${user.username}?'),
-                      actions: [
-                        TextButton(onPressed: context.pop, child: Text('Отмена')),
-                        TextButton(
-                          onPressed: () {
-                            context.pop();
-                            context.read<UserBloc>().add(UserEvent.deleteUser(user.uuid));
-                          },
-                          child: Text('Ок'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
-          ];
-        },
-      ),
+      trailing: UsersActionsPopupMenuButton(),
       expandedAlignment: Alignment.centerLeft,
       childrenPadding: EdgeInsets.only(left: 50),
       children: [
