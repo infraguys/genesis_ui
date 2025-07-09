@@ -25,5 +25,6 @@
   "newPassword": "New password",
   "cancel": "Cancel",
   "ok": "Ok",
-  "success": "Success"
+  "success": "Success",
+  "delete": "Delete"
 }
