@@ -4,7 +4,7 @@ import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
-import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/presentation/features/user/blocs/create_user_bloc/create_user_bloc.dart';
 import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,17 +30,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final textTheme = TextTheme.of(context);
     final $ = context.$;
 
-    return BlocListener<UserBloc, UserState>(
+    return BlocListener<CreateUserBloc, CreateUserState>(
       listener: (context, state) {
-        if (state is UserStateCreatedFailure) {
+        if (state is CreateUserStateFailure) {
           final snack = SnackBar(
             backgroundColor: Colors.red,
             content: Text(state.message),
           );
           ScaffoldMessenger.of(context).showSnackBar(snack);
-        } else if (state is UserStateCreatedSuccess) {
+        } else if (state is CreateUserStateCreated) {
           final navigator = GoRouter.of(context);
           final snack = SnackBar(
+            duration: const Duration(milliseconds: 1000),
             backgroundColor: Colors.green,
             content: Text(context.$.success),
           );
@@ -48,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               .showSnackBar(snack)
               .closed
               .then(
-                (_) => navigator.pop(),
+                (_) => navigator.pop(state.user.username),
               );
         }
       },
@@ -132,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     listenable: Listenable.merge(_controllers.all),
                     builder: (context, _) {
                       return ElevatedButton(
-                        onPressed: _controllers.allFilled ? () => signIn(context) : null,
+                        onPressed: _controllers.allFilled ? () => createUser(context) : null,
                         child: Text($.signUp),
                       );
                     },
@@ -156,16 +157,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void signIn(BuildContext context) {
+  void createUser(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final event = UserEvent.createUser(
+      final event = CreateUserEvent.createUser(
         username: _controllers.username.text,
         firstName: _controllers.firstName.text,
         lastName: _controllers.lastName.text,
         email: _controllers.email.text,
         password: _controllers.password.text,
       );
-      context.read<UserBloc>().add(event);
+      context.read<CreateUserBloc>().add(event);
     }
   }
 }
