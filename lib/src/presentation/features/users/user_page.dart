@@ -64,3 +64,38 @@ class _UserPageState extends State<UserPage> {
     );
   }
 }
+
+class _UserFormControllers extends FormControllersManager {
+  _UserFormControllers(User user) {
+    usernameController = TextEditingController(text: user.username);
+    descriptionController = TextEditingController(text: user.description);
+    firstNameController = TextEditingController(text: user.firstName);
+    lastNameController = TextEditingController(text: user.lastName);
+    surnameController = TextEditingController(text: user.surname);
+    phoneController = TextEditingController(text: user.phone ?? '');
+    emailController = TextEditingController(text: user.email);
+  }
+
+  late final TextEditingController usernameController;
+  late final TextEditingController descriptionController;
+  late final TextEditingController firstNameController;
+  late final TextEditingController lastNameController;
+  late final TextEditingController surnameController;
+  late final TextEditingController phoneController;
+  late final TextEditingController emailController;
+
+  @override
+  List<TextEditingController> get all =>
+      [
+        usernameController,
+        descriptionController,
+        firstNameController,
+        lastNameController,
+        surnameController,
+        phoneController,
+        emailController
+      ];
+
+  @override
+  bool get allFilled => all.every((it) => it.text.isNotEmpty);
+}
