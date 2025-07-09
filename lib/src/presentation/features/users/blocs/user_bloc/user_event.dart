@@ -11,6 +11,15 @@ sealed class UserEvent {
 
   factory UserEvent.deleteUser(String userUuid) = _DeleteUser;
 
+  factory UserEvent.updateUser({
+    required String uuid,
+    required String? username,
+    required String? firstName,
+    required String? lastName,
+    required String? email,
+    required String? phone,
+  }) = _UpdateUser;
+
   factory UserEvent.changePassword({
     required String uuid,
     required String oldPassword,
@@ -40,6 +49,24 @@ final class _DeleteUser implements UserEvent {
   _DeleteUser(this.userUuid);
 
   final String userUuid;
+}
+
+final class _UpdateUser implements UserEvent {
+  _UpdateUser({
+    required this.uuid,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.username,
+    this.phone,
+  });
+
+  final String uuid;
+  final String? username;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final String? phone;
 }
 
 class _ChangeUserPassword implements UserEvent {
