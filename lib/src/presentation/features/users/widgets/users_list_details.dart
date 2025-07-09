@@ -7,9 +7,7 @@ import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
 class UsersListDetails extends StatelessWidget {
-  const UsersListDetails({
-    super.key,
-  });
+  const UsersListDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
