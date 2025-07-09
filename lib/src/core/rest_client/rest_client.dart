@@ -64,6 +64,26 @@ class RestClient {
     );
   }
 
+  Future<Response<T>> put<T>(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onReceiveProgress,
+    void Function(int, int)? onSendProgress,
+  }) async {
+    return await _dio.put(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
+      onSendProgress: onSendProgress,
+    );
+  }
+
   static Dio _createDio(SecureStorageClient secureStorage) {
     final dio = Dio()
       ..options = BaseOptions(
