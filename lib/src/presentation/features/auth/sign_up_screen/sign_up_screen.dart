@@ -16,20 +16,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  bool get isSignUpBtnEnabled {
-    return _firstNameController.text.isNotEmpty &&
-        _lastNameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _usernameController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty;
-  }
+  final _controllers = _FormControllers();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textAlign: TextAlign.center,
                   ),
                   TextFormField(
-                    controller: _usernameController,
+                    controller: _controllers.username,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Username'.hardcoded),
                     validator: (value) {
@@ -88,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _firstNameController,
+                    controller: _controllers.firstName,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'First name'.hardcoded),
                     validator: (value) {
@@ -99,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _lastNameController,
+                    controller: _controllers.lastName,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Last name'),
                     validator: (value) {
@@ -110,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _emailController,
+                    controller: _controllers.email,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'E-mail'),
@@ -122,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _passwordController,
+                    controller: _controllers.password,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'password'),
@@ -135,16 +122,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   ListenableBuilder(
-                    listenable: Listenable.merge([
-                      _firstNameController,
-                      _lastNameController,
-                      _emailController,
-                      _passwordController,
-                      _usernameController,
-                    ]),
+                    listenable: Listenable.merge(_controllers.all),
                     builder: (context, _) {
                       return ElevatedButton(
-                        onPressed: isSignUpBtnEnabled ? () => signIn(context) : null,
+                        onPressed: _controllers.allFilled ? () => signIn(context) : null,
                         child: Text($.signUp),
                       );
                     },
@@ -171,13 +152,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void signIn(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       final event = UserEvent.createUser(
-        username: _usernameController.text,
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        email: _emailController.text,
-        password: _passwordController.text,
+        username: _controllers.username.text,
+        firstName: _controllers.firstName.text,
+        lastName: _controllers.lastName.text,
+        email: _controllers.email.text,
+        password: _controllers.password.text,
       );
       context.read<UserBloc>().add(event);
+    }
+  }
+}
+
+class _FormControllers {
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final username = TextEditingController();
+  final password = TextEditingController();
+
+  List<TextEditingController> get all => [firstName, lastName, email, username, password];
+
+  bool get allFilled => all.every((c) => c.text.isNotEmpty);
+
+  void dispose() {
+    for (final controller in all) {
+      controller.dispose();
     }
   }
 }
