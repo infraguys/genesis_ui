@@ -35,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           final navigator = GoRouter.of(context);
           final snack = SnackBar(
             backgroundColor: Colors.green,
-            content: Text('Success!'),
+            content: Text(context.$.success),
           );
           ScaffoldMessenger.of(context)
               .showSnackBar(snack)
