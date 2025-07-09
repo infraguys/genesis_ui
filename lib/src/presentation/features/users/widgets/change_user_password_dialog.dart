@@ -91,7 +91,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
   }
 }
 
-class _ChangePasswordFormControllers extends FormControllers {
+class _ChangePasswordFormControllers extends FormControllersManager {
   final oldPassword = TextEditingController();
   final newPassword = TextEditingController();
 

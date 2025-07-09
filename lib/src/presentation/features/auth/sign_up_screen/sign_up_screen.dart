@@ -170,7 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-class _FormControllers extends FormControllers {
+class _FormControllers extends FormControllersManager {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final email = TextEditingController();

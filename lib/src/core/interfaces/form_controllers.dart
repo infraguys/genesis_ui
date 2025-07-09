@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class FormControllers {
+abstract class FormControllersManager {
   /// Returns a list of all controllers.
   List<TextEditingController> get all;
 
