@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/presentation/features/auth/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -17,12 +18,12 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+  late final _ControllerManager _controllerManager;
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  bool get isSignInBtnEnabled {
-    return _usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+  @override
+  void initState() {
+    _controllerManager = _ControllerManager();
+    super.initState();
   }
 
   @override
@@ -63,8 +64,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     textAlign: TextAlign.center,
                   ),
                   TextFormField(
-                    controller: _usernameController,
-                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    controller: _controllerManager.usernameController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Login'.hardcoded),
                     validator: (value) {
@@ -75,8 +76,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _passwordController,
-                    autovalidateMode: AutovalidateMode.onUnfocus,
+                    controller: _controllerManager.passwordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: $.password),
                     obscureText: true,
@@ -88,20 +89,20 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
                   ListenableBuilder(
-                    listenable: Listenable.merge([
-                      _usernameController,
-                      _passwordController,
-                    ]),
+                    listenable: Listenable.merge(_controllerManager.all),
                     builder: (context, _) {
                       return ElevatedButton(
-                        onPressed: isSignInBtnEnabled ? () => signIn(context) : null,
+                        onPressed: _controllerManager.allFilled ? () => signIn(context) : null,
                         child: Text($.signIn),
                       );
                     },
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed(AppRoutes.signUp.name);
+                    onPressed: () async {
+                      final username = await context.pushNamed<String>(AppRoutes.signUp.name);
+                      if (username != null) {
+                        _controllerManager.usernameController.text = username;
+                      }
                     },
                     child: Text($.signUp),
                   ),
@@ -117,10 +118,24 @@ class _SignInScreenState extends State<SignInScreen> {
   void signIn(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       final event = AuthEvent.signIn(
-        username: _usernameController.text,
-        password: _passwordController.text,
+        username: _controllerManager.usernameController.text,
+        password: _controllerManager.passwordController.text,
       );
       context.read<AuthBloc>().add(event);
     }
   }
+}
+
+class _ControllerManager extends FormControllersManager {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  List<TextEditingController> get all => [
+    usernameController,
+    passwordController,
+  ];
+
+  @override
+  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 }
