@@ -12,31 +12,11 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._repository) : super(UserState.init()) {
-    on<_CreateUser>(_signUp);
     on(_deleteUser);
     on(_changeUserPassword);
   }
 
   final IUsersRepository _repository;
-
-  Future<void> _signUp(_CreateUser event, Emitter<UserState> emit) async {
-    final useCase = CreateUserUseCase(_repository);
-    emit(UserState.loading());
-    try {
-      final createdUser = await useCase(
-        CreateUserParams(
-          username: event.username,
-          firstName: event.firstName,
-          lastName: event.lastName,
-          email: event.email,
-          password: event.password,
-        ),
-      );
-      emit(UserState.userCreated());
-    } on NetworkException catch (e) {
-      emit(UserState.createdFailure(e.message));
-    }
-  }
 
   Future<void> _deleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final deleteUseCase = DeleteUserUseCase(_repository);
