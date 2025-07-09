@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/domain/entities/user.dart';
+import 'package:genesis/src/presentation/features/users/widgets/block_user_dialog.dart';
 import 'package:genesis/src/presentation/features/users/widgets/change_user_password_dialog.dart';
 import 'package:genesis/src/presentation/features/users/widgets/delete_user_dialog.dart';
 import 'package:go_router/go_router.dart';
@@ -13,11 +14,12 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.read<User>();
-    return PopupMenuButton<String>(
+    return PopupMenuButton<_PopupBtnValue>(
       onSelected: (value) {
         final child = switch (value) {
-          'change_password' => ChangeUserPasswordDialog(),
-          'delete_user' => DeleteUserDialog(),
+          _PopupBtnValue.changePassword => ChangeUserPasswordDialog(),
+          _PopupBtnValue.deleteUser => DeleteUserDialog(),
+          _PopupBtnValue.blockUser => BlockUserDialog(),
           _ => SizedBox.shrink(),
         };
         showDialog<void>(
@@ -58,24 +60,18 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
             },
           ),
           PopupMenuItem(
-            value: 'change_password',
+            value: _PopupBtnValue.changePassword,
             child: Text(context.$.changeUserPassword),
-            onTap: () {
-              showDialog<void>(
-                context: context,
-                builder: (_) {
-                  return Provider.value(
-                    value: user,
-                    child: ChangeUserPasswordDialog(),
-                  );
-                },
-              );
-            },
           ),
-          PopupMenuItem(child: Text('Сменить email'.hardcoded)),
-          PopupMenuItem(child: Text('Блокировать'.hardcoded)),
           PopupMenuItem(
-            value: 'delete_user',
+            child: Text('Сменить email'.hardcoded),
+          ),
+          PopupMenuItem(
+            value: _PopupBtnValue.blockUser,
+            child: Text('Блокировать'.hardcoded),
+          ),
+          PopupMenuItem(
+            value: _PopupBtnValue.deleteUser,
             labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
             child: Text(context.$.delete),
           ),
@@ -83,4 +79,10 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
       },
     );
   }
+}
+
+enum _PopupBtnValue {
+  changePassword,
+  blockUser,
+  deleteUser,
 }
