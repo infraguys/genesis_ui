@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/presentation/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _controllers = _FormControllers();
+
+  @override
+  void dispose() {
+    _controllers.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,20 +170,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-class _FormControllers {
+class _FormControllers extends FormControllers {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final email = TextEditingController();
   final username = TextEditingController();
   final password = TextEditingController();
 
+  @override
   List<TextEditingController> get all => [firstName, lastName, email, username, password];
 
+  @override
   bool get allFilled => all.every((c) => c.text.isNotEmpty);
-
-  void dispose() {
-    for (final controller in all) {
-      controller.dispose();
-    }
-  }
 }
