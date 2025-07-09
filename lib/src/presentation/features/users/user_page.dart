@@ -13,6 +13,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
 
   @override
@@ -26,6 +27,7 @@ class _UserPageState extends State<UserPage> {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Form(
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 24,
@@ -107,10 +109,21 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
             ),
+            SizedBox(
+              width: 400,
+              child: ElevatedButton(
+                onPressed: () => save(context),
+                child: Text('Save'.hardcoded),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void save(BuildContext context) {
+    if (_formKey.currentState!.validate()) {}
   }
 }
 
