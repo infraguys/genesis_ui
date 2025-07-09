@@ -28,6 +28,7 @@ class UsersListDetails extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: () {
+              // context.read<UserBloc>().add(event);
               context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid}, extra: user);
             },
             child: Icon(Icons.remove_red_eye),
