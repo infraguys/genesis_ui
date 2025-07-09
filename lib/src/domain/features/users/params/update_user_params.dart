@@ -1,24 +1,26 @@
 class UpdateUserParams {
   UpdateUserParams({
-    required this.username,
-    required this.description,
-    required this.firstName,
-    required this.lastName,
-    required this.surname,
-    required this.phone,
-    required this.email,
+    required this.uuid,
+    this.username,
+    this.description,
+    this.firstName,
+    this.lastName,
+    this.surname,
+    this.phone,
+    this.email,
   });
 
-  final String username;
-  final String description;
-  final String firstName;
-  final String lastName;
-  final String surname;
-  final String phone;
-  final String email;
+  final String uuid;
+  final String? username;
+  final String? description;
+  final String? firstName;
+  final String? lastName;
+  final String? surname;
+  final String? phone;
+  final String? email;
 
   @override
   String toString() {
-    return 'UpdateUserParams(username: $username, description: $description, firstName: $firstName, lastName: $lastName, surname: $surname, phone: $phone, email: $email)';
+    return 'UpdateUserParams(uuid: $uuid, username: $username, description: $description, firstName: $firstName, lastName: $lastName, surname: $surname, phone: $phone, email: $email)';
   }
 }
