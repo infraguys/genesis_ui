@@ -43,7 +43,10 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
                   return AlertDialog(
                     content: Text('Подтвердить email?'),
                     actions: [
-                      TextButton(onPressed: context.pop, child: Text('Отмена')),
+                      TextButton(
+                        onPressed: context.pop,
+                        child: Text(context.$.cancel),
+                      ),
                       TextButton(
                         onPressed: () {},
                         child: Text('Ок'),
@@ -74,7 +77,7 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
           PopupMenuItem(
             value: 'delete_user',
             labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
-            child: Text('Удалить'.hardcoded),
+            child: Text(context.$.delete),
           ),
         ];
       },
