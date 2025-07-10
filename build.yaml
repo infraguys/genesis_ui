@@ -3,7 +3,7 @@ targets:
     builders:
       json_serializable:
         generate_for:
-          - lib/src/data/**/dtos/*.dart
-          - lib/src/data/**/requests/*.dart
+          - lib/src/features/**/data/dtos/*.dart
+          - lib/src/features/**/data/requests/*.dart
         options:
           field_rename: snake

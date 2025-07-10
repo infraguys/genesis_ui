@@ -5,17 +5,20 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
-import 'package:genesis/src/data/auth/auth_repository.dart';
-import 'package:genesis/src/data/auth/sources/local/token_dao.dart';
-import 'package:genesis/src/data/auth/sources/remote/remote_iam_client_api.dart';
-import 'package:genesis/src/data/users/source/remote/users_api.dart';
-import 'package:genesis/src/data/users/users_repository.dart';
-import 'package:genesis/src/domain/features/auth/repository/i_auth_repository.dart';
-import 'package:genesis/src/domain/features/users/repository/i_users_repository.dart';
-import 'package:genesis/src/presentation/features/auth/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/presentation/features/users/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/presentation/features/users/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/presentation/routing/app_router.dart';
+import 'package:genesis/src/features/auth/data/repositories/auth_repository.dart';
+import 'package:genesis/src/features/auth/data/sources/local/token_dao.dart';
+import 'package:genesis/src/features/auth/data/sources/remote/remote_iam_client_api.dart';
+import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/user/data/repositories/user_repository.dart';
+import 'package:genesis/src/features/user/data/source/remote/user_api.dart';
+import 'package:genesis/src/features/user/domain/i_user_repository.dart';
+import 'package:genesis/src/features/user/presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
+import 'package:genesis/src/features/users/data/source/remote/users_api.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
 class DiContainer extends StatelessWidget {
@@ -46,10 +49,16 @@ class DiContainer extends StatelessWidget {
               return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
             },
           ),
+          RepositoryProvider<IUserRepository>(
+            create: (context) {
+              final userApi = UserApi(context.read<RestClient>());
+              return UserRepository(userApi);
+            },
+          ),
           RepositoryProvider<IUsersRepository>(
             create: (context) {
               final usersApi = UsersApi(context.read<RestClient>());
-              return UsersRepository(usersApi: usersApi);
+              return UsersRepository(usersApi);
             },
           ),
         ],
@@ -63,7 +72,7 @@ class DiContainer extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) {
-                final repository = context.read<IUsersRepository>();
+                final repository = context.read<IUserRepository>();
                 return UserBloc(repository);
               },
             ),
