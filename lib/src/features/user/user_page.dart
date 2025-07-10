@@ -44,11 +44,22 @@ class _UserPageState extends State<UserPage> {
           ScaffoldMessenger.of(context).showSnackBar(snack);
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 48,
+            children: [
+              Wrap(
+                spacing: 12,
+                children: [
+                  Chip(label: Text('Admin'), backgroundColor: Colors.blue,),
+                  Chip(label: Text('Manager'), backgroundColor: Colors.orange,),
+                ],
+              ),
+              Form(
+                key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 24,
@@ -187,9 +198,10 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
           ),
+            ],
         ),
-      ),
-    );
+        ),
+      ),);
   }
 
   void save(BuildContext context) {
@@ -229,15 +241,16 @@ class _ControllersManager extends FormControllersManager {
   late final TextEditingController emailController;
 
   @override
-  List<TextEditingController> get all => [
-    usernameController,
-    descriptionController,
-    firstNameController,
-    lastNameController,
-    surnameController,
-    phoneController,
-    emailController,
-  ];
+  List<TextEditingController> get all =>
+      [
+        usernameController,
+        descriptionController,
+        firstNameController,
+        lastNameController,
+        surnameController,
+        phoneController,
+        emailController,
+      ];
 
   @override
   bool get allFilled => all.every((it) => it.text.isNotEmpty);
