@@ -17,7 +17,7 @@ class Project extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final ProjectStatus status;
-  final String organization;
+  final List<dynamic> organization;
 
   @override
   List<Object?> get props => [
