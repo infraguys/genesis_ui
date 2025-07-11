@@ -12,8 +12,8 @@ import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.da
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
 import 'package:genesis/src/features/users/data/source/remote/users_api.dart';
-import 'package:genesis/src/features/users/data/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';

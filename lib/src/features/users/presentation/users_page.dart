@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/users/data/user_bloc/user_bloc.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_list_details.dart';
 import 'package:provider/provider.dart';

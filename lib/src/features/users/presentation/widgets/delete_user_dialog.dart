@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
-import 'package:genesis/src/features/users/data/user_bloc/user_bloc.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class DeleteUserDialog extends StatelessWidget {
