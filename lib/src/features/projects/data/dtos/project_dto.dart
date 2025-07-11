@@ -2,9 +2,11 @@ import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable(createToJson: false)
+part 'project_dto.g.dart';
+
+@JsonSerializable(createToJson: false, constructor: '_')
 class ProjectDto implements IDto<Project> {
-  ProjectDto({
+  ProjectDto._({
     required this.id,
     required this.name,
     required this.description,
@@ -13,6 +15,8 @@ class ProjectDto implements IDto<Project> {
     required this.status,
     required this.organization,
   });
+
+  factory ProjectDto.fromJson(Map<String, dynamic> json) => _$ProjectDtoFromJson(json);
 
   final String id;
   final String name;
