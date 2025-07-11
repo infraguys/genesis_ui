@@ -4,9 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_user_dto.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: false, constructor: '_')
 class AuthUserDto implements IDto<User> {
-  AuthUserDto({
+  AuthUserDto._({
     required this.uuid,
     required this.username,
     required this.description,
