@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_req.dart';
-import 'package:genesis/src/features/user/domain/params/update_user_params.dart';
+import 'package:genesis/src/features/users/domain/params/update_user_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'update_user_req.g.dart';

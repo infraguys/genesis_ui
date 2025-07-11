@@ -9,9 +9,9 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/features/common/shared_widgets/scaffold_with_navigation.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
-import 'package:genesis/src/features/user/domain/i_user_repository.dart';
-import 'package:genesis/src/features/user/presentation/blocs/create_user_bloc/create_user_bloc.dart';
-import 'package:genesis/src/features/user/user_page.dart';
+import 'package:genesis/src/features/users/data/create_user_bloc/create_user_bloc.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/presentation/user_page.dart';
 import 'package:genesis/src/features/users/presentation/users_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,7 +59,7 @@ GoRouter createRouter(BuildContext context) {
         pageBuilder: (_, _) {
           return NoTransitionPage(
             child: BlocProvider(
-              create: (context) => CreateUserBloc(context.read<IUserRepository>()),
+              create: (context) => CreateUserBloc(context.read<IUsersRepository>()),
               child: SignUpScreen(),
             ),
           );

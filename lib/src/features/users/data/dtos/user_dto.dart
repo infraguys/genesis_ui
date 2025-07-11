@@ -2,11 +2,11 @@ import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user_feat_user_dto.g.dart';
+part 'user_dto.g.dart';
 
 @JsonSerializable(createToJson: false, constructor: '_')
-class UserFeatUserDto implements IDto<User> {
-  UserFeatUserDto._({
+class UserDto implements IDto<User> {
+  UserDto._({
     required this.uuid,
     required this.username,
     required this.description,
@@ -22,10 +22,10 @@ class UserFeatUserDto implements IDto<User> {
     required this.otpEnabled,
   });
 
-  factory UserFeatUserDto.fromJson(Map<String, dynamic> json) {
+  factory UserDto.fromJson(Map<String, dynamic> json) {
     final modifiedJson = Map.of(json);
     modifiedJson['username'] ??= json['name'];
-    return _$UserFeatUserDtoFromJson(modifiedJson);
+    return _$UserDtoFromJson(modifiedJson);
   }
 
   @JsonKey(required: true)

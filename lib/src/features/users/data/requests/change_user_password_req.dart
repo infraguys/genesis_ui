@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_req.dart';
-import 'package:genesis/src/features/user/domain/params/change_user_password_params.dart';
+import 'package:genesis/src/features/users/domain/params/change_user_password_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'change_user_password_req.g.dart';
