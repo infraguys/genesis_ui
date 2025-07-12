@@ -9,10 +9,10 @@ class MeAppbarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
-        if (authState is! Authenticated) {
+        if (authState is! AuthenticatedAuthState) {
           return SizedBox.shrink();
         }
-        final user = authState.iamClient.user;
+        final user = authState.user;
         final firstLetter = user.firstName.substring(0, 1).toUpperCase();
         final secondLetter = user.lastName.substring(0, 1).toUpperCase();
         return Row(

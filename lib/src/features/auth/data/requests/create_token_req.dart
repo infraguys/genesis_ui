@@ -7,20 +7,8 @@ part 'create_token_req.g.dart';
 
 @JsonSerializable(createFactory: false)
 class CreateTokenReq implements IReq {
-  CreateTokenReq({
-    required this.iamClientUuid,
-    required this.grantType,
-    required this.clientId,
-    required this.clientSecret,
-    required this.username,
-    required this.password,
-    required this.scope,
-    required this.ttl,
-    required this.refreshTtl,
-  });
-
-  factory CreateTokenReq.fromParams(CreateTokenParams params) {
-    return CreateTokenReq(
+  factory CreateTokenReq(CreateTokenParams params) {
+    return CreateTokenReq._(
       iamClientUuid: Env.iamClientUuid,
       clientId: Env.clientId,
       clientSecret: Env.clientSecret,
@@ -32,6 +20,18 @@ class CreateTokenReq implements IReq {
       password: params.password,
     );
   }
+
+  CreateTokenReq._({
+    required this.iamClientUuid,
+    required this.grantType,
+    required this.clientId,
+    required this.clientSecret,
+    required this.username,
+    required this.password,
+    required this.scope,
+    required this.ttl,
+    required this.refreshTtl,
+  });
 
   @JsonKey(includeToJson: false)
   final String iamClientUuid;

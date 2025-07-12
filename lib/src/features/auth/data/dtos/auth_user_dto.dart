@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/auth/data/dtos/auth_organization_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -20,6 +21,7 @@ class AuthUserDto implements IDto<User> {
     required this.email,
     required this.emailVerified,
     required this.otpEnabled,
+    required this.organizations,
   });
 
   factory AuthUserDto.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,8 @@ class AuthUserDto implements IDto<User> {
   final String email;
   final bool emailVerified;
   final bool otpEnabled;
+  @JsonKey(name: 'organization', defaultValue: [])
+  final List<AuthOrganizationDto> organizations;
 
   static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
@@ -63,7 +67,7 @@ class AuthUserDto implements IDto<User> {
       email: email,
       emailVerified: emailVerified,
       otpEnabled: otpEnabled,
-      roles: [],
+      // todo: add organizations to User entity when implemented
     );
   }
 }

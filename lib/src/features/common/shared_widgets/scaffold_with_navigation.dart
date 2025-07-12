@@ -16,7 +16,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
   Widget build(context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is Authenticated) {
+        if (state is AuthenticatedAuthState) {
           final snackBar = SnackBar(
             content: const Text('Yay! SignIn was Success!'),
             action: SnackBarAction(

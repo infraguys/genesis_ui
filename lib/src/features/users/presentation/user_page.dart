@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
 class UserPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
+    context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
     _controllersManager = _ControllersManager(widget.user);
     super.initState();
   }
@@ -153,53 +155,6 @@ class _UserPageState extends State<UserPage> {
                         onPressed: () => save(context),
                         child: Text('Save'.hardcoded),
                       ),
-                    ),
-                    Text('Проекты', style: textTheme.headlineSmall),
-                    Wrap(
-                      spacing: 24,
-                      runSpacing: 24,
-                      children: [
-                        SizedBox(
-                          width: 300,
-                          height: 250,
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          height: 250,
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          height: 250,
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          height: 250,
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),

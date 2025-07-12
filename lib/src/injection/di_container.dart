@@ -10,6 +10,11 @@ import 'package:genesis/src/features/auth/data/sources/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/sources/remote/remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/projects/data/repositories/projects_repository.dart';
+import 'package:genesis/src/features/projects/data/source/remote/projects_api.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
 import 'package:genesis/src/features/users/data/source/remote/users_api.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
@@ -52,6 +57,12 @@ class DiContainer extends StatelessWidget {
               return UsersRepository(usersApi);
             },
           ),
+          RepositoryProvider<IProjectsRepository>(
+            create: (context) {
+              final projectsApi = ProjectsApi(context.read<RestClient>());
+              return ProjectsRepository(projectsApi);
+            },
+          ),
         ],
         child: MultiProvider(
           providers: [
@@ -71,6 +82,18 @@ class DiContainer extends StatelessWidget {
               create: (context) {
                 final repository = context.read<IUsersRepository>();
                 return UsersBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IProjectsRepository>();
+                return ProjectsBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IProjectsRepository>();
+                return ProjectBloc(repository);
               },
             ),
             Provider(

@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
-import 'package:genesis/src/features/auth/domain/auth_entities/iam_client.dart';
 import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/domain/usecases/sign_in_use_case.dart';
+import 'package:genesis/src/features/common/shared_entities/user.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -21,10 +22,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final params = CreateTokenParams(username: event.username, password: event.password);
 
     try {
-      final iamClient = await useCase(params);
-      if (iamClient != null) {
-        emit(Authenticated(iamClient));
-      }
+      final user = await useCase(params);
+      emit(AuthState.authenticated(user));
+    } on DataNotFoundException catch (e) {
+      emit(AuthState.failure(e.message));
     } on NetworkException catch (e) {
       emit(AuthState.failure(e.message));
     } on Exception catch (_) {
@@ -33,6 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signOut(_, Emitter<AuthState> emit) async {
-    emit(Unauthenticated());
+    emit(AuthState.unauthenticated());
   }
 }

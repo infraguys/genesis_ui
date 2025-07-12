@@ -8,4 +8,6 @@ abstract interface class IProjectsRepository {
   Future<void> deleteProject(String uuid);
 
   Future<Project> updateProject(UpdateProjectParams params);
+
+  Future<List<Project>> getProjects();
 }

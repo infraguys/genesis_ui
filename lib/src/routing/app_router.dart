@@ -9,6 +9,7 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/features/common/shared_widgets/scaffold_with_navigation.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
+import 'package:genesis/src/features/projects/presentation/projects_page.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/create_user_bloc/create_user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/user_page.dart';
@@ -42,8 +43,8 @@ GoRouter createRouter(BuildContext context) {
       final isAuthRoute = _authRoutes.contains(state.matchedLocation);
 
       return switch (bloc.state) {
-        Authenticated() when isAuthRoute => '/',
-        Unauthenticated() when !isAuthRoute => '/sign_in',
+        AuthenticatedAuthState() when isAuthRoute => '/',
+        UnauthenticatedAuthState() when !isAuthRoute => '/sign_in',
         _ => null,
       };
     },
@@ -113,7 +114,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.projects.name,
                 path: '/projects',
                 pageBuilder: (_, _) {
-                  return NoTransitionPage(child: Placeholder());
+                  return NoTransitionPage(child: ProjectsPage());
                 },
               ),
             ],

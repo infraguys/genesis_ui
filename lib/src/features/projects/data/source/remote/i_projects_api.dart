@@ -1,14 +1,14 @@
-import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/features/projects/domain/params/create_project_params.dart';
+import 'package:genesis/src/features/projects/data/dtos/project_dto.dart';
+import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
 import 'package:genesis/src/features/projects/domain/params/update_project_paramas.dart';
 
 abstract interface class IProjectsApi {
   /// Creates a new project.
-  Future<void> createProject(CreateProjectParams params);
+  Future<ProjectDto> createProject(CreateProjectReq req);
 
   Future<void> updateProject(UpdateProjectParams params);
 
   Future<void> deleteProject(String uuid);
 
-  Future<List<Project>> getProjects();
+  Future<List<ProjectDto>> getProjects();
 }

@@ -2,11 +2,11 @@ import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'organization_dto.g.dart';
+part 'auth_organization_dto.g.dart';
 
-@JsonSerializable(createToJson: false)
-class OrganizationDto implements IDto<Organization> {
-  OrganizationDto({
+@JsonSerializable(createToJson: false, constructor: '_')
+class AuthOrganizationDto implements IDto<Organization> {
+  AuthOrganizationDto._({
     required this.uuid,
     required this.name,
     required this.description,
@@ -16,7 +16,7 @@ class OrganizationDto implements IDto<Organization> {
     required this.info,
   });
 
-  factory OrganizationDto.fromJson(Map<String, dynamic> json) => _$OrganizationDtoFromJson(json);
+  factory AuthOrganizationDto.fromJson(Map<String, dynamic> json) => _$AuthOrganizationDtoFromJson(json);
 
   final String uuid;
   final String name;
