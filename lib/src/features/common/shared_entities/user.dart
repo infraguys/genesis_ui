@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:genesis/src/features/common/shared_entities/organization.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
 
 enum UserStatus { active }
@@ -18,7 +19,6 @@ class User extends Equatable {
     required this.email,
     required this.emailVerified,
     required this.otpEnabled,
-    this.roles = const [],
   });
 
   final String uuid;
@@ -34,7 +34,6 @@ class User extends Equatable {
   final String email;
   final bool emailVerified;
   final bool otpEnabled;
-  final List<Role> roles;
 
   @override
   List<Object?> get props => [
@@ -51,7 +50,6 @@ class User extends Equatable {
     email,
     emailVerified,
     otpEnabled,
-    roles,
   ];
 }
 
@@ -73,6 +71,7 @@ extension UserCopyable on User {
     bool? emailVerified,
     bool? otpEnabled,
     List<Role>? roles,
+    List<Organization>? organizations,
   }) {
     return User(
       uuid: uuid ?? this.uuid,
@@ -88,7 +87,6 @@ extension UserCopyable on User {
       email: email ?? this.email,
       emailVerified: emailVerified ?? this.emailVerified,
       otpEnabled: otpEnabled ?? this.otpEnabled,
-      roles: roles ?? this.roles,
     );
   }
 }
