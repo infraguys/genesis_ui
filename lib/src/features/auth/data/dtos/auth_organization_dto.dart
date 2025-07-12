@@ -25,7 +25,7 @@ class AuthOrganizationDto implements IDto<Organization> {
   final DateTime createdAt;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime updatedAt;
-  final OrganizationDtoStatus status;
+  final OrganizationStatusDto status;
   final dynamic info;
 
   static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
@@ -44,7 +44,7 @@ class AuthOrganizationDto implements IDto<Organization> {
 }
 
 @JsonEnum()
-enum OrganizationDtoStatus {
+enum OrganizationStatusDto {
   @JsonValue('ACTIVE')
   active;
 
