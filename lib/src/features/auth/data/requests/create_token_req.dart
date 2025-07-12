@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'create_token_req.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable(createFactory: false, constructor: '_')
 class CreateTokenReq implements IReq {
   factory CreateTokenReq(CreateTokenParams params) {
     return CreateTokenReq._(
