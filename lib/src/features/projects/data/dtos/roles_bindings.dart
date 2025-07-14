@@ -5,8 +5,6 @@ part 'roles_bindings.g.dart';
 
 @JsonSerializable(createToJson: false, constructor: '_')
 class RolesBindingsDto implements IDto<dynamic> {
-  factory RolesBindingsDto.fromJson(Map<String, dynamic> json) => _$RolesBindingsDtoFromJson(json);
-
   RolesBindingsDto._({
     required this.uuid,
     required this.createdAt,
@@ -17,17 +15,22 @@ class RolesBindingsDto implements IDto<dynamic> {
     required this.project,
   });
 
+  factory RolesBindingsDto.fromJson(Map<String, dynamic> json) => _$RolesBindingsDtoFromJson(json);
+
   final String uuid;
-  final String createdAt;
-  final String updatedAt;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime createdAt;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  final DateTime updatedAt;
   final String status;
   final String? project;
   final String user;
   final String role;
 
+  static DateTime _fromIsoStringToDateTime(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp);
+
   @override
   toEntity() {
-    // TODO: implement toEntity
     throw UnimplementedError();
   }
 }
