@@ -44,9 +44,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(url);
       if (data != null) {
         if (data case {
-          'user': Map<String, dynamic> userJson,
-          'organization': List<Map<String, dynamic>>? orgJson,
-        }) {
+          'user': Map<String, dynamic> userJson, 'organization': List<dynamic> orgJson, 'project_id': _}) {
           userJson.putIfAbsent('organization', () => orgJson);
           return AuthUserDto.fromJson(userJson);
         }
