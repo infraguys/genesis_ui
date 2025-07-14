@@ -2,8 +2,12 @@ import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+part 'role_dto.g.dart';
+
 @JsonSerializable(createToJson: false, constructor: '_')
 class RoleDto implements IDto<Role> {
+  factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
+
   RoleDto._({
     required this.uuid,
     required this.name,
