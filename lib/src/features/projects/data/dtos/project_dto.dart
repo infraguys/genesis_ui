@@ -21,10 +21,14 @@ class ProjectDto implements IDto<Project> {
   final String uuid;
   final String name;
   final String description;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime createdAt;
+  @JsonKey(fromJson: _fromIsoStringToDateTime)
   final DateTime updatedAt;
   final ProjectStatusDto status;
   final String organization;
+
+  static DateTime _fromIsoStringToDateTime(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp);
 
   @override
   Project toEntity() {
