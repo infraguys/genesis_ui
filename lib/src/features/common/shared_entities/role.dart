@@ -32,3 +32,27 @@ class Role extends Equatable {
 }
 
 enum RoleStatus { active }
+
+// Copyable extension ----------
+
+extension RoleCopyable on Role {
+  Role copyWith({
+    String? uuid,
+    String? name,
+    String? description,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    RoleStatus? status,
+    dynamic projectId,
+  }) {
+    return Role(
+      uuid: uuid ?? this.uuid,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      status: status ?? this.status,
+      projectId: projectId ?? this.projectId,
+    );
+  }
+}
