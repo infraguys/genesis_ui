@@ -3,6 +3,7 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/projects/data/dtos/project_dto.dart';
+import 'package:genesis/src/features/projects/data/dtos/roles_bindings.dart';
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
 import 'package:genesis/src/features/projects/data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/features/projects/domain/params/update_project_paramas.dart';
@@ -37,15 +38,30 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<List<ProjectDto>> getProjects() async {
+  Future<List<ProjectDto>> getProjects(req) async {
     // const url = '$_roleBindingsUrl/?user=00000000-0000-0000-0000-000000000000';
-    const url = '$_roleBindingsUrl/';
+    final url = '$_roleBindingsUrl/?user=${req.userUuid}';
 
     try {
       final Response(:data) = await _client.get<List<dynamic>>(url);
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => ProjectDto.fromJson(it)).toList();
+        final bindings = castedData.map((it) => RolesBindingsDto.fromJson(it)).toList();
+
+        final futures = <Future<Response<Map<String, dynamic>>>>[];
+
+        for (var binding in bindings) {
+          if (binding.project == null) {
+            continue;
+          }
+          final future = _client.get<Map<String, dynamic>>(binding.project!);
+          futures.add(future);
+        }
+
+        final projectData = await futures.wait;
+        return projectData.map((response) {
+          return ProjectDto.fromJson(response.data!);
+        }).toList();
       }
     } on DioException catch (e) {
       throw NetworkException(e);

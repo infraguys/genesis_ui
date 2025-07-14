@@ -1,5 +1,6 @@
 import 'package:genesis/src/features/projects/data/dtos/project_dto.dart';
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
+import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
 import 'package:genesis/src/features/projects/domain/params/update_project_paramas.dart';
 
 abstract interface class IProjectsApi {
@@ -10,5 +11,5 @@ abstract interface class IProjectsApi {
 
   Future<void> deleteProject(String uuid);
 
-  Future<List<ProjectDto>> getProjects();
+  Future<List<ProjectDto>> getProjects(GetProjectsReq req);
 }

@@ -5,6 +5,9 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/widgets/list_of_projects.dart';
+import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/features/role/presentation/widgets/roles_list.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
 class UserPage extends StatefulWidget {
@@ -22,7 +25,8 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
+    context.read<ProjectsBloc>().add(ProjectsEvent.getProjects(widget.user.uuid));
+    context.read<UserRolesBloc>().add(UserRolesEvent.getRoles(widget.user.uuid));
     _controllersManager = _ControllersManager(widget.user);
     super.initState();
   }
@@ -53,19 +57,7 @@ class _UserPageState extends State<UserPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 48,
             children: [
-              Wrap(
-                spacing: 12,
-                children: [
-                  Chip(
-                    label: Text('Admin'),
-                    backgroundColor: Colors.blue,
-                  ),
-                  Chip(
-                    label: Text('Manager'),
-                    backgroundColor: Colors.orange,
-                  ),
-                ],
-              ),
+              RolesList(),
               Form(
                 key: _formKey,
                 child: Column(
@@ -159,6 +151,7 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
               ),
+              ListOfProjects(),
             ],
           ),
         ),

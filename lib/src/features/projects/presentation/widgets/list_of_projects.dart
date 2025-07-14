@@ -15,8 +15,10 @@ class ListOfProjects extends StatelessWidget {
           return Center(child: CupertinoActivityIndicator());
         }
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Проекты', style: textTheme.headlineSmall),
+            const SizedBox(height: 24),
             Wrap(
               spacing: 24,
               runSpacing: 24,
@@ -28,52 +30,19 @@ class ListOfProjects extends StatelessWidget {
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Text(project.name, style: textTheme.bodyMedium),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(project.name, style: textTheme.bodyMedium),
+                            Text(project.createdAt.toString(), style: textTheme.bodySmall),
+                            Text(project.description, style: textTheme.bodySmall),
+                          ],
+                        ),
                       ),
                     ),
                   );
                 },
               ).toList(),
-              // SizedBox(
-              //   width: 300,
-              //   height: 250,
-              //   child: Card(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(12.0),
-              //       child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: 300,
-              //   height: 250,
-              //   child: Card(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(12.0),
-              //       child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: 300,
-              //   height: 250,
-              //   child: Card(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(12.0),
-              //       child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: 300,
-              //   height: 250,
-              //   child: Card(
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(12.0),
-              //       child: Text('No projects yet'.hardcoded, style: textTheme.bodyMedium),
-              //     ),
-              //   ),
-              // ),
             ),
           ],
         );

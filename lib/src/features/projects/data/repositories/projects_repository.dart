@@ -1,4 +1,5 @@
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
+import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
 import 'package:genesis/src/features/projects/data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/projects/domain/params/create_project_params.dart';
@@ -30,8 +31,9 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<List<Project>> getProjects() async {
-    final dtos = await _projectsApi.getProjects();
+  Future<List<Project>> getProjects(params) async {
+    final req = GetProjectsReq(params);
+    final dtos = await _projectsApi.getProjects(req);
     return dtos.map((it) => it.toEntity()).toList();
   }
 }
