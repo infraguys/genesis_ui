@@ -24,10 +24,10 @@ final class UsersApi implements IUsersApi {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => UserDto.fromJson(it)).toList();
       }
+      return [];
     } on DioException catch (e) {
       throw NetworkException(e);
     }
-    return [];
   }
 
   @override
