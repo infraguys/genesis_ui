@@ -15,6 +15,9 @@ import 'package:genesis/src/features/projects/data/source/remote/projects_api.da
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/role/data/repositories/roles_repository.dart';
+import 'package:genesis/src/features/role/data/source/remote/roles_api.dart';
+import 'package:genesis/src/features/role/domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
 import 'package:genesis/src/features/users/data/source/remote/users_api.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
@@ -61,6 +64,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final projectsApi = ProjectsApi(context.read<RestClient>());
               return ProjectsRepository(projectsApi);
+            },
+          ),
+          RepositoryProvider<IRolesRepository>(
+            create: (context) {
+              final rolesApi = RolesApi(context.read<RestClient>());
+              return RolesRepository(rolesApi);
             },
           ),
         ],
