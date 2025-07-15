@@ -11,7 +11,7 @@ final class CreateProjectReq implements IReq {
     return CreateProjectReq._(
       name: params.name,
       description: params.description,
-      organization: params.organization,
+      organizationID: params.organizationID,
       status: ProjectStatusReq.fromProjectStatus(params.status),
     );
   }
@@ -19,7 +19,7 @@ final class CreateProjectReq implements IReq {
   CreateProjectReq._({
     required this.name,
     required this.description,
-    required this.organization,
+    required this.organizationID,
     this.status,
   });
 
@@ -28,7 +28,7 @@ final class CreateProjectReq implements IReq {
 
   final String name;
   final String description;
-  final String organization;
+  final String organizationID;
   @JsonKey(defaultValue: 'NEW')
   final ProjectStatusReq? status;
 }
@@ -36,6 +36,7 @@ final class CreateProjectReq implements IReq {
 @JsonEnum()
 enum ProjectStatusReq {
   // todo: remove this  status
+  @JsonValue('NEW')
   newProject;
 
   factory ProjectStatusReq.fromProjectStatus(ProjectStatus status) {

@@ -22,7 +22,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       CreateProjectParams(
         name: event.name,
         description: event.description,
-        organization: event.organization,
+        organizationID: event.organization,
       ),
     );
     emit(ProjectCreatedState(createdProject));
