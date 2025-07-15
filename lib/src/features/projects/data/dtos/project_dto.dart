@@ -28,7 +28,7 @@ class ProjectDto implements IDto<Project> {
   final ProjectStatusDto status;
   final String organization;
 
-  static DateTime _fromIsoStringToDateTime(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp);
+  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   Project toEntity() {

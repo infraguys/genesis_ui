@@ -27,7 +27,7 @@ class RolesBindingsDto implements IDto<dynamic> {
   final String user;
   final String role;
 
-  static DateTime _fromIsoStringToDateTime(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp);
+  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   toEntity() {
