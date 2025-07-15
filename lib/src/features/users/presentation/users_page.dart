@@ -15,12 +15,6 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   @override
-  void initState() {
-    context.read<UsersBloc>().add(UsersEvent.getUsers());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
