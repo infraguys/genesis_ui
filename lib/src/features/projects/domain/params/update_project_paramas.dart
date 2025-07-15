@@ -17,6 +17,13 @@ final class UpdateProjectParams {
 
   @override
   String toString() {
-    return 'UpdateProjectParams(id: $uuid, name: $name, description: $description, organizationId: $organization, status: $status)';
+    return '''
+UpdateProjectParams(
+  id: $uuid, 
+  name: $name, 
+  description: $description, 
+  organizationId: $organization, 
+  status: $status
+)''';
   }
 }
