@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
@@ -28,14 +29,13 @@ class UsersListDetails extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: () {
-              // context.read<UserBloc>().add(event);
               context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid}, extra: user);
             },
             child: Icon(Icons.remove_red_eye),
           ),
         ],
       ),
-      leading: Icon(Icons.play_arrow, color: Colors.green),
+      leading: Icon(CupertinoIcons.play_arrow_solid, color: Colors.green),
       trailing: UsersActionsPopupMenuButton(),
       expandedAlignment: Alignment.centerLeft,
       childrenPadding: EdgeInsets.only(left: 50),
