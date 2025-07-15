@@ -14,6 +14,12 @@ final class CreateProjectParams {
 
   @override
   String toString() {
-    return 'CreateProjectParams(name: $name, description: $description, organizationId: $organizationID, status: $status)';
+    return '''
+CreateProjectParams(
+  name: $name,
+  description: $description,
+  organizationId: $organizationID,
+  status: $status
+)''';
   }
 }
