@@ -21,6 +21,7 @@ class AppTheme {
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
       textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
+      listTileTheme: ListTileThemeData(selectedColor: Colors.blue),
       expansionTileTheme: ExpansionTileThemeData(
         childrenPadding: EdgeInsets.only(left: 12),
         shape: OutlineInputBorder(borderSide: BorderSide.none),
