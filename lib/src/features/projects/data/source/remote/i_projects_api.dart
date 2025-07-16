@@ -9,7 +9,7 @@ abstract interface class IProjectsApi {
 
   Future<void> updateProject(UpdateProjectParams params);
 
-  Future<void> deleteProject(String uuid);
+  Future<void> deleteProject(String projectUuid);
 
   Future<List<ProjectDto>> getProjects(GetProjectsReq req);
 }
