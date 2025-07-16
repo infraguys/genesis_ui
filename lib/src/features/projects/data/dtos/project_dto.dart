@@ -33,7 +33,7 @@ class ProjectDto implements IDto<Project> {
   @override
   Project toEntity() {
     return Project(
-      id: uuid,
+      uuid: uuid,
       name: name,
       description: description,
       createdAt: createdAt,
