@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Project extends Equatable {
   const Project({
-    required this.id,
+    required this.uuid,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -10,7 +10,7 @@ class Project extends Equatable {
     required this.status,
   });
 
-  final String id;
+  final String uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -19,7 +19,7 @@ class Project extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
+    uuid,
     name,
     description,
     createdAt,
