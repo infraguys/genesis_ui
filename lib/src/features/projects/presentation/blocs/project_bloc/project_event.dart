@@ -6,6 +6,8 @@ sealed class ProjectEvent {
     required String description,
     required String organization,
   }) = _CreateProjectEvent;
+
+  factory ProjectEvent.delete(String projectUuid) = _DeleteProjectEvent;
 }
 
 final class _CreateProjectEvent implements ProjectEvent {
@@ -18,4 +20,10 @@ final class _CreateProjectEvent implements ProjectEvent {
   final String name;
   final String description;
   final String organization;
+}
+
+final class _DeleteProjectEvent implements ProjectEvent {
+  _DeleteProjectEvent(this.projectUuid);
+
+  final String projectUuid;
 }
