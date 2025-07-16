@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/list_of_projects.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
@@ -33,7 +34,6 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         if (state is UserStateUpdateSuccess) {
@@ -151,7 +151,14 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
               ),
-              ListOfProjects(),
+              BlocListener<ProjectBloc, ProjectState>(
+                listener: (context, state) {
+                  if (state is ProjectDeletedState) {
+                    context.read<ProjectsBloc>().add(ProjectsEvent.getProjects(widget.user.uuid));
+                  }
+                },
+                child: ListOfProjects(),
+              ),
             ],
           ),
         ),
