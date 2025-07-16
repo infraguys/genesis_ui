@@ -21,7 +21,13 @@ final class ProjectsApi implements IProjectsApi {
     const url = _projectsUrl;
 
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        url,
+        data: {
+          // 'organization': '$_projectsUrl/${req.organizationId}',
+          ...req.toJson(),
+        },
+      );
       if (data != null) {
         return ProjectDto.fromJson(data);
       }
@@ -32,9 +38,13 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<void> deleteProject(String uuid) {
-    // TODO: implement deleteProject
-    throw UnimplementedError();
+  Future<void> deleteProject(String projectUuid) async {
+    final url = '$_projectsUrl/$projectUuid';
+    try {
+      await _client.delete<void>(url);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
