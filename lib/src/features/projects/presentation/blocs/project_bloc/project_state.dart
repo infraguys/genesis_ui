@@ -17,3 +17,5 @@ final class ProjectCreatedState extends ProjectState {
 
   final Project project;
 }
+
+final class ProjectDeletedState extends ProjectState {}
