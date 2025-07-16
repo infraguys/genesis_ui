@@ -13,7 +13,6 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<User>();
     return PopupMenuButton<_PopupBtnValue>(
       onSelected: (value) {
         final child = switch (value) {
@@ -26,7 +25,7 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
           context: context,
           builder: (_) {
             return Provider.value(
-              value: user,
+              value: context.read<User>(),
               child: child,
             );
           },
