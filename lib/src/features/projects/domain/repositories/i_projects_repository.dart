@@ -6,7 +6,7 @@ import 'package:genesis/src/features/projects/domain/params/update_project_param
 abstract interface class IProjectsRepository {
   Future<Project> createProject(CreateProjectParams params);
 
-  Future<void> deleteProject(String uuid);
+  Future<void> deleteProject(String projectUuid);
 
   Future<Project> updateProject(UpdateProjectParams params);
 
