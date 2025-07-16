@@ -14,6 +14,7 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<_PopupBtnValue>(
+      icon: Icon(Icons.more_vert),
       onSelected: (value) {
         final child = switch (value) {
           _PopupBtnValue.changePassword => ChangeUserPasswordDialog(),
