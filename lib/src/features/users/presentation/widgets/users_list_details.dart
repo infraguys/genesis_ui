@@ -55,25 +55,25 @@ class UsersListDetails extends StatelessWidget {
             TableRow(
               children: [
                 Text(context.$.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
-                Text(user.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
+                SelectableText(user.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
               ],
             ),
             TableRow(
               children: [
                 Text(context.$.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
-                Text(user.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
+                SelectableText(user.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
               ],
             ),
             TableRow(
               children: [
                 Text(context.$.email, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
-                Text(user.email, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
+                SelectableText(user.email, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
               ],
             ),
             TableRow(
               children: [
                 Text(context.$.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
-                Text(user.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
+                SelectableText(user.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
               ],
             ),
           ],
