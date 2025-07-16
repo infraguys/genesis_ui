@@ -34,9 +34,15 @@ class ListOfProjects extends StatelessWidget {
                           spacing: 4,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              project.name,
-                              style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  project.name,
+                                  style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))
+                              ],
                             ),
                             Text(project.createdAt.toString(), style: textTheme.bodySmall),
                             Text(project.description, style: textTheme.bodySmall),
