@@ -19,9 +19,8 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<void> deleteProject(String uuid) {
-    // TODO: implement deleteProject
-    throw UnimplementedError();
+  Future<void> deleteProject(String projectUuid) async {
+    await _projectsApi.deleteProject(projectUuid);
   }
 
   @override
