@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/widgets/project_action_popup_menu_button.dart';
+import 'package:provider/provider.dart';
 
 class ListOfProjects extends StatelessWidget {
   const ListOfProjects({super.key});
@@ -41,7 +43,10 @@ class ListOfProjects extends StatelessWidget {
                                   project.name,
                                   style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                                 ),
-                                IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))
+                                Provider.value(
+                                  value: project,
+                                  child: ProjectActionPopupMenuButton(),
+                                ),
                               ],
                             ),
                             Text(project.createdAt.toString(), style: textTheme.bodySmall),
