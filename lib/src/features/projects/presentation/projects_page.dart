@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/widgets/create_project_dialog.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/project_action_popup_menu_button.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +24,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
     }
     super.initState();
   }
-
-  // final _formKey = GlobalKey<FormState>();
-  //
-  // final _nameController = TextEditingController();
-  // final _descriptionController = TextEditingController();
-  // final _organizationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +52,23 @@ class _ProjectsPageState extends State<ProjectsPage> {
               itemCount: state.projects.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return Card(
-                    child: Center(
-                      child: Icon(Icons.add),
+                  return Material(
+                    color: Colors.transparent,
+                    child: Card(
+                      clipBehavior: Clip.hardEdge,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog<void>(
+                            context: context,
+                            builder: (context) {
+                              return CreateProjectDialog();
+                            },
+                          );
+                        },
+                        child: Center(
+                          child: Icon(Icons.add),
+                        ),
+                      ),
                     ),
                   );
                 }
@@ -89,7 +99,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           height: 16,
                         ),
                         Text(
-                          'Роли',
+                          context.$.roles,
                           style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -116,52 +126,5 @@ class _ProjectsPageState extends State<ProjectsPage> {
     //       _organizationController.clear();
     //     }
     //   },
-    //   child: Center(
-    //     child: Form(
-    //       key: _formKey,
-    //       child: SizedBox(
-    //         width: 500,
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.stretch,
-    //           spacing: 24,
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             TextFormField(
-    //               controller: _nameController,
-    //               style: TextStyle(color: Colors.white),
-    //               decoration: InputDecoration(hintText: 'Project name'.hardcoded),
-    //             ),
-    //             TextFormField(
-    //               controller: _descriptionController,
-    //               style: TextStyle(color: Colors.white),
-    //               decoration: InputDecoration(hintText: 'Project description'.hardcoded),
-    //             ),
-    //             // BlocBuilder<AuthBloc, AuthState>(
-    //             //   builder: (context, state) {
-    //             //     return DropdownMenu(
-    //             //       dropdownMenuEntries: (state as AuthenticatedAuthState).iamClient.organizations.map((it) {
-    //             //         return DropdownMenuEntry(value: it.uuid, label: 'cwcwcw');
-    //             //       },).toList(),
-    //             //     );
-    //             //   },
-    //             // ),
-    //             ElevatedButton(
-    //               onPressed: () {
-    //                 context.read<ProjectBloc>().add(
-    //                   ProjectEvent.create(
-    //                     name: _nameController.text,
-    //                     description: _descriptionController.text,
-    //                     organization: _organizationController.text,
-    //                   ),
-    //                 );
-    //               },
-    //               child: Text('Create Project'.hardcoded),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
