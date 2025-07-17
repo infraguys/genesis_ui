@@ -4,7 +4,6 @@ import 'package:genesis/src/features/organizations/domain/params/get_organizatio
 import 'package:genesis/src/features/organizations/domain/params/update_organiztion_params.dart';
 
 abstract interface class IOrganizationsRepository {
-  const IOrganizationsRepository();
 
   Future<List<Organization>> getOrganizations(GetOrganizationsParams params);
 
@@ -15,4 +14,6 @@ abstract interface class IOrganizationsRepository {
   Future<void> deleteOrganization(String uuid);
 
   Future<Organization> getOrganizationByUuid(String uuid);
+
+  Future<List<Organization>> getOrganizationByUser(String userUuid);
 }
