@@ -17,6 +17,7 @@
   "description": "Description",
   "firstName": "First name",
   "lastName": "Last name",
+  "surName": "Surname",
   "email": "email",
   "uuid": "uuid",
   "iam": "Iam",
@@ -26,5 +27,7 @@
   "cancel": "Cancel",
   "ok": "Ok",
   "success": "Success",
-  "delete": "Delete"
+  "delete": "Delete",
+  "username": "Username",
+  "save": "Save",
 }

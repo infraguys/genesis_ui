@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Last name'**
   String get lastName;
 
+  /// No description provided for @surName.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname'**
+  String get surName;
+
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
@@ -247,6 +253,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get delete;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @project.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No projects} =1{1 project} other{{count} projects}}'**
+  String project(int count);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
