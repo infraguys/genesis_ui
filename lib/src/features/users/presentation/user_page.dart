@@ -71,7 +71,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'username'.hardcoded,
+                          hintText: context.$.username,
                         ),
                       ),
                     ),
@@ -82,7 +82,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Decscription'.hardcoded,
+                          hintText: context.$.description,
                         ),
                       ),
                     ),
@@ -93,7 +93,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'First name'.hardcoded,
+                          hintText: context.$.firstName,
                         ),
                       ),
                     ),
@@ -104,7 +104,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Last name'.hardcoded,
+                          hintText: context.$.lastName,
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Surname',
+                          hintText: context.$.surName,
                         ),
                       ),
                     ),
@@ -137,7 +137,7 @@ class _UserPageState extends State<UserPage> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: 'Email'.hardcoded,
+                          hintText: context.$.email,
                         ),
                       ),
                     ),
@@ -145,7 +145,7 @@ class _UserPageState extends State<UserPage> {
                       width: 400,
                       child: ElevatedButton(
                         onPressed: () => save(context),
-                        child: Text('Save'.hardcoded),
+                        child: Text(context.$.save),
                       ),
                     ),
                   ],
