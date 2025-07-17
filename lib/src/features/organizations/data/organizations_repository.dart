@@ -34,4 +34,10 @@ final class OrganizationsRepository implements IOrganizationsRepository {
     // TODO: implement updateOrganization
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<Organization>> getOrganizationByUser(String userUuid) {
+    // TODO: implement updateOrganization
+    throw UnimplementedError();
+  }
 }
