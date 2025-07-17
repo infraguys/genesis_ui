@@ -68,6 +68,9 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                         ),
                       );
                     },
+                    onSelected: (option) {
+                      _userController.text = option.username;
+                    },
                     optionsViewBuilder: (context, onSelected, options) {
                       return Align(
                         alignment: Alignment.topLeft,
