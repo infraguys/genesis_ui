@@ -4,7 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/data/dtos/auth_user_dto.dart';
 import 'package:genesis/src/features/auth/data/dtos/token_dto.dart';
-import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
+import 'package:genesis/src/features/auth/data/requests/sign_in_req.dart';
 import 'package:genesis/src/features/auth/data/sources/remote/i_remote_iam_client_api.dart';
 
 final class RemoteIamClientApi implements IRemoteIamClientApi {
@@ -15,7 +15,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   static const _iamClientUrl = '/v1/iam/clients';
 
   @override
-  Future<TokenDto> createTokenByPassword(CreateTokenReq req) async {
+  Future<TokenDto> createTokenByPassword(SignInReq req) async {
     final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
 
     try {

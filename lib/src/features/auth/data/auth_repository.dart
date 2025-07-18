@@ -1,7 +1,7 @@
-import 'package:genesis/src/features/auth/data/requests/create_token_req.dart';
+import 'package:genesis/src/features/auth/data/requests/sign_in_req.dart';
 import 'package:genesis/src/features/auth/data/sources/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/sources/remote/i_remote_iam_client_api.dart';
-import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
+import 'package:genesis/src/features/auth/domain/params/sign_in_params.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 
@@ -16,8 +16,8 @@ class AuthRepository implements IAuthRepository {
   final TokenDao _tokenDao;
 
   @override
-  Future<User> signIn(CreateTokenParams params) async {
-    final req = CreateTokenReq(params);
+  Future<User> signIn(SignInParams params) async {
+    final req = SignInReq(params);
 
     final tokenDto = await _iamApi.createTokenByPassword(req);
     await _tokenDao.writeToken(tokenDto.accessToken);

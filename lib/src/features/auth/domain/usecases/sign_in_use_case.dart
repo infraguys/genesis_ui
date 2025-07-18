@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/auth/domain/params/create_token_params.dart';
+import 'package:genesis/src/features/auth/domain/params/sign_in_params.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 
@@ -7,7 +7,7 @@ class SignInUseCase {
 
   final IAuthRepository _repo;
 
-  Future<User> call(CreateTokenParams params) async {
+  Future<User> call(SignInParams params) async {
     return await _repo.signIn(params);
   }
 }
