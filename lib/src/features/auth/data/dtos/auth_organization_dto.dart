@@ -21,14 +21,12 @@ class AuthOrganizationDto implements IDto<Organization> {
   final String uuid;
   final String name;
   final String description;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
   final OrganizationStatusDto status;
   final dynamic info;
-
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   Organization toEntity() {
