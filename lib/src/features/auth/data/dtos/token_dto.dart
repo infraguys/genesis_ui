@@ -17,11 +17,9 @@ class TokenDto {
 
   factory TokenDto.fromJson(Map<String, dynamic> json) => _$TokenDtoFromJson(json);
 
-  static DateTime _fromTimestamp(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp);
-
   final String accessToken;
   final String tokenType;
-  @JsonKey(fromJson: _fromTimestamp)
+  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
   final DateTime expiresAt;
   final int expiresIn;
   final String idToken;
