@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/create_project_dialog.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/project_action_popup_menu_button.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void initState() {
     final authState = context.read<AuthBloc>().state;
     if (authState is AuthenticatedAuthState) {
-      context.read<ProjectsBloc>().add(ProjectsEvent.getProjects(authState.user.uuid));
+      context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
     }
     super.initState();
   }
@@ -36,9 +36,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
           'Проекты',
           style: textTheme.headlineMedium,
         ),
-        BlocBuilder<ProjectsBloc, ProjectsState>(
+        BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
           builder: (context, state) {
-            if (state is! ProjectsLoadedState) {
+            if (state is! AuthUserProjectsLoadedState) {
               return Center(child: CupertinoActivityIndicator());
             }
             return GridView.builder(

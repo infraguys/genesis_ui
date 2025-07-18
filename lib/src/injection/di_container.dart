@@ -17,8 +17,8 @@ import 'package:genesis/src/features/organizations/presentation/blocs/organizati
 import 'package:genesis/src/features/projects/data/repositories/projects_repository.dart';
 import 'package:genesis/src/features/projects/data/source/remote/projects_api.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/role/data/repositories/roles_repository.dart';
 import 'package:genesis/src/features/role/data/source/remote/roles_api.dart';
 import 'package:genesis/src/features/role/domain/repositories/i_roles_repositories.dart';
@@ -107,13 +107,13 @@ class DiContainer extends StatelessWidget {
             BlocProvider(
               create: (context) {
                 final repository = context.read<IProjectsRepository>();
-                return ProjectsBloc(repository);
+                return ProjectBloc(repository);
               },
             ),
             BlocProvider(
               create: (context) {
                 final repository = context.read<IProjectsRepository>();
-                return ProjectBloc(repository);
+                return AuthUserProjectsBloc(repository);
               },
             ),
             BlocProvider(

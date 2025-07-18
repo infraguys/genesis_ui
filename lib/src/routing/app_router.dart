@@ -9,6 +9,8 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/features/common/shared_widgets/scaffold_with_navigation.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/create_user_bloc/create_user_bloc.dart';
@@ -99,7 +101,13 @@ GoRouter createRouter(BuildContext context) {
                     pageBuilder: (_, state) {
                       final _ = state.pathParameters['uuid']!;
                       return NoTransitionPage(
-                        child: UserPage(user: state.extra as User),
+                        child: BlocProvider(
+                          create: (context) {
+                            final repository = context.read<IProjectsRepository>();
+                            return UserProjectsBloc(repository);
+                          },
+                          child: UserPage(user: state.extra as User),
+                        ),
                       );
                     },
                   ),

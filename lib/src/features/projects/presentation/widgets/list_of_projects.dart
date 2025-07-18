@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/project_action_popup_menu_button.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +11,9 @@ class ListOfProjects extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    return BlocBuilder<ProjectsBloc, ProjectsState>(
+    return BlocBuilder<UserProjectsBloc, UserProjectsState>(
       builder: (context, state) {
-        if (state is! ProjectsLoadedState) {
+        if (state is! UserProjectsLoadedState) {
           return Center(child: CupertinoActivityIndicator());
         }
         return Column(
