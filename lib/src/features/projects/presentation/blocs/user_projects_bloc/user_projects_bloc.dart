@@ -4,20 +4,22 @@ import 'package:genesis/src/features/projects/domain/params/get_projects_params.
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/domain/use_cases/get_projects_usecase.dart';
 
-part 'projects_event.dart';
-part 'projects_state.dart';
+part 'user_projects_event.dart';
+part 'user_projects_state.dart';
 
-class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
-  ProjectsBloc(this._projectsRepository) : super(ProjectsInitialState()) {
+class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
+  UserProjectsBloc(this._projectsRepository) : super(UserProjectsState.init()) {
     on(_getProjects);
   }
 
   final IProjectsRepository _projectsRepository;
 
-  Future<void> _getProjects(_GetProjectsEvent event, Emitter<ProjectsState> emit) async {
+  Future<void> _getProjects(_GetProjects event, Emitter<UserProjectsState> emit) async {
     final getProjectsUseCase = GetProjectsUseCase(_projectsRepository);
-    emit(ProjectsLoadingState());
-    final projects = await getProjectsUseCase(GetProjectsParams(userUuid: event.userUuid));
-    emit(ProjectsLoadedState(projects));
+    emit(UserProjectsState.loading());
+    final params = GetProjectsParams(userUuid: event.userUuid);
+
+    final projects = await getProjectsUseCase(params);
+    emit(UserProjectsState.loaded(projects));
   }
 }
