@@ -5,33 +5,18 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'create_token_req.g.dart';
 
-@JsonSerializable(createFactory: false, constructor: '_')
+@JsonSerializable(createFactory: false)
 class CreateTokenReq implements IReq {
-  factory CreateTokenReq(CreateTokenParams params) {
-    return CreateTokenReq._(
-      iamClientUuid: Env.iamClientUuid,
-      clientId: Env.clientId,
-      clientSecret: Env.clientSecret,
-      grantType: Env.grantType,
-      ttl: Env.ttl,
-      refreshTtl: Env.refreshTtl,
-      scope: Env.scope,
-      username: params.username,
-      password: params.password,
-    );
-  }
-
-  CreateTokenReq._({
-    required this.iamClientUuid,
-    required this.grantType,
-    required this.clientId,
-    required this.clientSecret,
-    required this.username,
-    required this.password,
-    required this.scope,
-    required this.ttl,
-    required this.refreshTtl,
-  });
+  CreateTokenReq(CreateTokenParams params)
+    : iamClientUuid = Env.iamClientUuid,
+      clientId = Env.clientId,
+      clientSecret = Env.clientSecret,
+      grantType = Env.grantType,
+      ttl = Env.ttl,
+      refreshTtl = Env.refreshTtl,
+      scope = Env.scope,
+      username = params.username,
+      password = params.password;
 
   @JsonKey(includeToJson: false)
   final String iamClientUuid;
