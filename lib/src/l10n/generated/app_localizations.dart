@@ -265,12 +265,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
-
-  /// No description provided for @project.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{No projects} =1{1 project} other{{count} projects}}'**
-  String project(int count);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
