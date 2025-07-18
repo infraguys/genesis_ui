@@ -7,27 +7,18 @@ part 'create_token_req.g.dart';
 
 @JsonSerializable(createFactory: false)
 class CreateTokenReq implements IReq {
-  CreateTokenReq(CreateTokenParams params)
-    : iamClientUuid = Env.iamClientUuid,
-      clientId = Env.clientId,
-      clientSecret = Env.clientSecret,
-      grantType = Env.grantType,
-      ttl = Env.ttl,
-      refreshTtl = Env.refreshTtl,
-      scope = Env.scope,
-      username = params.username,
-      password = params.password;
+  CreateTokenReq(CreateTokenParams params) : username = params.username, password = params.password;
 
   @JsonKey(includeToJson: false)
-  final String iamClientUuid;
-  final String grantType;
-  final String clientId;
-  final String clientSecret;
+  final String iamClientUuid = Env.iamClientUuid;
+  final String grantType = Env.grantType;
+  final String clientId = Env.clientId;
+  final String clientSecret = Env.clientSecret;
+  final String? scope = Env.scope;
+  final int? ttl = Env.ttl;
+  final int? refreshTtl = Env.refreshTtl;
   final String username;
   final String password;
-  final String? scope;
-  final int? ttl;
-  final int? refreshTtl;
 
   @override
   Map<String, dynamic> toJson() => _$CreateTokenReqToJson(this);
