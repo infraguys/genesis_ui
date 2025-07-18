@@ -28,6 +28,7 @@ final class CreateProjectReq implements IReq {
 
   final String name;
   final String description;
+  @JsonKey(includeToJson: false)
   final String organizationID;
   @JsonKey(defaultValue: 'NEW')
   final ProjectStatusReq? status;

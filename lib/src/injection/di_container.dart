@@ -10,6 +10,10 @@ import 'package:genesis/src/features/auth/data/sources/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/sources/remote/remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/organizations/data/organizations_repository.dart';
+import 'package:genesis/src/features/organizations/data/source/remote/organizations_api.dart';
+import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/features/projects/data/repositories/projects_repository.dart';
 import 'package:genesis/src/features/projects/data/source/remote/projects_api.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
@@ -73,6 +77,12 @@ class DiContainer extends StatelessWidget {
               return RolesRepository(rolesApi);
             },
           ),
+          RepositoryProvider<IOrganizationsRepository>(
+            create: (context) {
+              final organizationsApi = OrganizationsApi(context.read<RestClient>());
+              return OrganizationsRepository(organizationsApi);
+            },
+          ),
         ],
         child: MultiProvider(
           providers: [
@@ -110,6 +120,12 @@ class DiContainer extends StatelessWidget {
               create: (context) {
                 final repository = context.read<IRolesRepository>();
                 return UserRolesBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IOrganizationsRepository>();
+                return OrganizationsBloc(repository);
               },
             ),
             Provider(

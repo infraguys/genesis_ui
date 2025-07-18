@@ -18,7 +18,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
   Future<void> _onCreateProject(_CreateProjectEvent event, Emitter<ProjectState> emit) async {
     final createProjectUseCase = CreateProjectUseCase(_projectsRepository);
-    emit(ProjectInitialState());
+    emit(ProjectLoadingState());
 
     final createdProject = await createProjectUseCase(
       CreateProjectParams(
