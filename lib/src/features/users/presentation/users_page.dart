@@ -24,7 +24,7 @@ class _UsersPageState extends State<UsersPage> {
       },
       child: BlocBuilder<UsersBloc, UsersState>(
         builder: (context, usersState) {
-          if (usersState is! SuccessUsersState) {
+          if (usersState is! UsersLoadedState) {
             return Center(child: CupertinoActivityIndicator());
           }
           return Center(

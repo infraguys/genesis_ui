@@ -22,7 +22,7 @@ class ActiveUsersCard extends StatelessWidget {
                 Text('Active Users', style: textTheme.titleMedium),
                 BlocBuilder<UsersBloc, UsersState>(
                   builder: (context, state) {
-                    if (state is! SuccessUsersState) {
+                    if (state is! UsersLoadedState) {
                       return Text(
                         'Loading...',
                         style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),

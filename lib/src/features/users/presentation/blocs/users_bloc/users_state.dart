@@ -2,12 +2,12 @@ part of 'users_bloc.dart';
 
 sealed class UsersState {}
 
-final class InitUsersState implements UsersState {}
+final class UsersInitState implements UsersState {}
 
-final class LoadingUsersState implements UsersState {}
+final class UsersLoadingState implements UsersState {}
 
-final class SuccessUsersState implements UsersState {
-  SuccessUsersState(this.users);
+final class UsersLoadedState implements UsersState {
+  UsersLoadedState(this.users);
 
   final List<User> users;
 }
