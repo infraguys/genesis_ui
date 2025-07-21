@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/widgets/create_project_dialog.dart';
+import 'package:genesis/src/features/projects/presentation/widgets/add_project_card_button.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/project_action_popup_menu_button.dart';
 import 'package:provider/provider.dart';
 
@@ -38,10 +38,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         spacing: 24,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Проекты',
-            style: textTheme.headlineMedium,
-          ),
+          Text('Проекты', style: textTheme.headlineMedium),
           BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
             builder: (context, state) {
               if (state is! AuthUserProjectsLoadedState) {
@@ -58,25 +55,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 itemCount: state.projects.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
-                    return Material(
-                      color: Colors.transparent,
-                      child: Card(
-                        clipBehavior: Clip.hardEdge,
-                        child: InkWell(
-                          onTap: () {
-                            showDialog<void>(
-                              context: context,
-                              builder: (context) {
-                                return CreateProjectDialog();
-                              },
-                            );
-                          },
-                          child: Center(
-                            child: Icon(Icons.add),
-                          ),
-                        ),
-                      ),
-                    );
+                    return AddProjectCardButton();
                   }
                   final project = state.projects[index - 1];
                   return Card(
@@ -101,9 +80,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           ),
                           Text(project.createdAt.toString(), style: textTheme.bodySmall),
                           Text(project.description, style: textTheme.bodySmall),
-                          SizedBox(
-                            height: 16,
-                          ),
+                          SizedBox(height: 16),
                           Text(
                             context.$.roles,
                             style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
