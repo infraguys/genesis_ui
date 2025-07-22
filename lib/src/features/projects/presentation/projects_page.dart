@@ -96,19 +96,5 @@ class _ProjectsPageState extends State<ProjectsPage> {
         ],
       ),
     );
-    // return BlocListener<ProjectBloc, ProjectState>(
-    //   listener: (context, state) {
-    //     if (state is ProjectCreatedState) {
-    //       final snack = SnackBar(
-    //         duration: const Duration(milliseconds: 1000),
-    //         backgroundColor: Colors.green,
-    //         content: Text('Project ${state.project.name} created successfully!'.hardcoded),
-    //       );
-    //       ScaffoldMessenger.of(context).showSnackBar(snack);
-    //       _nameController.clear();
-    //       _descriptionController.clear();
-    //       _organizationController.clear();
-    //     }
-    //   },
   }
 }
