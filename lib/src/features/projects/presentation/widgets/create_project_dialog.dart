@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
-import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/custom_options_view.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateProjectDialog extends StatefulWidget {
@@ -22,29 +21,23 @@ class CreateProjectDialog extends StatefulWidget {
 
 class _CreateProjectDialogState extends State<CreateProjectDialog> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _nameController;
-  late final TextEditingController _descriptionController;
-  late final TextEditingController _organizationController;
-  late final TextEditingController _userController;
 
   late AuthenticatedAuthState authState;
+  late final FocusNode _organizationFocusNode;
+  late final _ControllersManager _controllersManager;
 
   @override
   void initState() {
     super.initState();
+    _organizationFocusNode = FocusNode();
+    _controllersManager = _ControllersManager();
     authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
     context.read<OrganizationsBloc>().add(
       OrganizationsEvent.getOrganizationsByUser(authState.user.uuid),
     );
-
-    _nameController = TextEditingController();
-    _descriptionController = TextEditingController();
-    _organizationController = TextEditingController();
-    _userController = TextEditingController();
   }
 
   Organization? _selectedOrganization;
-  User? _selectedUser;
 
   @override
   Widget build(BuildContext context) {
@@ -71,70 +64,70 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                   spacing: 24,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    BlocBuilder<UsersBloc, UsersState>(
-                      builder: (context, state) {
-                        return RawAutocomplete<User>(
-                          textEditingController: _userController,
-                          focusNode: FocusNode(),
-                          optionsBuilder: (textEditingValue) {
-                            if (state is! UsersLoadedState) {
-                              return [];
-                            }
-                            return state.users.where(
-                              (user) => user.username.toLowerCase().contains(textEditingValue.text.toLowerCase()),
-                            );
-                          },
-                          fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-                            return TextFormField(
-                              controller: controller,
-                              focusNode: focusNode,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                hintText: 'Выберите пользователя',
-                              ),
-                            );
-                          },
-                          onSelected: (option) {
-                            _selectedUser = option;
-                            _userController.text = option.username;
-                          },
-                          optionsViewBuilder: (context, onSelected, options) {
-                            return Align(
-                              alignment: Alignment.topLeft,
-                              child: Material(
-                                color: Colors.grey[850],
-                                elevation: 4,
-                                borderRadius: BorderRadius.circular(8),
-                                child: ListView.separated(
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.zero,
-                                  itemCount: options.length,
-                                  separatorBuilder: (_, __) => Divider(height: 1, color: Colors.grey[700]),
-                                  itemBuilder: (context, index) {
-                                    final option = options.elementAt(index);
-                                    return InkWell(
-                                      onTap: () => onSelected(option),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Text(option.username, style: const TextStyle(color: Colors.white)),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                    // BlocBuilder<UsersBloc, UsersState>(
+                    //   builder: (context, state) {
+                    //     return RawAutocomplete<User>(
+                    //       textEditingController: _userController,
+                    //       focusNode: FocusNode(),
+                    //       optionsBuilder: (textEditingValue) {
+                    //         if (state is! UsersLoadedState) {
+                    //           return [];
+                    //         }
+                    //         return state.users.where(
+                    //           (user) => user.username.toLowerCase().contains(textEditingValue.text.toLowerCase()),
+                    //         );
+                    //       },
+                    //       fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                    //         return TextFormField(
+                    //           controller: controller,
+                    //           focusNode: focusNode,
+                    //           style: const TextStyle(color: Colors.white),
+                    //           decoration: InputDecoration(
+                    //             hintText: 'Выберите пользователя',
+                    //           ),
+                    //         );
+                    //       },
+                    //       onSelected: (option) {
+                    //         _selectedUser = option;
+                    //         _userController.text = option.username;
+                    //       },
+                    //       optionsViewBuilder: (context, onSelected, options) {
+                    //         return Align(
+                    //           alignment: Alignment.topLeft,
+                    //           child: Material(
+                    //             color: Colors.grey[850],
+                    //             elevation: 4,
+                    //             borderRadius: BorderRadius.circular(8),
+                    //             child: ListView.separated(
+                    //               shrinkWrap: true,
+                    //               padding: EdgeInsets.zero,
+                    //               itemCount: options.length,
+                    //               separatorBuilder: (_, __) => Divider(height: 1, color: Colors.grey[700]),
+                    //               itemBuilder: (context, index) {
+                    //                 final option = options.elementAt(index);
+                    //                 return InkWell(
+                    //                   onTap: () => onSelected(option),
+                    //                   child: Padding(
+                    //                     padding: const EdgeInsets.all(16),
+                    //                     child: Text(option.username, style: const TextStyle(color: Colors.white)),
+                    //                   ),
+                    //                 );
+                    //               },
+                    //             ),
+                    //           ),
+                    //         );
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                     BlocBuilder<OrganizationsBloc, OrganizationsState>(
                       builder: (context, state) {
                         return RawAutocomplete<Organization>(
-                          focusNode: FocusNode(),
-                          textEditingController: _organizationController,
+                          focusNode: _organizationFocusNode,
+                          textEditingController: _controllersManager.organizationSourceController,
                           optionsBuilder: (textEditingValue) {
                             if (state is! OrganizationsLoadedState) {
-                              return [];
+                              return List.empty();
                             }
                             return state.organizations.where(
                               (org) => org.name.toLowerCase().contains(
@@ -142,7 +135,7 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                               ),
                             );
                           },
-                          fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                          fieldViewBuilder: (_, controller, focusNode, _) {
                             return TextFormField(
                               focusNode: focusNode,
                               controller: controller,
@@ -150,9 +143,10 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                               decoration: InputDecoration(hintText: 'Выберите организацию'),
                             );
                           },
+                          displayStringForOption: (option) => option.name,
                           onSelected: (option) {
                             _selectedOrganization = option;
-                            _organizationController.text = option.name;
+                            _organizationFocusNode.unfocus();
                           },
                           optionsViewBuilder: (context, onSelected, options) {
                             if (state is! OrganizationsLoadedState) {
@@ -164,7 +158,7 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                                 padding: EdgeInsets.zero,
                                 itemCount: options.length,
                                 separatorBuilder: (_, _) => Divider(height: 1, color: Colors.grey[700]),
-                                itemBuilder: (context, index) {
+                                itemBuilder: (_, index) {
                                   final option = options.elementAt(index);
                                   return InkWell(
                                     onTap: () => onSelected(option),
@@ -181,12 +175,12 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                       },
                     ),
                     TextFormField(
-                      controller: _nameController,
+                      controller: _controllersManager.projectNameController,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(hintText: 'Project name'.hardcoded),
                     ),
                     TextFormField(
-                      controller: _descriptionController,
+                      controller: _controllersManager.projectDescriptionController,
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(hintText: 'Project description'.hardcoded),
                     ),
@@ -198,20 +192,43 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
         ),
         actions: [
           TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
-          TextButton(
-            onPressed: () {
-              context.read<ProjectBloc>().add(
-                ProjectEvent.create(
-                  name: _nameController.text,
-                  description: _descriptionController.text,
-                  organization: _selectedOrganization!.uuid,
-                ),
+          ListenableBuilder(
+            listenable: Listenable.merge(_controllersManager.all),
+            builder: (context, asyncSnapshot) {
+              return TextButton(
+                onPressed: _controllersManager.allFilled
+                    ? () {
+                        context.read<ProjectBloc>().add(
+                          ProjectEvent.create(
+                            name: _controllersManager.projectNameController.text,
+                            description: _controllersManager.projectDescriptionController.text,
+                            organization: _selectedOrganization!.uuid,
+                          ),
+                        );
+                      }
+                    : null,
+                child: Text(context.$.ok),
               );
             },
-            child: Text(context.$.ok),
           ),
         ],
       ),
     );
   }
+}
+
+final class _ControllersManager extends FormControllersManager {
+  final projectNameController = TextEditingController();
+  final projectDescriptionController = TextEditingController();
+  final organizationSourceController = TextEditingController();
+
+  @override
+  List<TextEditingController> get all => [
+    projectNameController,
+    projectDescriptionController,
+    organizationSourceController,
+  ];
+
+  @override
+  bool get allFilled => all.every((controller) => controller.text.isNotEmpty);
 }
