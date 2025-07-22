@@ -17,9 +17,11 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
+  late final AuthenticatedAuthState authState;
+
   @override
   void initState() {
-    final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
+    authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
     context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
     super.initState();
   }
@@ -30,7 +32,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
         if (state is ProjectDeletedState || state is ProjectUpdatedState) {
-          final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
           context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
         }
       },

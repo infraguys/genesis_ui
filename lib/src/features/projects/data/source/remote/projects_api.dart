@@ -83,7 +83,13 @@ final class ProjectsApi implements IProjectsApi {
   Future<ProjectDto> updateProject(UpdateProjectReq req) async {
     final url = '$_projectsUrl/${req.uuid}';
     try {
-      final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(url, data: req.toJson());
+      final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
+        url,
+        data: {
+          'organization': '/v1/iam/organizations/${req.uuid}',
+          ...req.toJson(),
+        },
+      );
       if (data != null) {
         return ProjectDto.fromJson(data);
       }

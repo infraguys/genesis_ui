@@ -18,6 +18,7 @@ final class UpdateProjectReq implements IReq {
   final String uuid;
   final String? name;
   final String? description;
+  @JsonKey(includeToJson: false)
   final String? organization;
   final ProjectStatusReq? status;
 

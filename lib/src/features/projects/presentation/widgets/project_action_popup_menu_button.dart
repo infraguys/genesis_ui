@@ -17,7 +17,6 @@ class ProjectActionPopupMenuButton extends StatelessWidget {
         final child = switch (value) {
           _PopupBtnValue.deleteProject => DeleteProjectDialog(),
           _PopupBtnValue.updateProject => UpdateProjectDialog(),
-          _ => SizedBox.shrink(),
         };
         showDialog<void>(
           context: context,

@@ -14,11 +14,8 @@ enum ProjectStatusReq {
   factory ProjectStatusReq.fromProjectStatus(ProjectStatus status) {
     return switch (status) {
       ProjectStatus.newProject => ProjectStatusReq.newProject,
-      // Add other cases as needed
-      // TODO: Handle this case.
-      ProjectStatus.active => throw UnimplementedError(),
-      // TODO: Handle this case.
-      ProjectStatus.inProgress => throw UnimplementedError(),
+      ProjectStatus.active => ProjectStatusReq.active,
+      ProjectStatus.inProgress => ProjectStatusReq.inProgress,
     };
   }
 }

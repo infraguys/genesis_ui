@@ -157,7 +157,15 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
             return TextButton(
               onPressed: _controllersManager.allFilled
                   ? () {
-                      // context.read<ProjectBloc>().add(ProjectEvent.update(uuid:),);
+                      context.read<ProjectBloc>().add(
+                        ProjectEvent.update(
+                          uuid: project.uuid,
+                          name: _controllersManager.projectNameController.text,
+                          description: _controllersManager.projectDescriptionController.text,
+                          organization: _selectedOrganization?.uuid,
+                          status: chips.singleWhere((it) => it.selected).value,
+                        ),
+                      );
                     }
                   : null,
               child: Text(context.$.ok),
