@@ -8,6 +8,14 @@ sealed class ProjectEvent {
   }) = _CreateProjectEvent;
 
   factory ProjectEvent.delete(String projectUuid) = _DeleteProjectEvent;
+
+  factory ProjectEvent.update({
+    required String uuid,
+    String? name,
+    String? description,
+    String? organization,
+    ProjectStatus? status,
+  }) = _ProjectUpdateEvent;
 }
 
 final class _CreateProjectEvent implements ProjectEvent {
@@ -26,4 +34,20 @@ final class _DeleteProjectEvent implements ProjectEvent {
   _DeleteProjectEvent(this.projectUuid);
 
   final String projectUuid;
+}
+
+final class _ProjectUpdateEvent implements ProjectEvent {
+  _ProjectUpdateEvent({
+    required this.uuid,
+    this.name,
+    this.description,
+    this.organization,
+    this.status,
+  });
+
+  final String uuid;
+  final String? name;
+  final String? description;
+  final String? organization;
+  final ProjectStatus? status;
 }

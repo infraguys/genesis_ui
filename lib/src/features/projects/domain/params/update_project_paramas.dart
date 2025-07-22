@@ -10,10 +10,10 @@ final class UpdateProjectParams {
   });
 
   final String uuid;
-  final String name;
-  final String description;
-  final String organization;
-  final ProjectStatus status;
+  final String? name;
+  final String? description;
+  final String? organization;
+  final ProjectStatus? status;
 
   @override
   String toString() {

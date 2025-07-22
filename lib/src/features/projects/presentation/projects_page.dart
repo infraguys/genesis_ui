@@ -29,7 +29,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     final textTheme = Theme.of(context).textTheme;
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
-        if (state is ProjectDeletedState) {
+        if (state is ProjectDeletedState || state is ProjectUpdatedState) {
           final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
           context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
         }

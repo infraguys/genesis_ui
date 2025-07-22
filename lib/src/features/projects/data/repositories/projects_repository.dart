@@ -1,5 +1,6 @@
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
+import 'package:genesis/src/features/projects/data/requests/update_project_req.dart';
 import 'package:genesis/src/features/projects/data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/projects/domain/params/create_project_params.dart';
@@ -24,9 +25,10 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<Project> updateProject(UpdateProjectParams params) {
-    // TODO: implement updateProject
-    throw UnimplementedError();
+  Future<Project> updateProject(UpdateProjectParams params) async {
+    final req = UpdateProjectReq(params);
+    final dto = await _projectsApi.updateProject(req);
+    return dto.toEntity();
   }
 
   @override

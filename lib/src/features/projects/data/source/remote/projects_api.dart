@@ -5,8 +5,8 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/projects/data/dtos/project_dto.dart';
 import 'package:genesis/src/features/projects/data/dtos/roles_bindings.dart';
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
+import 'package:genesis/src/features/projects/data/requests/update_project_req.dart';
 import 'package:genesis/src/features/projects/data/source/remote/i_projects_api.dart';
-import 'package:genesis/src/features/projects/domain/params/update_project_paramas.dart';
 
 final class ProjectsApi implements IProjectsApi {
   ProjectsApi(this._client);
@@ -80,8 +80,16 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<void> updateProject(UpdateProjectParams params) {
-    // TODO: implement updateProject
-    throw UnimplementedError();
+  Future<ProjectDto> updateProject(UpdateProjectReq req) async {
+    final url = '$_projectsUrl/${req.uuid}';
+    try {
+      final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(url, data: req.toJson());
+      if (data != null) {
+        return ProjectDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 }
