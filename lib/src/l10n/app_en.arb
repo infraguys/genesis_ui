@@ -29,5 +29,6 @@
   "success": "Success",
   "delete": "Delete",
   "username": "Username",
-  "save": "Save"
+  "save": "Save",
+  "deleteProject": "Delete the project?"
 }
