@@ -35,7 +35,7 @@ class ProjectActionPopupMenuButton extends StatelessWidget {
         return [
           PopupMenuItem(
             value: _PopupBtnValue.updateProject,
-            child: Text('updated'.hardcoded),
+            child: Text('Update'.hardcoded),
           ),
           PopupMenuItem(
             value: _PopupBtnValue.deleteProject,

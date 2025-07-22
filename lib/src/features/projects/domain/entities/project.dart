@@ -30,4 +30,6 @@ class Project extends Equatable {
 
 enum ProjectStatus {
   newProject,
+  active,
+  inProgress,
 }

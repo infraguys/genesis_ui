@@ -22,7 +22,6 @@ class CreateProjectDialog extends StatefulWidget {
 class _CreateProjectDialogState extends State<CreateProjectDialog> {
   final _formKey = GlobalKey<FormState>();
 
-  late AuthenticatedAuthState authState;
   late final FocusNode _organizationFocusNode;
   late final _ControllersManager _controllersManager;
 
@@ -31,7 +30,7 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
     super.initState();
     _organizationFocusNode = FocusNode();
     _controllersManager = _ControllersManager();
-    authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
+    final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
     context.read<OrganizationsBloc>().add(
       OrganizationsEvent.getOrganizationsByUser(authState.user.uuid),
     );

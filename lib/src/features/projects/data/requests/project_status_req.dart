@@ -15,6 +15,10 @@ enum ProjectStatusReq {
     return switch (status) {
       ProjectStatus.newProject => ProjectStatusReq.newProject,
       // Add other cases as needed
+      // TODO: Handle this case.
+      ProjectStatus.active => throw UnimplementedError(),
+      // TODO: Handle this case.
+      ProjectStatus.inProgress => throw UnimplementedError(),
     };
   }
 }
