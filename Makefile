@@ -63,6 +63,7 @@ prod-web:
 
 ci:
 	echo "🤖Running CI/CD pipeline (cleaning, localization, generation)"
+	$(MAKE) format
 	$(MAKE) clean
 	$(MAKE) loc
 	$(MAKE) gen
