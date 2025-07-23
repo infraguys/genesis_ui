@@ -46,9 +46,15 @@ class ProjectDto implements IDto<Project> {
 @JsonEnum()
 enum ProjectStatusDto {
   @JsonValue('NEW')
-  newProject;
+  newProject,
+  @JsonValue('ACTIVE')
+  active,
+  @JsonValue('IN_PROGRESS')
+  inProgress;
 
   ProjectStatus toProjectStatus() => switch (this) {
     newProject => ProjectStatus.newProject,
+    ProjectStatusDto.active => ProjectStatus.active,
+    ProjectStatusDto.inProgress => ProjectStatus.inProgress,
   };
 }
