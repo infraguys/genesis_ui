@@ -43,7 +43,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
           BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
             builder: (context, state) {
               if (state is! AuthUserProjectsLoadedState) {
-                return Center(child: CupertinoActivityIndicator());
+                return Expanded(child: Center(child: CupertinoActivityIndicator()));
               }
               return GridView.builder(
                 shrinkWrap: true,
