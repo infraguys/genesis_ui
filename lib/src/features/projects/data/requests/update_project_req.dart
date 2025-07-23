@@ -11,7 +11,7 @@ final class UpdateProjectReq implements IReq {
     : uuid = params.uuid,
       name = params.name,
       description = params.description,
-      organization = params.organization,
+      organizationUuid = params.organizationUuid,
       status = (params.status != null) ? ProjectStatusReq.fromProjectStatus(params.status!) : null;
 
   @JsonKey(includeToJson: false)
@@ -19,7 +19,7 @@ final class UpdateProjectReq implements IReq {
   final String? name;
   final String? description;
   @JsonKey(includeToJson: false)
-  final String? organization;
+  final String? organizationUuid;
   final ProjectStatusReq? status;
 
   @override
@@ -32,7 +32,7 @@ UpdateProjectParams(
   id: $uuid, 
   name: $name, 
   description: $description, 
-  organizationId: $organization, 
+  organizationUuid: $organizationUuid, 
   status: $status
 )''';
   }

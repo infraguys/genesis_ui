@@ -24,11 +24,7 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
   late final FocusNode _organizationFocusNode;
   late final _ControllersManager _controllersManager;
 
-  final chips = [
-    _ChipModel(label: 'New', value: ProjectStatus.newProject),
-    _ChipModel(label: 'Active', value: ProjectStatus.active),
-    _ChipModel(label: 'In progress', value: ProjectStatus.inProgress),
-  ];
+  var projectStatus = ProjectStatus.newProject;
 
   @override
   void initState() {
@@ -129,19 +125,23 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
                   ),
                   Wrap(
                     spacing: 12,
-                    children: chips.map(
-                      (chip) {
-                        return ChoiceChip(
-                          label: Text(chip.label),
-                          selected: chip.selected,
-                          onSelected: (select) {
-                            chips.forEach((it) => it.selected = false);
-                            chip.selected = !chip.selected;
-                            setState(() {});
-                          },
-                        );
-                      },
-                    ).toList(),
+                    children: [
+                      ChoiceChip(
+                        label: Text('New'),
+                        selected: projectStatus == ProjectStatus.newProject,
+                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.newProject),
+                      ),
+                      ChoiceChip(
+                        label: Text('Active'),
+                        selected: projectStatus == ProjectStatus.active,
+                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.active),
+                      ),
+                      ChoiceChip(
+                        label: Text('In progress'),
+                        selected: projectStatus == ProjectStatus.inProgress,
+                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.inProgress),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -163,7 +163,7 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
                           name: _controllersManager.projectNameController.text,
                           description: _controllersManager.projectDescriptionController.text,
                           organization: _selectedOrganization?.uuid,
-                          status: chips.singleWhere((it) => it.selected).value,
+                          status: projectStatus,
                         ),
                       );
                     }
@@ -191,16 +191,4 @@ final class _ControllersManager extends FormControllersManager {
 
   @override
   bool get allFilled => all.every((controller) => controller.text.isNotEmpty);
-}
-
-class _ChipModel {
-  _ChipModel({
-    required this.label,
-    required this.value,
-    this.selected = false,
-  });
-
-  final String label;
-  final ProjectStatus value;
-  bool selected;
 }

@@ -86,7 +86,7 @@ final class ProjectsApi implements IProjectsApi {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
         url,
         data: {
-          'organization': '/v1/iam/organizations/${req.uuid}',
+          'organization': '/v1/iam/organizations/${req.organizationUuid}',
           ...req.toJson(),
         },
       );
@@ -96,6 +96,6 @@ final class ProjectsApi implements IProjectsApi {
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
-    }
+    } /**/
   }
 }

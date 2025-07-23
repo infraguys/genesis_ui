@@ -48,7 +48,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       uuid: event.uuid,
       name: event.name,
       description: event.description,
-      organization: event.organization,
+      organizationUuid: event.organization,
       status: event.status,
     );
     final updatedProject = await useCase(params);

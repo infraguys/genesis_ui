@@ -5,14 +5,14 @@ final class UpdateProjectParams {
     required this.uuid,
     required this.name,
     required this.description,
-    required this.organization,
+    required this.organizationUuid,
     required this.status,
   });
 
   final String uuid;
   final String? name;
   final String? description;
-  final String? organization;
+  final String? organizationUuid;
   final ProjectStatus? status;
 
   @override
@@ -22,7 +22,7 @@ UpdateProjectParams(
   id: $uuid, 
   name: $name, 
   description: $description, 
-  organizationId: $organization, 
+  organizationUuid: $organizationUuid, 
   status: $status
 )''';
   }
