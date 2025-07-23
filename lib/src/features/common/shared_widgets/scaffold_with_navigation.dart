@@ -89,6 +89,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                   onTap: () => context.goNamed(AppRoutes.dashboard.name),
                 ),
                 ExpansionTile(
+                  initiallyExpanded: true,
                   title: Text(context.$.iam),
                   children: [
                     ListTile(
