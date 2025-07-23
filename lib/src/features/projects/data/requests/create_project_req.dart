@@ -8,18 +8,21 @@ part 'create_project_req.g.dart';
 @JsonSerializable(createFactory: false)
 final class CreateProjectReq implements IReq {
   CreateProjectReq(CreateProjectParams params)
-    : name = params.name,
+    : userUuid = params.userUuid,
+      name = params.name,
       description = params.description,
-      organizationID = params.organizationID,
+      organizationUuid = params.organizationUuid,
       status = ProjectStatusReq.fromProjectStatus(params.status);
 
   @override
   Map<String, dynamic> toJson() => _$CreateProjectReqToJson(this);
 
+  @JsonKey(includeToJson: false)
+  final String userUuid;
   final String name;
   final String description;
   @JsonKey(includeToJson: false)
-  final String organizationID;
+  final String organizationUuid;
   @JsonKey(defaultValue: 'NEW')
   final ProjectStatusReq? status;
 }
