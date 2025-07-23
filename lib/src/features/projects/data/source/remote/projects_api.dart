@@ -24,12 +24,23 @@ final class ProjectsApi implements IProjectsApi {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         url,
         data: {
-          'organization': '/v1/iam/organizations/${req.organizationID}',
+          'organization': '/v1/iam/organizations/${req.organizationUuid}',
           ...req.toJson(),
         },
       );
+      late final ProjectDto projectDto;
       if (data != null) {
-        return ProjectDto.fromJson(data);
+        projectDto = ProjectDto.fromJson(data);
+
+        await _client.post<Map<String, dynamic>>(
+          _roleBindingsUrl,
+          data: {
+            'project': '/v1/iam/projects/${projectDto.uuid}',
+            'user': '/v1/iam/users/${req.userUuid}',
+            'role': '/v1/iam/roles/726f6c65-0000-0000-0000-000000000002',
+          },
+        );
+        return projectDto;
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
