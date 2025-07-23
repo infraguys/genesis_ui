@@ -25,9 +25,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     final createdProject = await createProjectUseCase(
       CreateProjectParams(
+        userUuid: event.userUuid,
         name: event.name,
         description: event.description,
-        organizationID: event.organization,
+        organizationUuid: event.organization,
       ),
     );
     emit(ProjectCreatedState(createdProject));
