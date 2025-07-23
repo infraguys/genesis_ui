@@ -2,6 +2,7 @@ part of 'project_bloc.dart';
 
 sealed class ProjectEvent {
   factory ProjectEvent.create({
+    required String userUuid,
     required String name,
     required String description,
     required String organization,
@@ -20,11 +21,13 @@ sealed class ProjectEvent {
 
 final class _CreateProjectEvent implements ProjectEvent {
   _CreateProjectEvent({
+    required this.userUuid,
     required this.name,
     required this.description,
     required this.organization,
   });
 
+  final String userUuid;
   final String name;
   final String description;
   final String organization;
