@@ -4,7 +4,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/list_of_projects.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
@@ -151,14 +150,7 @@ class _UserPageState extends State<UserPage> {
                   ],
                 ),
               ),
-              BlocListener<ProjectBloc, ProjectState>(
-                listener: (context, state) {
-                  if (state is ProjectDeletedState) {
-                    context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(widget.user.uuid));
-                  }
-                },
-                child: ListOfProjects(),
-              ),
+              ListOfProjects(userUuid: widget.user.uuid),
             ],
           ),
         ),
