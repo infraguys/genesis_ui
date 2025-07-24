@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/common/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
+import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
 class ScaffoldWithNavigation extends StatelessWidget {
@@ -13,6 +14,12 @@ class ScaffoldWithNavigation extends StatelessWidget {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          const Icon(Icons.notifications_none_outlined),
+          MeAppbarWidget(),
+        ],
+      ),
       // appBar: AppBar(
       //
       //   backgroundColor: Colors.green,
@@ -66,85 +73,67 @@ class ScaffoldWithNavigation extends StatelessWidget {
       // ),
       body: Row(
         children: [
-          Drawer(
-            backgroundColor: Colors.grey.shade200,
-            width: 220,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 48),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 100,
-                    child: Container(
-                      decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
-                      margin: EdgeInsets.zero,
-                      child: SvgPicture.asset(
-                        'assets/images/logo.svg',
-                        width: 50,
-                        height: 50,
-                      ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Drawer(
+              backgroundColor: Palette.color333333,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                child: Column(
+                  spacing: 4.0,
+                  children: [
+                    // SizedBox(
+                    //   height: 100,
+                    //   child: Container(
+                    //     decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
+                    //     margin: EdgeInsets.zero,
+                    //     child: SvgPicture.asset(
+                    //       'assets/images/logo.svg',
+                    //       width: 50,
+                    //       height: 50,
+                    //     ),
+                    //   ),
+                    // ),
+                    ListTile(
+                      leading: Icon(Icons.dashboard),
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
+                      title: Text('Главная'),
+                      onTap: () => context.goNamed(AppRoutes.dashboard.name),
                     ),
-                  ),
-                  ListTile(
-                    selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
-                    title: Text(context.$.dashboard),
-                    onTap: () => context.goNamed(AppRoutes.dashboard.name),
-                  ),
-                  ExpansionTile(
-                    initiallyExpanded: true,
-                    title: Text(context.$.iam),
-                    children: [
-                      ListTile(
-                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.users.name,
-                        title: Text(context.$.users),
-                        onTap: () => context.goNamed(AppRoutes.users.name),
-                      ),
-                      ListTile(
-                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.projects.name,
-                        title: Text(context.$.projects),
-                        onTap: () => context.goNamed(AppRoutes.projects.name),
-                      ),
-                      ListTile(
-                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
-                        title: Text(context.$.roles),
-                        onTap: () => context.goNamed(AppRoutes.roles.name),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  ListTile(
-                    title: Text('Marketplace'),
-                    onTap: () {},
-                  ),
-                ],
+                    ListTile(
+                      leading: Icon(CupertinoIcons.person_2_fill),
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.users.name,
+                      title: Text(context.$.users),
+                      onTap: () => context.goNamed(AppRoutes.users.name),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.folder_copy_rounded),
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.projects.name,
+                      title: Text(context.$.projects),
+                      onTap: () => context.goNamed(AppRoutes.projects.name),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.admin_panel_settings),
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
+                      title: Text(context.$.roles),
+                      onTap: () => context.goNamed(AppRoutes.roles.name),
+                    ),
+                    const SizedBox(height: 20.0),
+                    ListTile(
+                      leading: Icon(Icons.extension),
+                      tileColor: Colors.white,
+                      title: Text('Extensions'),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          VerticalDivider(color: Colors.white, endIndent: 50, indent: 50, width: 1),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      spacing: 20,
-                      children: [
-                        const Icon(Icons.notifications_none_outlined),
-                        MeAppbarWidget(),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: navigationShell,
-                  ),
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0, vertical: 32.0),
+              child: navigationShell,
             ),
           ),
         ],
