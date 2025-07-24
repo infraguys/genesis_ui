@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/add_project_card_button.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/features/role/presentation/widgets/role_action_popup_menu_nutton.dart';
+import 'package:provider/provider.dart';
 
 class RolesPage extends StatefulWidget {
   const RolesPage({super.key});
@@ -63,10 +65,10 @@ class _ProjectsPageState extends State<RolesPage> {
                               role.name,
                               style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                             ),
-                            // Provider.value(
-                            //   value: project,
-                            //   child: ProjectActionPopupMenuButton(),
-                            // ),
+                            Provider.value(
+                              value: role,
+                              child: RoleActionPopupMenuButton(),
+                            ),
                           ],
                         ),
                         Text(role.createdAt.toString(), style: textTheme.bodySmall),
