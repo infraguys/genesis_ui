@@ -21,14 +21,12 @@ class RoleDto implements IDto<Role> {
   final String uuid;
   final String name;
   final String description;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
   final RoleStatusDto status;
   final dynamic projectId;
-
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   Role toEntity() {
