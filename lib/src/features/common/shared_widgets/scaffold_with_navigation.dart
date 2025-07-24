@@ -69,47 +69,55 @@ class ScaffoldWithNavigation extends StatelessWidget {
           Drawer(
             backgroundColor: Colors.grey.shade200,
             width: 220,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                  child: Container(
-                    decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
-                    margin: EdgeInsets.zero,
-                    child: SvgPicture.asset(
-                      'assets/images/logo.svg',
-                      width: 50,
-                      height: 50,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 48),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 100,
+                    child: Container(
+                      decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
+                      margin: EdgeInsets.zero,
+                      child: SvgPicture.asset(
+                        'assets/images/logo.svg',
+                        width: 50,
+                        height: 50,
+                      ),
                     ),
                   ),
-                ),
-                ListTile(
-                  selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
-                  title: Text(context.$.dashboard),
-                  onTap: () => context.goNamed(AppRoutes.dashboard.name),
-                ),
-                ExpansionTile(
-                  initiallyExpanded: true,
-                  title: Text(context.$.iam),
-                  children: [
-                    ListTile(
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.users.name,
-                      title: Text(context.$.users),
-                      onTap: () => context.goNamed(AppRoutes.users.name),
-                    ),
-                    ListTile(
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.projects.name,
-                      title: Text(context.$.projects),
-                      onTap: () => context.goNamed(AppRoutes.projects.name),
-                    ),
-                    ListTile(
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
-                      title: Text(context.$.roles),
-                      onTap: () => context.goNamed(AppRoutes.roles.name),
-                    ),
-                  ],
-                ),
-              ],
+                  ListTile(
+                    selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
+                    title: Text(context.$.dashboard),
+                    onTap: () => context.goNamed(AppRoutes.dashboard.name),
+                  ),
+                  ExpansionTile(
+                    initiallyExpanded: true,
+                    title: Text(context.$.iam),
+                    children: [
+                      ListTile(
+                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.users.name,
+                        title: Text(context.$.users),
+                        onTap: () => context.goNamed(AppRoutes.users.name),
+                      ),
+                      ListTile(
+                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.projects.name,
+                        title: Text(context.$.projects),
+                        onTap: () => context.goNamed(AppRoutes.projects.name),
+                      ),
+                      ListTile(
+                        selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
+                        title: Text(context.$.roles),
+                        onTap: () => context.goNamed(AppRoutes.roles.name),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  ListTile(
+                    title: Text('Marketplace'),
+                    onTap: () {},
+                  ),
+                ],
+              ),
             ),
           ),
           VerticalDivider(color: Colors.white, endIndent: 50, indent: 50, width: 1),
