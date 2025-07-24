@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/widgets/add_project_card_button.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/features/role/presentation/widgets/add_role_card_button.dart';
 import 'package:genesis/src/features/role/presentation/widgets/role_action_popup_menu_nutton.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +48,7 @@ class _ProjectsPageState extends State<RolesPage> {
               itemCount: state.roles.toSet().toList().length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return AddProjectCardButton();
+                  return AddRoleCardButton();
                 }
                 final role = state.roles[index - 1];
                 return Card(
