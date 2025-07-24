@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_list_details.dart';
@@ -27,20 +28,25 @@ class _UsersPageState extends State<UsersPage> {
           if (usersState is! UsersLoadedState) {
             return Center(child: CupertinoActivityIndicator());
           }
-          return Center(
-            child: ListView.separated(
-              itemCount: usersState.users.length,
-              itemBuilder: (context, index) {
-                final currentUser = usersState.users[index];
-                return Provider.value(
-                  value: currentUser,
-                  child: UsersListDetails(),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider(color: Colors.white, indent: 100, endIndent: 100);
-              },
-            ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+              const SizedBox(height: 24),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: usersState.users.length,
+                  itemBuilder: (context, index) {
+                    final currentUser = usersState.users[index];
+                    return Provider.value(
+                      value: currentUser,
+                      child: UsersListDetails(),
+                    );
+                  },
+                  separatorBuilder: (_, _) => Divider(color: Colors.white, height: 1),
+                ),
+              ),
+            ],
           );
         },
       ),

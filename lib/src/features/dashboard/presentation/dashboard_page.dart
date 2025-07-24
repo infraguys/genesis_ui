@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/common/shared_widgets/page_header.dart';
 import 'package:genesis/src/features/common/shared_widgets/summary_card.dart';
 import 'package:genesis/src/features/dashboard/presentation/widgets/table_view/table_view.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
@@ -28,10 +26,6 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PageHeader(
-            title: 'Genesis Stage'.hardcoded,
-            description: 'A summary of key data and insights on the installation.'.hardcoded,
-          ),
           const SizedBox(
             height: 20,
           ),
