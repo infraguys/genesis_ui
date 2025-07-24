@@ -8,6 +8,7 @@ class Project extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
+    required this.organizationUuid,
   });
 
   final String uuid;
@@ -16,6 +17,7 @@ class Project extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final ProjectStatus status;
+  final String organizationUuid;
 
   @override
   List<Object?> get props => [
@@ -25,6 +27,7 @@ class Project extends Equatable {
     createdAt,
     updatedAt,
     status,
+    organizationUuid,
   ];
 }
 

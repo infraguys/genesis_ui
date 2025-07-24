@@ -30,8 +30,12 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
   void initState() {
     super.initState();
     _organizationFocusNode = FocusNode();
-    _controllersManager = _ControllersManager();
+    final project = context.read<Project>();
 
+    _controllersManager = _ControllersManager(
+      projectName: project.name,
+      projectDescription: project.description,
+    );
     final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
     context.read<OrganizationsBloc>().add(
       OrganizationsEvent.getOrganizationsByUser(authState.user.uuid),
@@ -43,144 +47,157 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
   @override
   Widget build(BuildContext context) {
     final project = context.read<Project>();
-    // final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
 
-    return AlertDialog(
-      title: Text('Обновление проекта'),
-      content: SizedBox(
-        width: 500,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                spacing: 24,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BlocBuilder<OrganizationsBloc, OrganizationsState>(
-                    builder: (context, state) {
-                      return RawAutocomplete<Organization>(
-                        focusNode: _organizationFocusNode,
-                        textEditingController: _controllersManager.organizationController,
-                        optionsBuilder: (textEditingValue) {
-                          if (state is! OrganizationsLoadedState) {
-                            return List.empty();
-                          }
-                          return state.organizations.where(
-                            (org) => org.name.toLowerCase().contains(
-                              textEditingValue.text.toLowerCase(),
-                            ),
-                          );
-                        },
-                        fieldViewBuilder: (_, controller, focusNode, _) {
-                          return TextFormField(
-                            focusNode: focusNode,
-                            controller: controller,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(hintText: 'Выберите организацию'),
-                          );
-                        },
-                        displayStringForOption: (option) => option.name,
-                        onSelected: (option) {
-                          _selectedOrganization = option;
-                          _organizationFocusNode.unfocus();
-                        },
-                        optionsViewBuilder: (context, onSelected, options) {
-                          if (state is! OrganizationsLoadedState) {
-                            return Center(child: CupertinoActivityIndicator());
-                          }
-                          return CustomOptionsView(
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              itemCount: options.length,
-                              separatorBuilder: (_, _) => Divider(height: 1, color: Colors.grey[700]),
-                              itemBuilder: (_, index) {
-                                final option = options.elementAt(index);
-                                return InkWell(
-                                  onTap: () => onSelected(option),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Text(option.name, style: const TextStyle(color: Colors.white)),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  TextFormField(
-                    controller: _controllersManager.projectNameController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'Project name'.hardcoded),
-                  ),
-                  TextFormField(
-                    controller: _controllersManager.projectDescriptionController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'Project description'.hardcoded),
-                  ),
-                  Wrap(
-                    spacing: 12,
-                    children: [
-                      ChoiceChip(
-                        label: Text('New'),
-                        selected: projectStatus == ProjectStatus.newProject,
-                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.newProject),
-                      ),
-                      ChoiceChip(
-                        label: Text('Active'),
-                        selected: projectStatus == ProjectStatus.active,
-                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.active),
-                      ),
-                      ChoiceChip(
-                        label: Text('In progress'),
-                        selected: projectStatus == ProjectStatus.inProgress,
-                        onSelected: (_) => setState(() => projectStatus = ProjectStatus.inProgress),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
-        ListenableBuilder(
-          listenable: Listenable.merge(_controllersManager.all),
-          builder: (context, asyncSnapshot) {
-            return TextButton(
-              onPressed: _controllersManager.allFilled
-                  ? () {
-                      context.read<ProjectBloc>().add(
-                        ProjectEvent.update(
-                          uuid: project.uuid,
-                          name: _controllersManager.projectNameController.text,
-                          description: _controllersManager.projectDescriptionController.text,
-                          organization: _selectedOrganization?.uuid,
-                          status: projectStatus,
+    return BlocListener<ProjectBloc, ProjectState>(
+      listener: (context, state) {
+        if (state is ProjectUpdatedState) {
+          context.pop();
+        }
+      },
+      child: AlertDialog(
+        title: Text('Обновление проекта'),
+        content: SizedBox(
+          width: 500,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 24,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BlocBuilder<OrganizationsBloc, OrganizationsState>(
+                      builder: (context, state) {
+                        return RawAutocomplete<Organization>(
+                          focusNode: _organizationFocusNode,
+                          textEditingController: _controllersManager.organizationController,
+                          optionsBuilder: (textEditingValue) {
+                            if (state is! OrganizationsLoadedState) {
+                              return List.empty();
+                            }
+                            return state.organizations.where(
+                              (org) => org.name.toLowerCase().contains(
+                                textEditingValue.text.toLowerCase(),
+                              ),
+                            );
+                          },
+                          fieldViewBuilder: (_, controller, focusNode, _) {
+                            return TextFormField(
+                              focusNode: focusNode,
+                              controller: controller,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(hintText: 'Выберите организацию'),
+                            );
+                          },
+                          displayStringForOption: (option) => option.name,
+                          onSelected: (option) {
+                            _selectedOrganization = option;
+                            _organizationFocusNode.unfocus();
+                          },
+                          optionsViewBuilder: (context, onSelected, options) {
+                            if (state is! OrganizationsLoadedState) {
+                              return Center(child: CupertinoActivityIndicator());
+                            }
+                            return CustomOptionsView(
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                itemCount: options.length,
+                                separatorBuilder: (_, _) => Divider(height: 1, color: Colors.grey[700]),
+                                itemBuilder: (_, index) {
+                                  final option = options.elementAt(index);
+                                  return InkWell(
+                                    onTap: () => onSelected(option),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Text(option.name, style: const TextStyle(color: Colors.white)),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    TextFormField(
+                      controller: _controllersManager.projectNameController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(hintText: 'Project name'.hardcoded),
+                    ),
+                    TextFormField(
+                      controller: _controllersManager.projectDescriptionController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(hintText: 'Project description'.hardcoded),
+                    ),
+                    Wrap(
+                      spacing: 12,
+                      children: [
+                        ChoiceChip(
+                          label: Text('New'),
+                          selected: projectStatus == ProjectStatus.newProject,
+                          onSelected: (_) => setState(() => projectStatus = ProjectStatus.newProject),
                         ),
-                      );
-                    }
-                  : null,
-              child: Text(context.$.ok),
-            );
-          },
+                        ChoiceChip(
+                          label: Text('Active'),
+                          selected: projectStatus == ProjectStatus.active,
+                          onSelected: (_) => setState(() => projectStatus = ProjectStatus.active),
+                        ),
+                        ChoiceChip(
+                          label: Text('In progress'),
+                          selected: projectStatus == ProjectStatus.inProgress,
+                          onSelected: (_) => setState(() => projectStatus = ProjectStatus.inProgress),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
+        actions: [
+          TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
+          ListenableBuilder(
+            listenable: Listenable.merge(_controllersManager.all),
+            builder: (context, asyncSnapshot) {
+              return TextButton(
+                onPressed: _controllersManager.allFilled
+                    ? () {
+                        context.read<ProjectBloc>().add(
+                          ProjectEvent.update(
+                            uuid: project.uuid,
+                            name: _controllersManager.projectNameController.text,
+                            description: _controllersManager.projectDescriptionController.text,
+                            organization: _selectedOrganization?.uuid,
+                            status: projectStatus,
+                          ),
+                        );
+                      }
+                    : null,
+                child: Text(context.$.ok),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
 final class _ControllersManager extends FormControllersManager {
-  final projectNameController = TextEditingController();
-  final projectDescriptionController = TextEditingController();
-  final organizationController = TextEditingController();
+  _ControllersManager({
+    required String projectName,
+    required String projectDescription,
+  }) : projectNameController = TextEditingController(text: projectName),
+       projectDescriptionController = TextEditingController(text: projectDescription),
+       organizationController = TextEditingController();
+
+  final TextEditingController projectNameController;
+  final TextEditingController projectDescriptionController;
+  final TextEditingController organizationController;
 
   @override
   List<TextEditingController> get all => [

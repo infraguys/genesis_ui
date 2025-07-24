@@ -21,14 +21,15 @@ class ProjectDto implements IDto<Project> {
   final String uuid;
   final String name;
   final String description;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
   final ProjectStatusDto status;
+  @JsonKey(fromJson: _fromUrlToUuid)
   final String organization;
 
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
+  static String _fromUrlToUuid(String value) => value.split('/').last;
 
   @override
   Project toEntity() {
@@ -39,6 +40,7 @@ class ProjectDto implements IDto<Project> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status.toProjectStatus(),
+      organizationUuid: organization,
     );
   }
 }
