@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/common/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -15,8 +16,15 @@ class ScaffoldWithNavigation extends StatelessWidget {
   Widget build(context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: SvgPicture.asset(
+            'assets/images/purple_logo.svg',
+          ),
+        ),
         actions: [
-          const Icon(Icons.notifications_none_outlined),
+          const Icon(Icons.notifications_none_outlined, color: Palette.colorAFA8A4),
+          const SizedBox(width: 16),
           MeAppbarWidget(),
         ],
       ),
@@ -97,7 +105,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.dashboard),
                       selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
-                      title: Text('Главная'),
+                      title: Text(context.$.main),
                       onTap: () => context.goNamed(AppRoutes.dashboard.name),
                     ),
                     ListTile(
@@ -122,7 +130,8 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.extension),
                       tileColor: Colors.white,
-                      title: Text('Extensions'),
+                      textColor: Palette.color333333,
+                      title: Text(context.$.extensions),
                       onTap: () {},
                     ),
                   ],
