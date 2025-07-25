@@ -1,7 +1,7 @@
 {
   "@@locale" : "en",
   "signOut": "Sign out",
-  "dashboard": "Dashboard",
+  "main": "Main",
   "pageNotFound": "Page not found",
   "goBack": "Go back",
   "genesis": "Genesis",
@@ -15,6 +15,7 @@
   "projects": "Projects",
   "roles": "Roles",
   "description": "Description",
+  "extensions": "Extensions",
   "firstName": "First name",
   "lastName": "Last name",
   "surName": "Surname",

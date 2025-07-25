@@ -1,7 +1,7 @@
 {
   "@@locale" : "ru",
   "signOut": "Выход",
-  "dashboard": "Дашборд",
+  "main": "Главная",
   "pageNotFound": "Страница не найдена",
   "goBack": "Назад",
   "loading": "Загрузка",
@@ -13,6 +13,7 @@
   "projects": "Проекты",
   "roles": "Роли",
   "description": "Описание",
+  "extensions": "Расширения",
   "firstName": "Имя",
   "lastName": "Фамилия",
   "surName": "Отчество",

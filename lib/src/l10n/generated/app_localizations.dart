@@ -98,11 +98,11 @@ abstract class AppLocalizations {
   /// **'Sign out'**
   String get signOut;
 
-  /// No description provided for @dashboard.
+  /// No description provided for @main.
   ///
   /// In en, this message translates to:
-  /// **'Dashboard'**
-  String get dashboard;
+  /// **'Main'**
+  String get main;
 
   /// No description provided for @pageNotFound.
   ///
@@ -175,6 +175,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get description;
+
+  /// No description provided for @extensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Extensions'**
+  String get extensions;
 
   /// No description provided for @firstName.
   ///
