@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_actions_popup_menu_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -17,20 +18,17 @@ class UsersListDetails extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
         listTileTheme: ListTileThemeData(
+          minVerticalPadding: 0,
+          contentPadding: EdgeInsets.zero,
           tileColor: Colors.transparent,
         ),
       ),
       child: ExpansionTile(
+        visualDensity: VisualDensity(vertical: -4),
         title: Row(
           children: [
             SizedBox(width: 250, child: Text(user.username)),
-            SizedBox(
-              width: 250,
-              child: Text(
-                user.status.name,
-                style: TextStyle(color: user.status == UserStatus.active ? Colors.green : Colors.red),
-              ),
-            ),
+            StatusLabel(status: user.status),
             Spacer(),
             GestureDetector(
               onTap: () {
