@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
@@ -41,7 +40,7 @@ class UsersListDetails extends StatelessWidget {
             ),
           ],
         ),
-        leading: Icon(CupertinoIcons.play_arrow_solid, color: Colors.green),
+        leading: Checkbox(value: true, onChanged: (_) {}),
         trailing: UsersActionsPopupMenuButton(),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),
@@ -53,6 +52,7 @@ class UsersListDetails extends StatelessWidget {
             },
             children: [
               TableRow(
+                decoration: BoxDecoration(),
                 children: [
                   Text(context.$.description, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
                   Text(user.description, style: textTheme.bodyMedium!.copyWith(height: 1.8)),
