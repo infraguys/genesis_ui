@@ -41,6 +41,25 @@ class AppTheme {
       dialogTheme: DialogThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
+      dividerTheme: DividerThemeData(
+        thickness: 0.5,
+        color: Palette.color333333,
+      ),
+      checkboxTheme: CheckboxThemeData(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Palette.color7C7774),
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        checkColor: WidgetStateColor.fromMap({
+          WidgetState.selected: Palette.color1B1B1D,
+          WidgetState.any: Colors.transparent
+        }),
+        fillColor: WidgetStateColor.fromMap({
+          WidgetState.selected: Palette.colorFF8900,
+          WidgetState.any: Colors.transparent
+        }),
+      ),
+
     );
   }
 
