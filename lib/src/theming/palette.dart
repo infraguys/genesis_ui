@@ -9,4 +9,5 @@ abstract class Palette {
   static const color7C7774 = Color(0xFF7C7774);
 
   static const color6DCF91 = Color(0xFF6DCF91);
+  static const colorF04C4C = Color(0xFFF04C4C);
 }
