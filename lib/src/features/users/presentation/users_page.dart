@@ -43,7 +43,7 @@ class _UsersPageState extends State<UsersPage> {
                       child: UsersListDetails(),
                     );
                   },
-                  separatorBuilder: (_, _) => Divider(),
+                  separatorBuilder: (_, _) => Divider(height: 0),
                 ),
               ),
             ],
