@@ -20,7 +20,7 @@ class MeAppbarWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Colors.white,
-              radius: 12,
+              radius: 16,
               child: Text(
                 '$firstLetter$secondLetter',
                 style: TextStyle(fontSize: 12),
