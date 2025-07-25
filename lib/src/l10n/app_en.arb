@@ -31,5 +31,7 @@
   "delete": "Delete",
   "username": "Username",
   "save": "Save",
-  "deleteProject": "Delete the project?"
+  "deleteProject": "Delete the project?",
+  "active": "Active",
+  "inactive": "Inactive"
 }
