@@ -24,7 +24,6 @@ class UsersListDetails extends StatelessWidget {
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final totalFlex = 6;
           return ExpansionTile(
             title: Row(
               spacing: 48,
