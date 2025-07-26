@@ -33,6 +33,23 @@ class _UsersPageState extends State<UsersPage> {
             children: [
               Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
               const SizedBox(height: 24),
+              ListTile(
+                leading: Checkbox(value: true, onChanged: (_) {}),
+                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                title: Row(
+                  spacing: 48,
+                  children: [
+                    Expanded(flex: 2, child: Text('Username')),
+                    Expanded(child: Text('Status')),
+                    Expanded(flex: 4, child: Text('Created At')),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Icon(Icons.remove_red_eye),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView.separated(
                   itemCount: usersState.users.length,
