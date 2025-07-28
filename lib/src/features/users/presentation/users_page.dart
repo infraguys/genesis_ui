@@ -34,6 +34,10 @@ class _UsersPageState extends State<UsersPage> {
               Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
               const SizedBox(height: 24),
               ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
+                ),
+                contentPadding: EdgeInsets.zero,
                 leading: Checkbox(value: true, onChanged: (_) {}),
                 trailing: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
                 title: Row(
