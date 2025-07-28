@@ -1,0 +1,80 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/widgets/organizations_list_item.dart';
+import 'package:provider/provider.dart';
+
+class OrganizationsPage extends StatefulWidget {
+  const OrganizationsPage({super.key});
+
+  @override
+  State<OrganizationsPage> createState() => _OrganizationsPageState();
+}
+
+class _OrganizationsPageState extends State<OrganizationsPage> {
+  @override
+  void initState() {
+    context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OrganizationsBloc, OrganizationsState>(
+      builder: (context, organizationsState) {
+        if (organizationsState is! OrganizationsLoadedState) {
+          return Center(child: CupertinoActivityIndicator());
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+            const SizedBox(height: 24),
+            ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+              ),
+              contentPadding: EdgeInsets.zero,
+              leading: Checkbox(value: true, onChanged: (_) {}),
+              trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              title: Row(
+                spacing: 48,
+                children: [
+                  Expanded(flex: 2, child: Text('Username')),
+                  Expanded(child: Text('Status')),
+                  Expanded(flex: 4, child: Text('Created At')),
+                  Spacer(),
+                  Visibility(
+                    visible: false,
+                    maintainSize: true,
+                    maintainState: true,
+                    maintainAnimation: true,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(Icons.remove_red_eye),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                itemCount: organizationsState.organizations.length,
+                itemBuilder: (context, index) {
+                  final currentOrganization = organizationsState.organizations[index];
+                  return Provider.value(
+                    value: currentOrganization,
+                    child: OrganizationsListItem(),
+                  );
+                },
+                separatorBuilder: (_, _) => Divider(height: 0),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

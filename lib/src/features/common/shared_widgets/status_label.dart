@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
-import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class StatusLabel extends StatelessWidget {
-  const StatusLabel({required UserStatus status, super.key}) : _status = status;
+  const StatusLabel({required Status status, super.key}) : _status = status;
 
-  final UserStatus _status;
+  final Status _status;
 
   Color get textStatusColor => switch (_status) {
-    UserStatus.active => Palette.color6DCF91,
-    UserStatus.inactive => Palette.colorF04C4C,
+    Status.active => Palette.color6DCF91,
+    Status.inactive => Palette.colorF04C4C,
   };
 
   Color get labelStatusColor => switch (_status) {
-    UserStatus.active => Palette.color6DCF91.withValues(alpha: 0.10),
-    UserStatus.inactive => Palette.colorF04C4C.withValues(alpha: 0.10),
+    Status.active => Palette.color6DCF91.withValues(alpha: 0.10),
+    Status.inactive => Palette.colorF04C4C.withValues(alpha: 0.10),
   };
 
   @override

@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -72,7 +73,7 @@ enum AuthUserDtoStatus {
   @JsonValue('ACTIVE')
   active;
 
-  UserStatus toUserStatus() => switch (this) {
-    active => UserStatus.active,
+  Status toUserStatus() => switch (this) {
+    active => Status.active,
   };
 }

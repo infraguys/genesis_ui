@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/features/users/presentation/widgets/users_list_details.dart';
+import 'package:genesis/src/features/users/presentation/widgets/users_list_item.dart';
 import 'package:provider/provider.dart';
 
 class UsersPage extends StatefulWidget {
@@ -67,7 +67,7 @@ class _UsersPageState extends State<UsersPage> {
                     final currentUser = usersState.users[index];
                     return Provider.value(
                       value: currentUser,
-                      child: UsersListDetails(),
+                      child: UsersListItem(),
                     );
                   },
                   separatorBuilder: (_, _) => Divider(height: 0),

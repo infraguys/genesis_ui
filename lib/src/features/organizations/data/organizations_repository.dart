@@ -1,4 +1,5 @@
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
+import 'package:genesis/src/features/organizations/data/requests/get_organizations_req.dart';
 import 'package:genesis/src/features/organizations/data/source/remote/i_organizations_api.dart';
 import 'package:genesis/src/features/organizations/domain/params/create_organization_params.dart';
 import 'package:genesis/src/features/organizations/domain/params/get_organizations_params.dart';
@@ -29,9 +30,10 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<List<Organization>> getOrganizations(GetOrganizationsParams params) {
-    // TODO: implement getOrganizations
-    throw UnimplementedError();
+  Future<List<Organization>> getOrganizations(GetOrganizationsParams params) async {
+    final req = GetOrganizationsReq(params);
+    final listOfOrganizationDto = await _organizationsApi.getOrganizations(req);
+    return listOfOrganizationDto.map((dto) => dto.toEntity()).toList();
   }
 
   @override
