@@ -39,7 +39,7 @@ class _UsersPageState extends State<UsersPage> {
                 ),
                 contentPadding: EdgeInsets.zero,
                 leading: Checkbox(value: true, onChanged: (_) {}),
-                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
                 title: Row(
                   spacing: 48,
                   children: [
@@ -47,9 +47,15 @@ class _UsersPageState extends State<UsersPage> {
                     Expanded(child: Text('Status')),
                     Expanded(flex: 4, child: Text('Created At')),
                     Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Icon(Icons.remove_red_eye),
+                    Visibility(
+                      visible: false,
+                      maintainSize: true,
+                      maintainState: true,
+                      maintainAnimation: true,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Icon(Icons.remove_red_eye),
+                      ),
                     ),
                   ],
                 ),
