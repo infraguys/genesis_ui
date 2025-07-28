@@ -17,8 +17,9 @@ enum AppRoutes {
   user,
   projects,
   roles,
+  organizations,
   //
-  dashboard,
+  main,
   monitoring,
   vpn,
 }
