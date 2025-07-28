@@ -31,10 +31,11 @@ GoRouter createRouter(BuildContext context) {
   final authBloc = context.read<AuthBloc>();
 
   final rootNavKey = GlobalKey<NavigatorState>();
-  final dashboardNavKey = GlobalKey<NavigatorState>();
+  final mainNavKey = GlobalKey<NavigatorState>();
   final usersNavKey = GlobalKey<NavigatorState>();
   final projectsNavKey = GlobalKey<NavigatorState>();
   final rolesNavKey = GlobalKey<NavigatorState>();
+  final organizationsNavKey = GlobalKey<NavigatorState>();
 
   return GoRouter(
     debugLogDiagnostics: true,
@@ -75,10 +76,10 @@ GoRouter createRouter(BuildContext context) {
         },
         branches: [
           StatefulShellBranch(
-            navigatorKey: dashboardNavKey,
+            navigatorKey: mainNavKey,
             routes: [
               GoRoute(
-                name: AppRoutes.dashboard.name,
+                name: AppRoutes.main.name,
                 path: '/',
                 pageBuilder: (_, _) {
                   return NoTransitionPage(child: DashboardPage());
@@ -136,6 +137,18 @@ GoRouter createRouter(BuildContext context) {
                 path: '/roles',
                 pageBuilder: (_, _) {
                   return NoTransitionPage(child: RolesPage());
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: organizationsNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.organizations.name,
+                path: '/organizations',
+                pageBuilder: (_, _) {
+                  return NoTransitionPage(child: Placeholder());
                 },
               ),
             ],
