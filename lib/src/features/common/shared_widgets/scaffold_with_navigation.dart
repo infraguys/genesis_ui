@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/common/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
@@ -104,9 +105,9 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     // ),
                     ListTile(
                       leading: Icon(Icons.dashboard),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.dashboard.name,
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.main.name,
                       title: Text(context.$.main),
-                      onTap: () => context.goNamed(AppRoutes.dashboard.name),
+                      onTap: () => context.goNamed(AppRoutes.main.name),
                     ),
                     ListTile(
                       leading: Icon(CupertinoIcons.person_2_fill),
@@ -125,6 +126,12 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
                       title: Text(context.$.roles),
                       onTap: () => context.goNamed(AppRoutes.roles.name),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.business_sharp),
+                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.organizations.name,
+                      title: Text('Организации'.hardcoded),
+                      onTap: () => context.goNamed(AppRoutes.organizations.name),
                     ),
                     const SizedBox(height: 20.0),
                     ListTile(
