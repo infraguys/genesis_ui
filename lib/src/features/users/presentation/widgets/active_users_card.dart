@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 
 class ActiveUsersCard extends StatelessWidget {
@@ -30,7 +30,7 @@ class ActiveUsersCard extends StatelessWidget {
                     }
                     return RichText(
                       text: TextSpan(
-                        text: state.users.where((it) => it.status == UserStatus.active).length.toString(),
+                        text: state.users.where((it) => it.status == Status.active).length.toString(),
                         style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
                         children: [
                           TextSpan(

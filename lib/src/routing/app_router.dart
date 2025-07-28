@@ -9,6 +9,7 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/features/common/shared_widgets/scaffold_with_navigation.dart';
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
+import 'package:genesis/src/features/organizations/presentation/organizations_page.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
@@ -148,7 +149,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.organizations.name,
                 path: '/organizations',
                 pageBuilder: (_, _) {
-                  return NoTransitionPage(child: Placeholder());
+                  return NoTransitionPage(child: OrganizationsPage());
                 },
               ),
             ],

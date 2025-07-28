@@ -1,8 +1,9 @@
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
 import 'package:genesis/src/features/organizations/data/dtos/organization_dto.dart';
+import 'package:genesis/src/features/organizations/data/requests/get_organizations_req.dart';
 
 abstract interface class IOrganizationsApi {
-  Future<List<Organization>> getOrganizations();
+  Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req);
 
   Future<Organization> createOrganization();
 

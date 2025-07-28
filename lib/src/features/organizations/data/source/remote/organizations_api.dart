@@ -4,6 +4,7 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
 import 'package:genesis/src/features/organizations/data/dtos/organization_dto.dart';
 import 'package:genesis/src/features/organizations/data/dtos/organization_member_dto.dart';
+import 'package:genesis/src/features/organizations/data/requests/get_organizations_req.dart';
 import 'package:genesis/src/features/organizations/data/source/remote/i_organizations_api.dart';
 
 final class OrganizationsApi implements IOrganizationsApi {
@@ -12,6 +13,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   final RestClient _client;
 
   static const _organizationMembersUrl = '/v1/iam/organization_members/';
+  static const _organizationsUrl = '/v1/iam/organizations/';
 
   @override
   Future<Organization> createOrganization() {
@@ -60,9 +62,20 @@ final class OrganizationsApi implements IOrganizationsApi {
   }
 
   @override
-  Future<List<Organization>> getOrganizations() {
-    // TODO: implement getOrganizations
-    throw UnimplementedError();
+  Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
+    final url = _organizationsUrl;
+    final queryParameters = req.toJson();
+
+    try {
+      final Response(:data) = await _client.get<List<dynamic>>(url, queryParameters: queryParameters);
+      if (data != null) {
+        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+        return castedData.map((it) => OrganizationDto.fromJson(it)).toList();
+      }
+      return [];
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override

@@ -1,10 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
-
-enum UserStatus { active, inactive }
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 
 class User extends Equatable {
   const User({
@@ -28,7 +25,7 @@ class User extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final UserStatus status;
+  final Status status;
   final String firstName;
   final String lastName;
   final String? surname;
@@ -64,7 +61,7 @@ extension UserCopyable on User {
     String? description,
     DateTime? createdAt,
     DateTime? updatedAt,
-    UserStatus? status,
+    Status? status,
     String? firstName,
     String? lastName,
     String? surname,
@@ -91,11 +88,4 @@ extension UserCopyable on User {
       otpEnabled: otpEnabled ?? this.otpEnabled,
     );
   }
-}
-
-extension UserStatusExtension on UserStatus {
-  String humanReadable(BuildContext context) => switch (this) {
-    UserStatus.active => context.$.active,
-    UserStatus.inactive => context.$.inactive,
-  };
 }

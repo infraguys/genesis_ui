@@ -1,4 +1,5 @@
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
+import 'package:genesis/src/features/organizations/domain/params/get_organizations_params.dart';
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
 
 final class GetOrganizationsUseCase {
@@ -6,7 +7,7 @@ final class GetOrganizationsUseCase {
 
   final IOrganizationsRepository _repository;
 
-  Future<List<Organization>> call(String userUuid) async {
-    return await _repository.getOrganizationByUser(userUuid);
+  Future<List<Organization>> call(GetOrganizationsParams params) async {
+    return await _repository.getOrganizations(params);
   }
 }

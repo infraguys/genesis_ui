@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/common/shared_entities/organization.dart';
+import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
+
+class OrganizationsListItem extends StatelessWidget {
+  const OrganizationsListItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final organization = context.read<Organization>();
+
+    return Theme(
+      data: Theme.of(context).copyWith(
+        listTileTheme: ListTileThemeData(
+          minVerticalPadding: 0,
+          contentPadding: EdgeInsets.zero,
+          tileColor: Colors.transparent,
+        ),
+      ),
+      child: ExpansionTile(
+        title: Row(
+          spacing: 48,
+          children: [
+            // SizedBox(width: 250, child: Text(user.username)),
+            Expanded(flex: 2, child: Text(organization.name)),
+            Flexible(child: StatusLabel(status: organization.status)),
+            Expanded(flex: 4, child: Text(organization.createdAt.toString())),
+            Spacer(),
+            GestureDetector(
+              onTap: () {},
+              child: Icon(Icons.remove_red_eye),
+            ),
+          ],
+        ),
+        leading: Checkbox(value: true, onChanged: (_) {}),
+        // trailing: UsersActionsPopupMenuButton(),
+        expandedAlignment: Alignment.centerLeft,
+        childrenPadding: EdgeInsets.only(left: 50),
+      ),
+    );
+  }
+}

@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/common/shared_entities/organization.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 
 final class UpdateOrganizationParams {
   const UpdateOrganizationParams({
@@ -12,7 +12,7 @@ final class UpdateOrganizationParams {
   final String uuid;
   final String name;
   final String? description;
-  final OrganizationStatus? status;
+  final Status? status;
   final Map<String, dynamic>? info;
 
   @override
