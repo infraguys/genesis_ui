@@ -26,11 +26,7 @@ class OrganizationsListItem extends StatelessWidget {
             Expanded(flex: 2, child: Text(organization.name)),
             Flexible(child: StatusLabel(status: organization.status)),
             Expanded(flex: 4, child: Text(organization.createdAt.toString())),
-            Spacer(),
-            GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.remove_red_eye),
-            ),
+            Spacer(flex: 2),
           ],
         ),
         leading: Checkbox(value: true, onChanged: (_) {}),
