@@ -13,6 +13,7 @@ import 'package:genesis/src/features/organizations/presentation/organizations_pa
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
+import 'package:genesis/src/features/role/presentation/role_page.dart';
 import 'package:genesis/src/features/role/presentation/roles_page.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/create_user_bloc/create_user_bloc.dart';
@@ -139,15 +140,15 @@ GoRouter createRouter(BuildContext context) {
                 pageBuilder: (_, _) {
                   return NoTransitionPage(child: RolesPage());
                 },
-                  routes: [
-                    GoRoute(
-                      name: AppRoutes.createRole.name,
-                      path: '/create',
-                      pageBuilder: (_, _) {
-                        return NoTransitionPage(child: Placeholder());
-                      },
-                    ),
-                  ]
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.createRole.name,
+                    path: 'create',
+                    pageBuilder: (_, _) {
+                      return NoTransitionPage(child: RolePage());
+                    },
+                  ),
+                ],
               ),
             ],
           ),
