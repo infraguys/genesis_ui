@@ -37,5 +37,6 @@
   "status": "Status",
   "edit": "Edit",
   "add": "Add",
-  "create": "Create"
+  "create": "Create",
+  "createdAt": "Created at"
 }
