@@ -5,11 +5,14 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/users/presentation/widgets/block_user_dialog.dart';
 import 'package:genesis/src/features/users/presentation/widgets/change_user_password_dialog.dart';
 import 'package:genesis/src/features/users/presentation/widgets/delete_user_dialog.dart';
+import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class UsersActionsPopupMenuButton extends StatelessWidget {
-  const UsersActionsPopupMenuButton({super.key});
+  const UsersActionsPopupMenuButton({required this.user, super.key});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,6 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
           _PopupBtnValue.changePassword => ChangeUserPasswordDialog(),
           _PopupBtnValue.deleteUser => DeleteUserDialog(),
           _PopupBtnValue.blockUser => BlockUserDialog(),
-          _ => SizedBox.shrink(),
         };
         showDialog<void>(
           context: context,
@@ -36,6 +38,13 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
       useRootNavigator: true,
       itemBuilder: (context) {
         return [
+          PopupMenuItem(
+            child: Text(context.$.edit),
+            onTap: () {
+              final user = context.read<User>();
+              context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid}, extra: user);
+            },
+          ),
           PopupMenuItem(
             child: Text('Подтвердить email'.hardcoded),
             onTap: () {
