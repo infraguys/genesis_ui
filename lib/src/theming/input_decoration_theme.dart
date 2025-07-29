@@ -6,14 +6,14 @@ final _inputDecorationThemeData = InputDecorationTheme(
   hintStyle: TextStyle(color: Color(0xFF7A7B7D).hardcoded),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Color(0xFF2E2E2E).hardcoded),
-    borderRadius: BorderRadius.all(Radius.circular(12)),
+    borderRadius: BorderRadius.all(Radius.circular(8)),
   ),
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Color(0xFF2E2E2E).hardcoded),
-    borderRadius: BorderRadius.all(Radius.circular(12)),
+    borderRadius: BorderRadius.all(Radius.circular(8)),
   ),
   border: OutlineInputBorder(
     borderSide: BorderSide(color: Color(0xFF2E2E2E).hardcoded),
-    borderRadius: BorderRadius.all(Radius.circular(12)),
+    borderRadius: BorderRadius.all(Radius.circular(8)),
   ),
 );
