@@ -7,7 +7,6 @@ import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/list_of_projects.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/features/role/presentation/widgets/roles_list.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
 class UserPage extends StatefulWidget {
@@ -35,19 +34,19 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if (state is UserStateUpdateSuccess) {
-          final snack = SnackBar(
-            backgroundColor: Colors.green,
-            content: Text(context.$.success),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
-        } else if (state is UserStateFailure) {
-          final snack = SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(state.message),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
-        }
+        // if (state is UserStateUpdateSuccess) {
+        //   final snack = SnackBar(
+        //     backgroundColor: Colors.green,
+        //     content: Text(context.$.success),
+        //   );
+        //   ScaffoldMessenger.of(context).showSnackBar(snack);
+        // } else if (state is UserStateFailure) {
+        //   final snack = SnackBar(
+        //     backgroundColor: Colors.red,
+        //     content: Text(state.message),
+        //   );
+        //   ScaffoldMessenger.of(context).showSnackBar(snack);
+        // }
       },
       child: SingleChildScrollView(
         child: Padding(
@@ -56,7 +55,7 @@ class _UserPageState extends State<UserPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 48,
             children: [
-              RolesList(),
+              // RolesList(),
               Form(
                 key: _formKey,
                 child: Column(
