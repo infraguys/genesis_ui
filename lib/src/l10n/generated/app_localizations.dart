@@ -295,6 +295,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Status'**
   String get status;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

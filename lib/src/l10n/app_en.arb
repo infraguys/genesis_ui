@@ -34,6 +34,6 @@
   "deleteProject": "Delete the project?",
   "active": "Active",
   "inactive": "Inactive",
-  "status": "Status"
-
+  "status": "Status",
+  "edit": "Edit"
 }
