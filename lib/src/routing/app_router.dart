@@ -73,8 +73,8 @@ GoRouter createRouter(BuildContext context) {
         },
       ),
       StatefulShellRoute.indexedStack(
-        builder: (_, _, navigationShell) {
-          return ScaffoldWithNavigation(navigationShell: navigationShell);
+        pageBuilder: (_, _, navigationShell) {
+          return NoTransitionPage(child: ScaffoldWithNavigation(navigationShell: navigationShell));
         },
         branches: [
           StatefulShellBranch(
@@ -95,9 +95,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.users.name,
                 path: '/users',
-                pageBuilder: (context, _) {
-                  return NoTransitionPage(child: UsersPage());
-                },
+                pageBuilder: (_, _) => NoTransitionPage(child: UsersPage()),
                 routes: [
                   GoRoute(
                     name: AppRoutes.user.name,
@@ -107,8 +105,7 @@ GoRouter createRouter(BuildContext context) {
                       return NoTransitionPage(
                         child: BlocProvider(
                           create: (context) {
-                            final repository = context.read<IProjectsRepository>();
-                            return UserProjectsBloc(repository);
+                            return UserProjectsBloc(context.read<IProjectsRepository>());
                           },
                           child: UserPage(user: state.extra as User),
                         ),
@@ -125,9 +122,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.projects.name,
                 path: '/projects',
-                pageBuilder: (_, _) {
-                  return NoTransitionPage(child: ProjectsPage());
-                },
+                pageBuilder: (_, _) => NoTransitionPage(child: ProjectsPage()),
               ),
             ],
           ),
@@ -137,16 +132,12 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.roles.name,
                 path: '/roles',
-                pageBuilder: (_, _) {
-                  return NoTransitionPage(child: RolesPage());
-                },
+                pageBuilder: (_, _) => NoTransitionPage(child: RolesPage()),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createRole.name,
                     path: 'create',
-                    pageBuilder: (_, _) {
-                      return NoTransitionPage(child: RolePage());
-                    },
+                    pageBuilder: (_, _) => NoTransitionPage(child: RolePage()),
                   ),
                 ],
               ),
@@ -158,9 +149,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.organizations.name,
                 path: '/organizations',
-                pageBuilder: (_, _) {
-                  return NoTransitionPage(child: OrganizationsPage());
-                },
+                pageBuilder: (_, _) => NoTransitionPage(child: OrganizationsPage()),
               ),
             ],
           ),
