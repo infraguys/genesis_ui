@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_role_dto.g.dart';
@@ -49,7 +50,7 @@ enum UsersRoleStatusDto {
   @JsonValue('ACTIVE')
   active;
 
-  RoleStatus toRoleStatus() => switch (this) {
-    active => RoleStatus.active,
+  Status toRoleStatus() => switch (this) {
+    active => Status.active,
   };
 }
