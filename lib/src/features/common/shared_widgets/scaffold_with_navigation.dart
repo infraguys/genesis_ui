@@ -91,18 +91,6 @@ class ScaffoldWithNavigation extends StatelessWidget {
                 child: Column(
                   spacing: 4.0,
                   children: [
-                    // SizedBox(
-                    //   height: 100,
-                    //   child: Container(
-                    //     decoration: BoxDecoration(border: BoxBorder.fromBorderSide(BorderSide.none)),
-                    //     margin: EdgeInsets.zero,
-                    //     child: SvgPicture.asset(
-                    //       'assets/images/logo.svg',
-                    //       width: 50,
-                    //       height: 50,
-                    //     ),
-                    //   ),
-                    // ),
                     ListTile(
                       leading: Icon(Icons.dashboard),
                       selected: GoRouterState.of(context).topRoute?.name == AppRoutes.main.name,
