@@ -43,8 +43,8 @@ class _UsersPageState extends State<UsersPage> {
                 title: Row(
                   spacing: 48,
                   children: [
-                    Expanded(flex: 2, child: Text('Username')),
-                    Expanded(child: Text('Status')),
+                    Expanded(flex: 2, child: Text(context.$.username)),
+                    Expanded(child: Text(context.$.status)),
                     Expanded(flex: 4, child: Text('Created At')),
                   ],
                 ),
