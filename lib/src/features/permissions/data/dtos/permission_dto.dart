@@ -16,6 +16,8 @@ final class PermissionDto implements IDto<Permission> {
     required this.status,
   });
 
+  factory PermissionDto.fromJson(Map<String, dynamic> json) => _$PermissionDtoFromJson(json);
+
   final String uuid;
   final String name;
   final String description;
