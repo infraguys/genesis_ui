@@ -59,14 +59,13 @@ class _UsersPageState extends State<UsersPage> {
               Expanded(
                 child: ListView.separated(
                   itemCount: usersState.users.length,
+                  separatorBuilder: (_, _) => Divider(height: 0),
                   itemBuilder: (context, index) {
-                    final currentUser = usersState.users[index];
                     return Provider.value(
-                      value: currentUser,
+                      value: usersState.users[index],
                       child: UsersListItem(),
                     );
                   },
-                  separatorBuilder: (_, _) => Divider(height: 0),
                 ),
               ),
             ],
