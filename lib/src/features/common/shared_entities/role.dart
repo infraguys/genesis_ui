@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 
 class Role extends Equatable {
   const Role({
@@ -16,7 +17,7 @@ class Role extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final RoleStatus status;
+  final Status status;
   final dynamic projectId;
 
   @override
@@ -31,7 +32,6 @@ class Role extends Equatable {
   ];
 }
 
-enum RoleStatus { active }
 
 // Copyable extension ----------
 
@@ -42,7 +42,7 @@ extension RoleCopyable on Role {
     String? description,
     DateTime? createdAt,
     DateTime? updatedAt,
-    RoleStatus? status,
+    Status? status,
     dynamic projectId,
   }) {
     return Role(
