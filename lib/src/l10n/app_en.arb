@@ -13,7 +13,7 @@
   "signUp": "Sign up",
   "users": "Users",
   "projects": "Projects",
-  "roles": "Roles",
+  "role": "{count, plural, =0{No roles} one{Role} other{Roles}}",
   "description": "Description",
   "extensions": "Extensions",
   "firstName": "First name",
@@ -33,5 +33,7 @@
   "save": "Save",
   "deleteProject": "Delete the project?",
   "active": "Active",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "status": "Status"
+
 }

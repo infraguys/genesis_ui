@@ -11,7 +11,7 @@
   "signUp": "Зарегистрироваться",
   "users": "Пользователи",
   "projects": "Проекты",
-  "roles": "Роли",
+  "role": "{count, plural, =0{Ролей нет} one{Роль} few{Роли} many{Ролей} other{Роли}}",
   "description": "Описание",
   "extensions": "Расширения",
   "firstName": "Имя",
@@ -29,5 +29,6 @@
   "save": "Сохранить",
   "deleteProject": "Удалить проект?",
   "active": "Активный",
-  "inactive": "Неактивный"
+  "inactive": "Неактивный",
+  "status": "Статус"
 }

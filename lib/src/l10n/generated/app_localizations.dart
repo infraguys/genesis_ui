@@ -164,11 +164,11 @@ abstract class AppLocalizations {
   /// **'Projects'**
   String get projects;
 
-  /// No description provided for @roles.
+  /// No description provided for @role.
   ///
   /// In en, this message translates to:
-  /// **'Roles'**
-  String get roles;
+  /// **'{count, plural, =0{No roles} one{Role} other{Roles}}'**
+  String role(num count);
 
   /// No description provided for @description.
   ///
@@ -289,6 +289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inactive'**
   String get inactive;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
