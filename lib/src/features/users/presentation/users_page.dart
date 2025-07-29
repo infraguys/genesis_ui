@@ -19,58 +19,61 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if (state is UserStateDeleteSuccess || state is UserStateUpdateSuccess) {
-          context.read<UsersBloc>().add(UsersEvent.getUsers());
+        switch (state) {
+          case UserStateDeleteSuccess():
+          case UserStateUpdateSuccess():
+            context.read<UsersBloc>().add(UsersEvent.getUsers());
+          default:
         }
       },
-      child: BlocBuilder<UsersBloc, UsersState>(
-        builder: (context, usersState) {
-          if (usersState is! UsersLoadedState) {
-            return Center(child: CupertinoActivityIndicator());
-          }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
-              const SizedBox(height: 24),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  listTileTheme: Theme.of(context).listTileTheme.copyWith(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                    ),
-                  ),
-                ),
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Checkbox(value: true, onChanged: (_) {}),
-                  trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-                  title: Row(
-                    spacing: 48,
-                    children: [
-                      Expanded(flex: 2, child: Text(context.$.username)),
-                      Expanded(child: Text(context.$.status)),
-                      Expanded(flex: 4, child: Text('Created At')),
-                      Spacer(flex: 2),
-                    ],
-                  ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+          const SizedBox(height: 24),
+          Theme(
+            data: Theme.of(context).copyWith(
+              listTileTheme: Theme.of(context).listTileTheme.copyWith(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 ),
               ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: usersState.users.length,
+            ),
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Checkbox(value: true, onChanged: (_) {}),
+              trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              title: Row(
+                spacing: 48,
+                children: [
+                  Expanded(flex: 2, child: Text(context.$.username)),
+                  Expanded(child: Text(context.$.status)),
+                  Expanded(flex: 4, child: Text(context.$.createdAt)),
+                  Spacer(flex: 2),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: BlocBuilder<UsersBloc, UsersState>(
+              builder: (context, state) {
+                if (state is! UsersLoadedState) {
+                  return Center(child: CupertinoActivityIndicator());
+                }
+                return ListView.separated(
+                  itemCount: state.users.length,
                   separatorBuilder: (_, _) => Divider(height: 0),
                   itemBuilder: (context, index) {
                     return Provider.value(
-                      value: usersState.users[index],
+                      value: state.users[index],
                       child: UsersListItem(),
                     );
                   },
-                ),
-              ),
-            ],
-          );
-        },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
