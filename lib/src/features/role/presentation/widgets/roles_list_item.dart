@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
+import 'package:genesis/src/features/role/presentation/widgets/roles_action_popup_menu_nutton.dart';
 import 'package:provider/provider.dart';
 
 class RolesListItem extends StatelessWidget {
@@ -25,15 +26,11 @@ class RolesListItem extends StatelessWidget {
             Expanded(flex: 2, child: Text(role.name)),
             Flexible(child: StatusLabel(status: role.status)),
             Expanded(flex: 4, child: Text(role.createdAt.toString())),
-            Spacer(),
-            GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.remove_red_eye),
-            ),
+            Spacer(flex: 2),
           ],
         ),
         leading: Checkbox(value: true, onChanged: (_) {}),
-        // trailing: UsersActionsPopupMenuButton(),
+        trailing: RolesActionPopupMenuButton(role: role),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),
       ),
