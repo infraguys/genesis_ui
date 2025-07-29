@@ -83,7 +83,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           Text(project.description, style: textTheme.bodySmall),
                           SizedBox(height: 16),
                           Text(
-                            context.$.roles,
+                            context.$.role(3),
                             style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ],
