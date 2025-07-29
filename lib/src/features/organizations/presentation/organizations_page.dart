@@ -42,20 +42,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               title: Row(
                 spacing: 48,
                 children: [
-                  Expanded(flex: 2, child: Text('Username')),
-                  Expanded(child: Text('Status')),
+                  Expanded(flex: 2, child: Text('Имя')),
+                  Expanded(child: Text(context.$.status)),
                   Expanded(flex: 4, child: Text('Created At')),
-                  Spacer(),
-                  Visibility(
-                    visible: false,
-                    maintainSize: true,
-                    maintainState: true,
-                    maintainAnimation: true,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(Icons.remove_red_eye),
-                    ),
-                  ),
+                  Spacer(flex: 2),
                 ],
               ),
             ),
