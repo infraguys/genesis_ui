@@ -16,7 +16,7 @@ class UsersListItem extends StatelessWidget {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        listTileTheme: ListTileThemeData(
+        listTileTheme: Theme.of(context).listTileTheme.copyWith(
           minVerticalPadding: 0,
           contentPadding: EdgeInsets.zero,
           tileColor: Colors.transparent,
@@ -26,7 +26,6 @@ class UsersListItem extends StatelessWidget {
         title: Row(
           spacing: 48,
           children: [
-            // SizedBox(width: 250, child: Text(user.username)),
             Expanded(flex: 2, child: Text(user.username)),
             Flexible(child: StatusLabel(status: user.status)),
             Expanded(flex: 3, child: Text(user.createdAt.toString())),
