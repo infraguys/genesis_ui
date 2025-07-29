@@ -46,6 +46,7 @@ class _UsersPageState extends State<UsersPage> {
                     Expanded(flex: 2, child: Text(context.$.username)),
                     Expanded(child: Text(context.$.status)),
                     Expanded(flex: 4, child: Text('Created At')),
+                    Spacer(flex: 2)
                   ],
                 ),
               ),
