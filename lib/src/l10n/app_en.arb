@@ -35,5 +35,6 @@
   "active": "Active",
   "inactive": "Inactive",
   "status": "Status",
-  "edit": "Edit"
+  "edit": "Edit",
+  "add": "Add"
 }
