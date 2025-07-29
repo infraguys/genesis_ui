@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/common/shared_entities/role.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/features/projects/presentation/widgets/delete_project_dialog.dart';
 import 'package:provider/provider.dart';
 
-class RoleActionPopupMenuButton extends StatelessWidget {
-  const RoleActionPopupMenuButton({super.key});
+class RolesActionPopupMenuButton extends StatelessWidget {
+  const RolesActionPopupMenuButton({
+    required this.role,
+    super.key,
+  });
+
+  final Role role;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +18,9 @@ class RoleActionPopupMenuButton extends StatelessWidget {
       icon: Icon(Icons.more_vert),
       onSelected: (value) {
         final child = switch (value) {
-          _PopupBtnValue.addRole => DeleteProjectDialog(),
-          // _PopupBtnValue.updateRole => UpdateProjectDialog(),
-          // _PopupBtnValue.deleteRole => UpdateProjectDialog(),
+          _PopupBtnValue.addRole => Placeholder(),
+          _PopupBtnValue.editRole => Placeholder(),
+          _PopupBtnValue.deleteRole => Placeholder(),
         };
         showDialog<void>(
           context: context,
@@ -33,13 +38,17 @@ class RoleActionPopupMenuButton extends StatelessWidget {
         return [
           PopupMenuItem(
             value: _PopupBtnValue.addRole,
-            child: Text('Add'.hardcoded),
+            child: Text(context.$.add),
           ),
-          // PopupMenuItem(
-          //   value: _PopupBtnValue.deleteProject,
-          //   labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
-          //   child: Text(context.$.delete),
-          // ),
+          PopupMenuItem(
+            value: _PopupBtnValue.editRole,
+            child: Text(context.$.edit),
+          ),
+          PopupMenuItem(
+            value: _PopupBtnValue.deleteRole,
+            labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.red)),
+            child: Text(context.$.delete),
+          ),
         ];
       },
     );
@@ -48,6 +57,6 @@ class RoleActionPopupMenuButton extends StatelessWidget {
 
 enum _PopupBtnValue {
   addRole,
-  // updateRole,
-  // deleteRole,
+  editRole,
+  deleteRole,
 }
