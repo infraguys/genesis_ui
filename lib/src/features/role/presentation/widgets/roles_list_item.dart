@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
-import 'package:genesis/src/features/role/presentation/widgets/roles_action_popup_menu_nutton.dart';
+import 'package:genesis/src/features/role/presentation/widgets/roles_action_popup_menu_button.dart';
 import 'package:provider/provider.dart';
 
 class RolesListItem extends StatelessWidget {
@@ -22,7 +22,6 @@ class RolesListItem extends StatelessWidget {
         title: Row(
           spacing: 48,
           children: [
-            // SizedBox(width: 250, child: Text(role.name)),
             Expanded(flex: 2, child: Text(role.name)),
             Flexible(child: StatusLabel(status: role.status)),
             Expanded(flex: 4, child: Text(role.createdAt.toString())),
