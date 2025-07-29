@@ -12,7 +12,7 @@ class UsersListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.read<User>();
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
 
     return Theme(
       data: Theme.of(context).copyWith(
