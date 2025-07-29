@@ -35,7 +35,7 @@ class _UsersPageState extends State<UsersPage> {
               const SizedBox(height: 24),
               ListTile(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 ),
                 contentPadding: EdgeInsets.zero,
                 leading: Checkbox(value: true, onChanged: (_) {}),
@@ -46,17 +46,6 @@ class _UsersPageState extends State<UsersPage> {
                     Expanded(flex: 2, child: Text('Username')),
                     Expanded(child: Text('Status')),
                     Expanded(flex: 4, child: Text('Created At')),
-                    Spacer(),
-                    Visibility(
-                      visible: false,
-                      maintainSize: true,
-                      maintainState: true,
-                      maintainAnimation: true,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Icon(Icons.remove_red_eye),
-                      ),
-                    ),
                   ],
                 ),
               ),
