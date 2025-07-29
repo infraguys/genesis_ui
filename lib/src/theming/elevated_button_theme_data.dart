@@ -15,7 +15,7 @@ final _elevatedButtonThemeData = ElevatedButtonThemeData(
     ),
     shape: WidgetStatePropertyAll(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   ),
