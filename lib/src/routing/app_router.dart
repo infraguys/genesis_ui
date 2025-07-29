@@ -139,6 +139,15 @@ GoRouter createRouter(BuildContext context) {
                 pageBuilder: (_, _) {
                   return NoTransitionPage(child: RolesPage());
                 },
+                  routes: [
+                    GoRoute(
+                      name: AppRoutes.createRole.name,
+                      path: '/create',
+                      pageBuilder: (_, _) {
+                        return NoTransitionPage(child: Placeholder());
+                      },
+                    ),
+                  ]
               ),
             ],
           ),
