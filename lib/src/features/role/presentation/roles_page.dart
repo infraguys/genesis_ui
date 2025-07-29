@@ -49,27 +49,16 @@ class _ProjectsPageState extends State<RolesPage> {
                   Expanded(flex: 2, child: Text(context.$.role(1))),
                   Expanded(child: Text(context.$.status)),
                   Expanded(flex: 4, child: Text('Created At')),
-                  Spacer(),
-                  Visibility(
-                    visible: false,
-                    maintainSize: true,
-                    maintainState: true,
-                    maintainAnimation: true,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(Icons.remove_red_eye),
-                    ),
-                  ),
+                  Spacer(flex: 2),
                 ],
               ),
             ),
             Expanded(
               child: ListView.separated(
                 itemCount: state.roles.length,
-                itemBuilder: (context, index) {
-                  final currentOrganization = state.roles[index];
+                itemBuilder: (_, index) {
                   return Provider.value(
-                    value: currentOrganization,
+                    value: state.roles[index],
                     child: RolesListItem(),
                   );
                 },
