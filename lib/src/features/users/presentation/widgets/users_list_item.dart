@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_actions_popup_menu_button.dart';
@@ -10,6 +12,7 @@ class UsersListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.read<User>();
+    final textTheme = Theme.of(context).textTheme;
 
     return Theme(
       data: Theme.of(context).copyWith(
@@ -34,6 +37,47 @@ class UsersListItem extends StatelessWidget {
         trailing: UsersActionsPopupMenuButton(user: user),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),
+        children: [
+          Table(
+            columnWidths: const {
+              0: FixedColumnWidth(250),
+              1: FlexColumnWidth(),
+            },
+            children: [
+              TableRow(
+                decoration: BoxDecoration(),
+                children: [
+                  Text(context.$.description, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                  Text(user.description, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(context.$.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                  SelectableText(user.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(context.$.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                  SelectableText(user.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(context.$.email, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                  SelectableText(user.email, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Text(context.$.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                  SelectableText(user.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
