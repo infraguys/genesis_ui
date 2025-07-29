@@ -33,21 +33,27 @@ class _UsersPageState extends State<UsersPage> {
             children: [
               Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
               const SizedBox(height: 24),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  listTileTheme: Theme.of(context).listTileTheme.copyWith(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    ),
+                  ),
                 ),
-                contentPadding: EdgeInsets.zero,
-                leading: Checkbox(value: true, onChanged: (_) {}),
-                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-                title: Row(
-                  spacing: 48,
-                  children: [
-                    Expanded(flex: 2, child: Text(context.$.username)),
-                    Expanded(child: Text(context.$.status)),
-                    Expanded(flex: 4, child: Text('Created At')),
-                    Spacer(flex: 2)
-                  ],
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Checkbox(value: true, onChanged: (_) {}),
+                  trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+                  title: Row(
+                    spacing: 48,
+                    children: [
+                      Expanded(flex: 2, child: Text(context.$.username)),
+                      Expanded(child: Text(context.$.status)),
+                      Expanded(flex: 4, child: Text('Created At')),
+                      Spacer(flex: 2),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
