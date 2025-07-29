@@ -32,126 +32,110 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(
-      listener: (context, state) {
-        // if (state is UserStateUpdateSuccess) {
-        //   final snack = SnackBar(
-        //     backgroundColor: Colors.green,
-        //     content: Text(context.$.success),
-        //   );
-        //   ScaffoldMessenger.of(context).showSnackBar(snack);
-        // } else if (state is UserStateFailure) {
-        //   final snack = SnackBar(
-        //     backgroundColor: Colors.red,
-        //     content: Text(state.message),
-        //   );
-        //   ScaffoldMessenger.of(context).showSnackBar(snack);
-        // }
-      },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 48,
-            children: [
-              // RolesList(),
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 24,
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.usernameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.username,
-                        ),
+    return Scaffold(
+      body: BlocListener<UserBloc, UserState>(
+        listener: (context, state) {
+          late final SnackBar snack;
+          if (state is UserStateUpdateSuccess) {
+            snack = SnackBar(backgroundColor: Colors.green, content: Text(context.$.success));
+          } else if (state is UserStateFailure) {
+            snack = SnackBar(backgroundColor: Colors.red, content: Text(state.message));
+          }
+          ScaffoldMessenger.of(context).showSnackBar(snack);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 48,
+          children: [
+            // RolesList(),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 24,
+                children: [
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.usernameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.username,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.descriptionController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.description,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.descriptionController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.description,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.firstNameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.firstName,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.firstNameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.firstName,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.lastNameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.lastName,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.lastNameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.lastName,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.surnameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.surName,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.surnameController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.surName,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.phoneController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Phone'.hardcoded,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.phoneController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: 'Phone'.hardcoded,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.emailController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.email,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.emailController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        hintText: context.$.email,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: ElevatedButton(
-                        onPressed: () => save(context),
-                        child: Text(context.$.save),
-                      ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: ElevatedButton(
+                      onPressed: () => save(context),
+                      child: Text(context.$.save),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              ListOfProjects(userUuid: widget.user.uuid),
-            ],
-          ),
+            ),
+            ListOfProjects(userUuid: widget.user.uuid),
+          ],
         ),
       ),
     );
