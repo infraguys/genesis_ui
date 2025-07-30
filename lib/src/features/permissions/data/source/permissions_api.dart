@@ -27,20 +27,15 @@ final class PermissionsApi implements IPermissionsApi {
   @override
   Future<List<PermissionDto>> getPermissions(GetPermissionsReq req) async {
     const url = _baseUrl;
-    // final queryParams = {
-    //   'name': req.name,
-    //   'description': req.description,
-    //   'created_at': req.createdAt,
-    //   'updated_at': req.updatedAt,
-    //   'status': req.status,
-    // };
 
     try {
-      final Response(:data) = await _client.get<List<dynamic>>(url);
+      final Response(:data) = await _client.get<List<dynamic>>(url, queryParameters: req.query);
+
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => PermissionDto.fromJson(it)).toList();
       }
+
       return [];
     } on DioException catch (e) {
       throw NetworkException(e);
