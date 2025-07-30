@@ -36,7 +36,7 @@ class AuthUserDto implements IDto<User> {
   final DateTime createdAt;
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(unknownEnumValue: _StatusDto.unknown)
+  @JsonKey(name: 'status', unknownEnumValue: _StatusDto.unknown)
   final _StatusDto statusDto; // ignore: library_private_types_in_public_api
   final String username;
   final String firstName;
