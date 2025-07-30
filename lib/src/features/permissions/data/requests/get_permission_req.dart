@@ -20,11 +20,11 @@ final class GetPermissionsReq {
 
   Map<String, dynamic> get query {
     return {
-      'name': _name,
-      'description': _description,
-      'created_at': _createdAt,
-      'updated_at': _updatedAt,
-      'status': _status,
+      'name': ?_name,
+      'description': ?_description,
+      'created_at': ?_createdAt,
+      'updated_at': ?_updatedAt,
+      'status': ?_status,
     };
   }
 }

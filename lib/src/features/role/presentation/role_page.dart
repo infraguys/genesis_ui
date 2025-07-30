@@ -50,7 +50,6 @@ class _RolePageState extends State<RolePage> {
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 48,
           children: [
             Form(
               key: _formKey,
@@ -83,7 +82,9 @@ class _RolePageState extends State<RolePage> {
                 ],
               ),
             ),
-            // Text('Permissions'.hardcoded, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            const SizedBox(height: 48),
+            Text('Permissions'.hardcoded, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            const SizedBox(height: 24),
             Theme(
               data: Theme.of(context).copyWith(
                 listTileTheme: Theme.of(context).listTileTheme.copyWith(
@@ -96,7 +97,7 @@ class _RolePageState extends State<RolePage> {
                 contentPadding: EdgeInsets.zero,
                 leading: Checkbox(value: true, onChanged: (_) {}),
                 trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-                title: Text('Permissions'.hardcoded),
+                title: Text('Название'.hardcoded),
               ),
             ),
             Expanded(
