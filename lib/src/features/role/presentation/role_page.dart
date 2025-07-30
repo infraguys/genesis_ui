@@ -83,7 +83,7 @@ class _RolePageState extends State<RolePage> {
               ),
             ),
             const SizedBox(height: 48),
-            Text('Permissions'.hardcoded, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             const SizedBox(height: 24),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
