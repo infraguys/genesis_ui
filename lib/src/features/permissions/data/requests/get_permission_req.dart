@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/common/shared_entities/permission.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:genesis/src/features/permissions/domain/params/get_permissions_params.dart';
 
 final class GetPermissionsReq {
@@ -8,7 +8,7 @@ final class GetPermissionsReq {
       createdAt = params.createdAt?.toIso8601String(),
       updatedAt = params.updatedAt?.toIso8601String(),
       status = switch (params.status) {
-        PermissionStatus.active => 'ACTIVE',
+        Status.active => 'ACTIVE',
         _ => null,
       };
 
