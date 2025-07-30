@@ -1,11 +1,10 @@
-import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:genesis/src/features/users/domain/params/update_user_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'update_user_req.g.dart';
 
 @JsonSerializable(createFactory: false)
-class UpdateUserReq implements IReq {
+class UpdateUserReq {
   UpdateUserReq._({
     required this.uuid,
     this.username,
@@ -39,6 +38,5 @@ class UpdateUserReq implements IReq {
   final String? phone;
   final String? email;
 
-  @override
   Map<String, dynamic> toJson() => _$UpdateUserReqToJson(this);
 }

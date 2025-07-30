@@ -1,11 +1,10 @@
-import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_user_req.g.dart';
 
 @JsonSerializable(createFactory: false)
-final class CreateUserReq implements IReq {
+final class CreateUserReq {
   CreateUserReq._({
     required this.username,
     required this.firstName,
@@ -39,6 +38,5 @@ final class CreateUserReq implements IReq {
   final String? surname;
   final String? phone;
 
-  @override
   Map<String, dynamic> toJson() => _$CreateUserReqToJson(this);
 }

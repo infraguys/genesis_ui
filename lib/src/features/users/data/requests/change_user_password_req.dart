@@ -1,11 +1,10 @@
-import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:genesis/src/features/users/domain/params/change_user_password_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'change_user_password_req.g.dart';
 
 @JsonSerializable(createFactory: false)
-class ChangeUserPasswordReq implements IReq {
+class ChangeUserPasswordReq {
   ChangeUserPasswordReq._({
     required this.uuid,
     required this.oldPassword,
@@ -25,6 +24,5 @@ class ChangeUserPasswordReq implements IReq {
   final String oldPassword;
   final String newPassword;
 
-  @override
   Map<String, dynamic> toJson() => _$ChangeUserPasswordReqToJson(this);
 }

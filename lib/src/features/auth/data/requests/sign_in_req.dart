@@ -1,12 +1,11 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/core/interfaces/i_req.dart';
 import 'package:genesis/src/features/auth/domain/params/sign_in_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'sign_in_req.g.dart';
 
 @JsonSerializable(createFactory: false)
-class SignInReq implements IReq {
+class SignInReq {
   SignInReq(SignInParams params) : username = params.username, password = params.password;
 
   @JsonKey(includeToJson: false)
@@ -20,6 +19,5 @@ class SignInReq implements IReq {
   final String username;
   final String password;
 
-  @override
   Map<String, dynamic> toJson() => _$SignInReqToJson(this);
 }
