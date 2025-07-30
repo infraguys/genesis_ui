@@ -42,5 +42,3 @@ class StatusLabel extends StatelessWidget {
     );
   }
 }
-
-// Palette.color6DCF91
