@@ -13,7 +13,7 @@ class AuthUserDto implements IDto<User> {
     required this.description,
     required this.createdAt,
     required this.updatedAt,
-    required this.status,
+    required this.statusDto,
     required this.firstName,
     required this.lastName,
     required this.surname,
@@ -32,11 +32,12 @@ class AuthUserDto implements IDto<User> {
 
   final String uuid;
   final String description;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final UserDtoUserStatus status;
+  @JsonKey(unknownEnumValue: _StatusDto.unknown)
+  final _StatusDto statusDto; // ignore: library_private_types_in_public_api
   final String username;
   final String firstName;
   final String lastName;
@@ -46,11 +47,6 @@ class AuthUserDto implements IDto<User> {
   final bool emailVerified;
   final bool otpEnabled;
 
-  // @JsonKey(name: 'organization', defaultValue: [])
-  // final List<AuthOrganizationDto> organizations;
-
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
-
   @override
   User toEntity() {
     return User(
@@ -59,7 +55,7 @@ class AuthUserDto implements IDto<User> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toUserStatus(),
+      status: statusDto.toStatus(),
       firstName: firstName,
       lastName: lastName,
       surname: surname,
@@ -73,11 +69,13 @@ class AuthUserDto implements IDto<User> {
 }
 
 @JsonEnum()
-enum UserDtoUserStatus {
+enum _StatusDto {
   @JsonValue('ACTIVE')
-  active;
+  active,
+  unknown;
 
-  Status toUserStatus() => switch (this) {
+  Status toStatus() => switch (this) {
     active => Status.active,
+    unknown => Status.unknown,
   };
 }
