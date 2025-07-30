@@ -25,7 +25,7 @@ class _UserPageState extends State<UserPage> {
   @override
   void initState() {
     context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(widget.user.uuid));
-    context.read<UserRolesBloc>().add(UserRolesEvent.getRoles(widget.user.uuid));
+    context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUserUuid(widget.user.uuid));
     _controllersManager = _ControllersManager(widget.user);
     super.initState();
   }

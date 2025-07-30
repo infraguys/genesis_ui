@@ -23,7 +23,7 @@ class _ProjectsPageState extends State<RolesPage> {
   @override
   void initState() {
     authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
-    context.read<UserRolesBloc>().add(UserRolesEvent.getRoles(authState.user.uuid));
+    context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUserUuid(authState.user.uuid));
     super.initState();
   }
 
