@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
@@ -26,70 +27,96 @@ class _RolePageState extends State<RolePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(
-      listener: (context, state) {
-        // if (state is UserStateUpdateSuccess) {
-        //   final snack = SnackBar(
-        //     backgroundColor: Colors.green,
-        //     content: Text(context.$.success),
-        //   );
-        //   ScaffoldMessenger.of(context).showSnackBar(snack);
-        // } else if (state is UserStateFailure) {
-        //   final snack = SnackBar(
-        //     backgroundColor: Colors.red,
-        //     content: Text(state.message),
-        //   );
-        //   ScaffoldMessenger.of(context).showSnackBar(snack);
-        // }
-      },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 48,
-            children: [
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 24,
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.nameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.username,
-                        ),
+    return Scaffold(
+      body: BlocListener<UserBloc, UserState>(
+        listener: (context, state) {
+          // if (state is UserStateUpdateSuccess) {
+          //   final snack = SnackBar(
+          //     backgroundColor: Colors.green,
+          //     content: Text(context.$.success),
+          //   );
+          //   ScaffoldMessenger.of(context).showSnackBar(snack);
+          // } else if (state is UserStateFailure) {
+          //   final snack = SnackBar(
+          //     backgroundColor: Colors.red,
+          //     content: Text(state.message),
+          //   );
+          //   ScaffoldMessenger.of(context).showSnackBar(snack);
+          // }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 48,
+          children: [
+            Form(
+              key: _formKey,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 24,
+                children: [
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.nameController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Названиe',
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.descriptionController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: context.$.description,
-                        ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.descriptionController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: context.$.description,
                       ),
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: ElevatedButton(
-                        onPressed: () => save(context),
-                        child: Text(context.$.save),
-                      ),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            // Text('Permissions'.hardcoded, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            Theme(
+              data: Theme.of(context).copyWith(
+                listTileTheme: Theme.of(context).listTileTheme.copyWith(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                  ),
                 ),
               ),
-              // ListOfProjects(userUuid: widget.user.uuid),
-            ],
-          ),
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Checkbox(value: true, onChanged: (_) {}),
+                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+                title: Text('Permissions'.hardcoded),
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                itemCount: 10,
+                separatorBuilder: (_, _) => Divider(height: 0),
+                itemBuilder: (context, index) {
+                  // TODO: поменять на реальный список
+                  return Text('>>>>>>>>');
+                  // return Provider.value(
+                  //   value: state.users[index],
+                  //   child: UsersListItem(),
+                  // );
+                },
+              ),
+            ),
+            // SizedBox(
+            //   width: 400,
+            //   child: ElevatedButton(
+            //     onPressed: () => save(context),
+            //     child: Text(context.$.save),
+            //   ),
+            // ),
+          ],
         ),
       ),
     );
