@@ -41,7 +41,7 @@ class _ProjectsPageState extends State<RolesPage> {
             ElevatedButton.icon(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
-                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 18)),
+                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
               ),
               onPressed: () {
                 context.goNamed(AppRoutes.createRole.name);
