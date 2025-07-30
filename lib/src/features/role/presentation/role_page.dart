@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
+import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permission_list_item.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
@@ -104,7 +104,7 @@ class _RolePageState extends State<RolePage> {
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
                 builder: (context, state) {
                   if (state is! PermissionsLoadedState) {
-                    return Center(child: CupertinoActivityIndicator());
+                    return AppProgressIndicator();
                   }
                   return ListView.separated(
                     itemCount: 10,
