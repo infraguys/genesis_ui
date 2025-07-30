@@ -19,9 +19,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 20.0),
-          child: SvgPicture.asset(
-            'assets/images/purple_logo.svg',
-          ),
+          child: SvgPicture.asset('assets/images/purple_logo.svg'),
         ),
         actions: [
           const Icon(Icons.notifications_none_outlined, color: Palette.colorAFA8A4),
@@ -46,39 +44,13 @@ class ScaffoldWithNavigation extends StatelessWidget {
       //     ),
       //     const SizedBox(width: 24),
       //     MeAppbarWidget(),
-      //     // PopupMenuButton<void>(
-      //     //   itemBuilder: (context) => [
-      //     //     PopupMenuItem(
-      //     //       onTap: () {
-      //     //         context.read<AuthBloc>().add(AuthEvent.signOut());
-      //     //       },
-      //     //       child: Text('Sign Out'),
-      //     //     ),
-      //     //   ],
-      //     //   child: const Icon(Icons.account_circle_outlined),
-      //     // ),
       //   ],
       // ),
       // drawer: NavigationDrawer(
       //   tilePadding: EdgeInsetsGeometry.zero,
       //   selectedIndex: navigationShell.currentIndex,
-      //   onDestinationSelected: (index) {
-      //     // if (index == 2) {
-      //     //   context.read<AuthBloc>().add(AuthEvent.signOut());
-      //     // } else {
-      //       goBranch(index);
-      //     // }
-      //   },
-      //   children: [
-      //     NavigationDrawerDestination(icon: Icon(Icons.dashboard), label: Text(context.$.dashboard)),
-      //     NavigationDrawerDestination(icon: Icon(Icons.supervised_user_circle_sharp), label: Text('Iam')),
-      //     // NavigationDrawerDestination(icon: Icon(Icons.laptop), label: Text('Monitoring'.hardcoded)),
-      //     // Divider(height: 1, color: Colors.grey.shade200),
-      //     // NavigationDrawerDestination(
-      //     //   icon: Icon(Icons.logout),
-      //     //   label: Text('Sign out'.hardcoded),
-      //     // ),
-      //   ],
+      //   onDestinationSelected: (index) {},
+      //   children: [],
       // ),
       body: Row(
         children: [
