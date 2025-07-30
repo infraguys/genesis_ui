@@ -26,6 +26,7 @@ class AuthOrganizationDto implements IDto<Organization> {
   final DateTime createdAt;
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
+  @JsonKey(unknownEnumValue: _StatusDto.unknown)
   final _StatusDto statusDto; // ignore: library_private_types_in_public_api
   final dynamic info;
 
@@ -45,9 +46,11 @@ class AuthOrganizationDto implements IDto<Organization> {
 @JsonEnum()
 enum _StatusDto {
   @JsonValue('ACTIVE')
-  active;
+  active,
+  unknown;
 
   Status toStatus() => switch (this) {
     active => Status.active,
+    unknown => Status.unknown,
   };
 }
