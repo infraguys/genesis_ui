@@ -1,0 +1,23 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/common/shared_entities/permission.dart';
+import 'package:genesis/src/features/permissions/domain/i_permissions_repository.dart';
+import 'package:genesis/src/features/permissions/domain/params/get_permissions_params.dart';
+import 'package:genesis/src/features/permissions/domain/use_cases/get_permissions_usecases.dart';
+
+part 'permissions_event.dart';
+part 'permissions_state.dart';
+
+class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
+  PermissionsBloc(this._repository) : super(PermissionsState.initial()) {
+    on(_getPermissions);
+  }
+
+  final IPermissionsRepository _repository;
+
+  Future<void> _getPermissions(_GetPermissions event, Emitter<PermissionsState> emit) async {
+    final useCase = GetPermissionsUseCases(_repository);
+    emit(PermissionsState.loading());
+    final permissions = await useCase(GetPermissionsParams());
+    emit(PermissionsState.loaded(permissions));
+  }
+}
