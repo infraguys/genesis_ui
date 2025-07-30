@@ -3,18 +3,28 @@ import 'package:genesis/src/features/permissions/domain/params/get_permissions_p
 
 final class GetPermissionsReq {
   GetPermissionsReq(GetPermissionsParams params)
-    : name = params.name,
-      description = params.description,
-      createdAt = params.createdAt?.toIso8601String(),
-      updatedAt = params.updatedAt?.toIso8601String(),
-      status = switch (params.status) {
+    : _name = params.name,
+      _description = params.description,
+      _createdAt = params.createdAt?.toIso8601String(),
+      _updatedAt = params.updatedAt?.toIso8601String(),
+      _status = switch (params.status) {
         Status.active => 'ACTIVE',
         _ => null,
       };
 
-  final String? name;
-  final String? description;
-  final String? createdAt;
-  final String? updatedAt;
-  final String? status;
+  final String? _name;
+  final String? _description;
+  final String? _createdAt;
+  final String? _updatedAt;
+  final String? _status;
+
+  Map<String, dynamic> get query {
+    return {
+      'name': _name,
+      'description': _description,
+      'created_at': _createdAt,
+      'updated_at': _updatedAt,
+      'status': _status,
+    };
+  }
 }
