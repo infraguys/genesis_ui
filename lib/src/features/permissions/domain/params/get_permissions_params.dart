@@ -1,3 +1,5 @@
+import 'package:genesis/src/features/common/shared_entities/permission.dart';
+
 final class GetPermissionsParams {
   GetPermissionsParams({
     this.name,
@@ -11,5 +13,5 @@ final class GetPermissionsParams {
   final String? description;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? status;
+  final PermissionStatus? status;
 }
