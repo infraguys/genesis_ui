@@ -38,5 +38,6 @@
   "edit": "Edit",
   "add": "Add",
   "create": "Create",
-  "createdAt": "Created at"
+  "createdAt": "Created at",
+  "permissions": "Permissions"
 }

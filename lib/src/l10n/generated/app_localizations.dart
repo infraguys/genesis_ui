@@ -319,6 +319,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Created at'**
   String get createdAt;
+
+  /// No description provided for @permissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get permissions;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
