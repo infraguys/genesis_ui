@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/organization.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_organization_dto.g.dart';
@@ -12,7 +13,7 @@ class AuthOrganizationDto implements IDto<Organization> {
     required this.description,
     required this.createdAt,
     required this.updatedAt,
-    required this.status,
+    required this.statusDto,
     required this.info,
   });
 
@@ -25,7 +26,7 @@ class AuthOrganizationDto implements IDto<Organization> {
   final DateTime createdAt;
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final _StatusDto status; // ignore: library_private_types_in_public_api
+  final _StatusDto statusDto; // ignore: library_private_types_in_public_api
   final dynamic info;
 
   @override
@@ -36,7 +37,7 @@ class AuthOrganizationDto implements IDto<Organization> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toOrganizationStatus(),
+      status: statusDto.toStatus(),
     );
   }
 }
@@ -46,7 +47,7 @@ enum _StatusDto {
   @JsonValue('ACTIVE')
   active;
 
-  OrganizationStatus toOrganizationStatus() => switch (this) {
-    active => OrganizationStatus.active,
+  Status toStatus() => switch (this) {
+    active => Status.active,
   };
 }
