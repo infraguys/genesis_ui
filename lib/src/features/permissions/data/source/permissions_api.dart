@@ -10,7 +10,7 @@ final class PermissionsApi implements IPermissionsApi {
 
   final RestClient _client;
 
-  static const String _baseUrl = '/permissions';
+  static const String _baseUrl = '/v1/iam/permissions/';
 
   @override
   Future<PermissionDto> createPermission() {
@@ -30,8 +30,8 @@ final class PermissionsApi implements IPermissionsApi {
     final queryParams = {
       'name': req.name,
       'description': req.description,
-      'createdAt': req.createdAt,
-      'updatedAt': req.updatedAt,
+      'created_at': req.createdAt,
+      'updated_at': req.updatedAt,
       'status': req.status,
     };
 
