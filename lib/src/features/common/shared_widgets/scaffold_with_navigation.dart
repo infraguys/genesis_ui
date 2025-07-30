@@ -93,31 +93,31 @@ class ScaffoldWithNavigation extends StatelessWidget {
                   children: [
                     ListTile(
                       leading: Icon(Icons.dashboard),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.main.name,
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/'),
                       title: Text(context.$.main),
                       onTap: () => context.goNamed(AppRoutes.main.name),
                     ),
                     ListTile(
                       leading: Icon(CupertinoIcons.person_2_fill),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.users.name,
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
                       title: Text(context.$.users),
                       onTap: () => context.goNamed(AppRoutes.users.name),
                     ),
                     ListTile(
                       leading: Icon(Icons.folder_copy_rounded),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.projects.name,
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/projects'),
                       title: Text(context.$.projects),
                       onTap: () => context.goNamed(AppRoutes.projects.name),
                     ),
                     ListTile(
                       leading: Icon(Icons.admin_panel_settings),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.roles.name,
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
                       title: Text(context.$.role(3)),
                       onTap: () => context.goNamed(AppRoutes.roles.name),
                     ),
                     ListTile(
                       leading: Icon(Icons.business_sharp),
-                      selected: GoRouterState.of(context).topRoute?.name == AppRoutes.organizations.name,
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
                       title: Text('Организации'.hardcoded),
                       onTap: () => context.goNamed(AppRoutes.organizations.name),
                     ),
