@@ -11,11 +11,15 @@ class StatusLabel extends StatelessWidget {
   Color get textStatusColor => switch (_status) {
     Status.active => Palette.color6DCF91,
     Status.inactive => Palette.colorF04C4C,
+    // TODO: Handle unknown status
+    Status.unknown => throw UnimplementedError(),
   };
 
   Color get labelStatusColor => switch (_status) {
     Status.active => Palette.color6DCF91.withValues(alpha: 0.10),
     Status.inactive => Palette.colorF04C4C.withValues(alpha: 0.10),
+    // TODO: Handle unknown status
+    Status.unknown => throw UnimplementedError(),
   };
 
   @override
