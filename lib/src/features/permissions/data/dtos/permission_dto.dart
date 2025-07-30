@@ -1,6 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/permission.dart';
-import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'permission_dto.g.dart';
@@ -35,7 +34,7 @@ final class PermissionDto implements IDto<Permission> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toStatus(),
+      status: status.toPermissionStatus(),
     );
   }
 }
@@ -45,7 +44,7 @@ enum PermissionStatusDto {
   @JsonValue('ACTIVE')
   active;
 
-  Status toStatus() => switch (this) {
-    active => Status.active,
+  PermissionStatus toPermissionStatus() => switch (this) {
+    active => PermissionStatus.active,
   };
 }
