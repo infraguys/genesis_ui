@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 
 class Permission extends Equatable {
   const Permission({
@@ -15,7 +16,7 @@ class Permission extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final PermissionStatus status;
+  final Status status;
 
   @override
   List<Object?> get props => [uuid, name, description, createdAt, updatedAt, status];
@@ -29,9 +30,7 @@ Permission(
   description: $description,
   createdAt: $createdAt,
   updatedAt: $updatedAt,
-  status: $status
+  status: $status,
 )''';
   }
 }
-
-enum PermissionStatus { active }
