@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:genesis/src/features/common/shared_entities/status.dart';
 
-class Organization {
-  Organization({
+class Organization extends Equatable {
+  const Organization({
     required this.uuid,
     required this.name,
     required this.description,
@@ -16,4 +17,14 @@ class Organization {
   final DateTime createdAt;
   final DateTime updatedAt;
   final Status status;
+
+  @override
+  List<Object?> get props => [
+    uuid,
+    name,
+    description,
+    createdAt,
+    updatedAt,
+    status,
+  ];
 }
