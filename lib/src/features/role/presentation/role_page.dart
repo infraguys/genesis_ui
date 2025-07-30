@@ -4,10 +4,10 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/features/common/shared_widgets/app_table.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permission_list_item.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
-import 'package:provider/provider.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({super.key});
@@ -85,36 +85,16 @@ class _RolePageState extends State<RolePage> {
             const SizedBox(height: 48),
             Text('Permissions'.hardcoded, style: TextStyle(color: Colors.white54, fontSize: 24)),
             const SizedBox(height: 24),
-            Theme(
-              data: Theme.of(context).copyWith(
-                listTileTheme: Theme.of(context).listTileTheme.copyWith(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                  ),
-                ),
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Checkbox(value: true, onChanged: (_) {}),
-                trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-                title: Text('Название'.hardcoded),
-              ),
-            ),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
                 builder: (context, state) {
                   if (state is! PermissionsLoadedState) {
                     return AppProgressIndicator();
                   }
-                  return ListView.separated(
-                    itemCount: 10,
-                    separatorBuilder: (_, _) => Divider(height: 0),
-                    itemBuilder: (context, index) {
-                      return Provider.value(
-                        value: state.permissions[index],
-                        child: PermissionListItem(),
-                      );
-                    },
+                  return AppTable(
+                    entities: state.permissions,
+                    item: PermissionListItem(),
+                    title: Text('Название'.hardcoded),
                   );
                 },
               ),
