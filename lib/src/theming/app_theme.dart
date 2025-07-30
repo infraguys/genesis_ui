@@ -3,6 +3,7 @@ import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 part 'appbar_theme_data.dart';
+part 'drawer_theme_data.dart';
 part 'elevated_button_theme_data.dart';
 part 'input_decoration_theme.dart';
 part 'navigation_drawer_theme_data.dart';
@@ -16,11 +17,7 @@ class AppTheme {
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
       navigationDrawerTheme: _navigationDrawerThemeData,
-      drawerTheme: DrawerThemeData(
-        width: 220,
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      ),
+      drawerTheme: _drawerThemeData,
       cardTheme: CardThemeData(color: Colors.white),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
@@ -71,11 +68,7 @@ class AppTheme {
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
       navigationDrawerTheme: _navigationDrawerThemeData,
-      drawerTheme: DrawerThemeData(
-        width: 220,
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      ),
+      drawerTheme: _drawerThemeData,
       cardTheme: CardThemeData(color: Colors.white),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
