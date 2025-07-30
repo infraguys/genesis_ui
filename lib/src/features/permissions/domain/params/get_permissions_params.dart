@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/common/shared_entities/permission.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 
 final class GetPermissionsParams {
   GetPermissionsParams({
@@ -13,5 +13,5 @@ final class GetPermissionsParams {
   final String? description;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final PermissionStatus? status;
+  final Status? status;
 }
