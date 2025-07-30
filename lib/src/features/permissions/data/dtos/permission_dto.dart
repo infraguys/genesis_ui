@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/common/shared_entities/permission.dart';
+import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'permission_dto.g.dart';
@@ -12,7 +13,7 @@ final class PermissionDto implements IDto<Permission> {
     required this.description,
     required this.createdAt,
     required this.updatedAt,
-    required this.status,
+    required this.statusDto,
   });
 
   factory PermissionDto.fromJson(Map<String, dynamic> json) => _$PermissionDtoFromJson(json);
@@ -24,7 +25,8 @@ final class PermissionDto implements IDto<Permission> {
   final DateTime createdAt;
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final PermissionStatusDto status;
+  @JsonKey(unknownEnumValue: _StatusDto.unknown)
+  final _StatusDto statusDto; // ignore: library_private_types_in_public_api
 
   @override
   Permission toEntity() {
@@ -34,17 +36,19 @@ final class PermissionDto implements IDto<Permission> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toPermissionStatus(),
+      status: statusDto.toStatus(),
     );
   }
 }
 
 @JsonEnum()
-enum PermissionStatusDto {
+enum _StatusDto {
   @JsonValue('ACTIVE')
-  active;
+  active,
+  unknown;
 
-  PermissionStatus toPermissionStatus() => switch (this) {
-    active => PermissionStatus.active,
+  Status toStatus() => switch (this) {
+    active => Status.active,
+    unknown => Status.unknown,
   };
 }
