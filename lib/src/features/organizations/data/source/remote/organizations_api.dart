@@ -64,10 +64,12 @@ final class OrganizationsApi implements IOrganizationsApi {
   @override
   Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
     final url = _organizationsUrl;
-    final queryParameters = req.toJson();
 
     try {
-      final Response(:data) = await _client.get<List<dynamic>>(url, queryParameters: queryParameters);
+      final Response(:data) = await _client.get<List<dynamic>>(
+        url,
+        queryParameters: req.toQuery(),
+      );
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => OrganizationDto.fromJson(it)).toList();
