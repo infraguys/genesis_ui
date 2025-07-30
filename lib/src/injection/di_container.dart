@@ -14,6 +14,9 @@ import 'package:genesis/src/features/organizations/data/organizations_repository
 import 'package:genesis/src/features/organizations/data/source/remote/organizations_api.dart';
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/features/permissions/data/permissions_repository.dart';
+import 'package:genesis/src/features/permissions/data/source/permissions_api.dart';
+import 'package:genesis/src/features/permissions/domain/i_permissions_repository.dart';
 import 'package:genesis/src/features/projects/data/repositories/projects_repository.dart';
 import 'package:genesis/src/features/projects/data/source/remote/projects_api.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
@@ -81,6 +84,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final organizationsApi = OrganizationsApi(context.read<RestClient>());
               return OrganizationsRepository(organizationsApi);
+            },
+          ),
+          RepositoryProvider<IPermissionsRepository>(
+            create: (context) {
+              final permissionsApi = PermissionsApi(context.read<RestClient>());
+              return PermissionsRepository(permissionsApi);
             },
           ),
         ],
