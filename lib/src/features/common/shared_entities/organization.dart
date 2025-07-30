@@ -1,5 +1,3 @@
-import 'package:genesis/src/features/common/shared_entities/status.dart';
-
 class Organization {
   Organization({
     required this.uuid,
@@ -15,5 +13,7 @@ class Organization {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Status status;
+  final OrganizationStatus status;
 }
+
+enum OrganizationStatus { active }
