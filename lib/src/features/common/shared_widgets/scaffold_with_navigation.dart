@@ -65,7 +65,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                   children: [
                     ListTile(
                       leading: Icon(Icons.dashboard),
-                      selected: GoRouterState.of(context).matchedLocation.startsWith('/'),
+                      selected: GoRouterState.of(context).matchedLocation == '/',
                       title: Text(context.$.main),
                       onTap: () => context.goNamed(AppRoutes.main.name),
                     ),
