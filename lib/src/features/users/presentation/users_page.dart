@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_table.dart';
@@ -28,13 +28,15 @@ class _UsersPageState extends State<UsersPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+          // TODO: Добавить название страницы
+          Breadcrumbs(),
+          // Text(context.$.users, ),
           const SizedBox(height: 24),
           Expanded(
             child: BlocBuilder<UsersBloc, UsersState>(
               builder: (context, state) {
                 if (state is! UsersLoadedState) {
-                  return Center(child: CupertinoActivityIndicator());
+                  return AppProgressIndicator();
                 }
                 return UsersTable(users: state.users);
               },
