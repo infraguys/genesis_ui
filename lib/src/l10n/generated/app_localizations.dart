@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @uuid.
   ///
   /// In en, this message translates to:
-  /// **'uuid'**
+  /// **'Uuid'**
   String get uuid;
 
   /// No description provided for @iam.

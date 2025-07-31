@@ -40,5 +40,6 @@
   "create": "Create",
   "createdAt": "Created at",
   "updatedAt": "Updated at",
-  "permissions": "Permissions"
+  "permissions": "Permissions",
+  "uuid": "Uuid"
 }
