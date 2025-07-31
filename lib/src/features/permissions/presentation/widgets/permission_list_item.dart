@@ -28,11 +28,10 @@ class PermissionListItem extends StatelessWidget {
         title: Row(
           spacing: 48,
           children: [
-            // SizedBox(width: 250, child: Text(user.username)),
             Expanded(flex: 2, child: Text(permission.name)),
             // TODO:  проверить статус
             Flexible(child: StatusLabel(status: Status.active)), // Assuming all permissions are active
-            Expanded(
+            Flexible(
               flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
