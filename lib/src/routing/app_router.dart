@@ -12,6 +12,7 @@ import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart'
 import 'package:genesis/src/features/organizations/presentation/organizations_page.dart';
 import 'package:genesis/src/features/permissions/domain/i_permissions_repository.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc%20/permissions_selection_bloc%20.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';
@@ -140,8 +141,15 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.createRole.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: BlocProvider(
-                        create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+                          ),
+                          BlocProvider(
+                            create: (_) => PermissionsSelectionBloc(),
+                          ),
+                        ],
                         child: RolePage(),
                       ),
                     ),
