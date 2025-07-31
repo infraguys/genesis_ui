@@ -36,5 +36,6 @@
   "create": "Создать",
   "createdAt": "Создано",
   "updatedAt": "Обновлено",
-  "permissions": "Разрешения"
+  "permissions": "Разрешения",
+  "name": "Имя"
 }
