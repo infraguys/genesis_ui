@@ -35,5 +35,6 @@
   "add": "Добавить",
   "create": "Создать",
   "createdAt": "Создано",
+  "updatedAt": "Обновлено",
   "permissions": "Разрешения"
 }

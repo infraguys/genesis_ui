@@ -320,6 +320,12 @@ abstract class AppLocalizations {
   /// **'Created at'**
   String get createdAt;
 
+  /// No description provided for @updatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated at'**
+  String get updatedAt;
+
   /// No description provided for @permissions.
   ///
   /// In en, this message translates to:
