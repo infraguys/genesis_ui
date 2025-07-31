@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/common/shared_entities/user.dart';
-import 'package:genesis/src/features/common/shared_widgets/app_table.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/features/users/presentation/widgets/users_list_item.dart';
+import 'package:genesis/src/features/users/presentation/widgets/users_table.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -38,19 +36,7 @@ class _UsersPageState extends State<UsersPage> {
                 if (state is! UsersLoadedState) {
                   return Center(child: CupertinoActivityIndicator());
                 }
-                return AppTable<User>(
-                  entities: state.users,
-                  item: UsersListItem(),
-                  title: Row(
-                    spacing: 48,
-                    children: [
-                      Expanded(flex: 2, child: Text(context.$.username)),
-                      Expanded(child: Text(context.$.status)),
-                      Expanded(flex: 4, child: Text(context.$.uuid)),
-                      Spacer(flex: 2),
-                    ],
-                  ),
-                );
+                return UsersTable(users: state.users);
               },
             ),
           ),

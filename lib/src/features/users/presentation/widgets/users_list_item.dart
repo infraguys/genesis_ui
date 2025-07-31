@@ -5,6 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/common/shared_entities/user.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_actions_popup_menu_button.dart';
 
 class UsersListItem extends StatelessWidget {
@@ -52,7 +53,16 @@ class UsersListItem extends StatelessWidget {
             Spacer(flex: 4),
           ],
         ),
-        leading: Checkbox(value: true, onChanged: (_) {}),
+        leading: BlocBuilder<UsersSelectionBloc, List<User>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(user),
+              onChanged: (val) {
+                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleUser(user));
+              },
+            );
+          },
+        ),
         trailing: UsersActionsPopupMenuButton(user: user),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),
