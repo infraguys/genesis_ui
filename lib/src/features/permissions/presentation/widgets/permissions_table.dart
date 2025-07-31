@@ -25,9 +25,7 @@ class PermissionsTable extends StatelessWidget {
             },
             tristate: true,
             onChanged: (val) {
-              context.read<PermissionsSelectionBloc>().add(
-                PermissionsSelectionEvent.selectAll(permissions),
-              );
+              context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.selectAll(permissions));
             },
           );
         },
