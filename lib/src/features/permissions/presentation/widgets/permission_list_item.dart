@@ -6,6 +6,7 @@ import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/common/shared_entities/permission.dart';
 import 'package:genesis/src/features/common/shared_entities/status.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc%20/permissions_selection_bloc%20.dart';
 
 class PermissionListItem extends StatelessWidget {
   const PermissionListItem({super.key});
@@ -54,9 +55,15 @@ class PermissionListItem extends StatelessWidget {
             Spacer(flex: 4),
           ],
         ),
-        leading: Checkbox(
-          value: true,
-          onChanged: (val) {},
+        leading: BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(permission),
+              onChanged: (val) {
+                context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.togglePermission(permission));
+              },
+            );
+          },
         ),
         // trailing: UsersActionsPopupMenuButton(),
         expandedAlignment: Alignment.centerLeft,
