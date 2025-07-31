@@ -6,19 +6,21 @@ class AppTable<T> extends StatelessWidget {
     required this.entities,
     required this.item,
     required this.title,
+    this.headerLeading,
     super.key,
   });
 
   final List<T> entities;
   final Widget item;
   final Widget title;
+  final Widget? headerLeading;
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
-          delegate: _AppTableHeaderDelegate(title),
+          delegate: _AppTableHeaderDelegate(title: title, headerLeading: headerLeading),
           pinned: true,
         ),
         SliverList.separated(
@@ -37,9 +39,10 @@ class AppTable<T> extends StatelessWidget {
 }
 
 class _AppTableHeaderDelegate extends SliverPersistentHeaderDelegate {
-  _AppTableHeaderDelegate(this.title);
+  _AppTableHeaderDelegate({required this.title, this.headerLeading});
 
   final Widget title;
+  final Widget? headerLeading;
 
   @override
   double get minExtent => 50.0;
@@ -60,7 +63,7 @@ class _AppTableHeaderDelegate extends SliverPersistentHeaderDelegate {
         ),
         minTileHeight: maxExtent,
         contentPadding: EdgeInsets.zero,
-        leading: Checkbox(value: true, onChanged: (_) {}),
+        leading: headerLeading,
         trailing: IconButton(
           onPressed: () {},
           icon: Icon(Icons.more_vert),
