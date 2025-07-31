@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
@@ -28,8 +29,27 @@ class UsersListItem extends StatelessWidget {
           children: [
             Expanded(flex: 2, child: Text(user.username)),
             Flexible(child: StatusLabel(status: user.status)),
-            Expanded(flex: 3, child: Text(user.createdAt.toString())),
-            Spacer(flex: 3),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('...${user.uuid.split('-').last}'),
+                  IconButton(
+                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: user.uuid));
+                      final snack = SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Скопировано в буфер обмена: ${user.uuid}'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Spacer(flex: 4),
           ],
         ),
         leading: Checkbox(value: true, onChanged: (_) {}),
