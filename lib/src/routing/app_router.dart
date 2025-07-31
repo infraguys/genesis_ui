@@ -111,12 +111,13 @@ GoRouter createRouter(BuildContext context) {
                     path: ':uuid',
                     pageBuilder: (_, state) {
                       final _ = state.pathParameters['uuid']!;
+                      final (:extra, :breadcrumbs) = state.extra as ({User extra, List<String> breadcrumbs});
                       return NoTransitionPage(
                         child: BlocProvider(
                           create: (context) {
                             return UserProjectsBloc(context.read<IProjectsRepository>());
                           },
-                          child: UserPage(user: state.extra as User),
+                          child: UserPage(user: extra),
                         ),
                       );
                     },
