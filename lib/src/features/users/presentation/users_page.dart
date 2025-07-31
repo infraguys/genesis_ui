@@ -46,7 +46,7 @@ class _UsersPageState extends State<UsersPage> {
                     children: [
                       Expanded(flex: 2, child: Text(context.$.username)),
                       Expanded(child: Text(context.$.status)),
-                      Expanded(flex: 4, child: Text(context.$.createdAt)),
+                      Expanded(flex: 4, child: Text(context.$.uuid)),
                       Spacer(flex: 2),
                     ],
                   ),
