@@ -45,7 +45,7 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
               context.goNamed(
                 AppRoutes.user.name,
                 pathParameters: {'uuid': user.uuid},
-                extra: user,
+                extra: (extra: user, breadcrumbs: [user.username]),
               );
             },
           ),
