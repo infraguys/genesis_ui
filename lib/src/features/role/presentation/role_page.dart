@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
-import 'package:genesis/src/features/common/shared_entities/permission.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
-import 'package:genesis/src/features/common/shared_widgets/app_table.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
-import 'package:genesis/src/features/permissions/presentation/widgets/permission_list_item.dart';
+import 'package:genesis/src/features/permissions/presentation/widgets/permissions_table.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
 class RolePage extends StatefulWidget {
@@ -91,19 +89,7 @@ class _RolePageState extends State<RolePage> {
                   if (state is! PermissionsLoadedState) {
                     return AppProgressIndicator();
                   }
-                  return AppTable<Permission>(
-                    entities: state.permissions,
-                    item: PermissionListItem(),
-                    title: Row(
-                      spacing: 48,
-                      children: [
-                        Expanded(flex: 2, child: Text(context.$.name)),
-                        Expanded(child: Text(context.$.status)),
-                        Expanded(flex: 4, child: Text(context.$.uuid)),
-                        Spacer(flex: 2),
-                      ],
-                    ),
-                  );
+                  return PermissionsTable(permissions: state.permissions);
                 },
               ),
             ),
