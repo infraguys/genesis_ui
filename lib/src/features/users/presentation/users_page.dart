@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/common/shared_entities/user.dart';
+import 'package:genesis/src/features/common/shared_widgets/app_table.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/widgets/users_list_item.dart';
-import 'package:provider/provider.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -31,44 +32,24 @@ class _UsersPageState extends State<UsersPage> {
         children: [
           Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
           const SizedBox(height: 24),
-          Theme(
-            data: Theme.of(context).copyWith(
-              listTileTheme: Theme.of(context).listTileTheme.copyWith(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                ),
-              ),
-            ),
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Checkbox(value: true, onChanged: (_) {}),
-              trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-              title: Row(
-                spacing: 48,
-                children: [
-                  Expanded(flex: 2, child: Text(context.$.username)),
-                  Expanded(child: Text(context.$.status)),
-                  Expanded(flex: 4, child: Text(context.$.createdAt)),
-                  Spacer(flex: 2),
-                ],
-              ),
-            ),
-          ),
           Expanded(
             child: BlocBuilder<UsersBloc, UsersState>(
               builder: (context, state) {
                 if (state is! UsersLoadedState) {
                   return Center(child: CupertinoActivityIndicator());
                 }
-                return ListView.separated(
-                  itemCount: state.users.length,
-                  separatorBuilder: (_, _) => Divider(height: 0),
-                  itemBuilder: (context, index) {
-                    return Provider.value(
-                      value: state.users[index],
-                      child: UsersListItem(),
-                    );
-                  },
+                return AppTable<User>(
+                  entities: state.users,
+                  item: UsersListItem(),
+                  title: Row(
+                    spacing: 48,
+                    children: [
+                      Expanded(flex: 2, child: Text(context.$.username)),
+                      Expanded(child: Text(context.$.status)),
+                      Expanded(flex: 4, child: Text(context.$.createdAt)),
+                      Spacer(flex: 2),
+                    ],
+                  ),
                 );
               },
             ),
