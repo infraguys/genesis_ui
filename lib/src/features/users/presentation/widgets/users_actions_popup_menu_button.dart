@@ -42,7 +42,11 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
             child: Text(context.$.edit),
             onTap: () {
               final user = context.read<User>();
-              context.goNamed(AppRoutes.user.name, pathParameters: {'uuid': user.uuid}, extra: user);
+              context.goNamed(
+                AppRoutes.user.name,
+                pathParameters: {'uuid': user.uuid},
+                extra: user,
+              );
             },
           ),
           PopupMenuItem(
