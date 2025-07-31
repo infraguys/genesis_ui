@@ -55,7 +55,10 @@ class PermissionListItem extends StatelessWidget {
             Spacer(flex: 4),
           ],
         ),
-        leading: Checkbox(value: true, onChanged: (_) {}),
+        leading: Checkbox(
+          value: true,
+          onChanged: (val) {},
+        ),
         // trailing: UsersActionsPopupMenuButton(),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),

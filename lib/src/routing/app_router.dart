@@ -11,7 +11,7 @@ import 'package:genesis/src/features/common/shared_widgets/scaffold_with_navigat
 import 'package:genesis/src/features/dashboard/presentation/dashboard_page.dart';
 import 'package:genesis/src/features/organizations/presentation/organizations_page.dart';
 import 'package:genesis/src/features/permissions/domain/i_permissions_repository.dart';
-import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/projects_page.dart';

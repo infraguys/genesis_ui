@@ -5,7 +5,7 @@ import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_entities/permission.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_table.dart';
-import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permission_list_item.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 
