@@ -44,105 +44,107 @@ class _UserPageState extends State<UserPage> {
           }
           ScaffoldMessenger.of(context).showSnackBar(snack);
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 48,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: 'user'),
-                BreadcrumbItem(text: widget.user.username),
-              ],
-            ),
-            // RolesList(),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24,
-                children: [
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.usernameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.username,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.descriptionController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.description,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.firstNameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.firstName,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.lastNameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.lastName,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.surnameController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.surName,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.phoneController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: 'Phone'.hardcoded,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.emailController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        hintText: context.$.email,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: ElevatedButton(
-                      onPressed: () => save(context),
-                      child: Text(context.$.save),
-                    ),
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 48,
+            children: [
+              Breadcrumbs(
+                items: [
+                  BreadcrumbItem(text: 'user'),
+                  BreadcrumbItem(text: widget.user.username),
                 ],
               ),
-            ),
-            ListOfProjects(userUuid: widget.user.uuid),
-          ],
+              // RolesList(),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 24,
+                  children: [
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.usernameController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.username,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.descriptionController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.description,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.firstNameController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.firstName,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.lastNameController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.lastName,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.surnameController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.surName,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.phoneController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: 'Phone'.hardcoded,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: TextFormField(
+                        controller: _controllersManager.emailController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: context.$.email,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: ElevatedButton(
+                        onPressed: () => save(context),
+                        child: Text(context.$.save),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListOfProjects(userUuid: widget.user.uuid),
+            ],
+          ),
         ),
       ),
     );
