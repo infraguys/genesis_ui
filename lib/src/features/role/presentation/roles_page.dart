@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/features/role/presentation/widgets/roles_list_item.dart';
@@ -78,7 +78,7 @@ class _ProjectsPageState extends State<RolesPage> {
           child: BlocBuilder<UserRolesBloc, UserRolesState>(
             builder: (context, state) {
               if (state is! UserRolesLoaded) {
-                return Center(child: CupertinoActivityIndicator());
+                return AppProgressIndicator();
               }
               return ListView.separated(
                 itemCount: state.roles.length,
