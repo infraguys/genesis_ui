@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/features/role/presentation/widgets/roles_list_item.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -33,7 +34,11 @@ class _ProjectsPageState extends State<RolesPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+        Breadcrumbs(
+          items: [
+            BreadcrumbItem(text: context.$.role(3).toLowerCase()),
+          ],
+        ),
         const SizedBox(height: 24),
         Row(
           children: [
