@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/features/organizations/presentation/widgets/organizations_list_item.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +32,11 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 12)),
+            Breadcrumbs(
+              items: [
+                BreadcrumbItem(text: 'organizations'.hardcoded),
+              ],
+            ),
             const SizedBox(height: 24),
             ListTile(
               shape: RoundedRectangleBorder(
