@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/widgets/add_project_card_button.dart';
@@ -39,6 +40,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
         spacing: 24,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Breadcrumbs(
+            items: [
+              BreadcrumbItem(text: 'projects'),
+            ],
+          ),
           Text('Проекты', style: textTheme.headlineMedium),
           BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
             builder: (context, state) {
