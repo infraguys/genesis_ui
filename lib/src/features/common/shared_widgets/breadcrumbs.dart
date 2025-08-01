@@ -1,33 +1,47 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class Breadcrumbs extends StatelessWidget {
-  const Breadcrumbs({super.key});
+  const Breadcrumbs({required this.items, super.key});
+
+  final List<BreadcrumbItem> items;
 
   @override
   Widget build(BuildContext context) {
-    final fullPath = GoRouterState.of(context).fullPath!;
+    return Row(
+      spacing: 6.0,
+      children: items
+          .map(
+            (it) => GestureDetector(
+              onTap: it.onTap,
+              child: Text(it.text, style: TextStyle(color: Colors.white54, fontSize: 12)),
+            ),
+          )
+          .intersperse(Text('>', style: TextStyle(color: Colors.white54, fontSize: 12)))
+          .toList(),
+    );
+  }
+}
 
-    final extra = GoRouterState.of(context).extra as ({Object? extra, List<String> breadcrumbs})?;
-    final breadcrumbs = extra?.breadcrumbs;
+final class BreadcrumbItem {
+  BreadcrumbItem({
+    required this.text,
+    this.onTap,
+  });
 
-    final segments = fullPath.split('/').where((segment) => segment.isNotEmpty).toList();
+  final String text;
+  final VoidCallback? onTap;
+}
 
-    if (breadcrumbs != null) {
-      outerLoop:
-      for (var it in breadcrumbs) {
-        var innerIndex = 0;
-        for (var i = innerIndex; i < segments.length; i += 1) {
-          if (segments[i].startsWith(':')) {
-            segments[i] = it;
-            innerIndex = i + 1;
-            continue outerLoop;
-          }
-        }
-      }
+extension _ on Iterable<Widget> {
+  Iterable<Widget> intersperse(Widget separator) sync* {
+    final it = iterator;
+    if (!it.moveNext()) return;
+    yield it.current;
+    while (it.moveNext()) {
+      yield separator;
+      yield it.current;
     }
-
-    final result = segments.join(' > ');
-    return Text(result, style: TextStyle(color: Colors.white54, fontSize: 12));
   }
 }
