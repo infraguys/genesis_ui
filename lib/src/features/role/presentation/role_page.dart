@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permissions_table.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
@@ -48,7 +49,14 @@ class _RolePageState extends State<RolePage> {
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 24,
           children: [
+            Breadcrumbs(
+              items: [
+                BreadcrumbItem(text: context.$.role(3).toLowerCase()),
+                BreadcrumbItem(text: context.$.create.toLowerCase()),
+              ],
+            ),
             Form(
               key: _formKey,
               child: Row(
@@ -80,9 +88,8 @@ class _RolePageState extends State<RolePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 48),
-            Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             const SizedBox(height: 24),
+            Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
                 builder: (context, state) {
