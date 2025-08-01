@@ -18,7 +18,7 @@ class Breadcrumbs extends StatelessWidget {
               child: Text(it.text, style: TextStyle(color: Colors.white54, fontSize: 12)),
             ),
           )
-          .intersperse(Text('>', style: TextStyle(color: Colors.white54, fontSize: 12)))
+          .intersperse(Text('›', style: TextStyle(color: Colors.white54, fontSize: 12)))
           .toList(),
     );
   }
