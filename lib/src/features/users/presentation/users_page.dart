@@ -29,7 +29,11 @@ class _UsersPageState extends State<UsersPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // TODO: Добавить название страницы
-          Breadcrumbs(),
+          Breadcrumbs(
+            items: [
+              BreadcrumbItem(text: 'users'),
+            ],
+          ),
           // Text(context.$.users, ),
           const SizedBox(height: 24),
           Expanded(
