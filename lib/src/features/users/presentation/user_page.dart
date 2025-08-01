@@ -48,7 +48,12 @@ class _UserPageState extends State<UserPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 48,
           children: [
-            Breadcrumbs(),
+            Breadcrumbs(
+              items: [
+                BreadcrumbItem(text: 'user'),
+                BreadcrumbItem(text: widget.user.username),
+              ],
+            ),
             // RolesList(),
             Form(
               key: _formKey,
