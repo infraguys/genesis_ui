@@ -1,5 +1,3 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 
 class Breadcrumbs extends StatelessWidget {
@@ -18,6 +16,7 @@ class Breadcrumbs extends StatelessWidget {
               child: Text(it.text, style: TextStyle(color: Colors.white54, fontSize: 12)),
             ),
           )
+          .wrapWithHoverable()
           .intersperse(Text('›', style: TextStyle(color: Colors.white54, fontSize: 12)))
           .toList(),
     );
@@ -28,10 +27,12 @@ final class BreadcrumbItem {
   BreadcrumbItem({
     required this.text,
     this.onTap,
+    // this.clickable = true,
   });
 
   final String text;
   final VoidCallback? onTap;
+  // final bool clickable;
 }
 
 extension _ on Iterable<Widget> {
@@ -43,5 +44,20 @@ extension _ on Iterable<Widget> {
       yield separator;
       yield it.current;
     }
+  }
+
+  Iterable<Widget> wrapWithHoverable() sync* {
+    final it = iterator;
+    if (!it.moveNext()) return;
+
+    var tempItem = it.current;
+    while (it.moveNext()) {
+      yield MouseRegion(
+        cursor: WidgetStateMouseCursor.clickable,
+        child: it.current,
+      );
+      tempItem = it.current;
+    }
+    yield tempItem;
   }
 }
