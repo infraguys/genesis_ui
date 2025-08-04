@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/common/shared_entities/role.dart';
 import 'package:genesis/src/features/common/shared_widgets/status_label.dart';
+import 'package:genesis/src/features/role/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/features/role/presentation/widgets/roles_action_popup_menu_button.dart';
-import 'package:provider/provider.dart';
 
 class RolesListItem extends StatelessWidget {
   const RolesListItem({super.key});
@@ -28,7 +29,16 @@ class RolesListItem extends StatelessWidget {
             Spacer(flex: 2),
           ],
         ),
-        leading: Checkbox(value: true, onChanged: (_) {}),
+        leading: BlocBuilder<RolesSelectionBloc, List<Role>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(role),
+              onChanged: (_) {
+                context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleRole(role));
+              },
+            );
+          },
+        ),
         trailing: RolesActionPopupMenuButton(role: role),
         expandedAlignment: Alignment.centerLeft,
         childrenPadding: EdgeInsets.only(left: 50),
