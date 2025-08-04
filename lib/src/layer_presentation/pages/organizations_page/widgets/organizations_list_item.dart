@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class OrganizationsListItem extends StatelessWidget {
@@ -12,27 +14,57 @@ class OrganizationsListItem extends StatelessWidget {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        listTileTheme: ListTileThemeData(
+        listTileTheme: Theme.of(context).listTileTheme.copyWith(
           minVerticalPadding: 0,
           contentPadding: EdgeInsets.zero,
           tileColor: Colors.transparent,
         ),
       ),
-      child: ExpansionTile(
+      child: ListTile(
         title: Row(
           spacing: 48,
           children: [
-            // SizedBox(width: 250, child: Text(user.username)),
             Expanded(flex: 2, child: Text(organization.name)),
             Flexible(child: StatusLabel(status: organization.status)),
-            Expanded(flex: 4, child: Text(organization.createdAt.toString())),
+            Expanded(
+              flex: 4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(organization.uuid),
+                  IconButton(
+                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: organization.uuid));
+                      final snack = SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Скопировано в буфер обмена: ${organization.uuid}'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    },
+                  ),
+                ],
+              ),
+            ),
             Spacer(flex: 2),
           ],
         ),
-        leading: Checkbox(value: true, onChanged: (_) {}),
+        leading: BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(organization),
+              onChanged: (_) {
+                context.read<OrganizationsSelectionBloc>().add(
+                  OrganizationsSelectionEvent.toggleOrganization(organization),
+                );
+              },
+            );
+          },
+        ),
         // trailing: UsersActionsPopupMenuButton(),
-        expandedAlignment: Alignment.centerLeft,
-        childrenPadding: EdgeInsets.only(left: 50),
+        // todo: Чуть позже удалить
+        // expandedAlignment: Alignment.centerLeft,
+        // childrenPadding: EdgeInsets.only(left: 50),
       ),
     );
   }
