@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc%20/permissions_selection_bloc%20.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permissions_table.dart';
-import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/features/role/presentation/blocs/role_editor_bloc/role_editor_bloc.dart';
+import 'package:genesis/src/theming/palette.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({super.key});
@@ -31,8 +34,17 @@ class _RolePageState extends State<RolePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<UserBloc, UserState>(
+      body: BlocListener<RoleEditorBloc, RoleEditorState>(
         listener: (context, state) {
+          if (state is RoleEditorStateSuccess) {
+            _controllersManager.clear();
+            context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
+            final snack = SnackBar(
+              backgroundColor: Palette.color6DCF91,
+              content: Text(context.$.success),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snack);
+          }
           // if (state is UserStateUpdateSuccess) {
           //   final snack = SnackBar(
           //     backgroundColor: Colors.green,
@@ -66,12 +78,19 @@ class _RolePageState extends State<RolePage> {
                   SizedBox(
                     width: 400,
                     child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUnfocus,
                       controller: _controllersManager.nameController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         hintText: context.$.name,
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'required'.hardcoded;
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(
@@ -88,7 +107,6 @@ class _RolePageState extends State<RolePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
             Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
@@ -100,13 +118,21 @@ class _RolePageState extends State<RolePage> {
                 },
               ),
             ),
-            // SizedBox(
-            //   width: 400,
-            //   child: ElevatedButton(
-            //     onPressed: () => save(context),
-            //     child: Text(context.$.save),
-            //   ),
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
+                    ),
+                    onPressed: () => save(context),
+                    child: Text(context.$.create),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -114,7 +140,15 @@ class _RolePageState extends State<RolePage> {
   }
 
   void save(BuildContext context) {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      context.read<RoleEditorBloc>().add(
+        RoleEditorEvent.create(
+          name: _controllersManager.nameController.text,
+          description: _controllersManager.descriptionController.text,
+          permission: context.read<PermissionsSelectionBloc>().state.first,
+        ),
+      );
+    }
   }
 }
 
