@@ -8,6 +8,7 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
   PermissionsSelectionBloc() : super([]) {
     on(_onTogglePermission);
     on(_onSelectAllPermissions);
+    on(_onUnSelectAllPermissions);
   }
 
   void _onTogglePermission(_TogglePermission event, Emitter<List<Permission>> emit) {
@@ -28,5 +29,9 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
       emit(event.permissions);
     }
     emit(event.permissions);
+  }
+
+  void _onUnSelectAllPermissions(_SelectAllPermissions _, Emitter<List<Permission>> emit) {
+    emit([]);
   }
 }

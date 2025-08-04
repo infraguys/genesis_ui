@@ -3,7 +3,9 @@ part of 'permissions_selection_bloc .dart';
 sealed class PermissionsSelectionEvent {
   factory PermissionsSelectionEvent.togglePermission(Permission permission) = _TogglePermission;
 
-  factory PermissionsSelectionEvent.selectAll(List<Permission> permissions) = _SelectAllPermissions;
+  factory PermissionsSelectionEvent.toggleAll(List<Permission> permissions) = _SelectAllPermissions;
+
+  factory PermissionsSelectionEvent.unSelectAll() = _UnSelectAllPermissions;
 }
 
 final class _TogglePermission implements PermissionsSelectionEvent {
@@ -17,3 +19,5 @@ final class _SelectAllPermissions implements PermissionsSelectionEvent {
 
   final List<Permission> permissions;
 }
+
+final class _UnSelectAllPermissions implements PermissionsSelectionEvent {}
