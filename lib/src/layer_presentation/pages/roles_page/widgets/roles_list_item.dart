@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
@@ -25,7 +26,26 @@ class RolesListItem extends StatelessWidget {
           children: [
             Expanded(flex: 2, child: Text(role.name)),
             Flexible(child: StatusLabel(status: role.status)),
-            Expanded(flex: 4, child: Text(role.createdAt.toString())),
+            Expanded(
+              flex: 4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(role.uuid),
+                  IconButton(
+                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: role.uuid));
+                      final snack = SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Скопировано в буфер обмена: ${role.uuid}'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    },
+                  ),
+                ],
+              ),
+            ),
             Spacer(flex: 2),
           ],
         ),
