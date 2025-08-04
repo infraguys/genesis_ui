@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_list_item.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -34,7 +33,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           children: [
             Breadcrumbs(
               items: [
-                BreadcrumbItem(text: 'organizations'.hardcoded),
+                BreadcrumbItem(text: context.$.organizations),
               ],
             ),
             const SizedBox(height: 24),
