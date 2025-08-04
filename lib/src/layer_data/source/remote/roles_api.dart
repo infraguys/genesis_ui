@@ -1,0 +1,49 @@
+import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
+import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/layer_data/dtos/role_dto.dart';
+import 'package:genesis/src/layer_data/requests/create_role_req.dart';
+import 'package:genesis/src/layer_data/source/remote/i_roles_api.dart';
+
+final class RolesApi implements IRolesApi {
+  RolesApi(this._client);
+
+  final RestClient _client;
+
+  static const _userUrl = '/v1/iam/users/';
+  static const _rolesUrl = '/v1/iam/roles/';
+
+  @override
+  Future<List<RoleDto>> getRolesByUserUuid(String userUuid) async {
+    final url = '$_userUrl/$userUuid/actions/get_my_roles';
+
+    try {
+      final Response(:data, :requestOptions) = await _client.get<List<dynamic>>(url);
+      if (data != null) {
+        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+        return castedData.map((it) => RoleDto.fromJson(it)).toList();
+      }
+      return [];
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
+  Future<RoleDto?> createRole(CreateRoleReq req) async {
+    const url = _rolesUrl;
+    try {
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        url,
+        data: req.toJson(),
+      );
+      if (data != null) {
+        return RoleDto.fromJson(data);
+      }
+
+      return null;
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+}
