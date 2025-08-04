@@ -14,13 +14,16 @@ class RolesListItem extends StatelessWidget {
     final role = context.read<Role>();
     return Theme(
       data: Theme.of(context).copyWith(
-        listTileTheme: ListTileThemeData(
-          minVerticalPadding: 0,
-          contentPadding: EdgeInsets.zero,
-          tileColor: Colors.transparent,
-        ),
+        listTileTheme:
+            Theme.of(
+              context,
+            ).listTileTheme.copyWith(
+              minVerticalPadding: 0,
+              contentPadding: EdgeInsets.zero,
+              tileColor: Colors.transparent,
+            ),
       ),
-      child: ExpansionTile(
+      child: ListTile(
         title: Row(
           spacing: 48,
           children: [
@@ -60,8 +63,9 @@ class RolesListItem extends StatelessWidget {
           },
         ),
         trailing: RolesActionPopupMenuButton(role: role),
-        expandedAlignment: Alignment.centerLeft,
-        childrenPadding: EdgeInsets.only(left: 50),
+        // TODO: Чуть позже удалить
+        // expandedAlignment: Alignment.centerLeft,
+        // childrenPadding: EdgeInsets.only(left: 50),
       ),
     );
   }
