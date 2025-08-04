@@ -10,6 +10,7 @@ import 'package:genesis/src/features/auth/data/sources/local/token_dao.dart';
 import 'package:genesis/src/features/auth/data/sources/remote/remote_iam_client_api.dart';
 import 'package:genesis/src/features/auth/domain/repository/i_auth_repository.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/common/shared_api/permission_binding_api.dart';
 import 'package:genesis/src/features/organizations/data/organizations_repository.dart';
 import 'package:genesis/src/features/organizations/data/source/remote/organizations_api.dart';
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
@@ -77,7 +78,8 @@ class DiContainer extends StatelessWidget {
           RepositoryProvider<IRolesRepository>(
             create: (context) {
               final rolesApi = RolesApi(context.read<RestClient>());
-              return RolesRepository(rolesApi);
+              final permissionBindingsApi = PermissionBindingApi(context.read<RestClient>());
+              return RolesRepository(rolesApi, permissionBindingsApi);
             },
           ),
           RepositoryProvider<IOrganizationsRepository>(
