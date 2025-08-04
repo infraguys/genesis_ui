@@ -4,5 +4,5 @@ import 'package:genesis/src/features/role/data/requests/create_role_req.dart';
 abstract interface class IRolesApi {
   Future<List<RoleDto>> getRolesByUserUuid(String userUuid);
 
-  Future<RoleDto> createRole(CreateRoleReq req);
+  Future<RoleDto?> createRole(CreateRoleReq req);
 }
