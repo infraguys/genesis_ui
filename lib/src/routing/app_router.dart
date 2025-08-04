@@ -8,6 +8,7 @@ import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
+import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/permissions_bloc/permissions_bloc.dart';
@@ -182,7 +183,12 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.organizations.name,
                 path: '/organizations',
-                pageBuilder: (_, _) => NoTransitionPage(child: OrganizationsPage()),
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: BlocProvider(
+                    create: (context) => OrganizationsSelectionBloc(),
+                    child: OrganizationsPage(),
+                  ),
+                ),
               ),
             ],
           ),
