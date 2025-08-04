@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_action_popup_menu_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+
+class RolesListItem extends StatelessWidget {
+  const RolesListItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final role = context.read<Role>();
+    return Theme(
+      data: Theme.of(context).copyWith(
+        listTileTheme: ListTileThemeData(
+          minVerticalPadding: 0,
+          contentPadding: EdgeInsets.zero,
+          tileColor: Colors.transparent,
+        ),
+      ),
+      child: ExpansionTile(
+        title: Row(
+          spacing: 48,
+          children: [
+            Expanded(flex: 2, child: Text(role.name)),
+            Flexible(child: StatusLabel(status: role.status)),
+            Expanded(flex: 4, child: Text(role.createdAt.toString())),
+            Spacer(flex: 2),
+          ],
+        ),
+        leading: BlocBuilder<RolesSelectionBloc, List<Role>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(role),
+              onChanged: (_) {
+                context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleRole(role));
+              },
+            );
+          },
+        ),
+        trailing: RolesActionPopupMenuButton(role: role),
+        expandedAlignment: Alignment.centerLeft,
+        childrenPadding: EdgeInsets.only(left: 50),
+      ),
+    );
+  }
+}

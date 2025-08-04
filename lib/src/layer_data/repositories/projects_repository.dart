@@ -1,0 +1,40 @@
+import 'package:genesis/src/layer_data/requests/create_project_req.dart';
+import 'package:genesis/src/layer_data/requests/get_projects_req.dart';
+import 'package:genesis/src/layer_data/requests/update_project_req.dart';
+import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/params/create_project_params.dart';
+import 'package:genesis/src/layer_domain/params/update_project_paramas.dart';
+import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
+
+final class ProjectsRepository implements IProjectsRepository {
+  ProjectsRepository(this._projectsApi);
+
+  final IProjectsApi _projectsApi;
+
+  @override
+  Future<Project> createProject(CreateProjectParams params) async {
+    final req = CreateProjectReq(params);
+    final dto = await _projectsApi.createProject(req);
+    return dto.toEntity();
+  }
+
+  @override
+  Future<void> deleteProject(String projectUuid) async {
+    await _projectsApi.deleteProject(projectUuid);
+  }
+
+  @override
+  Future<Project> updateProject(UpdateProjectParams params) async {
+    final req = UpdateProjectReq(params);
+    final dto = await _projectsApi.updateProject(req);
+    return dto.toEntity();
+  }
+
+  @override
+  Future<List<Project>> getProjects(params) async {
+    final req = GetProjectsReq(params);
+    final dtos = await _projectsApi.getProjects(req);
+    return dtos.map((it) => it.toEntity()).toList();
+  }
+}
