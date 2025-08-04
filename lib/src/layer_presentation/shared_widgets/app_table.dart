@@ -45,10 +45,10 @@ class _AppTableHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget? headerLeading;
 
   @override
-  double get minExtent => 50.0;
+  double get minExtent => 48.0;
 
   @override
-  double get maxExtent => 50.0;
+  double get maxExtent => 48.0;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
