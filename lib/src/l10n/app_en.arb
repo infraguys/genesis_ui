@@ -42,5 +42,6 @@
   "updatedAt": "Updated at",
   "permissions": "Permissions",
   "uuid": "Uuid",
-  "name": "Name"
+  "name": "Name",
+  "organizations": "Organizations"
 }
