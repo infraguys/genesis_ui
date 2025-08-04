@@ -5,4 +5,11 @@ final class CreateRoleReq {
 
   final String _name;
   final String? _description;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': _name,
+      'description': _description,
+    };
+  }
 }
