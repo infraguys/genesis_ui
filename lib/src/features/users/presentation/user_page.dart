@@ -51,7 +51,7 @@ class _UserPageState extends State<UserPage> {
             children: [
               Breadcrumbs(
                 items: [
-                  BreadcrumbItem(text: 'user'),
+                  BreadcrumbItem(text: 'users'),
                   BreadcrumbItem(text: widget.user.username),
                 ],
               ),
