@@ -15,6 +15,16 @@ class UsersTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTable<User>(
       entities: users,
+      item: UsersListItem(),
+      title: Row(
+        spacing: 48,
+        children: [
+          Expanded(flex: 2, child: Text(context.$.username)),
+          Expanded(child: Text(context.$.status)),
+          Expanded(flex: 4, child: Text(context.$.uuid)),
+          Spacer(flex: 2),
+        ],
+      ),
       headerLeading: BlocBuilder<UsersSelectionBloc, List<User>>(
         builder: (context, state) {
           return Checkbox(
@@ -29,16 +39,6 @@ class UsersTable extends StatelessWidget {
             },
           );
         },
-      ),
-      item: UsersListItem(),
-      title: Row(
-        spacing: 48,
-        children: [
-          Expanded(flex: 2, child: Text(context.$.username)),
-          Expanded(child: Text(context.$.status)),
-          Expanded(flex: 4, child: Text(context.$.uuid)),
-          Spacer(flex: 2),
-        ],
       ),
     );
   }
