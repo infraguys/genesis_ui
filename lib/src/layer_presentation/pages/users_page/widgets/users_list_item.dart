@@ -31,11 +31,11 @@ class UsersListItem extends StatelessWidget {
             Expanded(flex: 2, child: Text(user.username)),
             Flexible(child: StatusLabel(status: user.status)),
             Expanded(
-              flex: 2,
+              flex: 4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('...${user.uuid.split('-').last}'),
+                  Text(user.uuid),
                   IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
@@ -50,7 +50,7 @@ class UsersListItem extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(flex: 4),
+            Spacer(flex: 2),
           ],
         ),
         leading: BlocBuilder<UsersSelectionBloc, List<User>>(
