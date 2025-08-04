@@ -9,3 +9,5 @@ sealed class RoleEditorState {
 class RoleEditorInitialState implements RoleEditorState {}
 
 class RoleEditorLoadingState implements RoleEditorState {}
+
+final class RoleEditorStateSuccess implements RoleEditorState {}
