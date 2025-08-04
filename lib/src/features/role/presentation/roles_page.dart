@@ -5,11 +5,10 @@ import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc
 import 'package:genesis/src/features/common/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/features/common/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/features/role/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/features/role/presentation/widgets/roles_list_item.dart';
+import 'package:genesis/src/features/role/presentation/widgets/roles_table.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class RolesPage extends StatefulWidget {
   const RolesPage({super.key});
@@ -57,39 +56,13 @@ class _ProjectsPageState extends State<RolesPage> {
           ],
         ),
         const SizedBox(height: 24),
-        ListTile(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-          ),
-          contentPadding: EdgeInsets.zero,
-          leading: Checkbox(value: true, onChanged: (_) {}),
-          trailing: IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-          title: Row(
-            spacing: 48,
-            children: [
-              Expanded(flex: 2, child: Text(context.$.role(1))),
-              Expanded(child: Text(context.$.status)),
-              Expanded(flex: 4, child: Text('Created At')),
-              Spacer(flex: 2),
-            ],
-          ),
-        ),
         Expanded(
           child: BlocBuilder<UserRolesBloc, UserRolesState>(
             builder: (context, state) {
               if (state is! UserRolesLoaded) {
                 return AppProgressIndicator();
               }
-              return ListView.separated(
-                itemCount: state.roles.length,
-                separatorBuilder: (_, _) => Divider(height: 0),
-                itemBuilder: (_, index) {
-                  return Provider.value(
-                    value: state.roles[index],
-                    child: RolesListItem(),
-                  );
-                },
-              );
+              return RolesTable(roles: state.roles);
             },
           ),
         ),
