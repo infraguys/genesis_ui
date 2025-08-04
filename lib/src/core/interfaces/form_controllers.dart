@@ -7,6 +7,13 @@ abstract class FormControllersManager {
   /// Returns true if all controllers have text.
   bool get allFilled;
 
+  /// Clears the text in all text controllers.
+  void clear() {
+    for (final controller in all) {
+      controller.clear();
+    }
+  }
+
   /// Disposes all controllers.
   void dispose() {
     for (final controller in all) {
