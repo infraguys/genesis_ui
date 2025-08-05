@@ -32,7 +32,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           children: [
             Breadcrumbs(
               items: [
-                BreadcrumbItem(text: context.$.organizations),
+                BreadcrumbItem(text: context.$.organizations.toLowerCase()),
               ],
             ),
             const SizedBox(height: 24),
