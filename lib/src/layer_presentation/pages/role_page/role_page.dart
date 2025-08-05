@@ -145,7 +145,7 @@ class _RolePageState extends State<RolePage> {
         RoleEditorEvent.create(
           name: _controllersManager.nameController.text,
           description: _controllersManager.descriptionController.text,
-          permission: context.read<PermissionsSelectionBloc>().state.first,
+          permissions: context.read<PermissionsSelectionBloc>().state,
         ),
       );
     }
