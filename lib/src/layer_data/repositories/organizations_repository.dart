@@ -1,10 +1,10 @@
 import 'package:genesis/src/layer_data/requests/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
 import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
 import 'package:genesis/src/layer_domain/params/update_organiztion_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/create_organization_params.dart';
 
 final class OrganizationsRepository implements IOrganizationsRepository {
   OrganizationsRepository(this._organizationsApi);
