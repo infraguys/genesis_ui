@@ -24,5 +24,6 @@ class RoleEditorBloc extends Bloc<RoleEditorEvent, RoleEditorState> {
     );
     emit(RoleEditorState.loading());
     await useCase(params);
+    emit(RoleEditorState.success());
   }
 }
