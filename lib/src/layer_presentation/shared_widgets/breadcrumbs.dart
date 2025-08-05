@@ -13,7 +13,7 @@ class Breadcrumbs extends StatelessWidget {
           .map(
             (it) => GestureDetector(
               onTap: it.onTap,
-              child: Text(it.text, style: TextStyle(color: Colors.white54, fontSize: 12)),
+              child: Text(it.text.toLowerCase(), style: TextStyle(color: Colors.white54, fontSize: 12)),
             ),
           )
           .wrapWithHoverable()
