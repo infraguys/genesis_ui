@@ -65,8 +65,8 @@ class _RolePageState extends State<RolePage> {
           children: [
             Breadcrumbs(
               items: [
-                BreadcrumbItem(text: context.$.role(3).toLowerCase()),
-                BreadcrumbItem(text: context.$.create.toLowerCase()),
+                BreadcrumbItem(text: context.$.role(3)),
+                BreadcrumbItem(text: context.$.create),
               ],
             ),
             Form(
