@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/layer_presentation/pages/create_organization_page/blocs/organization_editor_bloc/organization_editor_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
@@ -198,7 +200,7 @@ GoRouter createRouter(BuildContext context) {
                       child: MultiBlocProvider(
                         providers: [
                           BlocProvider(
-                            create: (_) => RoleEditorBloc(context.read<IRolesRepository>()),
+                            create: (_) => OrganizationEditorBloc(context.read<IOrganizationsRepository>()),
                           ),
                         ],
                         child: CreateOrganizationPage(),
