@@ -3,7 +3,7 @@ part of 'role_editor_bloc.dart';
 sealed class RoleEditorEvent {
   factory RoleEditorEvent.create({
     required String name,
-    required Permission permission,
+    required List<Permission> permissions,
     String? description,
   }) = _CreateRole;
 }
@@ -11,11 +11,11 @@ sealed class RoleEditorEvent {
 final class _CreateRole implements RoleEditorEvent {
   const _CreateRole({
     required this.name,
-    required this.permission,
+    required this.permissions,
     this.description,
   });
 
   final String name;
   final String? description;
-  final Permission permission;
+  final List<Permission> permissions;
 }
