@@ -12,7 +12,6 @@ part 'text_theme.dart';
 class AppTheme {
   ThemeData get light {
     return ThemeData(
-      brightness: Brightness.light,
       useMaterial3: true,
       textTheme: _lightTextTheme,
       scaffoldBackgroundColor: Palette.color1B1B1D,
@@ -65,7 +64,6 @@ class AppTheme {
   ThemeData get dark {
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
       textTheme: _darkTextTheme,
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
