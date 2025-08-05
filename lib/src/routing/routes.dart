@@ -16,9 +16,11 @@ enum AppRoutes {
   users,
   user,
   projects,
+
   roles,
   createRole,
   organizations,
+  createOrganization,
   //
   main,
   monitoring,
