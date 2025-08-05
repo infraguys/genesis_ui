@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
 import 'package:genesis/src/layer_data/dtos/organization_member_dto.dart';
 import 'package:genesis/src/layer_data/requests/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 final class OrganizationsApi implements IOrganizationsApi {
   OrganizationsApi(this._client);
@@ -16,9 +16,20 @@ final class OrganizationsApi implements IOrganizationsApi {
   static const _organizationsUrl = '/v1/iam/organizations/';
 
   @override
-  Future<Organization> createOrganization() {
-    // TODO: implement createOrganization
-    throw UnimplementedError();
+  Future<OrganizationDto> createOrganization(req) async {
+    const url = _organizationsUrl;
+    try {
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        url,
+        data: req.toJson(),
+      );
+      if (data != null) {
+        return OrganizationDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
@@ -56,7 +67,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   }
 
   @override
-  Future<Organization> getOrganizationByUuid(String uuid) {
+  Future<OrganizationDto> getOrganizationByUuid(String uuid) {
     // TODO: implement getOrganizationByUuid
     throw UnimplementedError();
   }
@@ -81,7 +92,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   }
 
   @override
-  Future<Organization> updateOrganization() {
+  Future<OrganizationDto> updateOrganization() {
     // TODO: implement updateOrganization
     throw UnimplementedError();
   }
