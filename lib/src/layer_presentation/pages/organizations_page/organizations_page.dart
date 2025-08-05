@@ -45,7 +45,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
               ),
               onPressed: () {
-                context.goNamed(AppRoutes.createRole.name);
+                context.goNamed(AppRoutes.createOrganization.name);
               },
               label: Text(context.$.create, style: textTheme.headlineSmall!.copyWith(height: 20 / 14)),
               icon: Icon(Icons.add, color: Palette.color1B1B1D),
