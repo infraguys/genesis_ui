@@ -42,6 +42,7 @@ class _ProjectsPageState extends State<RolesPage> {
         Row(
           children: [
             Spacer(),
+            // todo: вынести в отдельный виджет или стиль
             ElevatedButton.icon(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
