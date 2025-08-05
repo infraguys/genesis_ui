@@ -42,7 +42,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         children: [
           Breadcrumbs(
             items: [
-              BreadcrumbItem(text: 'projects'),
+              BreadcrumbItem(text: context.$.projects),
             ],
           ),
           Text('Проекты', style: textTheme.headlineMedium),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_table.dart';
@@ -31,7 +32,7 @@ class _UsersPageState extends State<UsersPage> {
           // TODO: Добавить название страницы
           Breadcrumbs(
             items: [
-              BreadcrumbItem(text: 'users'),
+              BreadcrumbItem(text: context.$.users),
             ],
           ),
           // Text(context.$.users, ),
