@@ -11,15 +11,12 @@ final class PermissionBindingApi implements IPermissionBindingsApi {
   static const _permissionBindingsUrl = '/v1/iam/permission_bindings/';
 
   @override
-  Future<void> createPermissionBinding(String role, String permissionUuid) async {
+  Future<void> createPermissionBinding(req) async {
     const url = _permissionBindingsUrl;
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
         url,
-        data: {
-          'role': '/v1/iam/roles/$role',
-          'permission': '/v1/iam/permissions/$permissionUuid',
-        },
+        data: req.toJson(),
       );
     } on DioException catch (e) {
       throw NetworkException(e);
