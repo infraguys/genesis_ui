@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
@@ -30,7 +31,7 @@ final class RolesApi implements IRolesApi {
   }
 
   @override
-  Future<RoleDto?> createRole(CreateRoleReq req) async {
+  Future<RoleDto> createRole(CreateRoleReq req) async {
     const url = _rolesUrl;
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
@@ -40,8 +41,7 @@ final class RolesApi implements IRolesApi {
       if (data != null) {
         return RoleDto.fromJson(data);
       }
-
-      return null;
+      throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
