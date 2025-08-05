@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_data/requests/create_permission_binding_req.dart';
 import 'package:genesis/src/layer_data/requests/create_role_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_permission_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/i_roles_api.dart';
@@ -19,13 +20,17 @@ final class RolesRepository implements IRolesRepository {
 
   @override
   Future<Role?> createRole(CreateRoleParams params) async {
-    final req = CreateRoleReq(params);
-    final roleDto = await _rolesApi.createRole(req);
+    final createRoleReq = CreateRoleReq(params);
+    final roleDto = await _rolesApi.createRole(createRoleReq);
 
     if (roleDto != null) {
-      _iPermissionBindingsApi.createPermissionBinding(
-        roleDto.uuid,
-        params.permission.uuid,
+      await Future.wait(
+        params.permissions.map(
+          (it) {
+            final createPermReq = CreatePermissionBindingReq(permissionUuid: it.uuid, roleUuid: roleDto.uuid);
+            return _iPermissionBindingsApi.createPermissionBinding(createPermReq);
+          },
+        ),
       );
     }
 
