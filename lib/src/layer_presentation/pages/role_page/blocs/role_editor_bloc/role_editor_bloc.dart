@@ -20,7 +20,7 @@ class RoleEditorBloc extends Bloc<RoleEditorEvent, RoleEditorState> {
     final params = CreateRoleParams(
       name: event.name,
       description: event.description,
-      permission: event.permission,
+      permissions: event.permissions,
     );
     emit(RoleEditorState.loading());
     await useCase(params);
