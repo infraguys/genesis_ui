@@ -18,7 +18,6 @@ class RolesActionPopupMenuButton extends StatelessWidget {
       icon: Icon(Icons.more_vert),
       onSelected: (value) {
         final child = switch (value) {
-          _PopupBtnValue.addRole => Placeholder(),
           _PopupBtnValue.editRole => Placeholder(),
           _PopupBtnValue.deleteRole => Placeholder(),
         };
@@ -37,10 +36,6 @@ class RolesActionPopupMenuButton extends StatelessWidget {
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-            value: _PopupBtnValue.addRole,
-            child: Text(context.$.add),
-          ),
-          PopupMenuItem(
             value: _PopupBtnValue.editRole,
             child: Text(context.$.edit),
           ),
@@ -56,7 +51,6 @@ class RolesActionPopupMenuButton extends StatelessWidget {
 }
 
 enum _PopupBtnValue {
-  addRole,
   editRole,
   deleteRole,
 }
