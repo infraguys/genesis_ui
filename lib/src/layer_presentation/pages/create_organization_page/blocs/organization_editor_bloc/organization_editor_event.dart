@@ -1,15 +1,11 @@
 part of 'organization_editor_bloc.dart';
 
 sealed class OrganizationEditorEvent {
-  factory OrganizationEditorEvent.createOrganization({
-    required String name,
-    String? description,
-  }) = _CreateOrganization;
+  factory OrganizationEditorEvent.createOrganization(CreateOrganizationParams params) = _CreateOrganization;
 }
 
 final class _CreateOrganization implements OrganizationEditorEvent {
-  const _CreateOrganization({required this.name, this.description});
+  const _CreateOrganization(this.params);
 
-  final String name;
-  final String? description;
+  final CreateOrganizationParams params;
 }
