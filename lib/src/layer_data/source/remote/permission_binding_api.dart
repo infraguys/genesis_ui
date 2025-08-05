@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/layer_data/dtos/permission_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/i_permission_bindings_api.dart';
 
 final class PermissionBindingApi implements IPermissionBindingsApi {
@@ -11,13 +13,17 @@ final class PermissionBindingApi implements IPermissionBindingsApi {
   static const _permissionBindingsUrl = '/v1/iam/permission_bindings/';
 
   @override
-  Future<void> createPermissionBinding(req) async {
+  Future<PermissionDto> createPermissionBinding(req) async {
     const url = _permissionBindingsUrl;
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         url,
         data: req.toJson(),
       );
+      if (data != null) {
+        return PermissionDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
