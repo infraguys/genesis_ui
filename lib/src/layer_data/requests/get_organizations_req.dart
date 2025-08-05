@@ -1,5 +1,5 @@
 import 'package:genesis/src/layer_domain/entities/status.dart';
-import 'package:genesis/src/layer_domain/use_cases/get_organizations_params.dart';
+import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'get_organizations_req.g.dart';

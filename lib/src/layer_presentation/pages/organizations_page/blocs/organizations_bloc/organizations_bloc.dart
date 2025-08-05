@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/get_orgaizations_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/get_organizations_by_user_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/get_organizations_params.dart';
+import 'package:genesis/src/layer_domain/use_cases/organizations/get_orgaizations_usecase.dart';
 
 part 'organizations_event.dart';
 part 'organizations_state.dart';
