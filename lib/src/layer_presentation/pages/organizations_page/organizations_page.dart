@@ -35,10 +35,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           ],
         ),
         const SizedBox(height: 24),
-        // todo: вынести в отдельный виджет или стиль
         Row(
           children: [
             Spacer(),
+            // todo: вынести в отдельный виджет или стиль
             ElevatedButton.icon(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
