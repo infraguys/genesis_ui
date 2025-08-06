@@ -1,23 +1,27 @@
 import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/core/interfaces/json_encodable.dart';
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/sign_in_params.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'sign_in_req.g.dart';
+final class SignInReq implements JsonEncodable, PathEncodable {
+  const SignInReq(this._params);
 
-@JsonSerializable(createFactory: false)
-class SignInReq {
-  SignInReq(SignInParams params) : username = params.username, password = params.password;
+  final SignInParams _params;
 
-  @JsonKey(includeToJson: false)
-  final String iamClientUuid = Env.iamClientUuid;
-  final String grantType = Env.grantType;
-  final String clientId = Env.clientId;
-  final String clientSecret = Env.clientSecret;
-  final String? scope = Env.scope;
-  final int? ttl = Env.ttl;
-  final int? refreshTtl = Env.refreshTtl;
-  final String username;
-  final String password;
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'grant_type': Env.grantType,
+      'client_id': Env.clientId,
+      'client_secret': Env.clientSecret,
+      'scope': Env.scope,
+      'ttl': Env.ttl,
+      'refresh_ttl': Env.refreshTtl,
+      'username': _params.username,
+      'password': _params.password,
+    };
+  }
 
-  Map<String, dynamic> toJson() => _$SignInReqToJson(this);
+  @override
+  String toPath(String prefix) => '$prefix/${Env.iamClientUuid}/actions/get_token/invoke';
 }
