@@ -23,7 +23,7 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<User> changeUserPassword(ChangeUserPasswordParams params) async {
-    final req = ChangeUserPasswordReq.fromParams(params);
+    final req = ChangeUserPasswordReq(params);
     final dto = await _usersApi.changeUserPassword(req);
     return dto.toEntity();
   }
