@@ -1,15 +1,14 @@
 import 'package:genesis/src/layer_domain/params/create_role_params.dart';
 
 final class CreateRoleReq {
-  CreateRoleReq(CreateRoleParams params) : _name = params.name, _description = params.description;
+  CreateRoleReq(this._params);
 
-  final String _name;
-  final String? _description;
+  final CreateRoleParams _params;
 
   Map<String, dynamic> toJson() {
     return {
-      'name': _name,
-      'description': _description,
+      'name': _params.name,
+      'description': _params.description,
     };
   }
 }
