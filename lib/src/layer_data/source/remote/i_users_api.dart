@@ -2,7 +2,7 @@ import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
 import 'package:genesis/src/layer_data/requests/change_user_password_req.dart';
 import 'package:genesis/src/layer_data/requests/create_user_req.dart';
-import 'package:genesis/src/layer_data/requests/update_user_req.dart';
+import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
 
 abstract interface class IUsersApi {
   Future<List<UserDto>> getUsers();
