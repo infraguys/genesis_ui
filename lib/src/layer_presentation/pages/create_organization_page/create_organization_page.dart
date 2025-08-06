@@ -22,8 +22,6 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
 
   @override
   void initState() {
-    // context.read<PermissionsBloc>().add(PermissionsEvent.getPermissions());
-    // context.read<UserRolesBloc>().add(UserRolesEvent.getRoles(widget.user.uuid));
     _controllersManager = _ControllersManager();
     super.initState();
   }
