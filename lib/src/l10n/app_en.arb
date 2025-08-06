@@ -44,5 +44,6 @@
   "uuid": "Uuid",
   "name": "Name",
   "organizations": "Organizations",
-  "block": "Block"
+  "block": "Block",
+  "confirmEmail": "Confirm email"
 }

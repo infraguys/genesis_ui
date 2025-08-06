@@ -349,6 +349,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Block'**
   String get block;
+
+  /// No description provided for @confirmEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm email'**
+  String get confirmEmail;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

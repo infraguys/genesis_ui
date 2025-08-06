@@ -39,5 +39,6 @@
   "permissions": "Разрешения",
   "name": "Имя",
   "organizations": "Организации",
-  "block": "Блокировать"
+  "block": "Блокировать",
+  "confirmEmail": "Подтвердить email"
 }
