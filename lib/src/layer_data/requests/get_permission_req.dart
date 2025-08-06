@@ -1,30 +1,29 @@
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_domain/params/get_permissions_params.dart';
 
-final class GetPermissionsReq {
-  GetPermissionsReq(GetPermissionsParams params)
-    : _name = params.name,
-      _description = params.description,
-      _createdAt = params.createdAt?.toIso8601String(),
-      _updatedAt = params.updatedAt?.toIso8601String(),
-      _status = switch (params.status) {
-        Status.active => 'ACTIVE',
-        _ => null,
-      };
+final class GetPermissionsReq implements QueryEncodable, PathEncodable {
+  GetPermissionsReq(this._params);
 
-  final String? _name;
-  final String? _description;
-  final String? _createdAt;
-  final String? _updatedAt;
-  final String? _status;
+  final GetPermissionsParams _params;
 
-  Map<String, dynamic> get query {
+  @override
+  Map<String, dynamic> toQuery() {
+    final status = switch (_params.status) {
+      Status.active => 'ACTIVE',
+      _ => null,
+    };
+
     return {
-      'name': ?_name,
-      'description': ?_description,
-      'created_at': ?_createdAt,
-      'updated_at': ?_updatedAt,
-      'status': ?_status,
+      'name': ?_params.name,
+      'description': ?_params.description,
+      'created_at': ?_params.createdAt?.toIso8601String(),
+      'updated_at': ?_params.updatedAt?.toIso8601String(),
+      'status': ?status,
     };
   }
+
+  @override
+  String toPath(String prefix) => prefix;
 }
