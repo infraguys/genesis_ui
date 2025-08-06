@@ -15,7 +15,6 @@ final class CreateRoleReq implements JsonEncodable, PathEncodable {
     };
   }
 
-  /// .../v1/iam/roles/
   @override
   String toPath(String prefix) => prefix;
 }

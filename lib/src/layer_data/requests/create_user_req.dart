@@ -1,42 +1,26 @@
+import 'package:genesis/src/core/interfaces/json_encodable.dart';
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/create_user_params.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'create_user_req.g.dart';
+final class CreateUserReq implements JsonEncodable, PathEncodable {
+  CreateUserReq(this._params);
 
-@JsonSerializable(createFactory: false)
-final class CreateUserReq {
-  CreateUserReq._({
-    required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.password,
-    required this.email,
-    this.surname,
-    this.phone,
-    this.description,
-  });
+  final CreateUserParams _params;
 
-  factory CreateUserReq.fromParams(CreateUserParams params) {
-    return CreateUserReq._(
-      username: params.username,
-      description: params.description,
-      password: params.password,
-      email: params.email,
-      firstName: params.firstName,
-      lastName: params.lastName,
-      phone: params.phone,
-      surname: params.surname,
-    );
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'username': _params.username,
+      'first_name': _params.firstName,
+      'last_name': _params.lastName,
+      'email': _params.email,
+      'password': _params.password,
+      'description': ?_params.description,
+      'surname': ?_params.surname,
+      'phone': ?_params.phone,
+    };
   }
 
-  final String username;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String password;
-  final String? description;
-  final String? surname;
-  final String? phone;
-
-  Map<String, dynamic> toJson() => _$CreateUserReqToJson(this);
+  @override
+  String toPath(String prefix) => prefix;
 }

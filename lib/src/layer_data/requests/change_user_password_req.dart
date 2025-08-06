@@ -15,7 +15,6 @@ class ChangeUserPasswordReq implements JsonEncodable, PathEncodable {
     };
   }
 
-  /// .../v1/iam/users/:uuid/actions/change_password/invoke
   @override
   String toPath(String prefix) => '$prefix/${_params.uuid}/actions/change_password/invoke';
 }
