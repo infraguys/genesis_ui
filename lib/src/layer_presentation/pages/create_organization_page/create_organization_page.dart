@@ -48,12 +48,7 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
             backgroundColor: Palette.color6DCF91,
             content: Text(context.$.success),
           );
-          ScaffoldMessenger.of(context)
-              .showSnackBar(snack)
-              .closed
-              .then(
-                (_) => navigator.pop(),
-              );
+          ScaffoldMessenger.of(context).showSnackBar(snack).closed.then((_) => navigator.pop());
         }
       },
       child: Scaffold(
