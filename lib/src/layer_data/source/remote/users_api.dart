@@ -4,7 +4,6 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
-import 'package:genesis/src/layer_data/requests/update_user_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_users_api.dart';
 
 final class UsersApi implements IUsersApi {
@@ -99,15 +98,14 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
-  Future<UserDto> updateUser(UpdateUserReq req) async {
-    final url = '$_usersUrl/${req.uuid}';
+  Future<UserDto> updateUser(req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
-        url,
+        req.toPath(_usersUrl),
         data: req.toJson(),
       );
       if (data == null) {
-        throw DataNotFoundException(url);
+        throw DataNotFoundException(req.toPath(_usersUrl));
       }
       return UserDto.fromJson(data);
     } on DioException catch (e) {
