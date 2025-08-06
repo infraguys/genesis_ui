@@ -32,11 +32,9 @@ final class UsersApi implements IUsersApi {
 
   @override
   Future<UserDto> changeUserPassword(req) async {
-    final url = '$_usersUrl/${req.uuid}/actions/change_password/invoke';
-
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        url,
+        req.toPath(_usersUrl),
         data: req.toJson(),
       );
       if (data == null) {
@@ -51,6 +49,7 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> confirmEmail(String userUuid) async {
     final url = '$_usersUrl/$userUuid/actions/confirm_email/invoke';
+    final Uri uri = Uri(pathSegments: []);
 
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
