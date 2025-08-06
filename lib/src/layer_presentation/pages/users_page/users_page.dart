@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_selection_bloc/users_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_bloc_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -56,6 +57,7 @@ class _UsersPageState extends State<UsersPage> {
             children: [
               Spacer(),
               UsersDeleteIconButton(),
+              UsersBlockIconButton(),
               // todo: вынести в отдельный виджет или стиль
               ElevatedButton.icon(
                 style: ButtonStyle(
