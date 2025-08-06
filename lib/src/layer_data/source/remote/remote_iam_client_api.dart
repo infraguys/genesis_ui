@@ -16,16 +16,12 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
 
   @override
   Future<TokenDto> createTokenByPassword(SignInReq req) async {
-    final url = '$_iamClientUrl/${req.iamClientUuid}/actions/get_token/invoke';
-
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        url,
+        req.toPath(_iamClientUrl),
         data: req.toJson(),
         options: Options(
-          headers: {
-            Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
-          },
+          headers: {Headers.contentTypeHeader: Headers.formUrlEncodedContentType},
         ),
       );
       return TokenDto.fromJson(data!);
@@ -35,13 +31,11 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   }
 
   @override
-  Future<AuthUserDto> getCurrentUser(
-    String iamClientUuid,
-  ) async {
-    final url = '$_iamClientUrl/$iamClientUuid/actions/me';
-
+  Future<AuthUserDto> getCurrentUser(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(url);
+      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+        req.toPath(_iamClientUrl),
+      );
       if (data != null) {
         if (data case {
           'user': Map<String, dynamic> userJson,
