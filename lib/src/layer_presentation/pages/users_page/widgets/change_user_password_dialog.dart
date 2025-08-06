@@ -33,7 +33,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
           spacing: 12,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(context.$.changeUserPassword),
+            Text(context.$.changePassword),
             TextFormField(
               controller: _controllers.oldPassword,
               autovalidateMode: AutovalidateMode.onUnfocus,
