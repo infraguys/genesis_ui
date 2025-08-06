@@ -51,17 +51,17 @@ class _UsersPageState extends State<UsersPage> {
                 builder: (context, state) {
                   if (state.isNotEmpty) {
                     return ElevatedButton.icon(
+                      icon: Icon(CupertinoIcons.delete, color: Palette.colorF04C4C),
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(Palette.color333333),
                         padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
                       ),
                       // todo: добавить обработку нажатия
-                      onPressed: () {},
                       label: Text(
                         context.$.delete,
                         style: textTheme.headlineSmall!.copyWith(height: 20 / 14) + Colors.white,
                       ),
-                      icon: Icon(CupertinoIcons.delete, color: Palette.colorF04C4C),
+                      onPressed: () {},
                     );
                   }
                   return SizedBox.shrink();
