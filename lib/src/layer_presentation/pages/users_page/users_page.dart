@@ -6,11 +6,11 @@ import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_bloc
 import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_bloc_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_confirm_email_icon_button.dart';
+import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
-import 'package:genesis/src/theming/palette.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -22,7 +22,6 @@ class UsersPage extends StatefulWidget {
 class _UsersPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
     return MultiBlocListener(
       listeners: [
         BlocListener<UserBloc, UserState>(
@@ -60,17 +59,7 @@ class _UsersPageState extends State<UsersPage> {
               UsersDeleteIconButton(),
               UsersBlockIconButton(),
               UsersConfirmEmailIconButton(),
-              // todo: вынести в отдельный виджет или стиль
-              ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
-                  padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
-                ),
-                // todo: добавить обработку нажатия
-                onPressed: () {},
-                label: Text(context.$.create, style: textTheme.headlineSmall!.copyWith(height: 20 / 14)),
-                icon: Icon(Icons.add, color: Palette.color1B1B1D),
-              ),
+              UsersCreateIconButton(),
             ],
           ),
           const SizedBox(height: 24),
