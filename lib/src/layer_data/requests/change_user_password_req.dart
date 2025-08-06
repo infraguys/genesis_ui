@@ -1,28 +1,21 @@
+import 'package:genesis/src/core/interfaces/json_encodable.dart';
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/change_user_password_params.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'change_user_password_req.g.dart';
+class ChangeUserPasswordReq implements JsonEncodable, PathEncodable {
+  ChangeUserPasswordReq(this._params);
 
-@JsonSerializable(createFactory: false)
-class ChangeUserPasswordReq {
-  ChangeUserPasswordReq._({
-    required this.uuid,
-    required this.oldPassword,
-    required this.newPassword,
-  });
+  final ChangeUserPasswordParams _params;
 
-  factory ChangeUserPasswordReq.fromParams(ChangeUserPasswordParams params) {
-    return ChangeUserPasswordReq._(
-      uuid: params.uuid,
-      oldPassword: params.oldPassword,
-      newPassword: params.newPassword,
-    );
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'old_password': _params.oldPassword,
+      'new_password': _params.newPassword,
+    };
   }
 
-  @JsonKey(includeToJson: false)
-  final String uuid;
-  final String oldPassword;
-  final String newPassword;
-
-  Map<String, dynamic> toJson() => _$ChangeUserPasswordReqToJson(this);
+  /// .../:uuid/actions/change_password/invoke
+  @override
+  String toPath(String prefix) => '$prefix/${_params.uuid}/actions/change_password/invoke';
 }
