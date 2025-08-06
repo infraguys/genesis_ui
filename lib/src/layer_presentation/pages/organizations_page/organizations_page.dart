@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/pages/create_organization_page/blocs/organization_editor_bloc/organization_editor_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -55,20 +54,13 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         ),
         const SizedBox(height: 24),
         Expanded(
-          child: BlocListener<OrganizationEditorBloc, OrganizationEditorState>(
-            listener: (context, state) {
-              if (state is OrganizationEditorStateSuccess) {
-                context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+          child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
+            builder: (_, state) {
+              if (state is! OrganizationsLoadedState) {
+                return AppProgressIndicator();
               }
+              return OrganizationsTable(organizations: state.organizations);
             },
-            child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
-              builder: (_, state) {
-                if (state is! OrganizationsLoadedState) {
-                  return AppProgressIndicator();
-                }
-                return OrganizationsTable(organizations: state.organizations);
-              },
-            ),
           ),
         ),
       ],
