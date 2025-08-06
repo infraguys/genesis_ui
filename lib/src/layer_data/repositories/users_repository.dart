@@ -36,7 +36,7 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<User> createUser(CreateUserParams params) async {
-    final req = CreateUserReq.fromParams(params);
+    final req = CreateUserReq(params);
     final dto = await _usersApi.createUser(req);
     return dto.toEntity();
   }
