@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -40,9 +41,11 @@ class _ProjectsPageState extends State<RolesPage> {
         ),
         const SizedBox(height: 24),
         Row(
+          spacing: 4.0,
           children: [
             Spacer(),
             // todo: вынести в отдельный виджет или стиль
+            RolesDeleteIconButton(),
             ElevatedButton.icon(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
