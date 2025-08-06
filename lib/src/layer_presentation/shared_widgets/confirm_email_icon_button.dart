@@ -6,7 +6,7 @@ import 'package:genesis/src/theming/palette.dart';
 class ConfirmEmailIconButton extends StatelessWidget {
   const ConfirmEmailIconButton({required this.onPressed, super.key});
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

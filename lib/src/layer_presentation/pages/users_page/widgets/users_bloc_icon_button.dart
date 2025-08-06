@@ -15,7 +15,7 @@ class UsersBlockIconButton extends StatelessWidget {
           return SizedBox.shrink();
         }
         return BlockIconButton(
-          onPressed: () {},
+          onPressed: null,
         );
       },
     );

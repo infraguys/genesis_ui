@@ -15,7 +15,7 @@ class UsersConfirmEmailIconButton extends StatelessWidget {
           return SizedBox.shrink();
         }
         return ConfirmEmailIconButton(
-          onPressed: () {},
+          onPressed: null,
         );
       },
     );

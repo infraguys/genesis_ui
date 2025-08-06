@@ -7,7 +7,7 @@ import 'package:genesis/src/theming/palette.dart';
 class DeleteIconButton extends StatelessWidget {
   const DeleteIconButton({required this.onPressed, super.key});
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
