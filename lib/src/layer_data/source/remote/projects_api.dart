@@ -60,11 +60,13 @@ final class ProjectsApi implements IProjectsApi {
 
   @override
   Future<List<ProjectDto>> getProjects(req) async {
-    // const url = '$_roleBindingsUrl/?user=00000000-0000-0000-0000-000000000000';
-    final url = '$_roleBindingsUrl/?user=${req.userUuid}';
+    const url = _roleBindingsUrl;
 
     try {
-      final Response(:data) = await _client.get<List<dynamic>>(url);
+      final Response(:data) = await _client.get<List<dynamic>>(
+        url,
+        queryParameters: req.toQuery(),
+      );
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         final bindings = castedData.map((it) => RolesBindingsDto.fromJson(it)).toList();
