@@ -5,8 +5,9 @@ part 'users_selection_event.dart';
 
 class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
   UsersSelectionBloc() : super([]) {
-    on<_ToggleUser>(_onToggleUser);
-    on<_SelectAllUsers>(_onSelectAllUsers);
+    on(_onToggleUser);
+    on(_onSelectAllUsers);
+    on(_onClearSelection);
   }
 
   void _onToggleUser(_ToggleUser event, Emitter<List<User>> emit) {
@@ -27,5 +28,9 @@ class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
       emit(event.users);
     }
     emit(event.users);
+  }
+
+  void _onClearSelection(_ClearSelection event, Emitter<List<User>> emit) {
+    emit([]);
   }
 }
