@@ -18,7 +18,7 @@
   "lastName": "Фамилия",
   "surName": "Отчество",
   "iam": "Управление",
-  "changePassword": "Сменить пароль",
+  "changePassword": "Изменить пароль",
   "oldPassword": "Старый пароль",
   "newPassword": "Новый пароль",
   "cancel": "Отмена",
@@ -40,5 +40,6 @@
   "name": "Имя",
   "organizations": "Организации",
   "block": "Блокировать",
-  "confirmEmail": "Подтвердить email"
+  "confirmEmail": "Подтвердить email",
+  "changeEmail": "Изменить email"
 }

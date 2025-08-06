@@ -218,11 +218,11 @@ abstract class AppLocalizations {
   /// **'Iam'**
   String get iam;
 
-  /// No description provided for @changeUserPassword.
+  /// No description provided for @changePassword.
   ///
   /// In en, this message translates to:
   /// **'Change password'**
-  String get changeUserPassword;
+  String get changePassword;
 
   /// No description provided for @oldPassword.
   ///
@@ -355,6 +355,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm email'**
   String get confirmEmail;
+
+  /// No description provided for @changeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Change email'**
+  String get changeEmail;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

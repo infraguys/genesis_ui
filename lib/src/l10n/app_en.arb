@@ -22,7 +22,7 @@
   "email": "email",
   "uuid": "uuid",
   "iam": "Iam",
-  "changeUserPassword": "Change password",
+  "changePassword": "Change password",
   "oldPassword": "Old password",
   "newPassword": "New password",
   "cancel": "Cancel",
@@ -45,5 +45,6 @@
   "name": "Name",
   "organizations": "Organizations",
   "block": "Block",
-  "confirmEmail": "Confirm email"
+  "confirmEmail": "Confirm email",
+  "changeEmail": "Change email"
 }
