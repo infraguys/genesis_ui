@@ -64,9 +64,11 @@ final class UsersApi implements IUsersApi {
 
   @override
   Future<UserDto> createUser(req) async {
-    const url = _usersUrl;
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(url, data: req.toJson());
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
+        req.toPath(_usersUrl),
+        data: req.toJson(),
+      );
       return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw NetworkException(e);
