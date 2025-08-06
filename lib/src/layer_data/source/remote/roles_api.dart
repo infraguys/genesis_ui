@@ -32,10 +32,9 @@ final class RolesApi implements IRolesApi {
 
   @override
   Future<RoleDto> createRole(CreateRoleReq req) async {
-    const url = _rolesUrl;
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        url,
+        req.toPath(_rolesUrl),
         data: req.toJson(),
       );
       if (data != null) {
