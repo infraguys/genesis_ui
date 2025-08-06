@@ -18,10 +18,7 @@ class DeleteIconButton extends StatelessWidget {
         backgroundColor: WidgetStatePropertyAll(Palette.color333333),
         padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
       ),
-      label: Text(
-        context.$.delete,
-        style: textTheme.headlineSmall!.copyWith(height: 20 / 14) + Colors.white,
-      ),
+      label: Text(context.$.delete, style: textTheme.headlineSmall!.copyWith(height: 20 / 14) + Colors.white),
       onPressed: onPressed,
     );
   }
