@@ -38,5 +38,6 @@
   "updatedAt": "Обновлено",
   "permissions": "Разрешения",
   "name": "Имя",
-  "organizations": "Организации"
+  "organizations": "Организации",
+  "block": "Блокировать"
 }
