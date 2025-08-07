@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Sign up'**
   String get signUp;
 
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
   /// No description provided for @users.
   ///
   /// In en, this message translates to:
@@ -343,6 +349,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get name;
+
+  /// No description provided for @organization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get organization;
 
   /// No description provided for @organizations.
   ///
