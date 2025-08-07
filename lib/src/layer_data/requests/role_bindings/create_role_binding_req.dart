@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/extensions/nullable_extension.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
@@ -12,7 +13,7 @@ final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {
     return {
       'user': '/v1/iam/users/${_params.userUuid}',
       'role': '/v1/iam/roles/${_params.roleUuid}',
-      'project': '/v1/iam/projects/${_params.projectUuid}',
+      'project': ?_params.projectUuid.notNull((it) => '/v1/iam/projects/${_params.projectUuid}'),
     };
   }
 
