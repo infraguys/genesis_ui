@@ -11,15 +11,11 @@ final class RoleBindingsApi implements IRoleBindingsApi {
   static const _roleBindingsUrl = '/v1/iam/role_bindings/';
 
   @override
-  Future<void> createRoleBinding(String roleUuid, String userUuid) async {
-    const url = _roleBindingsUrl;
+  Future<void> createRoleBinding(req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        url,
-        data: {
-          'role_uuid': roleUuid,
-          'user_uuid': userUuid,
-        },
+        req.toPath(_roleBindingsUrl),
+        data: req.toJson(),
       );
     } on DioException catch (e) {
       throw NetworkException(e);
