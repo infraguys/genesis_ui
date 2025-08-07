@@ -36,7 +36,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         Row(
           spacing: 4.0,
           children: [
-            Spacer(), OrganizationsDeleteIconButton(), OrganizationsCreateIconButton()],
+            Spacer(),
+            OrganizationsDeleteIconButton(),
+            OrganizationsCreateIconButton(),
+          ],
         ),
         const SizedBox(height: 24),
         Expanded(
