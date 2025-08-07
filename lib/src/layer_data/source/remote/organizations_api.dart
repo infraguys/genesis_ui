@@ -74,11 +74,9 @@ final class OrganizationsApi implements IOrganizationsApi {
 
   @override
   Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
-    final url = _organizationsUrl;
-
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        url,
+        req.toPath(_organizationsUrl),
         queryParameters: req.toQuery(),
       );
       if (data != null) {
