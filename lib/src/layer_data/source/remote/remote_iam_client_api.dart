@@ -4,7 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/auth_user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/token_dto.dart';
-import 'package:genesis/src/layer_data/requests/sign_in_req.dart';
+import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_remote_iam_client_api.dart';
 
 final class RemoteIamClientApi implements IRemoteIamClientApi {
