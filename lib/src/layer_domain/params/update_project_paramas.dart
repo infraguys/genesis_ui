@@ -14,16 +14,4 @@ final class UpdateProjectParams {
   final String? description;
   final String? organizationUuid;
   final ProjectStatus? status;
-
-  @override
-  String toString() {
-    return '''
-UpdateProjectParams(
-  id: $uuid, 
-  name: $name, 
-  description: $description, 
-  organizationUuid: $organizationUuid, 
-  status: $status
-)''';
-  }
 }
