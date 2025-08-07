@@ -33,9 +33,14 @@ final class OrganizationsApi implements IOrganizationsApi {
   }
 
   @override
-  Future<void> deleteOrganization(String uuid) {
-    // TODO: implement deleteOrganization
-    throw UnimplementedError();
+  Future<void> deleteOrganization(req) async {
+    try {
+      await _client.delete<List<dynamic>>(
+        req.toPath(_organizationsUrl),
+      );
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
