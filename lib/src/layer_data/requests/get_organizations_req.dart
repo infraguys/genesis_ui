@@ -1,35 +1,31 @@
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'get_organizations_req.g.dart';
+final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
+  GetOrganizationsReq(this._params);
 
-@JsonSerializable(createFactory: false)
-final class GetOrganizationsReq {
-  GetOrganizationsReq(GetOrganizationsParams params)
-    : name = params.name,
-      description = params.description,
-      createdAt = params.createdAt,
-      updatedAt = params.updatedAt,
-      status = _fromStatus(params.status);
+  final GetOrganizationsParams _params;
 
-  @JsonKey(includeIfNull: false)
-  final String? name;
-  @JsonKey(includeIfNull: false)
-  final String? description;
-  @JsonKey(includeIfNull: false)
-  final DateTime? createdAt;
-  @JsonKey(includeIfNull: false)
-  final DateTime? updatedAt;
-  @JsonKey(includeIfNull: false)
-  final String? status;
+  @override
+  Map<String, dynamic> toQuery() {
+    return {
+      'name': ?_params.name,
+      'description': ?_params.description,
+      'created_at': ?_params.createdAt?.toIso8601String(),
+      'updated_at': ?_params.updatedAt?.toIso8601String(),
+      'status': ?_fromStatus(_params.status),
+    };
+  }
 
-  Map<String, dynamic> toQuery() => _$GetOrganizationsReqToJson(this);
-
-  static String? _fromStatus(Status? status) {
+  String? _fromStatus(Status? status) {
     return switch (status) {
       Status.active => 'ACTIVE',
       _ => null,
     };
   }
+
+  @override
+  String toPath(String prefix) => prefix;
 }
