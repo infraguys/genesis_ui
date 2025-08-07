@@ -17,6 +17,7 @@ import 'package:genesis/src/layer_data/source/remote/permission_binding_api.dart
 import 'package:genesis/src/layer_data/source/remote/permissions_api.dart';
 import 'package:genesis/src/layer_data/source/remote/projects_api.dart';
 import 'package:genesis/src/layer_data/source/remote/remote_iam_client_api.dart';
+import 'package:genesis/src/layer_data/source/remote/role_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/roles_api.dart';
 import 'package:genesis/src/layer_data/source/remote/users_api.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
@@ -72,7 +73,8 @@ class DiContainer extends StatelessWidget {
           RepositoryProvider<IProjectsRepository>(
             create: (context) {
               final projectsApi = ProjectsApi(context.read<RestClient>());
-              return ProjectsRepository(projectsApi);
+              final roleBindingApi = RoleBindingsApi(context.read<RestClient>());
+              return ProjectsRepository(projectsApi, roleBindingApi);
             },
           ),
           RepositoryProvider<IRolesRepository>(
