@@ -33,6 +33,8 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = TextTheme.of(context);
+
     return Scaffold(
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
@@ -56,92 +58,107 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
               // RolesList(),
-              Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 24,
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.usernameController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.username,
+              Theme(
+                data:
+                    Theme.of(
+                      context,
+                    ).copyWith(
+                      inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+                        isDense: true,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 24,
+                    children: [
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.usernameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.username,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.descriptionController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.description,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          // enabled: false,
+                          controller: _controllersManager.descriptionController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.description,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.firstNameController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.firstName,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.firstNameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.firstName,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.lastNameController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.lastName,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.lastNameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.lastName,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.surnameController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.surName,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.surnameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.surName,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.phoneController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: 'Phone'.hardcoded,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.phoneController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: 'Phone'.hardcoded,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: TextFormField(
-                        controller: _controllersManager.emailController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: context.$.email,
+                      SizedBox(
+                        width: 400,
+                        child: TextFormField(
+                          controller: _controllersManager.emailController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: context.$.email,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 400,
-                      child: ElevatedButton(
-                        onPressed: () => save(context),
-                        child: Text(context.$.save),
+                      SizedBox(
+                        width: 400,
+                        child: ElevatedButton(
+                          onPressed: () => save(context),
+                          child: Text(context.$.save),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              Text('Проекты', style: textTheme.headlineLarge),
               ListOfProjects(userUuid: widget.user.uuid),
             ],
           ),
