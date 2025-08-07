@@ -21,9 +21,15 @@ class ProjectCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(project.name),
-                  Text(project.description),
-                  // Text('Роль в проекте: администратор'),
+                  // todo: вынести в типографику
+                  Text(
+                    project.name,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  Text(
+                    project.description,
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
                 ],
               ),
             ),
