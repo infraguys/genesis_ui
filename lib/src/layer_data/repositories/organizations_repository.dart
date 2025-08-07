@@ -1,5 +1,5 @@
-import 'package:genesis/src/layer_data/requests/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/create_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
