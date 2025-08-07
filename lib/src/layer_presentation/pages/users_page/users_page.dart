@@ -43,6 +43,7 @@ class _UsersPageState extends State<UsersPage> {
         ),
       ],
       child: Column(
+        spacing: 24.0,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Breadcrumbs(
@@ -51,7 +52,6 @@ class _UsersPageState extends State<UsersPage> {
             ],
           ),
           // Text(context.$.users, ),
-          const SizedBox(height: 24),
           Row(
             spacing: 4.0,
             children: [
@@ -62,7 +62,6 @@ class _UsersPageState extends State<UsersPage> {
               UsersCreateIconButton(),
             ],
           ),
-          const SizedBox(height: 24),
           Expanded(
             child: BlocBuilder<UsersBloc, UsersState>(
               builder: (context, state) {
