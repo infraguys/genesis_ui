@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_data/requests/get_projects_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/create_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/update_project_req.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/create_role_binding_req.dart';
-import 'package:genesis/src/layer_data/requests/update_project_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/layer_data/source/remote/i_role_bindings_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
