@@ -4,7 +4,6 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
 import 'package:genesis/src/layer_data/dtos/roles_bindings.dart';
-import 'package:genesis/src/layer_data/requests/create_project_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
 
 final class ProjectsApi implements IProjectsApi {
@@ -16,30 +15,14 @@ final class ProjectsApi implements IProjectsApi {
   static const _projectsUrl = '/v1/iam/projects/';
 
   @override
-  Future<ProjectDto> createProject(CreateProjectReq req) async {
-    const url = _projectsUrl;
-
+  Future<ProjectDto> createProject(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        url,
-        data: {
-          'organization': '/v1/iam/organizations/${req.organizationUuid}',
-          ...req.toJson(),
-        },
+        req.toPath(_projectsUrl),
+        data: req.toJson(),
       );
-      late final ProjectDto projectDto;
       if (data != null) {
-        projectDto = ProjectDto.fromJson(data);
-
-        await _client.post<Map<String, dynamic>>(
-          _roleBindingsUrl,
-          data: {
-            'project': '/v1/iam/projects/${projectDto.uuid}',
-            'user': '/v1/iam/users/${req.userUuid}',
-            'role': '/v1/iam/roles/726f6c65-0000-0000-0000-000000000002',
-          },
-        );
-        return projectDto;
+        return ProjectDto.fromJson(data);
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
@@ -68,7 +51,7 @@ final class ProjectsApi implements IProjectsApi {
       );
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        final bindings = castedData.map((it) => RolesBindingsDto.fromJson(it)).toList();
+        final bindings = castedData.map((it) => RolesBindingDto.fromJson(it)).toList();
 
         final futures = <Future<Response<Map<String, dynamic>>>>[];
 
