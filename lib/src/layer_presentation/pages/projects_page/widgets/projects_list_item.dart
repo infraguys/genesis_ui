@@ -3,11 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
-import 'package:genesis/src/routing/app_router.dart';
-import 'package:go_router/go_router.dart';
 
 class ProjectsListItem extends StatelessWidget {
   const ProjectsListItem({super.key});
@@ -53,22 +49,17 @@ class ProjectsListItem extends StatelessWidget {
             Spacer(flex: 2),
           ],
         ),
-        leading: BlocBuilder<UsersSelectionBloc, List<User>>(
-          builder: (context, state) {
-            return Checkbox(
-              value: state.contains(project),
-              onChanged: (val) {},
-            );
-          },
+        leading: Checkbox(
+          value: false,
+          onChanged: (val) {},
         ),
-        // trailing: UsersActionsPopupMenuButton(user: user),
         onTap: () {
-          final user = context.read<User>();
-          context.goNamed(
-            AppRoutes.user.name,
-            pathParameters: {'uuid': user.uuid},
-            extra: (extra: user, breadcrumbs: [user.username]),
-          );
+          // final user = context.read<User>();
+          // context.goNamed(
+          //   AppRoutes.user.name,
+          //   pathParameters: {'uuid': user.uuid},
+          //   extra: (extra: user, breadcrumbs: [user.username]),
+          // );
         },
       ),
     );
