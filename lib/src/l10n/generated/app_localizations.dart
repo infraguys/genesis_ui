@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'Users'**
   String get users;
 
+  /// No description provided for @project.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get project;
+
   /// No description provided for @projects.
   ///
   /// In en, this message translates to:

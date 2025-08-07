@@ -12,6 +12,7 @@
   "signOut": "Sign out",
   "signUp": "Sign up",
   "users": "Users",
+  "project": "Project",
   "projects": "Projects",
   "role": "{count, plural, =0{No roles} one{Role} other{Roles}}",
   "description": "Description",
