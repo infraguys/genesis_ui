@@ -64,10 +64,6 @@ class _AppTableHeaderDelegate extends SliverPersistentHeaderDelegate {
         minTileHeight: maxExtent,
         contentPadding: EdgeInsets.zero,
         leading: headerLeading,
-        trailing: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.more_vert),
-        ),
         title: title,
       ),
     );
