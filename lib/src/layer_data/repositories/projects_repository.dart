@@ -4,7 +4,7 @@ import 'package:genesis/src/layer_data/requests/update_project_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/create_project_params.dart';
-import 'package:genesis/src/layer_domain/params/update_project_paramas.dart';
+import 'package:genesis/src/layer_domain/params/update_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class ProjectsRepository implements IProjectsRepository {

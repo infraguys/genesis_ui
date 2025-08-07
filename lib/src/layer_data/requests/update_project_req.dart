@@ -1,25 +1,34 @@
-import 'package:genesis/src/layer_data/requests/project_status_req.dart';
-import 'package:genesis/src/layer_domain/params/update_project_paramas.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:genesis/src/core/interfaces/json_encodable.dart';
+import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/params/update_project_params.dart';
 
-part 'update_project_req.g.dart';
+final class UpdateProjectReq implements JsonEncodable, PathEncodable {
+  UpdateProjectReq(this._params);
 
-@JsonSerializable(createFactory: false)
-final class UpdateProjectReq {
-  UpdateProjectReq(UpdateProjectParams params)
-    : uuid = params.uuid,
-      name = params.name,
-      description = params.description,
-      organizationUuid = params.organizationUuid,
-      status = (params.status != null) ? ProjectStatusReq.fromProjectStatus(params.status!) : null;
+  final UpdateProjectParams _params;
 
-  @JsonKey(includeToJson: false)
-  final String uuid;
-  final String? name;
-  final String? description;
-  @JsonKey(includeToJson: false)
-  final String? organizationUuid;
-  final ProjectStatusReq? status;
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': _params.name,
+      'description': ?_params.description,
+      'status': ?_fromStatus(_params.status),
+      'organization': ?(_params.organizationUuid != null ? '/v1/iam/organizations/${_params.organizationUuid}' : null),
+    };
+  }
 
-  Map<String, dynamic> toJson() => _$UpdateProjectReqToJson(this);
+  String? _fromStatus(ProjectStatus? status) {
+    return switch (status) {
+      ProjectStatus.active => 'ACTIVE',
+      ProjectStatus.inProgress => 'IN_PROGRESS',
+      ProjectStatus.newProject => 'NEW',
+      _ => null,
+    };
+  }
+
+  @override
+  String toPath(String prefix) {
+    return '$prefix/${_params.uuid}';
+  }
 }

@@ -5,7 +5,6 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
 import 'package:genesis/src/layer_data/dtos/roles_bindings.dart';
 import 'package:genesis/src/layer_data/requests/create_project_req.dart';
-import 'package:genesis/src/layer_data/requests/update_project_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
 
 final class ProjectsApi implements IProjectsApi {
@@ -93,15 +92,11 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<ProjectDto> updateProject(UpdateProjectReq req) async {
-    final url = '$_projectsUrl/${req.uuid}';
+  Future<ProjectDto> updateProject(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
-        url,
-        data: {
-          'organization': '/v1/iam/organizations/${req.organizationUuid}',
-          ...req.toJson(),
-        },
+        req.toPath(_projectsUrl),
+        data: req.toJson(),
       );
       if (data != null) {
         return ProjectDto.fromJson(data);
