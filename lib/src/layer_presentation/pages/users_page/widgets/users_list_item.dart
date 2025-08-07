@@ -14,7 +14,6 @@ class UsersListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.read<User>();
-    final textTheme = TextTheme.of(context);
 
     return Theme(
       data: Theme.of(context).copyWith(
@@ -28,14 +27,14 @@ class UsersListItem extends StatelessWidget {
         title: Row(
           spacing: 48,
           children: [
-            Expanded(flex: 2, child: Text(user.username)),
+            Expanded(flex: 2, child: SelectableText(user.username)),
             Flexible(child: StatusLabel(status: user.status)),
             Expanded(
               flex: 4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(user.uuid),
+                  SelectableText(user.uuid),
                   IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
@@ -64,56 +63,12 @@ class UsersListItem extends StatelessWidget {
           },
         ),
         trailing: UsersActionsPopupMenuButton(user: user),
-        // todo: в будущем удалить
-        // expandedAlignment: Alignment.centerLeft,
-        // childrenPadding: EdgeInsets.only(left: 50),
-        // children: [
-        //   Table(
-        //     columnWidths: const {
-        //       0: FixedColumnWidth(250),
-        //       1: FlexColumnWidth(),
-        //     },
-        //     children: [
-        //       TableRow(
-        //         decoration: BoxDecoration(),
-        //         children: [
-        //           Text(context.$.description, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //           Text(user.description, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //         ],
-        //       ),
-        //       TableRow(
-        //         children: [
-        //           Text(context.$.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //           SelectableText(user.firstName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //         ],
-        //       ),
-        //       TableRow(
-        //         children: [
-        //           Text(context.$.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //           SelectableText(user.lastName, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //         ],
-        //       ),
-        //       TableRow(
-        //         children: [
-        //           Text(context.$.email, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //           SelectableText(user.email, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //         ],
-        //       ),
-        //       TableRow(
-        //         children: [
-        //           Text(context.$.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //           SelectableText(user.uuid, style: textTheme.bodyMedium!.copyWith(height: 1.8) + Colors.white),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ],
         onTap: () {
           final user = context.read<User>();
           context.goNamed(
             AppRoutes.user.name,
             pathParameters: {'uuid': user.uuid},
-            extra: (extra: user, breadcrumbs: [user.username]),
+            extra: user,
           );
         },
       ),
