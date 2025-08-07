@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
-import 'package:genesis/src/routing/app_router.dart';
-import 'package:genesis/src/theming/palette.dart';
-import 'package:go_router/go_router.dart';
 
 class RolesPage extends StatefulWidget {
   const RolesPage({super.key});
@@ -30,8 +28,8 @@ class _ProjectsPageState extends State<RolesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
     return Column(
+      spacing: 24.0,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Breadcrumbs(
@@ -39,27 +37,14 @@ class _ProjectsPageState extends State<RolesPage> {
             BreadcrumbItem(text: context.$.role(3).toLowerCase()),
           ],
         ),
-        const SizedBox(height: 24),
         Row(
           spacing: 4.0,
           children: [
             Spacer(),
-            // todo: вынести в отдельный виджет или стиль
             RolesDeleteIconButton(),
-            ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
-                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
-              ),
-              onPressed: () {
-                context.goNamed(AppRoutes.createRole.name);
-              },
-              label: Text(context.$.create, style: textTheme.headlineSmall!.copyWith(height: 20 / 14)),
-              icon: Icon(Icons.add, color: Palette.color1B1B1D),
-            ),
+            RolesCreateIconButton(),
           ],
         ),
-        const SizedBox(height: 24),
         Expanded(
           child: BlocBuilder<UserRolesBloc, UserRolesState>(
             builder: (context, state) {
