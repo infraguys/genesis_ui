@@ -1,5 +1,6 @@
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
 import 'package:genesis/src/layer_data/requests/organizations/create_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organizations/delete_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
 
 abstract interface class IOrganizationsApi {
@@ -9,7 +10,7 @@ abstract interface class IOrganizationsApi {
 
   Future<OrganizationDto> updateOrganization();
 
-  Future<void> deleteOrganization(String uuid);
+  Future<void> deleteOrganization(DeleteOrganizationReq req);
 
   Future<OrganizationDto> getOrganizationByUuid(String uuid);
 
