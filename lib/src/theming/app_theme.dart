@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
+import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 part 'appbar_theme_data.dart';
