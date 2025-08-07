@@ -31,11 +31,11 @@ class StatusLabel extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         child: Center(
           child: Text(
             _status.humanReadable(context),
-            style: textTheme.labelMedium! + textStatusColor,
+            style: textTheme.labelLarge! + textStatusColor,
           ),
         ),
       ),
