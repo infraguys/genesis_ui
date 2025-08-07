@@ -19,21 +19,19 @@ final class RolesRepository implements IRolesRepository {
   }
 
   @override
-  Future<Role?> createRole(CreateRoleParams params) async {
+  Future<Role> createRole(CreateRoleParams params) async {
     final createRoleReq = CreateRoleReq(params);
     final roleDto = await _rolesApi.createRole(createRoleReq);
 
-    if (roleDto != null) {
-      await Future.wait(
-        params.permissions.map(
-          (it) {
-            final createPermReq = CreatePermissionBindingReq(permissionUuid: it.uuid, roleUuid: roleDto.uuid);
-            return _iPermissionBindingsApi.createPermissionBinding(createPermReq);
-          },
-        ),
-      );
-    }
+    await Future.wait(
+      params.permissions.map(
+        (it) {
+          final createPermReq = CreatePermissionBindingReq(permissionUuid: it.uuid, roleUuid: roleDto.uuid);
+          return _iPermissionBindingsApi.createPermissionBinding(createPermReq);
+        },
+      ),
+    );
 
-    return roleDto?.toEntity();
+    return roleDto.toEntity();
   }
 }
