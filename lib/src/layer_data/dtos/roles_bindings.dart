@@ -4,8 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'roles_bindings.g.dart';
 
 @JsonSerializable(createToJson: false, constructor: '_')
-class RolesBindingsDto implements IDto<dynamic> {
-  RolesBindingsDto._({
+class RolesBindingDto implements IDto<dynamic> {
+  RolesBindingDto._({
     required this.uuid,
     required this.createdAt,
     required this.updatedAt,
@@ -15,7 +15,7 @@ class RolesBindingsDto implements IDto<dynamic> {
     required this.project,
   });
 
-  factory RolesBindingsDto.fromJson(Map<String, dynamic> json) => _$RolesBindingsDtoFromJson(json);
+  factory RolesBindingDto.fromJson(Map<String, dynamic> json) => _$RolesBindingsDtoFromJson(json);
 
   final String uuid;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
