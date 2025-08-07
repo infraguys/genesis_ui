@@ -1,6 +1,7 @@
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
 import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/delete_organization_params.dart';
 import 'package:genesis/src/layer_domain/params/update_organiztion_params.dart';
 
 abstract interface class IOrganizationsRepository {
@@ -10,7 +11,7 @@ abstract interface class IOrganizationsRepository {
 
   Future<Organization> updateOrganization(UpdateOrganizationParams params);
 
-  Future<void> deleteOrganization(String uuid);
+  Future<void> deleteOrganization(DeleteOrganizationParams params);
 
   Future<Organization> getOrganizationByUuid(String uuid);
 
