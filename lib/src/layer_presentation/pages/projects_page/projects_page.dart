@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_table.dart';
 import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -27,7 +28,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
         if (state is ProjectDeletedState || state is ProjectUpdatedState) {
@@ -43,7 +43,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
               BreadcrumbItem(text: context.$.projects),
             ],
           ),
-          Text('Проекты', style: textTheme.headlineMedium),
+          Row(
+            spacing: 4.0,
+            children: [
+              Spacer(),
+              ProjectsCreateIconButton(),
+            ],
+          ),
           Expanded(
             child: BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
               builder: (context, state) {
