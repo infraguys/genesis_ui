@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/project_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_projects_bloc/user_projects_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 
 class ListOfProjects extends StatelessWidget {
   const ListOfProjects({required this.userUuid, super.key});
@@ -36,41 +35,42 @@ class ListOfProjects extends StatelessWidget {
                 children: state.projects.map(
                   (project) {
                     return SizedBox(
-                      width: 300,
+                      width: 500,
                       height: 250,
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            spacing: 4,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    project.name,
-                                    style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                  Provider.value(
-                                    value: project,
-                                    child: ProjectActionPopupMenuButton(),
-                                  ),
-                                ],
-                              ),
-                              Text(project.createdAt.toString(), style: textTheme.bodySmall),
-                              Text(project.description, style: textTheme.bodySmall),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Text(
-                                'Роли',
-                                style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      child: ProjectCard(project: project),
+                      // child: Card(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(12.0),
+                      //     child: Column(
+                      //       spacing: 4,
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             Text(
+                      //               project.name,
+                      //               style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                      //             ),
+                      //             Provider.value(
+                      //               value: project,
+                      //               child: ProjectActionPopupMenuButton(),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         Text(project.createdAt.toString(), style: textTheme.bodySmall),
+                      //         Text(project.description, style: textTheme.bodySmall),
+                      //         SizedBox(
+                      //           height: 16,
+                      //         ),
+                      //         Text(
+                      //           'Роли',
+                      //           style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                     );
                   },
                 ).toList(),
