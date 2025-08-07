@@ -1,10 +1,8 @@
 import 'package:genesis/src/layer_data/requests/organizations/create_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organizations/delete_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
-import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
-import 'package:genesis/src/layer_domain/params/update_organiztion_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 
 final class OrganizationsRepository implements IOrganizationsRepository {
@@ -13,16 +11,16 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   final IOrganizationsApi _organizationsApi;
 
   @override
-  Future<Organization> createOrganization(CreateOrganizationParams params) async {
+  Future<Organization> createOrganization(params) async {
     final req = CreateOrganizationReq(params);
     final dto = await _organizationsApi.createOrganization(req);
     return dto.toEntity();
   }
 
   @override
-  Future<void> deleteOrganization(String uuid) {
-    // TODO: implement deleteOrganization
-    throw UnimplementedError();
+  Future<void> deleteOrganization(params) async {
+    final req = DeleteOrganizationReq(params);
+    await _organizationsApi.deleteOrganization(req);
   }
 
   @override
@@ -32,14 +30,14 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<List<Organization>> getOrganizations(GetOrganizationsParams params) async {
+  Future<List<Organization>> getOrganizations(params) async {
     final req = GetOrganizationsReq(params);
     final listOfOrganizationDto = await _organizationsApi.getOrganizations(req);
     return listOfOrganizationDto.map((dto) => dto.toEntity()).toList();
   }
 
   @override
-  Future<Organization> updateOrganization(UpdateOrganizationParams params) {
+  Future<Organization> updateOrganization(params) {
     // TODO: implement updateOrganization
     throw UnimplementedError();
   }
