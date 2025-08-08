@@ -37,7 +37,7 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<Organization> updateOrganization(params) {
+  Future<Organization> editOrganization(params) {
     // TODO: implement updateOrganization
     throw UnimplementedError();
   }
