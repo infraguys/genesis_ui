@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -11,6 +12,7 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/blocs/organization_editor_bloc/organization_editor_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
@@ -206,6 +208,17 @@ GoRouter createRouter(BuildContext context) {
                         child: CreateOrganizationPage(),
                       ),
                     ),
+                  ),
+                  GoRoute(
+                    name: AppRoutes.editOrganization.name,
+                    path: ':uuid',
+                    pageBuilder: (_, state) {
+                      final _ = state.pathParameters['uuid']!;
+                      final organization = state.extra as Organization;
+                      return NoTransitionPage(
+                        child: OrganizationPage(organization: organization),
+                      );
+                    },
                   ),
                 ],
               ),
