@@ -1,4 +1,4 @@
-import 'package:genesis/src/core/extensions/nullable_extension.dart';
+import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
@@ -14,8 +14,8 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
     return {
       'name': _params.name,
       'description': ?_params.description,
+      'organization': OrganizationsEndpoints.getOrganization.replaceFirst(':uuid', _params.organizationUuid),
       'status': ?_fromStatus(_params.status),
-      'organization': ?_params.organizationUuid.notNull((it) => '/v1/iam/organizations/$it'),
     };
   }
 
@@ -29,7 +29,7 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath(String prefix) {
-    return '$prefix/${_params.uuid}';
+  String toPath() {
+    return ProjectsEndpoints.editProject.replaceFirst(':uuid', _params.uuid);
   }
 }
