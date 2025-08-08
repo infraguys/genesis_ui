@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
@@ -25,5 +26,5 @@ final class GetPermissionsReq implements QueryEncodable, PathEncodable {
   }
 
   @override
-  String toPath(String prefix) => prefix;
+  String toPath() => PermissionsEndpoints.getPermissions;
 }
