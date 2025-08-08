@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
-import 'package:genesis/src/layer_domain/params/get_projects_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 
 final class GetProjectsReq implements QueryEncodable {
   GetProjectsReq(this._params);
