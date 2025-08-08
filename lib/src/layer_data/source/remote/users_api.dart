@@ -4,7 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
-import 'package:genesis/src/layer_data/source/remote/i_users_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 
 final class UsersApi implements IUsersApi {
   UsersApi(this._client);
@@ -48,7 +48,6 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> confirmEmail(String userUuid) async {
     final url = '$_usersUrl/$userUuid/actions/confirm_email/invoke';
-    final Uri uri = Uri(pathSegments: []);
 
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);

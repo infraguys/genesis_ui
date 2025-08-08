@@ -3,7 +3,7 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_dto.dart';
-import 'package:genesis/src/layer_data/source/remote/i_permission_bindings_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_permission_bindings_api.dart';
 
 final class PermissionBindingApi implements IPermissionBindingsApi {
   PermissionBindingApi(this._client);

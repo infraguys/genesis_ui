@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:genesis/src/layer_data/requests/users/change_user_password_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
-import 'package:genesis/src/layer_data/source/remote/i_users_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';

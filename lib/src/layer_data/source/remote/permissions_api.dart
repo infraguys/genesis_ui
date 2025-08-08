@@ -3,7 +3,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_dto.dart';
 import 'package:genesis/src/layer_data/requests/get_permission_req.dart';
-import 'package:genesis/src/layer_data/source/remote/i_permissions_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_permissions_api.dart';
 
 final class PermissionsApi implements IPermissionsApi {
   PermissionsApi(this._client);

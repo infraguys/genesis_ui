@@ -5,7 +5,7 @@ import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
 import 'package:genesis/src/layer_data/dtos/organization_member_dto.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
-import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_organizations_api.dart';
 
 final class OrganizationsApi implements IOrganizationsApi {
   OrganizationsApi(this._client);

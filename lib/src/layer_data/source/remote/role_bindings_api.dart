@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
-import 'package:genesis/src/layer_data/source/remote/i_role_bindings_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_api.dart';
 
 final class RoleBindingsApi implements IRoleBindingsApi {
   RoleBindingsApi(this._client);

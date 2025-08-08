@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_data/requests/users/get_current_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
 import 'package:genesis/src/layer_data/source/local/token_dao.dart';
-import 'package:genesis/src/layer_data/source/remote/i_remote_iam_client_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_remote_iam_client_api.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/sign_in_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';

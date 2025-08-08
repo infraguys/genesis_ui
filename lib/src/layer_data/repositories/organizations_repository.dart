@@ -2,7 +2,7 @@ import 'package:genesis/src/layer_data/requests/organizations/create_organizatio
 import 'package:genesis/src/layer_data/requests/organizations/delete_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/edit_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
-import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 
