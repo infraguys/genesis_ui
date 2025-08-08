@@ -18,9 +18,4 @@ class UpdateUserParams {
   final String? surname;
   final String? phone;
   final String? email;
-
-  @override
-  String toString() {
-    return 'UpdateUserParams(uuid: $uuid, username: $username, description: $description, firstName: $firstName, lastName: $lastName, surname: $surname, phone: $phone, email: $email)';
-  }
 }
