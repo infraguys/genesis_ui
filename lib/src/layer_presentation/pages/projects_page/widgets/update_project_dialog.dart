@@ -167,11 +167,11 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
                 onPressed: _controllersManager.allFilled
                     ? () {
                         context.read<ProjectBloc>().add(
-                          ProjectEvent.update(
+                          ProjectEvent.edit(
                             uuid: project.uuid,
                             name: _controllersManager.projectNameController.text,
                             description: _controllersManager.projectDescriptionController.text,
-                            organization: _selectedOrganization?.uuid,
+                            organizationUuid: _selectedOrganization!.uuid,
                             status: projectStatus,
                           ),
                         );
