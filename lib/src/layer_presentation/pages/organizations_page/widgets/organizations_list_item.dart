@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 class OrganizationsListItem extends StatelessWidget {
   const OrganizationsListItem({super.key});
@@ -61,10 +63,13 @@ class OrganizationsListItem extends StatelessWidget {
             );
           },
         ),
-        // trailing: UsersActionsPopupMenuButton(),
-        // todo: Чуть позже удалить
-        // expandedAlignment: Alignment.centerLeft,
-        // childrenPadding: EdgeInsets.only(left: 50),
+        onTap: () {
+          context.goNamed(
+            AppRoutes.editOrganization.name,
+            pathParameters: {'uuid': organization.uuid},
+            extra: organization,
+          );
+        },
       ),
     );
   }
