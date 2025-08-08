@@ -13,15 +13,4 @@ final class CreateProjectParams {
   final String description;
   final String organizationUuid;
   final ProjectStatus status = ProjectStatus.newProject;
-
-  @override
-  String toString() {
-    return '''
-CreateProjectParams(
-  name: $name,
-  description: $description,
-  organizationUuid: $organizationUuid,
-  status: $status
-)''';
-  }
 }
