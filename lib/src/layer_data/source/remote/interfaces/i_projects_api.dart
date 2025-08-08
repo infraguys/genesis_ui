@@ -8,7 +8,7 @@ abstract interface class IProjectsApi {
   /// Creates a new project.
   Future<ProjectDto> createProject(CreateProjectReq req);
 
-  Future<ProjectDto> updateProject(EditProjectReq req);
+  Future<ProjectDto> editProject(EditProjectReq req);
 
   Future<void> deleteProject(DeleteProjectReq req);
 
