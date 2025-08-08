@@ -10,10 +10,14 @@ enum AppRoutes {
   user,
   projects,
 
+  /// roles
   roles,
   createRole,
+
+  /// organizations
   organizations,
   createOrganization,
+  editOrganization,
   //
   main,
   monitoring,
