@@ -34,9 +34,9 @@ final class _CreateProjectEvent implements ProjectEvent {
 }
 
 final class _DeleteProjectEvent implements ProjectEvent {
-  _DeleteProjectEvent(this.projectUuid);
+  _DeleteProjectEvent(this.uuid);
 
-  final String projectUuid;
+  final String uuid;
 }
 
 final class _ProjectUpdateEvent implements ProjectEvent {
