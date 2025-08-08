@@ -13,3 +13,11 @@ abstract class ProjectsEndpoints {
   static const String editProject = '/iam/projects/:uuid';
   static const String deleteProject = '/iam/projects/:uuid';
 }
+
+abstract class RoleBindingsEndpoints {
+  static const String getRoleBindings = '/iam/role_bindings/';
+  static const String createRoleBinding = '/iam/role_bindings/';
+  static const String getRoleBinding = '/iam/role_bindings/:uuid';
+  static const String editRoleBinding = '/iam/role_bindings/:uuid';
+  static const String deleteRoleBinding = '/iam/role_bindings/:uuid';
+}
