@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
-import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/blocs/organization_editor_bloc/organization_editor_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';

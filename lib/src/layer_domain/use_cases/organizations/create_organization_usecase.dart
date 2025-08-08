@@ -1,5 +1,5 @@
 import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 
 final class CreateOrganizationUseCase {

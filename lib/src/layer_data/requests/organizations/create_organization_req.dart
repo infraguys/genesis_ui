@@ -1,4 +1,4 @@
-import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 
 final class CreateOrganizationReq {
   CreateOrganizationReq(this._params);

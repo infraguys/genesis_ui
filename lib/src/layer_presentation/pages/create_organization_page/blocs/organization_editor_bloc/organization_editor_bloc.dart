@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/params/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/create_organization_usecase.dart';
 
