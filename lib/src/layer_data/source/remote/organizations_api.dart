@@ -12,15 +12,13 @@ final class OrganizationsApi implements IOrganizationsApi {
 
   final RestClient _client;
 
-  static const _organizationMembersUrl = '/v1/iam/organization_members/';
-  static const _organizationsUrl = '/v1/iam/organizations/';
+  static const _organizationMembersUrl = '/iam/organization_members/';
 
   @override
   Future<OrganizationDto> createOrganization(req) async {
-    const url = _organizationsUrl;
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        url,
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {
@@ -36,7 +34,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   Future<void> deleteOrganization(req) async {
     try {
       await _client.delete<List<dynamic>>(
-        req.toPath(_organizationsUrl),
+        req.toPath(),
       );
     } on DioException catch (e) {
       throw NetworkException(e);
@@ -81,7 +79,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(_organizationsUrl),
+        req.toPath(),
         queryParameters: req.toQuery(),
       );
       if (data != null) {
@@ -98,7 +96,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   Future<OrganizationDto> editOrganization(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
-        req.toPath(_organizationsUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {
