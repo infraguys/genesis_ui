@@ -1,3 +1,19 @@
+abstract class RolesEndpoints {
+  static const String getRoles = '/iam/roles/';
+  static const String createRole = '/iam/roles/';
+  static const String getRole = '/iam/roles/:uuid';
+  static const String editRole = '/iam/roles/:uuid';
+  static const String deleteRole = '/iam/roles/:uuid';
+}
+
+abstract class PermissionsEndpoints {
+  static const String getPermissions = '/iam/permissions/';
+  static const String createPermission = '/iam/permissions/';
+  static const String getPermission = '/iam/permissions/:uuid';
+  static const String editPermission = '/iam/permissions/:uuid';
+  static const String deletePermission = '/iam/permissions/:uuid';
+}
+
 abstract class OrganizationsEndpoints {
   static const String getOrganizations = '/iam/organizations/';
   static const String createOrganization = '/iam/organizations/';
