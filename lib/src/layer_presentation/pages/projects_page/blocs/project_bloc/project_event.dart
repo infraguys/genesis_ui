@@ -6,21 +6,21 @@ sealed class ProjectEvent {
     required String name,
     required String description,
     required String organization,
-  }) = _CreateProjectEvent;
+  }) = _CreateEvent;
 
-  factory ProjectEvent.delete(String projectUuid) = _DeleteProjectEvent;
+  factory ProjectEvent.delete(String projectUuid) = _DeleteEvent;
 
-  factory ProjectEvent.update({
+  factory ProjectEvent.edit({
     required String uuid,
+    required String organizationUuid,
     String? name,
     String? description,
-    String? organization,
     ProjectStatus? status,
-  }) = _ProjectUpdateEvent;
+  }) = _EditEvent;
 }
 
-final class _CreateProjectEvent implements ProjectEvent {
-  _CreateProjectEvent({
+final class _CreateEvent implements ProjectEvent {
+  _CreateEvent({
     required this.userUuid,
     required this.name,
     required this.description,
@@ -33,24 +33,24 @@ final class _CreateProjectEvent implements ProjectEvent {
   final String organization;
 }
 
-final class _DeleteProjectEvent implements ProjectEvent {
-  _DeleteProjectEvent(this.uuid);
+final class _DeleteEvent implements ProjectEvent {
+  _DeleteEvent(this.uuid);
 
   final String uuid;
 }
 
-final class _ProjectUpdateEvent implements ProjectEvent {
-  _ProjectUpdateEvent({
+final class _EditEvent implements ProjectEvent {
+  _EditEvent({
     required this.uuid,
+    required this.organizationUuid,
     this.name,
     this.description,
-    this.organization,
     this.status,
   });
 
   final String uuid;
   final String? name;
   final String? description;
-  final String? organization;
+  final String organizationUuid;
   final ProjectStatus? status;
 }
