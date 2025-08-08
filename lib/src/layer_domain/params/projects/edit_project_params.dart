@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
-final class UpdateProjectParams {
-  const UpdateProjectParams({
+final class EditProjectParams {
+  const EditProjectParams({
     required this.uuid,
     required this.name,
     required this.description,
