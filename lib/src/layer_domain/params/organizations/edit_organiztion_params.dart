@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_domain/entities/status.dart';
 
-final class UpdateOrganizationParams {
-  const UpdateOrganizationParams({
+final class EditOrganizationParams {
+  const EditOrganizationParams({
     required this.uuid,
     required this.name,
     this.description,
