@@ -12,13 +12,12 @@ final class ProjectsApi implements IProjectsApi {
   final RestClient _client;
 
   static const _roleBindingsUrl = '/v1/iam/role_bindings/';
-  static const _projectsUrl = '/v1/iam/projects/';
 
   @override
   Future<ProjectDto> createProject(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_projectsUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {
@@ -31,10 +30,11 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<void> deleteProject(String projectUuid) async {
-    final url = '$_projectsUrl/$projectUuid';
+  Future<void> deleteProject(req) async {
     try {
-      await _client.delete<void>(url);
+      await _client.delete<void>(
+        req.toPath(),
+      );
     } on DioException catch (e) {
       throw NetworkException(e);
     }
@@ -75,10 +75,10 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<ProjectDto> updateProject(req) async {
+  Future<ProjectDto> editProject(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
-        req.toPath(_projectsUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {
