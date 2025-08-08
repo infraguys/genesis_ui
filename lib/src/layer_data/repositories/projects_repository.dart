@@ -1,5 +1,6 @@
 import 'package:genesis/src/layer_data/requests/get_projects_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/create_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/create_role_binding_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
@@ -34,14 +35,15 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<void> deleteProject(String projectUuid) async {
-    await _projectsApi.deleteProject(projectUuid);
+  Future<void> deleteProject(params) async {
+    final req = DeleteProjectReq(params);
+    await _projectsApi.deleteProject(req);
   }
 
   @override
   Future<Project> editProject(EditProjectParams params) async {
     final req = EditProjectReq(params);
-    final dto = await _projectsApi.updateProject(req);
+    final dto = await _projectsApi.editProject(req);
     return dto.toEntity();
   }
 
