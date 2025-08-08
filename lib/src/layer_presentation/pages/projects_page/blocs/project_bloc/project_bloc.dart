@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/delete_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/edit_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/create_project_usecase.dart';
@@ -37,7 +38,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   Future<void> _onDeleteProject(_DeleteProjectEvent event, Emitter<ProjectState> emit) async {
     final useCase = DeleteProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-    await useCase(event.projectUuid);
+    final params = DeleteProjectParams(uuid: event.uuid);
+    await useCase(params);
     emit(ProjectDeletedState());
   }
 
