@@ -16,6 +16,7 @@ env:
   #   "api_url": "https://console.genesis-core.tech/api"
   # }
   UI_BUILD_ENV_api_url: https://console.genesis-core.tech/api
+  UI_BUILD_ENV_version_api: v1
   UI_BUILD_ENV_scope: ""
 
 jobs:
