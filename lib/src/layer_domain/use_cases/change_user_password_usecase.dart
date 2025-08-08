@@ -1,4 +1,4 @@
-import 'package:genesis/src/layer_domain/params/change_user_password_params.dart';
+import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 
 class ChangeUserPasswordUseCase {
