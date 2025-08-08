@@ -8,13 +8,11 @@ final class RoleBindingsApi implements IRoleBindingsApi {
 
   final RestClient _client;
 
-  static const _roleBindingsUrl = '/v1/iam/role_bindings/';
-
   @override
   Future<void> createRoleBinding(req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_roleBindingsUrl),
+        req.toPath(),
         data: req.toJson(),
       );
     } on DioException catch (e) {
