@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/edit_organiztion_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/create_organization_usecase.dart';
 
@@ -9,7 +10,7 @@ part 'organization_editor_state.dart';
 class OrganizationEditorBloc extends Bloc<OrganizationEditorEvent, OrganizationEditorState> {
   OrganizationEditorBloc(this._repository) : super(OrganizationEditorState.initial()) {
     on(_onCreateOrganization);
-    // on(_onUpdateOrganization);
+    on(_onUpdateOrganization);
   }
 
   final IOrganizationsRepository _repository;
