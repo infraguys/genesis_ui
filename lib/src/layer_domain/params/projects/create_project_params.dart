@@ -1,5 +1,3 @@
-import 'package:genesis/src/layer_domain/entities/project.dart';
-
 final class CreateProjectParams {
   const CreateProjectParams({
     required this.userUuid,
@@ -10,7 +8,6 @@ final class CreateProjectParams {
 
   final String userUuid;
   final String name;
-  final String description;
+  final String? description;
   final String organizationUuid;
-  final ProjectStatus status = ProjectStatus.newProject;
 }
