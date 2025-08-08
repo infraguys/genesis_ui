@@ -95,8 +95,18 @@ final class OrganizationsApi implements IOrganizationsApi {
   }
 
   @override
-  Future<OrganizationDto> updateOrganization() {
-    // TODO: implement updateOrganization
-    throw UnimplementedError();
+  Future<OrganizationDto> editOrganization(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
+        req.toPath(_organizationsUrl),
+        data: req.toJson(),
+      );
+      if (data != null) {
+        return OrganizationDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 }
