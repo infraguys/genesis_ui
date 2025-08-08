@@ -20,7 +20,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
   final IProjectsRepository _projectsRepository;
 
-  Future<void> _onCreateProject(_CreateProjectEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onCreateProject(_CreateEvent event, Emitter<ProjectState> emit) async {
     final createProjectUseCase = CreateProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
 
@@ -35,7 +35,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(ProjectCreatedState(createdProject));
   }
 
-  Future<void> _onDeleteProject(_DeleteProjectEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onDeleteProject(_DeleteEvent event, Emitter<ProjectState> emit) async {
     final useCase = DeleteProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
     final params = DeleteProjectParams(uuid: event.uuid);
@@ -43,7 +43,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(ProjectDeletedState());
   }
 
-  Future<void> _onUpdateProject(_ProjectUpdateEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onUpdateProject(_EditEvent event, Emitter<ProjectState> emit) async {
     final useCase = EditProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
 
@@ -51,7 +51,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       uuid: event.uuid,
       name: event.name,
       description: event.description,
-      organizationUuid: event.organization,
+      organizationUuid: event.organizationUuid,
       status: event.status,
     );
     final updatedProject = await useCase(params);
