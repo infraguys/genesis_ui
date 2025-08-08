@@ -1,5 +1,6 @@
 import 'package:genesis/src/layer_data/requests/organizations/create_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/delete_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organizations/edit_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
@@ -37,9 +38,10 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<Organization> editOrganization(params) {
-    // TODO: implement updateOrganization
-    throw UnimplementedError();
+  Future<Organization> editOrganization(params) async {
+    final req = EditOrganizationReq(params);
+    final dto = await _organizationsApi.editOrganization(req);
+    return dto.toEntity();
   }
 
   @override
