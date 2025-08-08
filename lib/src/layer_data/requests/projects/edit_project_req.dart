@@ -2,12 +2,12 @@ import 'package:genesis/src/core/extensions/nullable_extension.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/params/projects/update_project_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/edit_project_params.dart';
 
-final class UpdateProjectReq implements JsonEncodable, PathEncodable {
-  UpdateProjectReq(this._params);
+final class EditProjectReq implements JsonEncodable, PathEncodable {
+  EditProjectReq(this._params);
 
-  final UpdateProjectParams _params;
+  final EditProjectParams _params;
 
   @override
   Map<String, dynamic> toJson() {
