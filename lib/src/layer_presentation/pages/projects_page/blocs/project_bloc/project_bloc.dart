@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
-import 'package:genesis/src/layer_domain/params/update_project_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/update_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/create_project_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/delete_project_usecase.dart';

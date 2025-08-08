@@ -2,7 +2,7 @@ import 'package:genesis/src/core/extensions/nullable_extension.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/params/update_project_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/update_project_params.dart';
 
 final class UpdateProjectReq implements JsonEncodable, PathEncodable {
   UpdateProjectReq(this._params);

@@ -6,8 +6,8 @@ import 'package:genesis/src/layer_data/source/remote/i_projects_api.dart';
 import 'package:genesis/src/layer_data/source/remote/i_role_bindings_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
+import 'package:genesis/src/layer_domain/params/projects/update_project_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
-import 'package:genesis/src/layer_domain/params/update_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class ProjectsRepository implements IProjectsRepository {
