@@ -12,6 +12,6 @@ final class EditProjectParams {
   final String uuid;
   final String? name;
   final String? description;
-  final String? organizationUuid;
+  final String organizationUuid;
   final ProjectStatus? status;
 }
