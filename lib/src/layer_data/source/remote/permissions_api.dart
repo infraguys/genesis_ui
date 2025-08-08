@@ -10,8 +10,6 @@ final class PermissionsApi implements IPermissionsApi {
 
   final RestClient _client;
 
-  static const String _permissionsUrl = '/v1/iam/permissions/';
-
   @override
   Future<PermissionDto> createPermission() {
     // TODO: implement createPermission
@@ -28,7 +26,7 @@ final class PermissionsApi implements IPermissionsApi {
   Future<List<PermissionDto>> getPermissions(GetPermissionsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(_permissionsUrl),
+        req.toPath(),
         queryParameters: req.toQuery(),
       );
 
