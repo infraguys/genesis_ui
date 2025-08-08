@@ -1,7 +1,7 @@
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
-import 'package:genesis/src/layer_domain/params/get_organizations_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/get_organizations_params.dart';
 
 final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
   GetOrganizationsReq(this._params);
