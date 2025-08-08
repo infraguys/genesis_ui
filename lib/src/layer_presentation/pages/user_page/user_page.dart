@@ -185,23 +185,22 @@ class _UserPageState extends State<UserPage> {
 }
 
 class _ControllersManager extends FormControllersManager {
-  _ControllersManager(User user) {
-    usernameController = TextEditingController(text: user.username);
-    descriptionController = TextEditingController(text: user.description);
-    firstNameController = TextEditingController(text: user.firstName);
-    lastNameController = TextEditingController(text: user.lastName);
-    surnameController = TextEditingController(text: user.surname);
-    phoneController = TextEditingController(text: user.phone);
-    emailController = TextEditingController(text: user.email);
-  }
+  _ControllersManager(User user)
+    : usernameController = TextEditingController(text: user.username),
+      descriptionController = TextEditingController(text: user.description),
+      firstNameController = TextEditingController(text: user.firstName),
+      lastNameController = TextEditingController(text: user.lastName),
+      surnameController = TextEditingController(text: user.surname),
+      phoneController = TextEditingController(text: user.phone),
+      emailController = TextEditingController(text: user.email);
 
-  late final TextEditingController usernameController;
-  late final TextEditingController descriptionController;
-  late final TextEditingController firstNameController;
-  late final TextEditingController lastNameController;
-  late final TextEditingController surnameController;
-  late final TextEditingController phoneController;
-  late final TextEditingController emailController;
+  final TextEditingController usernameController;
+  final TextEditingController descriptionController;
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
+  final TextEditingController surnameController;
+  final TextEditingController phoneController;
+  final TextEditingController emailController;
 
   @override
   List<TextEditingController> get all => [
