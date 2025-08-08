@@ -4,6 +4,5 @@ targets:
       json_serializable:
         generate_for:
           - lib/src/layer_data/dtos/*.dart
-          - lib/src/layer_data/requests/*.dart
         options:
           field_rename: snake
