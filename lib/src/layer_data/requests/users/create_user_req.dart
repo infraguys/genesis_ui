@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/layer_domain/params/create_user_params.dart';
+import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 
 final class CreateUserReq implements JsonEncodable, PathEncodable {
   CreateUserReq(this._params);
