@@ -1,3 +1,11 @@
+abstract class UsersEndpoints {
+  static const String getUsers = '/iam/users/';
+  static const String createUser = '/iam/users/';
+  static const String getUser = '/iam/users/:uuid';
+  static const String editUser = '/iam/users/:uuid';
+  static const String deleteUser = '/iam/users/:uuid';
+}
+
 abstract class RolesEndpoints {
   static const String getRoles = '/iam/roles/';
   static const String createRole = '/iam/roles/';
