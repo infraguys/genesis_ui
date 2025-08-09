@@ -12,7 +12,6 @@ final class RolesApi implements IRolesApi {
   final RestClient _client;
 
   static const _userUrl = '/v1/iam/users/';
-  static const _rolesUrl = '/v1/iam/roles/';
 
   @override
   Future<List<RoleDto>> getRolesByUserUuid(String userUuid) async {
@@ -34,7 +33,7 @@ final class RolesApi implements IRolesApi {
   Future<RoleDto> createRole(CreateRoleReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_rolesUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {
