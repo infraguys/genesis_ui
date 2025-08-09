@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
@@ -22,5 +23,5 @@ final class CreateUserReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath(String prefix) => prefix;
+  String toPath() => UsersEndpoints.createUser;
 }
