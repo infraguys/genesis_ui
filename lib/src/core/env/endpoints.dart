@@ -4,6 +4,8 @@ abstract class UsersEndpoints {
   static const String getUser = '/iam/users/:uuid';
   static const String editUser = '/iam/users/:uuid';
   static const String deleteUser = '/iam/users/:uuid';
+  static const String changeUserPassword = '/iam/users/:uuid/actions/change_password/invoke';
+  static const String confirmUserEmail = '/iam/users/:uuid/actions/confirm_email/invoke';
 }
 
 abstract class RolesEndpoints {
