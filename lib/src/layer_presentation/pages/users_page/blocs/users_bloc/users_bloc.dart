@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/get_users_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
@@ -18,7 +19,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   Future<void> _getUsers(_GetUsers event, Emitter<UsersState> emit) async {
     final useCase = GetUsersUseCase(_usersRepository);
     emit(UsersLoadingState());
-    final users = await useCase();
+    final users = await useCase(GetUsersParams());
     emit(UsersLoadedState(users));
   }
 
