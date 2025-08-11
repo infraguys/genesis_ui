@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
-import 'package:genesis/src/layer_presentation/pages/create_role_page/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class PermissionListItem extends StatelessWidget {
