@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_list_item.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 
@@ -23,14 +25,20 @@ class ProjectsTable extends StatelessWidget {
           Spacer(flex: 2),
         ],
       ),
-      headerLeading: Checkbox(
-        value: switch (10) {
-          0 => false,
-          final len when len == projects.length => true,
-          _ => null,
+      headerLeading: BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+        builder: (context, state) {
+          return Checkbox(
+            value: switch (state.length) {
+              0 => false,
+              final len when len == projects.length => true,
+              _ => null,
+            },
+            tristate: true,
+            onChanged: (val) {
+              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.selectAll(projects));
+            },
+          );
         },
-        tristate: true,
-        onChanged: (val) {},
       ),
     );
   }
