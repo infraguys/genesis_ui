@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
+import 'package:genesis/src/layer_presentation/shared_blocs/organization_editor_bloc/organization_editor_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/theming/palette.dart';
 
@@ -107,14 +110,15 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      // context.read<OrganizationEditorBloc>().add(
-      //   OrganizationEditorEvent.createOrganization(
-      //     CreateOrganizationParams(
-      //       name: _controllersManager.nameController.text,
-      //       description: _controllersManager.descriptionController.text,
-      //     ),
-      //   ),
-      // );
+      context.read<OrganizationEditorBloc>().add(
+        OrganizationEditorEvent.updateOrganization(
+          UpdateOrganizationParams(
+            uuid: widget.organization.uuid,
+            name: _controllersManager.nameController.text,
+            description: _controllersManager.descriptionController.text,
+          ),
+        ),
+      );
     }
   }
 }
