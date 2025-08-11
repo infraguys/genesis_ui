@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_projects_bloc/user_projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 
 class ListOfProjects extends StatelessWidget {

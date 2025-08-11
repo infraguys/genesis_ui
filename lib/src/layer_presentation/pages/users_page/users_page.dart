@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_selection_bloc/users_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_bloc_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_confirm_email_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_create_icon_button.dart';

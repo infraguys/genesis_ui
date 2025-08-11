@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class ProjectsListItem extends StatelessWidget {

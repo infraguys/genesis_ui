@@ -4,9 +4,9 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 

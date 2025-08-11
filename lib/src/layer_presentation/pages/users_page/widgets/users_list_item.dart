@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_selection_bloc/users_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_actions_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/routing/app_router.dart';

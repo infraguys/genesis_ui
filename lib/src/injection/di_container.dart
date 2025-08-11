@@ -27,13 +27,13 @@ import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 

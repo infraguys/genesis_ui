@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
