@@ -180,7 +180,4 @@ class _FormControllers extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [firstName, lastName, email, username, password];
-
-  @override
-  bool get allFilled => all.every((c) => c.text.isNotEmpty);
 }

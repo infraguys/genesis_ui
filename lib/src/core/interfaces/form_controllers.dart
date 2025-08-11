@@ -5,7 +5,7 @@ abstract class FormControllersManager {
   List<TextEditingController> get all;
 
   /// Returns true if all controllers have text.
-  bool get allFilled;
+  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 
   /// Clears the text in all text controllers.
   void clear() {

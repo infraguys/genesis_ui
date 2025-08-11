@@ -135,7 +135,4 @@ class _ControllerManager extends FormControllersManager {
     usernameController,
     passwordController,
   ];
-
-  @override
-  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 }

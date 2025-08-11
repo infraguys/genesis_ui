@@ -233,7 +233,4 @@ final class _ControllersManager extends FormControllersManager {
     projectDescriptionController,
     organizationSourceController,
   ];
-
-  @override
-  bool get allFilled => all.every((controller) => controller.text.isNotEmpty);
 }

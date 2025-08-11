@@ -97,7 +97,4 @@ class _ChangePasswordFormControllers extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [oldPassword, newPassword];
-
-  @override
-  bool get allFilled => all.every((controller) => controller.text.isNotEmpty);
 }

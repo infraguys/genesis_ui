@@ -151,7 +151,4 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
-
-  @override
-  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 }
