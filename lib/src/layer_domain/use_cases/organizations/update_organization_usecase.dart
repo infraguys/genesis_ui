@@ -1,5 +1,5 @@
 import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/params/organizations/edit_organiztion_params.dart';
+import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 
 final class UpdateOrganizationUseCase {
