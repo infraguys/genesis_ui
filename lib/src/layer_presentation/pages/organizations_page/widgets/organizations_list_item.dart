@@ -65,7 +65,7 @@ class OrganizationsListItem extends StatelessWidget {
         ),
         onTap: () {
           context.goNamed(
-            AppRoutes.editOrganization.name,
+            AppRoutes.organization.name,
             pathParameters: {'uuid': organization.uuid},
             extra: organization,
           );

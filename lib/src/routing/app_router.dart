@@ -184,6 +184,26 @@ GoRouter createRouter(BuildContext context) {
                       ),
                     ),
                   ),
+                  GoRoute(
+                    name: AppRoutes.createRole.name,
+                    path: ':uuid',
+                    pageBuilder: (_, _) => NoTransitionPage(
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+                          ),
+                          BlocProvider(
+                            create: (_) => PermissionsSelectionBloc(),
+                          ),
+                          BlocProvider(
+                            create: (_) => RoleEditorBloc(context.read<IRolesRepository>()),
+                          ),
+                        ],
+                        child: RolePage(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -216,7 +236,7 @@ GoRouter createRouter(BuildContext context) {
                     ),
                   ),
                   GoRoute(
-                    name: AppRoutes.editOrganization.name,
+                    name: AppRoutes.organization.name,
                     path: ':uuid',
                     pageBuilder: (_, state) {
                       final _ = state.pathParameters['uuid']!;
