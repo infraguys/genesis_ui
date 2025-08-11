@@ -1,5 +1,5 @@
-import 'package:genesis/src/layer_data/requests/create_permission_binding_req.dart';
-import 'package:genesis/src/layer_data/requests/create_role_req.dart';
+import 'package:genesis/src/layer_data/requests/permission_bindings/create_permission_binding_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_permission_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
