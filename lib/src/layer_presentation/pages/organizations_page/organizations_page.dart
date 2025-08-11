@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_table.dart';
