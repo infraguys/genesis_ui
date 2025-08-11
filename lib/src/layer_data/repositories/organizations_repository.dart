@@ -38,7 +38,7 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<Organization> editOrganization(params) async {
+  Future<Organization> updateOrganization(params) async {
     final req = EditOrganizationReq(params);
     final dto = await _organizationsApi.editOrganization(req);
     return dto.toEntity();

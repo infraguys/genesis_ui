@@ -1,5 +1,5 @@
-final class EditOrganizationParams {
-  const EditOrganizationParams({
+final class UpdateOrganizationParams {
+  const UpdateOrganizationParams({
     required this.uuid,
     required this.name,
     this.description,

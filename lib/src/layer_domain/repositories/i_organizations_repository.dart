@@ -9,7 +9,7 @@ abstract interface class IOrganizationsRepository {
 
   Future<Organization> createOrganization(CreateOrganizationParams params);
 
-  Future<Organization> editOrganization(EditOrganizationParams params);
+  Future<Organization> updateOrganization(UpdateOrganizationParams params);
 
   Future<void> deleteOrganization(DeleteOrganizationParams params);
 

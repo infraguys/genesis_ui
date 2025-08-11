@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_domain/params/organizations/edit_organiztion_p
 final class EditOrganizationReq implements JsonEncodable, PathEncodable {
   EditOrganizationReq(this._params);
 
-  final EditOrganizationParams _params;
+  final UpdateOrganizationParams _params;
 
   @override
   Map<String, dynamic> toJson() {
