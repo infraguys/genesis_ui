@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
+import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/change_user_password_usecase.dart';
@@ -21,7 +22,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _deleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final deleteUseCase = DeleteUserUseCase(_repository);
     emit(UserStateLoading());
-    deleteUseCase(event.userUuid);
+    // todo: передавать сразу параметры
+    deleteUseCase(DeleteUserParams(event.userUuid));
     emit(UserState.deleteSuccess());
   }
 
