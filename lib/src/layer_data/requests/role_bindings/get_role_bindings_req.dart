@@ -1,16 +1,18 @@
 import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
+import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 
 final class GetRoleBindingsReq implements QueryEncodable, PathEncodable {
-  GetRoleBindingsReq({required String? userUuid}) : _userUuid = userUuid;
+  GetRoleBindingsReq(this._params);
 
-  final String? _userUuid;
+  final GetRoleBindingsParams _params;
 
   @override
   Map<String, dynamic> toQuery() {
     return {
-      'user': ?_userUuid,
+      'user': ?_params.userUuid,
+      'project': ?_params.projectUuid,
     };
   }
 
