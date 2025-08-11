@@ -4,9 +4,9 @@ import 'package:genesis/src/layer_domain/params/projects/create_project_params.d
 import 'package:genesis/src/layer_domain/params/projects/delete_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/edit_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/create_project_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/delete_project_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/edit_project_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/projects/create_project_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/projects/delete_project_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/projects/edit_project_usecase.dart';
 
 part 'project_event.dart';
 part 'project_state.dart';

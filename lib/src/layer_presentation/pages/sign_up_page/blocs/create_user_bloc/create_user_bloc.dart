@@ -3,7 +3,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/create_user_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/create_user_usecase.dart';
 
 part 'create_user_event.dart';
 part 'create_user_state.dart';

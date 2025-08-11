@@ -95,7 +95,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                     backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
                   ),
                   onPressed: null,
-                  child: Text(context.$.create),
+                  child: Text(context.$.update),
                 ),
               ),
             ],

@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/params/get_permissions_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/get_permissions_usecases.dart';
+import 'package:genesis/src/layer_domain/use_cases/permissions/get_permissions_usecases.dart';
 
 part 'permissions_event.dart';
 part 'permissions_state.dart';

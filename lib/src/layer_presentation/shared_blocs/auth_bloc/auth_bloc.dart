@@ -4,7 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/sign_in_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/sign_in_use_case.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/sign_in_use_case.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
