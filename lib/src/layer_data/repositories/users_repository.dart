@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:genesis/src/layer_data/requests/users/change_user_password_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
+import 'package:genesis/src/layer_data/requests/users/delete_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
-import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 
 class UsersRepository implements IUsersRepository {
@@ -44,8 +44,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<void> deleteUser(String userUuid) async {
-    await _usersApi.deleteUser(userUuid);
+  Future<void> deleteUser(params) async {
+    final req = DeleteUserReq(params);
+    await _usersApi.deleteUser(req);
   }
 
   @override
@@ -55,7 +56,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<User> updateUser(UpdateUserParams params) async {
+  Future<User> updateUser(params) async {
     final req = UpdateUserReq(params);
     final dto = await _usersApi.updateUser(req);
     return dto.toEntity();
