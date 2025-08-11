@@ -10,7 +10,7 @@ final class PermissionBindingApi implements IPermissionBindingsApi {
 
   final RestClient _client;
 
-  static const _permissionBindingsUrl = '/v1/iam/permission_bindings/';
+  static const _permissionBindingsUrl = '/iam/permission_bindings/';
 
   @override
   Future<PermissionDto> createPermissionBinding(req) async {

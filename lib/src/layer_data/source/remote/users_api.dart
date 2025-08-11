@@ -11,7 +11,7 @@ final class UsersApi implements IUsersApi {
 
   final RestClient _client;
 
-  static const _usersUrl = '/v1/iam/users/';
+  static const _usersUrl = '/iam/users/';
 
   @override
   Future<List<UserDto>> getUsers(req) async {

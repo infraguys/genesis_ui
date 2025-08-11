@@ -11,7 +11,7 @@ final class ProjectsApi implements IProjectsApi {
 
   final RestClient _client;
 
-  static const _roleBindingsUrl = '/v1/iam/role_bindings/';
+  static const _roleBindingsUrl = '/iam/role_bindings/';
 
   @override
   Future<ProjectDto> createProject(req) async {
