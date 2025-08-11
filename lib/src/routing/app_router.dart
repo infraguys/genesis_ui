@@ -185,7 +185,7 @@ GoRouter createRouter(BuildContext context) {
                     ),
                   ),
                   GoRoute(
-                    name: AppRoutes.createRole.name,
+                    name: AppRoutes.role.name,
                     path: ':uuid',
                     pageBuilder: (_, _) => NoTransitionPage(
                       child: MultiBlocProvider(
