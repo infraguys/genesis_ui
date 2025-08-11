@@ -3,7 +3,7 @@ part of 'users_selection_bloc.dart';
 sealed class UsersSelectionEvent {
   factory UsersSelectionEvent.toggleUser(User user) = _ToggleUser;
 
-  factory UsersSelectionEvent.selectAll(List<User> users) = _SelectAllUsers;
+  factory UsersSelectionEvent.selectAll(List<User> users) = _SelectAll;
 
   factory UsersSelectionEvent.clearSelection() = _ClearSelection;
 }
@@ -14,8 +14,8 @@ final class _ToggleUser implements UsersSelectionEvent {
   final User user;
 }
 
-final class _SelectAllUsers implements UsersSelectionEvent {
-  _SelectAllUsers(this.users);
+final class _SelectAll implements UsersSelectionEvent {
+  _SelectAll(this.users);
 
   final List<User> users;
 }
