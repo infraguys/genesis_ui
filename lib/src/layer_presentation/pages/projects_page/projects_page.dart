@@ -30,8 +30,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
-        if (state is ProjectDeletedState || state is ProjectUpdatedState) {
-          context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
+        switch (state) {
+          case ProjectDeletedState():
+          case ProjectUpdatedState():
+            context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
+          default:
         }
       },
       child: Column(
