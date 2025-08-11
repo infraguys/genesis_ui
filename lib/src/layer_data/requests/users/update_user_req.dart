@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
@@ -21,5 +22,5 @@ class UpdateUserReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath(String prefix) => '$prefix/${_params.uuid}';
+  String toPath() => UsersEndpoints.editUser;
 }
