@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/use_cases/roles/create_role_usecase.dart';
@@ -17,13 +16,8 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
 
   Future<void> _onCreateRole(_CreateRole event, Emitter<RoleState> emit) async {
     final useCase = CreateRoleUseCase(_rolesRepository);
-    final params = CreateRoleParams(
-      name: event.name,
-      description: event.description,
-      permissions: event.permissions,
-    );
     emit(RoleState.loading());
-    await useCase(params);
+    await useCase(event.params);
     emit(RoleState.success());
   }
 }
