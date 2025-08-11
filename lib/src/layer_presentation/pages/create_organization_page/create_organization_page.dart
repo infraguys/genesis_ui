@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_blocs/organization_editor_bloc/organization_editor_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_blocs/organization_editor_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
@@ -36,9 +36,9 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OrganizationEditorBloc, OrganizationEditorState>(
+    return BlocListener<OrganizationBloc, OrganizationState>(
       listener: (context, state) {
-        if (state is OrganizationEditorStateSuccess) {
+        if (state is OrganizationStateSuccess) {
           context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
           _controllersManager.clear();
           final navigator = GoRouter.of(context);
@@ -123,8 +123,8 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<OrganizationEditorBloc>().add(
-        OrganizationEditorEvent.createOrganization(
+      context.read<OrganizationBloc>().add(
+        OrganizationEvent.createOrganization(
           CreateOrganizationParams(
             name: _controllersManager.nameController.text,
             description: _controllersManager.descriptionController.text,
