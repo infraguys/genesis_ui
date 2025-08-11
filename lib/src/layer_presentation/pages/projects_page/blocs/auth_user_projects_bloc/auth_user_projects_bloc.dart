@@ -15,7 +15,7 @@ class AuthUserProjectsBloc extends Bloc<AuthUserProjectsEvent, AuthUserProjectsS
   final IProjectsRepository _projectsRepository;
 
   Future<void> _getProjects(_GetProjectsEvent event, Emitter<AuthUserProjectsState> emit) async {
-    final getProjectsUseCase = GetProjectsUseCase(_projectsRepository);
+    final getProjectsUseCase = GetProjectsByUserUseCase(_projectsRepository);
     emit(AuthUserProjectsState.loading());
     final projects = await getProjectsUseCase(GetProjectsParams(userUuid: event.userUuid));
     emit(AuthUserProjectsState.loaded(projects));
