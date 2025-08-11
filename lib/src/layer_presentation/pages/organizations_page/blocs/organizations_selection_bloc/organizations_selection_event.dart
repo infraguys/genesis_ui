@@ -3,7 +3,7 @@ part of 'organizations_selection_bloc.dart';
 sealed class OrganizationsSelectionEvent {
   factory OrganizationsSelectionEvent.toggleOrganization(Organization organization) = _ToggleOrganization;
 
-  factory OrganizationsSelectionEvent.selectAll(List<Organization> organizations) = _SelectAllOrganizations;
+  factory OrganizationsSelectionEvent.selectAll(List<Organization> organizations) = _SelectAll;
 
   factory OrganizationsSelectionEvent.clearSelection() = _ClearSelection;
 }
@@ -14,8 +14,8 @@ final class _ToggleOrganization implements OrganizationsSelectionEvent {
   final Organization organization;
 }
 
-final class _SelectAllOrganizations implements OrganizationsSelectionEvent {
-  _SelectAllOrganizations(this.organizations);
+final class _SelectAll implements OrganizationsSelectionEvent {
+  _SelectAll(this.organizations);
 
   final List<Organization> organizations;
 }
