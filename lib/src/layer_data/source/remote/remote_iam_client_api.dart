@@ -18,7 +18,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   Future<TokenDto> createTokenByPassword(SignInReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_iamClientUrl),
+        req.toPath(),
         data: req.toJson(),
         options: Options(
           headers: {Headers.contentTypeHeader: Headers.formUrlEncodedContentType},
