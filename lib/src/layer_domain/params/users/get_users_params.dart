@@ -1,18 +1,18 @@
 final class GetUsersParams {
   GetUsersParams({
-    required this.name,
-    required this.description,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.salt,
-    required this.secretHash,
-    required this.firstName,
-    required this.lastName,
-    required this.surname,
-    required this.email,
-    required this.phone,
-    required this.emailVerified,
-    required this.password,
+    this.name,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.salt,
+    this.secretHash,
+    this.firstName,
+    this.lastName,
+    this.surname,
+    this.email,
+    this.phone,
+    this.emailVerified,
+    this.password,
   });
 
   final String? name;
@@ -26,6 +26,6 @@ final class GetUsersParams {
   final String? surname;
   final String? email;
   final String? phone;
-  final bool emailVerified;
+  final bool? emailVerified;
   final String? password;
 }
