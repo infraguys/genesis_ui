@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class RolesListItem extends StatelessWidget {
@@ -62,7 +61,7 @@ class RolesListItem extends StatelessWidget {
             );
           },
         ),
-        trailing: RolesActionPopupMenuButton(role: role),
+        // trailing: RolesActionPopupMenuButton(role: role),
         // TODO: Чуть позже удалить
         // expandedAlignment: Alignment.centerLeft,
         // childrenPadding: EdgeInsets.only(left: 50),
