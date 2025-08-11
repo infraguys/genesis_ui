@@ -4,7 +4,6 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
-import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 
 final class UsersApi implements IUsersApi {
@@ -64,7 +63,10 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> createUser(req) async {
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(req.toPath(), data: req.toJson());
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
+        req.toPath(),
+        data: req.toJson(),
+      );
       return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw NetworkException(e);
@@ -72,9 +74,11 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
-  Future<void> deleteUser(String userUuid) async {
+  Future<void> deleteUser(req) async {
     try {
-      await _client.delete<void>(url);
+      await _client.delete<void>(
+        req.toPath(),
+      );
     } on DioException catch (e) {
       throw NetworkException(e);
     }
