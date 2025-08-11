@@ -34,7 +34,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   Future<AuthUserDto> getCurrentUser(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
-        req.toPath(_iamClientUrl),
+        req.toPath(),
       );
       if (data != null) {
         if (data case {
