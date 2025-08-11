@@ -12,12 +12,13 @@ enum AppRoutes {
 
   /// roles
   roles,
+  role,
   createRole,
 
   /// organizations
   organizations,
+  organization,
   createOrganization,
-  editOrganization,
   //
   main,
   monitoring,
