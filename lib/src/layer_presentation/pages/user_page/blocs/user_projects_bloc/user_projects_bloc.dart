@@ -15,7 +15,7 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
   final IProjectsRepository _projectsRepository;
 
   Future<void> _getProjects(_GetProjects event, Emitter<UserProjectsState> emit) async {
-    final getProjectsUseCase = GetProjectsUseCase(_projectsRepository);
+    final getProjectsUseCase = GetProjectsByUserUseCase(_projectsRepository);
     emit(UserProjectsState.loading());
     final params = GetProjectsParams(userUuid: event.userUuid);
 

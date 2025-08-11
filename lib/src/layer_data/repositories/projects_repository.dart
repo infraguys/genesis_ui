@@ -1,14 +1,16 @@
-import 'package:genesis/src/layer_data/requests/get_projects_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/create_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/create_role_binding_req.dart';
+import 'package:genesis/src/layer_data/requests/role_bindings/get_role_bindings_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/edit_project_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
+import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class ProjectsRepository implements IProjectsRepository {
@@ -48,9 +50,18 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<List<Project>> getProjects(params) async {
-    final req = GetProjectsReq(params);
-    final dtos = await _projectsApi.getProjects(req);
-    return dtos.map((it) => it.toEntity()).toList();
+  Future<List<Project>> getProjectsByUser(params) async {
+    final roleBindingsReq = GetRoleBindingsReq(
+      GetRoleBindingsParams(userUuid: params.userUuid),
+    );
+    final roleBindingDtos = await _roleBindingsApi.getRoleBindings(roleBindingsReq);
+
+    final projectDtos = await Future.wait(
+      roleBindingDtos.where((dto) => dto.project != null).map((it) {
+        final req = GetProjectReq(it.project!.split('/').last);
+        return _projectsApi.getProject(req);
+      }),
+    );
+    return projectDtos.map((it) => it.toEntity()).toList();
   }
 }

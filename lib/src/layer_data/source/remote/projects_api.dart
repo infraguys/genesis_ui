@@ -3,7 +3,6 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
-import 'package:genesis/src/layer_data/dtos/roles_bindings.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
 
 final class ProjectsApi implements IProjectsApi {
@@ -41,37 +40,37 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<List<ProjectDto>> getProjects(req) async {
-    const url = _roleBindingsUrl;
-
-    try {
-      final Response(:data) = await _client.get<List<dynamic>>(
-        url,
-        queryParameters: req.toQuery(),
-      );
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        final bindings = castedData.map((it) => RolesBindingDto.fromJson(it)).toList();
-
-        final futures = <Future<Response<Map<String, dynamic>>>>[];
-
-        for (var binding in bindings) {
-          if (binding.project == null) {
-            continue;
-          }
-          final future = _client.get<Map<String, dynamic>>(binding.project!);
-          futures.add(future);
-        }
-
-        final projectData = await futures.wait;
-        return projectData.map((response) {
-          return ProjectDto.fromJson(response.data!);
-        }).toList();
-      }
-    } on DioException catch (e) {
-      throw NetworkException(e);
-    }
-    return [];
+  Future<List<ProjectDto>> getProjectsByUser(req) async {
+    throw UnimplementedError();
+    // const url = _roleBindingsUrl;
+    //
+    // try {
+    //   final Response(:data) = await _client.get<List<dynamic>>(
+    //     url,
+    //   );
+    //   if (data != null) {
+    //     // final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+    //     // final bindings = castedData.map((it) => RolesBindingDto.fromJson(it)).toList();
+    //     //
+    //     final futures = <Future<Response<Map<String, dynamic>>>>[];
+    //
+    //     for (var binding in bindings) {
+    //       if (binding.project == null) {
+    //         continue;
+    //       }
+    //       final future = _client.get<Map<String, dynamic>>(binding.project!);
+    //       futures.add(future);
+    //     }
+    //
+    //     final projectData = await futures.wait;
+    //     return projectData.map((response) {
+    //       return ProjectDto.fromJson(response.data!);
+    //     }).toList();
+    //   }
+    // } on DioException catch (e) {
+    //   throw NetworkException(e);
+    // }
+    // return [];
   }
 
   @override
@@ -80,6 +79,21 @@ final class ProjectsApi implements IProjectsApi {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
+      );
+      if (data != null) {
+        return ProjectDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    } /**/
+  }
+
+  @override
+  Future<ProjectDto> getProject(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+        req.toPath(),
       );
       if (data != null) {
         return ProjectDto.fromJson(data);
