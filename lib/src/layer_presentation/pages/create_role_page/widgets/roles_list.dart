@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/create_role_page/blocs/user_roles_bloc/user_roles_bloc.dart';
 
 class RolesList extends StatefulWidget {
   const RolesList({super.key});
