@@ -5,5 +5,5 @@ final class GetCurrentUserReq implements PathEncodable {
   const GetCurrentUserReq();
 
   @override
-  String toPath(String prefix) => '$prefix/${Env.iamClientUuid}/actions/me';
+  String toPath() => '/clients/${Env.iamClientUuid}/actions/me';
 }
