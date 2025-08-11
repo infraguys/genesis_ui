@@ -10,8 +10,6 @@ final class ProjectsApi implements IProjectsApi {
 
   final RestClient _client;
 
-  static const _roleBindingsUrl = '/iam/role_bindings/';
-
   @override
   Future<ProjectDto> createProject(req) async {
     try {
@@ -40,40 +38,6 @@ final class ProjectsApi implements IProjectsApi {
   }
 
   @override
-  Future<List<ProjectDto>> getProjectsByUser(req) async {
-    throw UnimplementedError();
-    // const url = _roleBindingsUrl;
-    //
-    // try {
-    //   final Response(:data) = await _client.get<List<dynamic>>(
-    //     url,
-    //   );
-    //   if (data != null) {
-    //     // final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-    //     // final bindings = castedData.map((it) => RolesBindingDto.fromJson(it)).toList();
-    //     //
-    //     final futures = <Future<Response<Map<String, dynamic>>>>[];
-    //
-    //     for (var binding in bindings) {
-    //       if (binding.project == null) {
-    //         continue;
-    //       }
-    //       final future = _client.get<Map<String, dynamic>>(binding.project!);
-    //       futures.add(future);
-    //     }
-    //
-    //     final projectData = await futures.wait;
-    //     return projectData.map((response) {
-    //       return ProjectDto.fromJson(response.data!);
-    //     }).toList();
-    //   }
-    // } on DioException catch (e) {
-    //   throw NetworkException(e);
-    // }
-    // return [];
-  }
-
-  @override
   Future<ProjectDto> editProject(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
@@ -86,7 +50,7 @@ final class ProjectsApi implements IProjectsApi {
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
-    } /**/
+    }
   }
 
   @override
@@ -101,6 +65,6 @@ final class ProjectsApi implements IProjectsApi {
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
-    } /**/
+    }
   }
 }
