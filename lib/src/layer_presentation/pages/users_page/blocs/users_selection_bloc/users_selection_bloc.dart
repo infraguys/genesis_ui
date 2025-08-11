@@ -20,7 +20,7 @@ class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
     emit(updatedUsers);
   }
 
-  void _onSelectAllUsers(_SelectAllUsers event, Emitter<List<User>> emit) {
+  void _onSelectAllUsers(_SelectAll event, Emitter<List<User>> emit) {
     if (state.length == event.users.length) {
       emit([]);
       return;
