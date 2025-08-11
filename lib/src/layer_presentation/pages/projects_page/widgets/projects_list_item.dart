@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
+import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class ProjectsListItem extends StatelessWidget {
@@ -49,9 +50,15 @@ class ProjectsListItem extends StatelessWidget {
             Spacer(flex: 2),
           ],
         ),
-        leading: Checkbox(
-          value: false,
-          onChanged: (val) {},
+        leading: BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+          builder: (context, state) {
+            return Checkbox(
+              value: state.contains(project),
+              onChanged: (val) {
+                context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleProject(project));
+              },
+            );
+          },
         ),
         onTap: () {
           // final user = context.read<User>();
