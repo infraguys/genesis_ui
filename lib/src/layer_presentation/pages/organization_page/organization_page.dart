@@ -97,7 +97,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
                   ),
-                  onPressed: null,
+                  onPressed: () => save(context),
                   child: Text(context.$.update),
                 ),
               ),
