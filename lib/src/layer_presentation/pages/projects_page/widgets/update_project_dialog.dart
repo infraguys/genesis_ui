@@ -6,9 +6,9 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/custom_options_view.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 
 class MeAppbarWidget extends StatelessWidget {
   const MeAppbarWidget({super.key});

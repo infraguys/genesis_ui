@@ -5,7 +5,6 @@ import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_bloc
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
-import 'package:genesis/src/layer_presentation/shared_blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 
@@ -17,8 +16,6 @@ class RolesPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<RolesPage> {
-  late final AuthenticatedAuthState authState;
-
   @override
   void initState() {
     context.read<RolesBloc>().add(RolesEvent.getRoles());
