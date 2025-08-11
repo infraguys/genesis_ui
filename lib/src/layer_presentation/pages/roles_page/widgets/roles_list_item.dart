@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 class RolesListItem extends StatelessWidget {
   const RolesListItem({super.key});
@@ -61,6 +63,13 @@ class RolesListItem extends StatelessWidget {
             );
           },
         ),
+        onTap: () {
+          context.goNamed(
+            AppRoutes.role.name,
+            pathParameters: {'uuid': role.uuid},
+            extra: role,
+          );
+        },
         // trailing: RolesActionPopupMenuButton(role: role),
         // TODO: Чуть позже удалить
         // expandedAlignment: Alignment.centerLeft,
