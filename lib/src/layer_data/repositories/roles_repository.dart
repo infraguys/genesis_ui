@@ -1,9 +1,11 @@
 import 'package:genesis/src/layer_data/requests/permission_bindings/create_permission_binding_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_permission_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
+import 'package:genesis/src/layer_domain/params/roles/get_roles_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 
 final class RolesRepository implements IRolesRepository {
@@ -33,5 +35,12 @@ final class RolesRepository implements IRolesRepository {
     );
 
     return roleDto.toEntity();
+  }
+
+  @override
+  Future<List<Role>> getRoles(GetRolesParams params) async {
+    final req = GetRolesReq(params);
+    final rolesDtos = await _rolesApi.getRoles(req);
+    return rolesDtos.map((dto) => dto.toEntity()).toList();
   }
 }
