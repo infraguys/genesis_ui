@@ -23,5 +23,5 @@ final class SignInReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath(String prefix) => '$prefix/${Env.iamClientUuid}/actions/get_token/invoke';
+  String toPath() => '/clients/${Env.iamClientUuid}/actions/get_token/invoke';
 }
