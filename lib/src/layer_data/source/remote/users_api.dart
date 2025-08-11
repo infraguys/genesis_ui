@@ -4,6 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
+import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 
 final class UsersApi implements IUsersApi {
@@ -14,11 +15,12 @@ final class UsersApi implements IUsersApi {
   static const _usersUrl = '/v1/iam/users/';
 
   @override
-  Future<List<UserDto>> getUsers() async {
-    const url = _usersUrl;
-
+  Future<List<UserDto>> getUsers(req) async {
     try {
-      final Response(:data) = await _client.get<List<dynamic>>(url);
+      final Response(:data) = await _client.get<List<dynamic>>(
+        req.toPath(),
+        queryParameters: req.toQuery(),
+      );
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => UserDto.fromJson(it)).toList();
@@ -33,7 +35,7 @@ final class UsersApi implements IUsersApi {
   Future<UserDto> changeUserPassword(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_usersUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data == null) {
@@ -47,26 +49,22 @@ final class UsersApi implements IUsersApi {
 
   @override
   Future<UserDto> confirmEmail(String userUuid) async {
-    final url = '$_usersUrl/$userUuid/actions/confirm_email/invoke';
-
-    try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return UserDto.fromJson(data);
-    } on DioException catch (e) {
-      throw NetworkException(e);
-    }
+    throw UnimplementedError();
+    // try {
+    //   final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
+    //   if (data == null) {
+    //     throw DataNotFoundException(requestOptions.uri.path);
+    //   }
+    //   return UserDto.fromJson(data);
+    // } on DioException catch (e) {
+    //   throw NetworkException(e);
+    // }
   }
 
   @override
   Future<UserDto> createUser(req) async {
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(
-        req.toPath(_usersUrl),
-        data: req.toJson(),
-      );
+      final Response(:data) = await _client.post<Map<String, dynamic>>(req.toPath(), data: req.toJson());
       return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw NetworkException(e);
@@ -75,8 +73,6 @@ final class UsersApi implements IUsersApi {
 
   @override
   Future<void> deleteUser(String userUuid) async {
-    final url = '$_usersUrl/$userUuid';
-
     try {
       await _client.delete<void>(url);
     } on DioException catch (e) {
@@ -100,11 +96,11 @@ final class UsersApi implements IUsersApi {
   Future<UserDto> updateUser(req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
-        req.toPath(_usersUrl),
+        req.toPath(),
         data: req.toJson(),
       );
       if (data == null) {
-        throw DataNotFoundException(req.toPath(_usersUrl));
+        throw DataNotFoundException(req.toPath());
       }
       return UserDto.fromJson(data);
     } on DioException catch (e) {
