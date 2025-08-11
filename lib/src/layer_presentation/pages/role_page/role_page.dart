@@ -11,14 +11,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indic
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/theming/palette.dart';
 
-class RolePage extends StatefulWidget {
-  const RolePage({super.key});
+class CreateRolePage extends StatefulWidget {
+  const CreateRolePage({super.key});
 
   @override
-  State<RolePage> createState() => _RolePageState();
+  State<CreateRolePage> createState() => _CreateRolePageState();
 }
 
-class _RolePageState extends State<RolePage> {
+class _CreateRolePageState extends State<CreateRolePage> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -26,9 +26,14 @@ class _RolePageState extends State<RolePage> {
   @override
   void initState() {
     context.read<PermissionsBloc>().add(PermissionsEvent.getPermissions());
-    // context.read<UserRolesBloc>().add(UserRolesEvent.getRoles(widget.user.uuid));
     _controllersManager = _ControllersManager();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controllersManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,19 +50,6 @@ class _RolePageState extends State<RolePage> {
             );
             ScaffoldMessenger.of(context).showSnackBar(snack);
           }
-          // if (state is UserStateUpdateSuccess) {
-          //   final snack = SnackBar(
-          //     backgroundColor: Colors.green,
-          //     content: Text(context.$.success),
-          //   );
-          //   ScaffoldMessenger.of(context).showSnackBar(snack);
-          // } else if (state is UserStateFailure) {
-          //   final snack = SnackBar(
-          //     backgroundColor: Colors.red,
-          //     content: Text(state.message),
-          //   );
-          //   ScaffoldMessenger.of(context).showSnackBar(snack);
-          // }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +150,4 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
-
-  @override
-  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 }
