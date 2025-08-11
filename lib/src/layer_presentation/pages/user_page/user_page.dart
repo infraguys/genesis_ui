@@ -32,6 +32,12 @@ class _UserPageState extends State<UserPage> {
   }
 
   @override
+  void dispose() {
+    _controllersManager.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
 
