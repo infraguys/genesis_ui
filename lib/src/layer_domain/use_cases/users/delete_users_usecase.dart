@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 
 class DeleteUsersUseCase {
@@ -7,7 +8,7 @@ class DeleteUsersUseCase {
 
   Future<List<void>> call(List<String> userUuids) async {
     return await Future.wait(
-      userUuids.map((userUuid) => _repository.deleteUser(userUuid)),
+      userUuids.map((uuid) => _repository.deleteUser(DeleteUserParams(uuid))),
     );
   }
 }
