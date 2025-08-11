@@ -4,26 +4,26 @@ import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/use_cases/roles/create_role_usecase.dart';
 
-part 'role_editor_event.dart';
-part 'role_editor_state.dart';
+part 'role_event.dart';
+part 'role_state.dart';
 
-class RoleEditorBloc extends Bloc<RoleEditorEvent, RoleEditorState> {
-  RoleEditorBloc(this._rolesRepository) : super(RoleEditorState.initial()) {
+class RoleBloc extends Bloc<RoleEvent, RoleState> {
+  RoleBloc(this._rolesRepository) : super(RoleState.initial()) {
     on(_onCreateRole);
     // on(_onUpdateRole);
   }
 
   final IRolesRepository _rolesRepository;
 
-  Future<void> _onCreateRole(_CreateRole event, Emitter<RoleEditorState> emit) async {
+  Future<void> _onCreateRole(_CreateRole event, Emitter<RoleState> emit) async {
     final useCase = CreateRoleUseCase(_rolesRepository);
     final params = CreateRoleParams(
       name: event.name,
       description: event.description,
       permissions: event.permissions,
     );
-    emit(RoleEditorState.loading());
+    emit(RoleState.loading());
     await useCase(params);
-    emit(RoleEditorState.success());
+    emit(RoleState.success());
   }
 }

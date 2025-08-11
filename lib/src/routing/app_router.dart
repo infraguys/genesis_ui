@@ -18,7 +18,7 @@ import 'package:genesis/src/layer_presentation/pages/projects_page/blocs/project
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/permissions_selection_bloc/permissions_selection_bloc%20.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/blocs/role_editor_bloc/role_editor_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/role_page/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
@@ -177,7 +177,7 @@ GoRouter createRouter(BuildContext context) {
                             create: (_) => PermissionsSelectionBloc(),
                           ),
                           BlocProvider(
-                            create: (_) => RoleEditorBloc(context.read<IRolesRepository>()),
+                            create: (_) => RoleBloc(context.read<IRolesRepository>()),
                           ),
                         ],
                         child: RolePage(),
@@ -197,7 +197,7 @@ GoRouter createRouter(BuildContext context) {
                             create: (_) => PermissionsSelectionBloc(),
                           ),
                           BlocProvider(
-                            create: (_) => RoleEditorBloc(context.read<IRolesRepository>()),
+                            create: (_) => RoleBloc(context.read<IRolesRepository>()),
                           ),
                         ],
                         child: RolePage(),

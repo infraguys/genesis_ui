@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/blocs/permissions_selection_bloc/permissions_selection_bloc%20.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/blocs/role_editor_bloc/role_editor_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/role_page/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -34,7 +34,7 @@ class _RolePageState extends State<RolePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<RoleEditorBloc, RoleEditorState>(
+      body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
           if (state is RoleEditorStateSuccess) {
             _controllersManager.clear();
@@ -141,8 +141,8 @@ class _RolePageState extends State<RolePage> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<RoleEditorBloc>().add(
-        RoleEditorEvent.create(
+      context.read<RoleBloc>().add(
+        RoleEvent.create(
           name: _controllersManager.nameController.text,
           description: _controllersManager.descriptionController.text,
           permissions: context.read<PermissionsSelectionBloc>().state,
