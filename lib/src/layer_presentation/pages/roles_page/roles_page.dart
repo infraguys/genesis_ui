@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
@@ -21,8 +21,7 @@ class _ProjectsPageState extends State<RolesPage> {
 
   @override
   void initState() {
-    // authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
-    context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUser(authState.user.uuid));
+    context.read<RolesBloc>().add(RolesEvent.getRoles());
     super.initState();
   }
 
@@ -46,9 +45,9 @@ class _ProjectsPageState extends State<RolesPage> {
           ],
         ),
         Expanded(
-          child: BlocBuilder<UserRolesBloc, UserRolesState>(
+          child: BlocBuilder<RolesBloc, RolesState>(
             builder: (context, state) {
-              if (state is! UserRolesLoaded) {
+              if (state is! RolesLoaded) {
                 return AppProgressIndicator();
               }
               return RolesTable(roles: state.roles);
