@@ -6,7 +6,7 @@ part 'organizations_selection_event.dart';
 class OrganizationsSelectionBloc extends Bloc<OrganizationsSelectionEvent, List<Organization>> {
   OrganizationsSelectionBloc() : super(List.empty()) {
     on(_onToggleOrganization);
-    on(_onSelectAllOrganizations);
+    on(_onSelectAll);
     on(_clearSelection);
   }
 
@@ -20,7 +20,7 @@ class OrganizationsSelectionBloc extends Bloc<OrganizationsSelectionEvent, List<
     emit(updatedOrganizations);
   }
 
-  void _onSelectAllOrganizations(_SelectAllOrganizations event, Emitter<List<Organization>> emit) {
+  void _onSelectAll(_SelectAll event, Emitter<List<Organization>> emit) {
     if (state.length == event.organizations.length) {
       emit(List.empty());
     } else {
