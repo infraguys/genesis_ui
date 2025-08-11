@@ -12,14 +12,9 @@ import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_ta
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 
-class UsersPage extends StatefulWidget {
+class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
 
-  @override
-  State<UsersPage> createState() => _UsersPageState();
-}
-
-class _UsersPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -34,13 +29,6 @@ class _UsersPageState extends State<UsersPage> {
             }
           },
         ),
-        BlocListener<UsersBloc, UsersState>(
-          listener: (context, state) {
-            if (state is UsersLoadedState) {
-              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
-            }
-          },
-        ),
       ],
       child: Column(
         spacing: 24.0,
@@ -51,7 +39,6 @@ class _UsersPageState extends State<UsersPage> {
               BreadcrumbItem(text: context.$.users),
             ],
           ),
-          // Text(context.$.users, ),
           Row(
             spacing: 4.0,
             children: [
@@ -63,7 +50,11 @@ class _UsersPageState extends State<UsersPage> {
             ],
           ),
           Expanded(
-            child: BlocBuilder<UsersBloc, UsersState>(
+            child: BlocConsumer<UsersBloc, UsersState>(
+              listenWhen: (_, current) => current is UsersLoadedState,
+              listener: (context, _) {
+                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
+              },
               builder: (context, state) {
                 if (state is! UsersLoadedState) {
                   return AppProgressIndicator();
