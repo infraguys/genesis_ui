@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
+import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/create_role_page/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -41,7 +41,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
     return Scaffold(
       body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
-          if (state is RoleEditorStateSuccess) {
+          if (state is RoleSuccessState) {
             _controllersManager.clear();
             context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
             final snack = SnackBar(
