@@ -12,3 +12,7 @@ final class DeleteOrganizationReq implements PathEncodable {
     return OrganizationsEndpoints.deleteOrganization.replaceFirst(':uuid', _params.uuid);
   }
 }
+
+extension DeleteOrganizationParamsX on DeleteOrganizationParams {
+  DeleteOrganizationReq toReq() => DeleteOrganizationReq(this);
+}

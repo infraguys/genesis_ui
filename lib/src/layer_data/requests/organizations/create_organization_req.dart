@@ -21,3 +21,7 @@ final class CreateOrganizationReq implements JsonEncodable, PathEncodable {
     return OrganizationsEndpoints.createOrganization;
   }
 }
+
+extension CreateOrganizationParamsX on CreateOrganizationParams {
+  CreateOrganizationReq toReq() => CreateOrganizationReq(this);
+}

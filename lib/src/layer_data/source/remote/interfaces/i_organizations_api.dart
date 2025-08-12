@@ -9,7 +9,7 @@ abstract interface class IOrganizationsApi {
 
   Future<OrganizationDto> createOrganization(CreateOrganizationReq req);
 
-  Future<OrganizationDto> editOrganization(EditOrganizationReq req);
+  Future<OrganizationDto> editOrganization(UpdateOrganizationReq req);
 
   Future<void> deleteOrganization(DeleteOrganizationReq req);
 

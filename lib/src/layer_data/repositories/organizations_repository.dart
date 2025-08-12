@@ -13,15 +13,13 @@ final class OrganizationsRepository implements IOrganizationsRepository {
 
   @override
   Future<Organization> createOrganization(params) async {
-    final req = CreateOrganizationReq(params);
-    final dto = await _organizationsApi.createOrganization(req);
+    final dto = await _organizationsApi.createOrganization(params.toReq());
     return dto.toEntity();
   }
 
   @override
   Future<void> deleteOrganization(params) async {
-    final req = DeleteOrganizationReq(params);
-    await _organizationsApi.deleteOrganization(req);
+    await _organizationsApi.deleteOrganization(params.toReq());
   }
 
   @override
@@ -32,15 +30,13 @@ final class OrganizationsRepository implements IOrganizationsRepository {
 
   @override
   Future<List<Organization>> getOrganizations(params) async {
-    final req = GetOrganizationsReq(params);
-    final listOfOrganizationDto = await _organizationsApi.getOrganizations(req);
+    final listOfOrganizationDto = await _organizationsApi.getOrganizations(params.toReq());
     return listOfOrganizationDto.map((dto) => dto.toEntity()).toList();
   }
 
   @override
   Future<Organization> updateOrganization(params) async {
-    final req = EditOrganizationReq(params);
-    final dto = await _organizationsApi.editOrganization(req);
+    final dto = await _organizationsApi.editOrganization(params.toReq());
     return dto.toEntity();
   }
 
