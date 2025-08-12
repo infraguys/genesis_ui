@@ -41,7 +41,6 @@ cd "$WORK_DIR"
 
 # Prepare the environment
 python3 genesis/images/make_ui_build_env.py
-cat env.json
 
 # Build the application
 make ci
