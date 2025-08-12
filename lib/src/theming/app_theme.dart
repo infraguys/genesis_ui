@@ -90,7 +90,11 @@ class AppTheme {
         shape: OutlineInputBorder(borderSide: BorderSide.none),
       ),
       dialogTheme: DialogThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: Palette.color1B1B1D,
+        contentTextStyle: TextStyle(color: Colors.white),
       ),
       dividerTheme: DividerThemeData(
         thickness: 0.5,
@@ -109,6 +113,11 @@ class AppTheme {
           WidgetState.selected: Palette.colorFF8900,
           WidgetState.any: Colors.transparent,
         }),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+        ),
       ),
     );
   }
