@@ -2,10 +2,8 @@ abstract class Env {
   static final _envString = String.fromEnvironment('env', defaultValue: EnvMode.unknown.name);
 
   // todo: поменять на _base_api_url
-  static const _baseApiUrl = String.fromEnvironment('api_url');
-  static const _versionApi = String.fromEnvironment('version_api', defaultValue: 'v1');
-
-  static const apiUrl = '$_baseApiUrl/$_versionApi';
+  static const apiUrl = String.fromEnvironment('api_url');
+  static const versionApi = String.fromEnvironment('version_api', defaultValue: 'v1');
 
   // Iam client config
   static const iamClientUuid = String.fromEnvironment('iam_client_uuid');
