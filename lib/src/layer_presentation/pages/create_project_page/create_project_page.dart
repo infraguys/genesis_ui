@@ -44,7 +44,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
           children: [
             Breadcrumbs(
               items: [
-                BreadcrumbItem(text: context.$.organizations),
+                BreadcrumbItem(text: context.$.projects),
                 BreadcrumbItem(text: context.$.create),
               ],
             ),
