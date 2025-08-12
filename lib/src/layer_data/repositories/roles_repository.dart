@@ -1,5 +1,6 @@
 import 'package:genesis/src/layer_data/requests/permission_bindings/create_permission_binding_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_permission_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
@@ -42,5 +43,11 @@ final class RolesRepository implements IRolesRepository {
     final req = GetRolesReq(params);
     final rolesDtos = await _rolesApi.getRoles(req);
     return rolesDtos.map((dto) => dto.toEntity()).toList();
+  }
+
+  @override
+  Future<Role> deleteRole(params) async {
+    final dto = await _rolesApi.deleteRole(params.toReq());
+    return dto.toEntity();
   }
 }
