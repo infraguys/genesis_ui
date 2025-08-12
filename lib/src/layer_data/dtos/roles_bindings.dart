@@ -15,7 +15,7 @@ class RolesBindingDto implements IDto<dynamic> {
     required this.project,
   });
 
-  factory RolesBindingDto.fromJson(Map<String, dynamic> json) => _$RolesBindingsDtoFromJson(json);
+  factory RolesBindingDto.fromJson(Map<String, dynamic> json) => _$RolesBindingDtoFromJson(json);
 
   final String uuid;
   @JsonKey(fromJson: _fromIsoStringToDateTime)
