@@ -4,6 +4,7 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
 
@@ -58,6 +59,21 @@ final class RolesApi implements IRolesApi {
         return castedData.map((it) => RoleDto.fromJson(it)).toList();
       }
       return [];
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
+  Future<RoleDto> deleteRole(DeleteRoleReq req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.delete<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data != null) {
+        return RoleDto.fromJson(data);
+      }
+      throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
