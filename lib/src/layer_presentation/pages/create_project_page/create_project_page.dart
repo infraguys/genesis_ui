@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/interfaces/form_controllers.dart';
+import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_table.dart';
+import 'package:genesis/src/layer_presentation/pages/users_page/widgets/users_table.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/theming/palette.dart';
+
+class CreateProjectPage extends StatefulWidget {
+  const CreateProjectPage({super.key});
+
+  @override
+  State<CreateProjectPage> createState() => _CreateProjectPageState();
+}
+
+class _CreateProjectPageState extends State<CreateProjectPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  late _ControllersManager _controllersManager;
+
+  @override
+  void initState() {
+    _controllersManager = _ControllersManager();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 24,
+          children: [
+            Breadcrumbs(
+              items: [
+                BreadcrumbItem(text: context.$.organizations),
+                BreadcrumbItem(text: context.$.create),
+              ],
+            ),
+            Form(
+              key: _formKey,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 24,
+                children: [
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUnfocus,
+                      controller: _controllersManager.nameController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: context.$.name,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'required'.hardcoded;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: _controllersManager.descriptionController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: context.$.description,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(context.$.organizations, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            SizedBox(
+              height: 405,
+              child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
+                builder: (context, state) {
+                  if (state is! OrganizationsLoadedState) {
+                    return AppProgressIndicator();
+                  }
+                  return OrganizationsTable(organizations: state.organizations);
+                },
+              ),
+            ),
+            Text(context.$.users, style: TextStyle(color: Colors.white54, fontSize: 24)),
+            SizedBox(
+              height: 405,
+              child: BlocBuilder<UsersBloc, UsersState>(
+                builder: (context, state) {
+                  if (state is! UsersLoadedState) {
+                    return AppProgressIndicator();
+                  }
+                  return UsersTable(users: state.users);
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
+                    ),
+                    onPressed: () => save(context),
+                    child: Text(context.$.create),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void save(BuildContext context) {
+    if (_formKey.currentState!.validate()) {}
+  }
+}
+
+class _ControllersManager extends FormControllersManager {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  @override
+  List<TextEditingController> get all => [nameController, descriptionController];
+
+  @override
+  bool get allFilled => all.every((it) => it.text.isNotEmpty);
+}

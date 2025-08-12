@@ -21,6 +21,7 @@ import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
+import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
@@ -155,7 +156,17 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.createProject.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: Placeholder(),
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => OrganizationsSelectionBloc(),
+                          ),
+                          BlocProvider(
+                            create: (context) => UsersSelectionBloc(),
+                          ),
+                        ],
+                        child: CreateProjectPage(),
+                      ),
                     ),
                   ),
                 ],
