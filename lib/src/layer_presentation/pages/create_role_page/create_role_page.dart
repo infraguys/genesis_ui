@@ -7,9 +7,9 @@ import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/create_role_page/widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class CreateRolePage extends StatefulWidget {

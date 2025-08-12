@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -25,6 +26,7 @@ import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/blocs/create_user_bloc/create_user_bloc.dart';
@@ -187,22 +189,26 @@ GoRouter createRouter(BuildContext context) {
                   GoRoute(
                     name: AppRoutes.role.name,
                     path: ':uuid',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider(
-                            create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
-                          ),
-                          BlocProvider(
-                            create: (_) => PermissionsSelectionBloc(),
-                          ),
-                          BlocProvider(
-                            create: (_) => RoleBloc(context.read<IRolesRepository>()),
-                          ),
-                        ],
-                        child: Placeholder(),
-                      ),
-                    ),
+                    pageBuilder: (_, state) {
+                      final _ = state.pathParameters['uuid']!;
+                      final role = state.extra as Role;
+                      return NoTransitionPage(
+                        child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+                            ),
+                            BlocProvider(
+                              create: (_) => PermissionsSelectionBloc(),
+                            ),
+                            BlocProvider(
+                              create: (_) => RoleBloc(context.read<IRolesRepository>()),
+                            ),
+                          ],
+                          child: RolePage(role: role),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

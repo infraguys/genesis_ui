@@ -20,17 +20,4 @@ class Permission extends Equatable {
 
   @override
   List<Object?> get props => [uuid, name, description, createdAt, updatedAt, status];
-
-  @override
-  String toString() {
-    return '''
-Permission(
-  uuid: $uuid,
-  name: $name,
-  description: $description,
-  createdAt: $createdAt,
-  updatedAt: $updatedAt,
-  status: $status,
-)''';
-  }
 }
