@@ -30,6 +30,6 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return ProjectsEndpoints.editProject.replaceFirst(':uuid', _params.uuid);
+    return ProjectsEndpoints.updateProject.replaceFirst(':uuid', _params.uuid);
   }
 }
