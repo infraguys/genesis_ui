@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
-import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';

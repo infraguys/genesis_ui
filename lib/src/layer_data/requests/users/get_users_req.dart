@@ -1,6 +1,6 @@
-import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/users_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 
 final class GetUsersReq implements PathEncodable, QueryEncodable {

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
-import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/roles_bindings.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/get_role_bindings_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_api.dart';

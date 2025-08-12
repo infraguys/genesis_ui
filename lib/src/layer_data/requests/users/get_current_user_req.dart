@@ -1,9 +1,11 @@
-import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/clients_endpoints.dart';
 
 final class GetCurrentUserReq implements PathEncodable {
   const GetCurrentUserReq();
 
   @override
-  String toPath() => '/iam/clients/${Env.iamClientUuid}/actions/me';
+  String toPath() {
+    return ClientsEndpoints.getMe;
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
-import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';

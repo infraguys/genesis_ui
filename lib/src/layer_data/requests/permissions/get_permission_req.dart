@@ -1,6 +1,6 @@
-import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/permissions_endpoints.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_domain/params/get_permissions_params.dart';
 

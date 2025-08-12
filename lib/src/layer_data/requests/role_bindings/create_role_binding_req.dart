@@ -1,6 +1,6 @@
-import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/role_bindings_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 
 final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {

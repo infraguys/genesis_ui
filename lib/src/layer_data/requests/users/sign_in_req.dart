@@ -1,6 +1,7 @@
 import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/clients_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/sign_in_params.dart';
 
 final class SignInReq implements JsonEncodable, PathEncodable {
@@ -23,5 +24,7 @@ final class SignInReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath() => '/iam/clients/${Env.iamClientUuid}/actions/get_token/invoke';
+  String toPath() {
+    return ClientsEndpoints.getToken;
+  }
 }

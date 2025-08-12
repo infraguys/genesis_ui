@@ -1,6 +1,6 @@
-import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/role_bindings_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 
 final class GetRoleBindingsReq implements QueryEncodable, PathEncodable {

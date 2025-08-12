@@ -1,6 +1,6 @@
-import 'package:genesis/src/core/env/endpoints.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
+import 'package:genesis/src/core/network/endpoints/users_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 
 class UpdateUserReq implements JsonEncodable, PathEncodable {

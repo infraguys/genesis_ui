@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
-import 'package:genesis/src/core/rest_client/rest_client.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
