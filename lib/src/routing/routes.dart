@@ -8,7 +8,10 @@ enum AppRoutes {
   /// iam
   users,
   user,
+
+  /// projects
   projects,
+  createProject,
 
   /// roles
   roles,

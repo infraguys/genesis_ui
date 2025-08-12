@@ -150,6 +150,15 @@ GoRouter createRouter(BuildContext context) {
                     child: ProjectsPage(),
                   ),
                 ),
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.createProject.name,
+                    path: 'create',
+                    pageBuilder: (_, _) => NoTransitionPage(
+                      child: Placeholder(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
