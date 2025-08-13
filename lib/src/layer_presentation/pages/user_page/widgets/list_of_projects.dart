@@ -38,39 +38,6 @@ class ListOfProjects extends StatelessWidget {
                       width: 500,
                       height: 250,
                       child: ProjectCard(project: project),
-                      // child: Card(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(12.0),
-                      //     child: Column(
-                      //       spacing: 4,
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       children: [
-                      //         Row(
-                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Text(
-                      //               project.name,
-                      //               style: textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      //             ),
-                      //             Provider.value(
-                      //               value: project,
-                      //               child: ProjectActionPopupMenuButton(),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         Text(project.createdAt.toString(), style: textTheme.bodySmall),
-                      //         Text(project.description, style: textTheme.bodySmall),
-                      //         SizedBox(
-                      //           height: 16,
-                      //         ),
-                      //         Text(
-                      //           'Роли',
-                      //           style: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
                     );
                   },
                 ).toList(),
