@@ -218,7 +218,4 @@ class _ControllersManager extends FormControllersManager {
     phoneController,
     emailController,
   ];
-
-  @override
-  bool get allFilled => all.every((it) => it.text.isNotEmpty);
 }
