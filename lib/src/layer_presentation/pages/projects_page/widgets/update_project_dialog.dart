@@ -167,7 +167,7 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
                 onPressed: _controllersManager.allFilled
                     ? () {
                         context.read<ProjectBloc>().add(
-                          ProjectEvent.edit(
+                          ProjectEvent.update(
                             uuid: project.uuid,
                             name: _controllersManager.projectNameController.text,
                             description: _controllersManager.projectDescriptionController.text,
