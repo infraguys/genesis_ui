@@ -20,7 +20,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
   final IProjectsRepository _projectsRepository;
 
-  Future<void> _onCreateProject(_CreateEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onCreateProject(_Create event, Emitter<ProjectState> emit) async {
     final createProjectUseCase = CreateProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
 
@@ -29,13 +29,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         userUuid: event.userUuid,
         name: event.name,
         description: event.description,
-        organizationUuid: event.organization,
+        organizationUuid: event.organizationUuid,
+        roleUuid: event.roleUuid,
       ),
     );
     emit(ProjectCreatedState(createdProject));
   }
 
-  Future<void> _onDeleteProject(_DeleteEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onDeleteProject(_Delete event, Emitter<ProjectState> emit) async {
     final useCase = DeleteProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
     final params = DeleteProjectParams(uuid: event.uuid);
@@ -43,7 +44,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(ProjectDeletedState());
   }
 
-  Future<void> _onUpdateProject(_EditEvent event, Emitter<ProjectState> emit) async {
+  Future<void> _onUpdateProject(_Update event, Emitter<ProjectState> emit) async {
     final useCase = EditProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
 

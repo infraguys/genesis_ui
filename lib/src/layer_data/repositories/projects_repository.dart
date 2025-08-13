@@ -27,7 +27,7 @@ final class ProjectsRepository implements IProjectsRepository {
     final createRoleBindingReq = CreateRoleBindingReq(
       CreateRoleBindingParams(
         userUuid: params.userUuid,
-        roleUuid: '726f6c65-0000-0000-0000-000000000002',
+        roleUuid: params.roleUuid,
         projectUuid: projectDto.uuid,
       ),
     );
