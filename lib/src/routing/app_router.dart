@@ -159,10 +159,13 @@ GoRouter createRouter(BuildContext context) {
                       child: MultiBlocProvider(
                         providers: [
                           BlocProvider(
-                            create: (context) => OrganizationsSelectionBloc(),
+                            create: (_) => OrganizationsSelectionBloc(),
                           ),
                           BlocProvider(
-                            create: (context) => UsersSelectionBloc(),
+                            create: (_) => UsersSelectionBloc(),
+                          ),
+                          BlocProvider(
+                            create: (_) => RolesSelectionBloc(),
                           ),
                         ],
                         child: CreateProjectPage(),
