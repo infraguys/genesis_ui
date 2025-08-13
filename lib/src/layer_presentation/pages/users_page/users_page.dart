@@ -55,7 +55,7 @@ class UsersPage extends StatelessWidget {
               listener: (context, _) {
                 context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
               },
-              builder: (context, state) {
+              builder: (_, state) {
                 if (state is! UsersLoadedState) {
                   return AppProgressIndicator();
                 }
