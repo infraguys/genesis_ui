@@ -26,7 +26,7 @@ class UsersTable extends StatelessWidget {
       ),
       item: UsersListItem(),
       headerLeading: BlocBuilder<UsersSelectionBloc, List<User>>(
-        builder: (context, state) {
+        builder: (_, state) {
           return Checkbox(
             value: switch (state.length) {
               0 => false,
