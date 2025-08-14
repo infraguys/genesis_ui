@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_text_form_field.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 
 class UserPage extends StatefulWidget {
@@ -83,76 +84,33 @@ class _UserPageState extends State<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 24,
                     children: [
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.usernameController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.username,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.usernameController,
+                        hintText: context.$.username,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          // enabled: false,
-                          controller: _controllersManager.descriptionController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.description,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.descriptionController,
+                        hintText: context.$.description,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.firstNameController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.firstName,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.firstNameController,
+                        hintText: context.$.firstName,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.lastNameController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.lastName,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.lastNameController,
+                        hintText: context.$.lastName,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.surnameController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.surName,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.surnameController,
+                        hintText: context.$.surName,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.phoneController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: 'Phone'.hardcoded,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.phoneController,
+                        hintText: 'Phone'.hardcoded,
                       ),
-                      SizedBox(
-                        width: 400,
-                        child: TextFormField(
-                          controller: _controllersManager.emailController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: context.$.email,
-                          ),
-                        ),
+                      AppTextFormField(
+                        controller: _controllersManager.emailController,
+                        hintText: context.$.email,
                       ),
                       SizedBox(
                         width: 400,
