@@ -47,17 +47,18 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
-  Future<UserDto> confirmEmail(String userUuid) async {
-    throw UnimplementedError();
-    // try {
-    //   final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(url);
-    //   if (data == null) {
-    //     throw DataNotFoundException(requestOptions.uri.path);
-    //   }
-    //   return UserDto.fromJson(data);
-    // } on DioException catch (e) {
-    //   throw NetworkException(e);
-    // }
+  Future<UserDto> confirmEmail(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+      return UserDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
