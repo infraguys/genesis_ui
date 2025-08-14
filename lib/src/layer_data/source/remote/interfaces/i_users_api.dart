@@ -1,6 +1,7 @@
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
 import 'package:genesis/src/layer_data/requests/users/change_user_password_req.dart';
+import 'package:genesis/src/layer_data/requests/users/confirm_email_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/delete_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
@@ -21,7 +22,7 @@ abstract interface class IUsersApi {
 
   Future<UserDto> resetUserPassword();
 
-  Future<UserDto> confirmEmail(String userUuid);
+  Future<UserDto> confirmEmail(ConfirmEmailReq req);
 
   Future<List<UserRoleDto>> getUserRoles(String userUuid);
 }
