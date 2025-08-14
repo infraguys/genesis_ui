@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
@@ -176,14 +177,16 @@ class _UserPageState extends State<UserPage> {
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       final event = UserEvent.updateUser(
-        uuid: widget.user.uuid,
-        username: _controllersManager.usernameController.text,
-        description: _controllersManager.descriptionController.text,
-        firstName: _controllersManager.firstNameController.text,
-        lastName: _controllersManager.lastNameController.text,
-        surname: _controllersManager.surnameController.text,
-        phone: _controllersManager.phoneController.text,
-        email: _controllersManager.emailController.text,
+        UpdateUserParams(
+          uuid: widget.user.uuid,
+          username: _controllersManager.usernameController.text,
+          description: _controllersManager.descriptionController.text,
+          firstName: _controllersManager.firstNameController.text,
+          lastName: _controllersManager.lastNameController.text,
+          surname: _controllersManager.surnameController.text,
+          phone: _controllersManager.phoneController.text,
+          email: _controllersManager.emailController.text,
+        ),
       );
       context.read<UserBloc>().add(event);
     }

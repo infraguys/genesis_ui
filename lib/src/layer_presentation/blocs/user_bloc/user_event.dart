@@ -3,16 +3,7 @@ part of 'user_bloc.dart';
 sealed class UserEvent {
   factory UserEvent.deleteUser(DeleteUserParams params) = _DeleteUser;
 
-  factory UserEvent.updateUser({
-    required String uuid,
-    String? username,
-    String? description,
-    String? firstName,
-    String? lastName,
-    String? surname,
-    String? phone,
-    String? email,
-  }) = _UpdateUser;
+  factory UserEvent.updateUser(UpdateUserParams params) = _UpdateUser;
 
   factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
 
@@ -26,25 +17,9 @@ final class _DeleteUser implements UserEvent {
 }
 
 final class _UpdateUser implements UserEvent {
-  _UpdateUser({
-    required this.uuid,
-    this.username,
-    this.description,
-    this.firstName,
-    this.lastName,
-    this.surname,
-    this.phone,
-    this.email,
-  });
+  _UpdateUser(this.params);
 
-  final String uuid;
-  final String? username;
-  final String? description;
-  final String? firstName;
-  final String? lastName;
-  final String? surname;
-  final String? phone;
-  final String? email;
+  final UpdateUserParams params;
 }
 
 class _ChangeUserPassword implements UserEvent {

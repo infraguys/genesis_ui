@@ -33,19 +33,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _updateUser(_UpdateUser event, Emitter<UserState> emit) async {
-    final updateUseCase = UpdateUserUseCase(_repository);
-    final params = UpdateUserParams(
-      uuid: event.uuid,
-      username: event.username,
-      description: event.description,
-      firstName: event.firstName,
-      lastName: event.lastName,
-      surname: event.surname,
-      phone: event.phone,
-      email: event.email,
-    );
+    final useCase = UpdateUserUseCase(_repository);
     emit(UserState.loading());
-    await updateUseCase(params);
+    await useCase(event.params);
     emit(UserState.updateSuccess());
   }
 }
