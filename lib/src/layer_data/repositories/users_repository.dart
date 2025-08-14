@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:genesis/src/layer_data/requests/users/change_user_password_req.dart';
+import 'package:genesis/src/layer_data/requests/users/confirm_email_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/delete_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
@@ -31,9 +32,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<User> confirmEmail() {
-    // TODO: implement confirmEmail
-    throw UnimplementedError();
+  Future<User> confirmEmail(params) async {
+    final dto = await _usersApi.confirmEmail(params.toReq());
+    return dto.toEntity();
   }
 
   @override
