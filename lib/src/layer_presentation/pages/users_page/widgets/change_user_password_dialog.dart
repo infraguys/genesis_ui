@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,9 +84,11 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
     final user = context.read<User>();
     userBloc.add(
       UserEvent.changePassword(
-        uuid: user.uuid,
-        oldPassword: _controllers.oldPassword.text,
-        newPassword: _controllers.newPassword.text,
+        ChangeUserPasswordParams(
+          uuid: user.uuid,
+          oldPassword: _controllers.oldPassword.text,
+          newPassword: _controllers.newPassword.text,
+        ),
       ),
     );
   }

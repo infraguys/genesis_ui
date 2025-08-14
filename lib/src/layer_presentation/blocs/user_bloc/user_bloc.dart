@@ -27,15 +27,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _changeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {
-    final changePasswordUseCase = ChangeUserPasswordUseCase(_repository);
+    final useCase = ChangeUserPasswordUseCase(_repository);
     emit(UserStateLoading());
-    changePasswordUseCase(
-      ChangeUserPasswordParams(
-        uuid: event.uuid,
-        oldPassword: event.oldPassword,
-        newPassword: event.newPassword,
-      ),
-    );
+    useCase(event.params);
   }
 
   Future<void> _updateUser(_UpdateUser event, Emitter<UserState> emit) async {

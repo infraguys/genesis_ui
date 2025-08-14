@@ -14,11 +14,7 @@ sealed class UserEvent {
     String? email,
   }) = _UpdateUser;
 
-  factory UserEvent.changePassword({
-    required String uuid,
-    required String oldPassword,
-    required String newPassword,
-  }) = _ChangeUserPassword;
+  factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
 
   factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 }
@@ -52,15 +48,9 @@ final class _UpdateUser implements UserEvent {
 }
 
 class _ChangeUserPassword implements UserEvent {
-  _ChangeUserPassword({
-    required this.uuid,
-    required this.oldPassword,
-    required this.newPassword,
-  });
+  _ChangeUserPassword(this.params);
 
-  final String uuid;
-  final String oldPassword;
-  final String newPassword;
+  final ChangeUserPasswordParams params;
 }
 
 class _ResetUserPassword implements UserEvent {
