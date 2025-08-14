@@ -20,10 +20,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final IUsersRepository _repository;
 
   Future<void> _deleteUser(_DeleteUser event, Emitter<UserState> emit) async {
-    final deleteUseCase = DeleteUserUseCase(_repository);
+    final useCase = DeleteUserUseCase(_repository);
     emit(UserStateLoading());
-    // todo: передавать сразу параметры
-    deleteUseCase(DeleteUserParams(event.userUuid));
+    useCase(event.params);
     emit(UserState.deleteSuccess());
   }
 
