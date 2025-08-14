@@ -43,9 +43,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmail event, Emitter<UserState> emit) async {
-    final useCase = ConfirmEmailUseCase(_repository);
     emit(UserState.loading());
-    await useCase(event.params);
-    emit(UserState.updateSuccess());
+    if (event.params.length == 1) {
+      final useCase = ConfirmEmailUseCase(_repository);
+      await useCase(event.params.single);
+      emit(UserState.updateSuccess());
+    } else {
+      throw UnimplementedError();
+    }
   }
 }
