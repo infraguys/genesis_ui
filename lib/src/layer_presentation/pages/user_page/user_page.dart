@@ -165,7 +165,7 @@ class _UserPageState extends State<UserPage> {
                   ),
                 ),
               ),
-              Text('Проекты', style: textTheme.headlineLarge),
+              Text(context.$.projects, style: textTheme.headlineLarge),
               ListOfProjects(userUuid: widget.user.uuid),
             ],
           ),
