@@ -45,5 +45,7 @@
   "organizations": "Организации",
   "block": "Блокировать",
   "confirmEmail": "Подтвердить email",
-  "changeEmail": "Изменить email"
+  "changeEmail": "Изменить email",
+  "verified": "Подтвержден",
+  "unverified": "Не подтвержден"
 }

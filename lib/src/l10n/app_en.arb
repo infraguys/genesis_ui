@@ -50,5 +50,7 @@
   "organizations": "Organizations",
   "block": "Block",
   "confirmEmail": "Confirm email",
-  "changeEmail": "Change email"
+  "changeEmail": "Change email",
+  "verified": "Verified",
+  "unverified": "Unverified"
 }
