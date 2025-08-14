@@ -1,7 +1,7 @@
 part of 'user_bloc.dart';
 
 sealed class UserEvent {
-  factory UserEvent.deleteUser(String userUuid) = _DeleteUser;
+  factory UserEvent.deleteUser(DeleteUserParams params) = _DeleteUser;
 
   factory UserEvent.updateUser({
     required String uuid,
@@ -24,9 +24,9 @@ sealed class UserEvent {
 }
 
 final class _DeleteUser implements UserEvent {
-  _DeleteUser(this.userUuid);
+  _DeleteUser(this.params);
 
-  final String userUuid;
+  final DeleteUserParams params;
 }
 
 final class _UpdateUser implements UserEvent {
