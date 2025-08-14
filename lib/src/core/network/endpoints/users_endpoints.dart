@@ -10,5 +10,8 @@ abstract class UsersEndpoints {
   static const String updateUser = _user;
   static const String deleteUser = _user;
   static const String changeUserPassword = '$_user/actions/change_password/invoke';
-  static const String confirmUserEmail = '$_user/actions/confirm_email/invoke';
+
+  static String confirmUserEmail(String userUuid) {
+    return '$_user/actions/confirm_email/invoke'.replaceFirst(':uuid', userUuid);
+  }
 }
