@@ -22,5 +22,5 @@ class UpdateUserReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath() => UsersEndpoints.updateUser;
+  String toPath() => UsersEndpoints.updateUser(_params.uuid);
 }
