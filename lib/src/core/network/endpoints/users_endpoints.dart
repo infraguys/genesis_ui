@@ -7,7 +7,8 @@ abstract class UsersEndpoints {
   static const String getUsers = _users;
   static const String createUser = _users;
   static const String getUser = _user;
-  static const String updateUser = _user;
+
+  static String updateUser(String userUuid) => _user.replaceFirst(':uuid', userUuid);
   static const String deleteUser = _user;
   static const String changeUserPassword = '$_user/actions/change_password/invoke';
 
