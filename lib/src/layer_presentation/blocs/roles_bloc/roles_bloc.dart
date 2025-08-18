@@ -19,7 +19,10 @@ class RolesBloc extends Bloc<RolesEvent, RolesState> {
 
   Future<void> _onGetRoles(_GetRoles event, Emitter<RolesState> emit) async {
     final usesCase = GetRoles(_repository);
-    final params = GetRolesParams();
+    final params = GetRolesParams(
+      userUuid: event.userUuid,
+      projectUuid: event.projectUuid,
+    );
     emit(RolesState.loading());
     final roles = await usesCase(params);
     emit(RolesState.loaded(roles));
