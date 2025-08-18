@@ -36,7 +36,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   }
 
   void _updateWidth() {
-    final text = widget.controller.text;
+    late final String text;
+    if (widget.controller.text.isEmpty) {
+      text = widget.hintText;
+    } else {
+      text = widget.controller.text;
+    }
     final tp = TextPainter(
       text: TextSpan(text: text, style: const TextStyle(fontSize: 16)),
       textDirection: TextDirection.ltr,
@@ -53,6 +58,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.hintText);
     return ValueListenableBuilder(
       valueListenable: isEditableNotifier,
       builder: (context, value, _) {
@@ -67,6 +73,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                   hintText: widget.hintText,
+                  // todo: вынести цвета в тему
+                  hintStyle: TextStyle(color: Colors.white24),
                 ),
                 onFieldSubmitted: (value) => isEditableNotifier.value = false,
               ),
