@@ -16,7 +16,7 @@ class AppTextFormField extends StatefulWidget {
 
 class _AppTextFormFieldState extends State<AppTextFormField> {
   final isEditableNotifier = ValueNotifier(false);
-  late double width;
+  final widthNotifier = ValueNotifier(100.0);
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       text: TextSpan(text: text, style: const TextStyle(fontSize: 16)),
       textDirection: TextDirection.ltr,
     )..layout();
-    setState(() => width = tp.width + 20);
+    widthNotifier.value = tp.width + 20;
   }
 
   @override
@@ -58,28 +58,32 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.hintText);
     return ValueListenableBuilder(
       valueListenable: isEditableNotifier,
-      builder: (context, value, _) {
+      builder: (_, isEditable, _) {
         return Row(
           children: [
-            SizedBox(
-              width: width,
-              child: TextFormField(
-                enabled: value,
-                controller: widget.controller,
-                style: TextStyle(color: Colors.white, fontSize: 16, height: 20 / 16),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  hintText: widget.hintText,
-                  // todo: вынести цвета в тему
-                  hintStyle: TextStyle(color: Colors.white24),
-                ),
-                onFieldSubmitted: (value) => isEditableNotifier.value = false,
-              ),
+            ValueListenableBuilder(
+              valueListenable: widthNotifier,
+              builder: (_, width, _) {
+                return SizedBox(
+                  width: width,
+                  child: TextFormField(
+                    enabled: isEditable,
+                    controller: widget.controller,
+                    style: TextStyle(color: Colors.white, fontSize: 16, height: 20 / 16),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                      hintText: widget.hintText,
+                      // todo: вынести цвета в тему
+                      hintStyle: TextStyle(color: Colors.white24),
+                    ),
+                    onFieldSubmitted: (value) => isEditableNotifier.value = false,
+                  ),
+                );
+              },
             ),
-            if (!value)
+            if (!isEditable)
               InkWell(
                 borderRadius: BorderRadius.circular(100),
                 onTap: () => isEditableNotifier.value = true,
