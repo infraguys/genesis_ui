@@ -18,10 +18,9 @@ class UsersConfirmEmailIconButton extends StatelessWidget {
         }
         return ConfirmEmailIconButton(
           onPressed: () {
+            final listOfParams = state.map((it) => ConfirmEmailParams(uuid: it.uuid, verified: it.emailVerified));
             context.read<UserBloc>().add(
-              UserEvent.confirmEmail(
-                state.map((it) => ConfirmEmailParams(uuid: it.uuid)).toList(),
-              ),
+              UserEvent.confirmEmail(listOfParams.toList()),
             );
           },
         );

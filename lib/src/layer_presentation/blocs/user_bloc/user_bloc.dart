@@ -6,6 +6,7 @@ import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/confirm_email_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
@@ -49,7 +50,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await useCase(event.params.single);
       emit(UserState.updateSuccess());
     } else {
-      throw UnimplementedError();
+      final useCase = ConfirmEmailsUseCase(_repository);
+      await useCase(event.params);
+      emit(UserState.updateSuccess());
     }
   }
 }
