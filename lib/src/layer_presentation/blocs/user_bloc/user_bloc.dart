@@ -5,7 +5,6 @@ import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/confirm_email_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
@@ -40,19 +39,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = UpdateUserUseCase(_repository);
     emit(UserState.loading());
     await useCase(event.params);
-    emit(UserState.updateSuccess());
+    emit(UserState.success());
   }
 
-  Future<void> _onConfirmEmail(_ConfirmEmail event, Emitter<UserState> emit) async {
+  Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
     emit(UserState.loading());
-    if (event.params.length == 1) {
-      final useCase = ConfirmEmailUseCase(_repository);
-      await useCase(event.params.single);
-      emit(UserState.updateSuccess());
-    } else {
-      final useCase = ConfirmEmailsUseCase(_repository);
-      await useCase(event.params);
-      emit(UserState.updateSuccess());
-    }
+    final useCase = ConfirmEmailsUseCase(_repository);
+    await useCase(event.params.toList());
+    emit(UserState.success());
   }
 }

@@ -9,7 +9,7 @@ sealed class UserEvent {
 
   factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 
-  factory UserEvent.confirmEmail(List<ConfirmEmailParams> params) = _ConfirmEmail;
+  factory UserEvent.confirmEmails(List<ConfirmEmailParams> params) = _ConfirmEmails;
 }
 
 final class _DeleteUser implements UserEvent {
@@ -36,8 +36,8 @@ class _ResetUserPassword implements UserEvent {
   final String userUuid;
 }
 
-final class _ConfirmEmail implements UserEvent {
-  _ConfirmEmail(this.params);
+final class _ConfirmEmails implements UserEvent {
+  _ConfirmEmails(this.params);
 
   final List<ConfirmEmailParams> params;
 }
