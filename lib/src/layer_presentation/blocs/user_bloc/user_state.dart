@@ -7,9 +7,7 @@ sealed class UserState {
 
   factory UserState.deleteSuccess() = UserStateDeleteSuccess;
 
-  factory UserState.changePasswordSuccess() = UserStateChangePasswordSuccess;
-
-  factory UserState.updateSuccess() = UserStateUpdateSuccess;
+  factory UserState.success() = UserStateSuccess;
 
   factory UserState.failure(String message) = UserStateFailure;
 }
@@ -26,6 +24,4 @@ final class UserStateFailure implements UserState {
   final String message;
 }
 
-final class UserStateUpdateSuccess implements UserState {}
-
-final class UserStateChangePasswordSuccess implements UserState {}
+final class UserStateSuccess implements UserState {}

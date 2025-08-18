@@ -47,7 +47,7 @@ class _UserPageState extends State<UserPage> {
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           late final SnackBar snack;
-          if (state is UserStateUpdateSuccess) {
+          if (state is UserStateSuccess) {
             snack = SnackBar(backgroundColor: Colors.green, content: Text(context.$.success));
           } else if (state is UserStateFailure) {
             snack = SnackBar(backgroundColor: Colors.red, content: Text(state.message));
