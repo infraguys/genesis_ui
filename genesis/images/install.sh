@@ -24,7 +24,7 @@ INSTALL_PATH="/opt/"
 WORK_DIR="/opt/genesis_ui"
 WEB_DIR="/var/www/html"
 FLUTTER_SDK_PATH="/opt/flutter"
-FLUTTER_SDK_VERSION=3.35.0
+FLUTTER_SDK_VERSION=3.35.1
 
 apt update
 apt install -y nginx
