@@ -25,17 +25,20 @@ class StatusLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: labelStatusColor,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-        child: Center(
-          child: Text(
-            _status.humanReadable(context),
-            style: textTheme.labelLarge! + textStatusColor,
+    return SizedBox(
+      width: 120,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: labelStatusColor,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: Center(
+            child: Text(
+              _status.humanReadable(context),
+              style: textTheme.labelLarge! + textStatusColor,
+            ),
           ),
         ),
       ),
