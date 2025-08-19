@@ -13,7 +13,7 @@ final class RolesApi implements IRolesApi {
 
   final RestClient _client;
 
-  static const _userUrl = '/iam/users/';
+  static const _userUrl = '/v1/iam/users/';
 
   @override
   Future<List<RoleDto>> getRolesByUserUuid(String userUuid) async {

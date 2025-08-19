@@ -11,6 +11,7 @@ import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_form_field.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({required this.user, super.key});
@@ -78,49 +79,68 @@ class _UserPageState extends State<UserPage> {
                         border: InputBorder.none,
                       ),
                     ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      AppTextFormField(
-                        controller: _controllersManager.usernameController,
-                        hintText: context.$.username,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.descriptionController,
-                        hintText: context.$.description,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.firstNameController,
-                        hintText: context.$.firstName,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.lastNameController,
-                        hintText: context.$.lastName,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.surnameController,
-                        hintText: context.$.surName,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.phoneController,
-                        hintText: 'Phone'.hardcoded,
-                      ),
-                      AppTextFormField(
-                        controller: _controllersManager.emailController,
-                        hintText: context.$.email,
-                      ),
-                      SizedBox(
-                        width: 400,
-                        child: ElevatedButton(
-                          onPressed: () => save(context),
-                          child: Text(context.$.save),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 24,
+                          children: [
+                            AppTextFormField(
+                              controller: _controllersManager.usernameController,
+                              hintText: context.$.username,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.descriptionController,
+                              hintText: context.$.description,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.firstNameController,
+                              hintText: context.$.firstName,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.lastNameController,
+                              hintText: context.$.lastName,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.surnameController,
+                              hintText: context.$.surName,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.phoneController,
+                              hintText: 'Phone'.hardcoded,
+                            ),
+                            AppTextFormField(
+                              controller: _controllersManager.emailController,
+                              hintText: context.$.email,
+                            ),
+                            SizedBox(
+                              width: 400,
+                              child: ElevatedButton(
+                                onPressed: () => save(context),
+                                child: Text(context.$.save),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 8.0,
+                          children: [
+                            Text('Статус', style: TextStyle(color: Colors.white),),
+                            StatusLabel(status: widget.user.status),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               Text(context.$.projects, style: textTheme.headlineLarge),

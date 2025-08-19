@@ -8,6 +8,6 @@ final class GetProjectReq implements PathEncodable {
 
   @override
   String toPath() {
-    return ProjectsEndpoints.getProject.replaceFirst(':uuid', _uuid);
+    return ProjectsEndpoints.getProject(_uuid);
   }
 }

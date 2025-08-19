@@ -4,9 +4,18 @@ abstract class RolesEndpoints {
   static const _roles = '/${Env.versionApi}/iam/roles/';
   static const _role = '/${Env.versionApi}/iam/roles/:uuid';
 
-  static const String getRoles = _roles;
-  static const String createRole = _roles;
-  static const String getRole = _role;
-  static const String updateRole = _role;
-  static const String deleteRole = _role;
+  static String getRoles() => _roles;
+
+  static String createRole() => _roles;
+
+  static String getRole(String uuid) => _role.fillUuid(uuid);
+
+  static String updateRole(String uuid) => _role.fillUuid(uuid);
+
+  static String deleteRole(String uuid) => _role.fillUuid(uuid);
+}
+
+// ignore: camel_case_extensions
+extension _ on String {
+  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
 }

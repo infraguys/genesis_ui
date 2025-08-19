@@ -19,6 +19,6 @@ final class CreateProjectReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return ProjectsEndpoints.createProject;
+    return ProjectsEndpoints.createProject();
   }
 }

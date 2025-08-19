@@ -9,7 +9,7 @@ final class DeleteRoleReq implements PathEncodable {
 
   @override
   String toPath() {
-    return RolesEndpoints.deleteRole.replaceFirst(':uuid', _params.uuid);
+    return RolesEndpoints.deleteRole(_params.uuid);
   }
 }
 

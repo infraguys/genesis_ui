@@ -29,7 +29,7 @@ final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.getOrganizations;
+    return OrganizationsEndpoints.getOrganizations();
   }
 }
 

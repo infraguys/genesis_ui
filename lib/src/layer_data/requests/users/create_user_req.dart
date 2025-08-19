@@ -23,5 +23,7 @@ final class CreateUserReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath() => UsersEndpoints.createUser;
+  String toPath() {
+    return UsersEndpoints.createUser();
+  }
 }

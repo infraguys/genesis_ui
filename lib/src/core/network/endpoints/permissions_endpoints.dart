@@ -4,9 +4,18 @@ abstract class PermissionsEndpoints {
   static const _permissions = '/${Env.versionApi}/iam/permissions/';
   static const _permission = '/${Env.versionApi}/iam/permissions/:uuid';
 
-  static const String getPermissions = _permissions;
-  static const String createPermission = _permissions;
-  static const String getPermission = _permission;
-  static const String updatePermission = _permission;
-  static const String deletePermission = _permission;
+  static String getPermissions() => _permissions;
+
+  static String createPermission() => _permissions;
+
+  static String getPermission(String uuid) => _permission.fillUuid(uuid);
+
+  static String updatePermission(String uuid) => _permission.fillUuid(uuid);
+
+  static String deletePermission(String uuid) => _permission.fillUuid(uuid);
+}
+
+// ignore: camel_case_extensions
+extension _ on String {
+  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
 }

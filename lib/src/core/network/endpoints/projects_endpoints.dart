@@ -4,9 +4,18 @@ abstract class ProjectsEndpoints {
   static const String _projects = '/${Env.versionApi}/iam/projects/';
   static const String _project = '/${Env.versionApi}/iam/projects/:uuid';
 
-  static const String getProjects = _projects;
-  static const String createProject = _projects;
-  static const String getProject = _project;
-  static const String updateProject = _project;
-  static const String deleteProject = _project;
+  static String getProjects() => _projects;
+
+  static String createProject() => _projects;
+
+  static String getProject(String uuid) => _project.fillUuid(uuid);
+
+  static String updateProject(String uuid) => _project.fillUuid(uuid);
+
+  static String deleteProject(String uuid) => _project.fillUuid(uuid);
+}
+
+// ignore: camel_case_extensions
+extension _ on String {
+  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
 }

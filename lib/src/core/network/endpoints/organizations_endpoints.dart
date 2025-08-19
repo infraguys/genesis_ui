@@ -4,9 +4,18 @@ abstract class OrganizationsEndpoints {
   static const String _organizations = '/${Env.versionApi}/iam/organizations/';
   static const String _organization = '/${Env.versionApi}/iam/organizations/:uuid';
 
-  static const String getOrganizations = _organizations;
-  static const String createOrganization = _organizations;
-  static const String getOrganization = _organization;
-  static const String updateOrganization = _organization;
-  static const String deleteOrganization = _organization;
+  static String getOrganizations() => _organizations;
+
+  static String createOrganization() => _organizations;
+
+  static String getOrganization(String uuid) => _organization.fillUuid(uuid);
+
+  static String updateOrganization(String uuid) => _organization.fillUuid(uuid);
+
+  static String deleteOrganization(String uuid) => _organization.fillUuid(uuid);
+}
+
+// ignore: camel_case_extensions
+extension _ on String {
+  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
 }

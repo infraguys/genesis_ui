@@ -8,7 +8,9 @@ final class ConfirmEmailReq implements PathEncodable {
   final ConfirmEmailParams _params;
 
   @override
-  String toPath() => UsersEndpoints.confirmUserEmail(_params.uuid);
+  String toPath() {
+    return UsersEndpoints.confirmUserEmail(_params.uuid);
+  }
 }
 
 extension ConfirmEmailParamsX on ConfirmEmailParams {

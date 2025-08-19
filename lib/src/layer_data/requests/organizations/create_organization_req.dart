@@ -18,7 +18,7 @@ final class CreateOrganizationReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.createOrganization;
+    return OrganizationsEndpoints.createOrganization();
   }
 }
 

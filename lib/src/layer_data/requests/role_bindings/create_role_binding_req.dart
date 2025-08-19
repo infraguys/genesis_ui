@@ -20,6 +20,6 @@ final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return RoleBindingsEndpoints.createRoleBinding;
+    return RoleBindingsEndpoints.createRoleBinding();
   }
 }

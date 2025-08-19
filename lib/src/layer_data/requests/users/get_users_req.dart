@@ -29,6 +29,6 @@ final class GetUsersReq implements PathEncodable, QueryEncodable {
 
   @override
   String toPath() {
-    return UsersEndpoints.getUsers;
+    return UsersEndpoints.getUsers();
   }
 }

@@ -10,14 +10,11 @@ final class PermissionBindingApi implements IPermissionBindingsApi {
 
   final RestClient _client;
 
-  static const _permissionBindingsUrl = '/iam/permission_bindings/';
-
   @override
   Future<PermissionDto> createPermissionBinding(req) async {
-    const url = _permissionBindingsUrl;
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        url,
+        req.toPath(),
         data: req.toJson(),
       );
       if (data != null) {

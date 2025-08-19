@@ -4,9 +4,18 @@ abstract class RoleBindingsEndpoints {
   static const String _roleBindings = '/${Env.versionApi}/iam/role_bindings/';
   static const String _roleBinding = '/${Env.versionApi}/iam/role_bindings/:uuid';
 
-  static const String getRoleBindings = _roleBindings;
-  static const String createRoleBinding = _roleBindings;
-  static const String getRoleBinding = _roleBinding;
-  static const String updateRoleBinding = _roleBinding;
-  static const String deleteRoleBinding = _roleBinding;
+  static String getRoleBindings() => _roleBindings;
+
+  static String createRoleBinding() => _roleBindings;
+
+  static String getRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
+
+  static String updateRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
+
+  static String deleteRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
+}
+
+// ignore: camel_case_extensions
+extension _ on String {
+  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
 }

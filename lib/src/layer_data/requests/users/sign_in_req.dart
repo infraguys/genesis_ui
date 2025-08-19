@@ -25,6 +25,6 @@ final class SignInReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return ClientsEndpoints.getToken;
+    return ClientsEndpoints.getToken();
   }
 }

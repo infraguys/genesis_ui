@@ -6,6 +6,6 @@ final class GetCurrentUserReq implements PathEncodable {
 
   @override
   String toPath() {
-    return ClientsEndpoints.getMe;
+    return ClientsEndpoints.getMe();
   }
 }

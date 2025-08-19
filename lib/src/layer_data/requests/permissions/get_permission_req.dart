@@ -26,5 +26,7 @@ final class GetPermissionsReq implements QueryEncodable, PathEncodable {
   }
 
   @override
-  String toPath() => PermissionsEndpoints.getPermissions;
+  String toPath() {
+    return PermissionsEndpoints.getPermissions();
+  }
 }
