@@ -9,9 +9,12 @@ import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_form_field.dart';
+import 'package:genesis/src/layer_presentation/pages/user_page/widgets/user_save_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
+import 'package:go_router/go_router.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({required this.user, super.key});
@@ -25,6 +28,8 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
+
+  bool get isValid => _formKey.currentState?.validate() ?? false;
 
   @override
   void initState() {
@@ -47,18 +52,32 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
+          final navigator = GoRouter.of(context);
           late final SnackBar snack;
           if (state is UserStateSuccess) {
-            snack = SnackBar(backgroundColor: Colors.green, content: Text(context.$.success));
+            snack = SnackBar(
+              backgroundColor: Colors.green,
+              content: Text(context.$.success),
+              duration: const Duration(milliseconds: 500),
+            );
           } else if (state is UserStateFailure) {
-            snack = SnackBar(backgroundColor: Colors.red, content: Text(state.message));
+            snack = SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.message),
+              duration: const Duration(milliseconds: 500),
+            );
           }
-          ScaffoldMessenger.of(context).showSnackBar(snack);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(
+                snack,
+              )
+              .closed
+              .then((_) => navigator.pop());
         },
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 48,
+            spacing: 24.0,
             children: [
               Breadcrumbs(
                 items: [
@@ -66,82 +85,132 @@ class _UserPageState extends State<UserPage> {
                   BreadcrumbItem(text: widget.user.username),
                 ],
               ),
-              // RolesList(),
-              Theme(
-                data:
-                    Theme.of(
-                      context,
-                    ).copyWith(
-                      inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
-                        isDense: true,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                      ),
-                    ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 24,
-                          children: [
-                            AppTextFormField(
-                              controller: _controllersManager.usernameController,
-                              hintText: context.$.username,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.descriptionController,
-                              hintText: context.$.description,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.firstNameController,
-                              hintText: context.$.firstName,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.lastNameController,
-                              hintText: context.$.lastName,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.surnameController,
-                              hintText: context.$.surName,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.phoneController,
-                              hintText: 'Phone'.hardcoded,
-                            ),
-                            AppTextFormField(
-                              controller: _controllersManager.emailController,
-                              hintText: context.$.email,
-                            ),
-                            SizedBox(
-                              width: 400,
-                              child: ElevatedButton(
-                                onPressed: () => save(context),
-                                child: Text(context.$.save),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Column(
+              Row(
+                spacing: 4.0,
+                children: [
+                  Spacer(),
+                  UserSaveIconButton(
+                    onPressed: () => save(context),
+                  ),
+                ],
+              ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return SizedBox(
+                    height: 410,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8.0,
-                          children: [
-                            Text('Статус', style: TextStyle(color: Colors.white),),
-                            StatusLabel(status: widget.user.status),
-                          ],
+                        SizedBox(
+                          width: constraints.maxWidth * 0.5,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              spacing: 24,
+                              children: [
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.usernameController,
+                                    hintText: context.$.username,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.firstNameController,
+                                    hintText: context.$.firstName,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.lastNameController,
+                                    hintText: context.$.lastName,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.surnameController,
+                                    hintText: context.$.surName,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.phoneController,
+                                    hintText: 'Phone'.hardcoded,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.4,
+                                  child: AppTextInput(
+                                    controller: _controllersManager.emailController,
+                                    hintText: context.$.email,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: constraints.maxWidth * 0.5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // spacing: 48,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.status),
+                                  StatusLabel(status: widget.user.status),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text('Верификация'),
+                                  VerifiedLabel(isVerified: widget.user.emailVerified),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.createdAt),
+                                  Text(widget.user.createdAt.toString()),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.updatedAt),
+                                  Text(widget.user.updatedAt.toString()),
+                                ],
+                              ),
+                              SizedBox(
+                                width: constraints.maxWidth * 0.4,
+                                child: AppTextInput.multiLine(
+                                  controller: _controllersManager.descriptionController,
+                                  hintText: context.$.description,
+                                  maxLines: 4,
+                                  minLines: 4,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
               Text(context.$.projects, style: textTheme.headlineLarge),
               ListOfProjects(userUuid: widget.user.uuid),
@@ -153,20 +222,21 @@ class _UserPageState extends State<UserPage> {
   }
 
   void save(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      final event = UserEvent.updateUser(
-        UpdateUserParams(
-          uuid: widget.user.uuid,
-          username: _controllersManager.usernameController.text,
-          description: _controllersManager.descriptionController.text,
-          firstName: _controllersManager.firstNameController.text,
-          lastName: _controllersManager.lastNameController.text,
-          surname: _controllersManager.surnameController.text,
-          phone: _controllersManager.phoneController.text,
-          email: _controllersManager.emailController.text,
+    if (isValid) {
+      context.read<UserBloc>().add(
+        UserEvent.updateUser(
+          UpdateUserParams(
+            uuid: widget.user.uuid,
+            username: _controllersManager.usernameController.text,
+            description: _controllersManager.descriptionController.text,
+            firstName: _controllersManager.firstNameController.text,
+            lastName: _controllersManager.lastNameController.text,
+            surname: _controllersManager.surnameController.text,
+            phone: _controllersManager.phoneController.text,
+            email: _controllersManager.emailController.text,
+          ),
         ),
       );
-      context.read<UserBloc>().add(event);
     }
   }
 }
