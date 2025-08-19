@@ -124,7 +124,7 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<OrganizationBloc>().add(
-        OrganizationEvent.createOrganization(
+        OrganizationEvent.create(
           CreateOrganizationParams(
             name: _controllersManager.nameController.text,
             description: _controllersManager.descriptionController.text,

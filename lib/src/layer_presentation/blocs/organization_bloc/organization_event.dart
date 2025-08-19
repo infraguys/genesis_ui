@@ -1,9 +1,9 @@
 part of 'organization_bloc.dart';
 
 sealed class OrganizationEvent {
-  factory OrganizationEvent.createOrganization(CreateOrganizationParams params) = _Create;
+  factory OrganizationEvent.create(CreateOrganizationParams params) = _Create;
 
-  factory OrganizationEvent.updateOrganization(UpdateOrganizationParams params) = _Update;
+  factory OrganizationEvent.update(UpdateOrganizationParams params) = _Update;
 }
 
 final class _Create implements OrganizationEvent {

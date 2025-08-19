@@ -129,7 +129,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<OrganizationBloc>().add(
-        OrganizationEvent.updateOrganization(
+        OrganizationEvent.update(
           UpdateOrganizationParams(
             uuid: widget.organization.uuid,
             name: _controllersManager.nameController.text,
