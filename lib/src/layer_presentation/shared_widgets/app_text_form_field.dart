@@ -15,8 +15,9 @@ class AppTextFormField extends StatefulWidget {
 }
 
 class _AppTextFormFieldState extends State<AppTextFormField> {
-  final isEditableNotifier = ValueNotifier(false);
-  final widthNotifier = ValueNotifier(100.0);
+  final _isEditableNotifier = ValueNotifier(false);
+  final _widthNotifier = ValueNotifier(100.0);
+  final _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -46,12 +47,14 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       text: TextSpan(text: text, style: const TextStyle(fontSize: 16)),
       textDirection: TextDirection.ltr,
     )..layout();
-    widthNotifier.value = tp.width + 20;
+    _widthNotifier.value = tp.width + 20;
   }
 
   @override
   void dispose() {
-    isEditableNotifier.dispose();
+    _isEditableNotifier.dispose();
+    _widthNotifier.dispose();
+    _focusNode.dispose();
     widget.controller.removeListener(_updateWidth);
     super.dispose();
   }
@@ -59,16 +62,17 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: isEditableNotifier,
+      valueListenable: _isEditableNotifier,
       builder: (_, isEditable, _) {
         return Row(
           children: [
             ValueListenableBuilder(
-              valueListenable: widthNotifier,
+              valueListenable: _widthNotifier,
               builder: (_, width, _) {
                 return SizedBox(
                   width: width,
                   child: TextFormField(
+                    focusNode: _focusNode,
                     enabled: isEditable,
                     controller: widget.controller,
                     style: TextStyle(color: Colors.white, fontSize: 16, height: 20 / 16),
@@ -78,7 +82,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                       // todo: вынести цвета в тему
                       hintStyle: TextStyle(color: Colors.white24),
                     ),
-                    onFieldSubmitted: (value) => isEditableNotifier.value = false,
+                    onFieldSubmitted: (value) => _isEditableNotifier.value = false,
                   ),
                 );
               },
@@ -86,7 +90,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             if (!isEditable)
               InkWell(
                 borderRadius: BorderRadius.circular(100),
-                onTap: () => isEditableNotifier.value = true,
+                onTap: () {
+                  _isEditableNotifier.value = true;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _focusNode.requestFocus();
+                  });
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(8),
                   child: Icon(Icons.edit, color: Colors.white, size: 16),
