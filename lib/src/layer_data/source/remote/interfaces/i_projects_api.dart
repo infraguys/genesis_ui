@@ -3,6 +3,7 @@ import 'package:genesis/src/layer_data/requests/projects/create_project_req.dart
 import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
 
 abstract interface class IProjectsApi {
   /// Creates a new project.
@@ -13,4 +14,6 @@ abstract interface class IProjectsApi {
   Future<void> deleteProject(DeleteProjectReq req);
 
   Future<ProjectDto> getProject(GetProjectReq req);
+
+  Future<List<ProjectDto>> getProjects(GetProjectsReq req);
 }

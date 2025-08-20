@@ -67,4 +67,21 @@ final class ProjectsApi implements IProjectsApi {
       throw NetworkException(e);
     }
   }
+
+  @override
+  Future<List<ProjectDto>> getProjects(req) async {
+    try {
+      final Response(:data) = await _client.get<List<dynamic>>(
+        req.toPath(),
+        queryParameters: req.toQuery(),
+      );
+      if (data != null) {
+        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+        return castedData.map((it) => ProjectDto.fromJson(it)).toList();
+      }
+      return List.empty();
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
 }

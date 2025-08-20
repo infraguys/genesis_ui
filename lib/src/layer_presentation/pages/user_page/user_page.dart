@@ -6,9 +6,8 @@ import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/pages/user_page/widgets/user_save_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
@@ -34,12 +33,12 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    context.read<ProjectsBloc>().add(
-      ProjectsEvent.getProjects(
+    context.read<UserProjectsBloc>().add(
+      UserProjectsEvent.getProjects(
         GetProjectsParams(userUuid: widget.user.uuid),
       ),
     );
-    context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUser(widget.user.uuid));
+    // context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUser(widget.user.uuid));
     _controllersManager = _ControllersManager(widget.user);
     super.initState();
   }
@@ -72,12 +71,7 @@ class _UserPageState extends State<UserPage> {
               duration: const Duration(milliseconds: 500),
             );
           }
-          ScaffoldMessenger.of(context)
-              .showSnackBar(
-                snack,
-              )
-              .closed
-              .then((_) => navigator.pop());
+          ScaffoldMessenger.of(context).showSnackBar(snack).closed.then((_) => navigator.pop());
         },
         child: SingleChildScrollView(
           child: Column(

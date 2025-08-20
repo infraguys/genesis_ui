@@ -15,10 +15,10 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
@@ -128,7 +128,7 @@ GoRouter createRouter(BuildContext context) {
                       return NoTransitionPage(
                         child: BlocProvider(
                           create: (context) {
-                            return ProjectsBloc(context.read<IProjectsRepository>());
+                            return UserProjectsBloc(context.read<IProjectsRepository>());
                           },
                           child: UserPage(user: user),
                         ),

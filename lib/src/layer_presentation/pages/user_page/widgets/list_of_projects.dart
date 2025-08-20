@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 
 class ListOfProjects extends StatelessWidget {
@@ -18,16 +18,16 @@ class ListOfProjects extends StatelessWidget {
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
         if (state is ProjectDeletedState || state is ProjectUpdatedState) {
-          context.read<ProjectsBloc>().add(
-            ProjectsEvent.getProjects(
+          context.read<UserProjectsBloc>().add(
+            UserProjectsEvent.getProjects(
               GetProjectsParams(userUuid: userUuid),
             ),
           );
         }
       },
-      child: BlocBuilder<ProjectsBloc, ProjectsState>(
+      child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
         builder: (context, state) {
-          if (state is! ProjectsLoadedState) {
+          if (state is! UserProjectsLoadedState) {
             return Center(child: CupertinoActivityIndicator());
           }
           return Column(

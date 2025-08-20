@@ -15,10 +15,10 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   final IProjectsRepository _projectsRepository;
 
   Future<void> _getProjects(_GetProjects event, Emitter<ProjectsState> emit) async {
-    final getProjectsUseCase = GetProjectsUseCase(_projectsRepository);
+    final useCase = GetProjectsUseCase(_projectsRepository);
     emit(ProjectsState.loading());
 
-    final projects = await getProjectsUseCase(event.params);
+    final projects = await useCase(event.params);
     emit(ProjectsState.loaded(projects));
   }
 }
