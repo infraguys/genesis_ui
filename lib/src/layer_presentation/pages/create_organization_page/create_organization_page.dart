@@ -7,6 +7,7 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
@@ -62,9 +63,8 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
                 BreadcrumbItem(text: context.$.create),
               ],
             ),
-            Row(
+            ButtonsBar(
               children: [
-                Spacer(),
                 SaveIconButton(onPressed: () => save(context)),
               ],
             ),
@@ -89,9 +89,10 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
                       ),
                       SizedBox(
                         width: constraints.maxWidth * 0.4,
-                        child: TextFormField(
+                        child: AppTextInput.multiLine(
                           controller: _controllersManager.descriptionController,
-                          decoration: InputDecoration(hintText: context.$.description),
+                          hintText: context.$.description,
+                          maxLines: 3,
                         ),
                       ),
                     ],
