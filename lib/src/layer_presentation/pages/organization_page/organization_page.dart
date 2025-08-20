@@ -98,7 +98,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                         child: AppTextInput.multiLine(
                           controller: _controllersManager.descriptionController,
                           hintText: context.$.description,
-                          minLines: 2,
+                          minLines: 3,
                         ),
                       ),
                     ],
