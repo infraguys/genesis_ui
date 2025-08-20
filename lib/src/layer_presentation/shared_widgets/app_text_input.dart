@@ -5,12 +5,14 @@ class AppTextInput extends StatelessWidget {
     required this.controller,
     super.key,
     this.hintText,
+    this.validator,
   }) : _maxLines = 1,
        _minLines = 1;
 
   const AppTextInput.multiLine({
     required this.controller,
     required this.hintText,
+    this.validator,
     super.key,
     final int? maxLines,
     final int? minLines,
@@ -21,20 +23,20 @@ class AppTextInput extends StatelessWidget {
   final String? hintText;
   final int? _maxLines;
   final int? _minLines;
+  final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorErrorColor: Colors.white,
+      cursorColor: Colors.white,
       controller: controller,
       maxLines: _maxLines,
       minLines: _minLines,
-      style: TextStyle(color: Colors.white, fontSize: 16, height: 20 / 16),
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-        hintText: hintText,
-        // todo: вынести цвета в тему
-        hintStyle: TextStyle(color: Colors.white24),
-      ),
+      autovalidateMode: AutovalidateMode.onUnfocus,
+      style: TextStyle(fontSize: 16, height: 20 / 16),
+      decoration: InputDecoration(hintText: hintText),
+      validator: validator,
     );
   }
 }
