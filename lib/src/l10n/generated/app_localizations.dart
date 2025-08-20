@@ -397,6 +397,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unverified'**
   String get unverified;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredField;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

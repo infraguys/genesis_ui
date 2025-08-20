@@ -52,5 +52,6 @@
   "confirmEmail": "Confirm email",
   "changeEmail": "Change email",
   "verified": "Verified",
-  "unverified": "Unverified"
+  "unverified": "Unverified",
+  "requiredField": "This field is required"
 }
