@@ -28,7 +28,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    final $ = context.$;
 
     return BlocListener<CreateUserBloc, CreateUserState>(
       listener: (context, state) {
@@ -134,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     builder: (context, _) {
                       return ElevatedButton(
                         onPressed: _controllers.allFilled ? () => createUser(context) : null,
-                        child: Text($.signUp),
+                        child: Text(context.$.signUp),
                       );
                     },
                   ),
@@ -146,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         context.goNamed(AppRoutes.signIn.name);
                       }
                     },
-                    child: Text($.goBack),
+                    child: Text(context.$.goBack),
                   ),
                 ],
               ),
