@@ -77,8 +77,6 @@ class _OrganizationPageState extends State<OrganizationPage> {
                       autovalidateMode: AutovalidateMode.onUnfocus,
                       controller: _controllersManager.nameController,
                       decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
                         hintText: context.$.name,
                       ),
                       validator: (value) {
