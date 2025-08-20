@@ -81,11 +81,9 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
                         child: AppTextInput(
                           controller: _controllersManager.nameController,
                           hintText: context.$.name,
-                          validator: (value) {
-                            return switch (value) {
-                              _ when value!.isEmpty => context.$.requiredField,
-                              _ => null,
-                            };
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
                           },
                         ),
                       ),
