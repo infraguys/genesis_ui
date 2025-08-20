@@ -33,7 +33,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   @override
   Future<void> deleteOrganization(req) async {
     try {
-      await _client.delete<List<dynamic>>(
+      await _client.delete<void>(
         req.toPath(),
       );
     } on DioException catch (e) {
