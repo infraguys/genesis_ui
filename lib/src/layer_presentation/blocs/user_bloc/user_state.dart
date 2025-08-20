@@ -5,8 +5,6 @@ sealed class UserState {
 
   factory UserState.loading() = UserStateLoading;
 
-  factory UserState.deleteSuccess() = UserStateDeleteSuccess;
-
   factory UserState.success() = UserStateSuccess;
 
   factory UserState.failure(String message) = UserStateFailure;
@@ -15,8 +13,6 @@ sealed class UserState {
 final class UserStateInit implements UserState {}
 
 final class UserStateLoading implements UserState {}
-
-final class UserStateDeleteSuccess implements UserState {}
 
 final class UserStateFailure implements UserState {
   UserStateFailure(this.message);

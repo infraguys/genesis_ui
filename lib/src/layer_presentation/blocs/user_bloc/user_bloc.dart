@@ -26,7 +26,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = DeleteUserUseCase(_repository);
     emit(UserStateLoading());
     useCase(event.params);
-    emit(UserState.deleteSuccess());
+    emit(UserState.success());
   }
 
   Future<void> _onChangeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {

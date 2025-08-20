@@ -22,7 +22,6 @@ class UsersPage extends StatelessWidget {
         BlocListener<UserBloc, UserState>(
           listener: (context, state) {
             switch (state) {
-              case UserStateDeleteSuccess():
               case UserStateSuccess():
                 context.read<UsersBloc>().add(UsersEvent.getUsers());
               default:
