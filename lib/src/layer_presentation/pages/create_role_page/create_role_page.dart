@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class CreateRolePage extends StatefulWidget {
@@ -23,10 +25,18 @@ class _CreateRolePageState extends State<CreateRolePage> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
+  late final PermissionsBloc _permissionsBloc;
+  late final PermissionsSelectionBloc _permissionsSelectionBloc;
+  late final RoleBloc _roleBloc;
 
   @override
   void initState() {
-    context.read<PermissionsBloc>().add(PermissionsEvent.getPermissions());
+    _permissionsBloc = context.read<PermissionsBloc>();
+    _permissionsSelectionBloc = context.read<PermissionsSelectionBloc>();
+    _roleBloc = context.read<RoleBloc>();
+
+    _permissionsBloc.add(PermissionsEvent.getPermissions());
+
     _controllersManager = _ControllersManager();
     super.initState();
   }
@@ -44,10 +54,11 @@ class _CreateRolePageState extends State<CreateRolePage> {
         listener: (context, state) {
           if (state is RoleSuccessState) {
             _controllersManager.clear();
-            context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
+            _permissionsSelectionBloc.add(PermissionsSelectionEvent.unSelectAll());
             final snack = SnackBar(
               backgroundColor: Palette.color6DCF91,
               content: Text(context.$.success),
+              duration: const Duration(milliseconds: 500),
             );
             ScaffoldMessenger.of(context).showSnackBar(snack);
           }
@@ -62,43 +73,41 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 BreadcrumbItem(text: context.$.create),
               ],
             ),
-            Form(
-              key: _formKey,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24,
-                children: [
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUnfocus,
-                      controller: _controllersManager.nameController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: context.$.name,
+            ButtonsBar(
+              children: [
+                SaveIconButton(onPressed: save),
+              ],
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Form(
+                  key: _formKey,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 24,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: AppTextInput(
+                          controller: _controllersManager.nameController,
+                          hintText: context.$.name,
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'required'.hardcoded;
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.descriptionController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: context.$.description,
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: AppTextInput(
+                          controller: _controllersManager.descriptionController,
+                          hintText: context.$.description,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
             Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             Expanded(
@@ -111,35 +120,20 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
-                    ),
-                    onPressed: () => save(context),
-                    child: Text(context.$.create),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
       final params = CreateRoleParams(
         name: _controllersManager.nameController.text,
         description: _controllersManager.descriptionController.text,
-        permissions: context.read<PermissionsSelectionBloc>().state,
+        permissions: _permissionsSelectionBloc.state,
       );
-      context.read<RoleBloc>().add(RoleEvent.create(params));
+      _roleBloc.add(RoleEvent.create(params));
     }
   }
 }
