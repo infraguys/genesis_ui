@@ -29,7 +29,13 @@ class AppTable<T> extends StatelessWidget {
           itemBuilder: (context, index) {
             return Provider.value(
               value: entities[index],
-              child: item,
+              child: ListTileTheme.merge(
+                minVerticalPadding: 0,
+                contentPadding: EdgeInsets.zero,
+                tileColor: Colors.transparent,
+                shape: RoundedRectangleBorder(),
+                child: item,
+              ),
             );
           },
         ),
