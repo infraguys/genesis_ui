@@ -14,63 +14,54 @@ class OrganizationsListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final organization = context.read<Organization>();
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        listTileTheme: Theme.of(context).listTileTheme.copyWith(
-          minVerticalPadding: 0,
-          contentPadding: EdgeInsets.zero,
-          tileColor: Colors.transparent,
-        ),
-      ),
-      child: ListTile(
-        title: Row(
-          spacing: 48,
-          children: [
-            Expanded(flex: 2, child: Text(organization.name)),
-            Flexible(child: StatusLabel(status: organization.status)),
-            Expanded(
-              flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(organization.uuid),
-                  IconButton(
-                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: organization.uuid));
-                      final snack = SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${organization.uuid}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    },
-                  ),
-                ],
-              ),
+    return ListTile(
+      title: Row(
+        spacing: 48,
+        children: [
+          Expanded(flex: 2, child: Text(organization.name)),
+          Flexible(child: StatusLabel(status: organization.status)),
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(organization.uuid),
+                IconButton(
+                  icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: organization.uuid));
+                    final snack = SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Скопировано в буфер обмена: ${organization.uuid}'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snack);
+                  },
+                ),
+              ],
             ),
-            Spacer(flex: 2),
-          ],
-        ),
-        leading: BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
-          builder: (context, state) {
-            return Checkbox(
-              value: state.contains(organization),
-              onChanged: (_) {
-                context.read<OrganizationsSelectionBloc>().add(
-                  OrganizationsSelectionEvent.toggleOrganization(organization),
-                );
-              },
-            );
-          },
-        ),
-        onTap: () {
-          context.goNamed(
-            AppRoutes.organization.name,
-            pathParameters: {'uuid': organization.uuid},
-            extra: organization,
+          ),
+          Spacer(flex: 2),
+        ],
+      ),
+      leading: BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
+        builder: (context, state) {
+          return Checkbox(
+            value: state.contains(organization),
+            onChanged: (_) {
+              context.read<OrganizationsSelectionBloc>().add(
+                OrganizationsSelectionEvent.toggleOrganization(organization),
+              );
+            },
           );
         },
       ),
+      onTap: () {
+        context.goNamed(
+          AppRoutes.organization.name,
+          pathParameters: {'uuid': organization.uuid},
+          extra: organization,
+        );
+      },
     );
   }
 }
