@@ -13,68 +13,56 @@ class RolesListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final role = context.read<Role>();
-    return Theme(
-      data: Theme.of(context).copyWith(
-        listTileTheme:
-            Theme.of(
-              context,
-            ).listTileTheme.copyWith(
-              minVerticalPadding: 0,
-              contentPadding: EdgeInsets.zero,
-              tileColor: Colors.transparent,
+    return ListTile(
+      title: Row(
+        spacing: 48,
+        children: [
+          Expanded(flex: 2, child: Text(role.name)),
+          Flexible(child: StatusLabel(status: role.status)),
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(role.uuid),
+                IconButton(
+                  icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: role.uuid));
+                    final snack = SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Скопировано в буфер обмена: ${role.uuid}'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snack);
+                  },
+                ),
+              ],
             ),
+          ),
+          Spacer(flex: 2),
+        ],
       ),
-      child: ListTile(
-        title: Row(
-          spacing: 48,
-          children: [
-            Expanded(flex: 2, child: Text(role.name)),
-            Flexible(child: StatusLabel(status: role.status)),
-            Expanded(
-              flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(role.uuid),
-                  IconButton(
-                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: role.uuid));
-                      final snack = SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${role.uuid}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Spacer(flex: 2),
-          ],
-        ),
-        leading: BlocBuilder<RolesSelectionBloc, List<Role>>(
-          builder: (context, state) {
-            return Checkbox(
-              value: state.contains(role),
-              onChanged: (_) {
-                context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleRole(role));
-              },
-            );
-          },
-        ),
-        onTap: () {
-          context.goNamed(
-            AppRoutes.role.name,
-            pathParameters: {'uuid': role.uuid},
-            extra: role,
+      leading: BlocBuilder<RolesSelectionBloc, List<Role>>(
+        builder: (context, state) {
+          return Checkbox(
+            value: state.contains(role),
+            onChanged: (_) {
+              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleRole(role));
+            },
           );
         },
-        // trailing: RolesActionPopupMenuButton(role: role),
-        // TODO: Чуть позже удалить
-        // expandedAlignment: Alignment.centerLeft,
-        // childrenPadding: EdgeInsets.only(left: 50),
       ),
+      onTap: () {
+        context.goNamed(
+          AppRoutes.role.name,
+          pathParameters: {'uuid': role.uuid},
+          extra: role,
+        );
+      },
+      // trailing: RolesActionPopupMenuButton(role: role),
+      // TODO: Чуть позже удалить
+      // expandedAlignment: Alignment.centerLeft,
+      // childrenPadding: EdgeInsets.only(left: 50),
     );
   }
 }
