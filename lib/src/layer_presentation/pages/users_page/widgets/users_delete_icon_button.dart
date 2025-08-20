@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/widgets/delete_user_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_user_dialog.dart';
 
-class UsersDeleteIconButton extends StatelessWidget {
-  const UsersDeleteIconButton({super.key});
+class DeleteUsersIconButton extends StatelessWidget {
+  const DeleteUsersIconButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class UsersDeleteIconButton extends StatelessWidget {
               builder: (context) => DeleteUserDialog(
                 users: state,
                 onDelete: () {
-                  final userUuids = state.map((user) => user.uuid).toList();
-                  context.read<UsersBloc>().add(UsersEvent.deleteUsers(userUuids));
+                  final userUuids = state.map((user) => user.uuid);
+                  context.read<UsersBloc>().add(UsersEvent.deleteUsers(userUuids.toList()));
                 },
               ),
             );
