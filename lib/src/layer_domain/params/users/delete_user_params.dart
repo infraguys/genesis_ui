@@ -1,5 +1,5 @@
 final class DeleteUserParams {
-  DeleteUserParams(this.uuid);
+  DeleteUserParams({required this.uuid});
 
   final String uuid;
 }
