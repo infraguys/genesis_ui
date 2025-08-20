@@ -13,62 +13,53 @@ class ProjectsListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final project = context.read<Project>();
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        listTileTheme: Theme.of(context).listTileTheme.copyWith(
-          minVerticalPadding: 0,
-          contentPadding: EdgeInsets.zero,
-          tileColor: Colors.transparent,
-        ),
-      ),
-      child: ListTile(
-        title: Row(
-          spacing: 48,
-          children: [
-            Expanded(flex: 2, child: Text(project.name)),
-            Flexible(child: StatusLabel(status: Status.active)),
-            Expanded(
-              flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(project.uuid),
-                  IconButton(
-                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: project.uuid));
-                      final snack = SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${project.uuid}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    },
-                  ),
-                ],
-              ),
+    return ListTile(
+      title: Row(
+        spacing: 48,
+        children: [
+          Expanded(flex: 2, child: Text(project.name)),
+          Flexible(child: StatusLabel(status: Status.active)),
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(project.uuid),
+                IconButton(
+                  icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: project.uuid));
+                    final snack = SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Скопировано в буфер обмена: ${project.uuid}'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snack);
+                  },
+                ),
+              ],
             ),
-            Spacer(flex: 2),
-          ],
-        ),
-        leading: BlocBuilder<ProjectsSelectionBloc, List<Project>>(
-          builder: (context, state) {
-            return Checkbox(
-              value: state.contains(project),
-              onChanged: (val) {
-                context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleProject(project));
-              },
-            );
-          },
-        ),
-        onTap: () {
-          // final user = context.read<User>();
-          // context.goNamed(
-          //   AppRoutes.user.name,
-          //   pathParameters: {'uuid': user.uuid},
-          //   extra: (extra: user, breadcrumbs: [user.username]),
-          // );
+          ),
+          Spacer(flex: 2),
+        ],
+      ),
+      leading: BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+        builder: (context, state) {
+          return Checkbox(
+            value: state.contains(project),
+            onChanged: (val) {
+              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleProject(project));
+            },
+          );
         },
       ),
+      onTap: () {
+        // final user = context.read<User>();
+        // context.goNamed(
+        //   AppRoutes.user.name,
+        //   pathParameters: {'uuid': user.uuid},
+        //   extra: (extra: user, breadcrumbs: [user.username]),
+        // );
+      },
     );
   }
 }
