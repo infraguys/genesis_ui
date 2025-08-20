@@ -12,7 +12,7 @@ class DeleteUserDialog extends StatelessWidget {
 
   String getContent(List<User> users) {
     if (users.length == 1) {
-      return 'Удалить пользователя ${users.first.username}?';
+      return 'Удалить пользователя ${users.single.username}?';
     }
     return 'Удалить выбранных(${users.length}) пользователей?';
   }
@@ -22,11 +22,12 @@ class DeleteUserDialog extends StatelessWidget {
     return AlertDialog(
       content: Text(getContent(users)),
       actions: [
-        TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
         TextButton(
-          style: TextButton.styleFrom(
-            foregroundColor: Palette.colorF04C4C,
-          ),
+          onPressed: context.pop,
+          child: Text(context.$.cancel),
+        ),
+        TextButton(
+          style: TextButton.styleFrom(foregroundColor: Palette.colorF04C4C),
           onPressed: () {
             context.pop();
             onDelete?.call();
