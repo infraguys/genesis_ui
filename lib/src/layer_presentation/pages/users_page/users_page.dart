@@ -41,7 +41,7 @@ class UsersPage extends StatelessWidget {
           ),
           ButtonsBar(
             children: [
-              UsersDeleteIconButton(),
+              DeleteUsersIconButton(),
               UsersBlockIconButton(),
               UsersConfirmEmailIconButton(),
               UsersCreateIconButton(),
