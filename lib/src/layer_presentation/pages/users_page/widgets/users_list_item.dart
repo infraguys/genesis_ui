@@ -16,63 +16,54 @@ class UsersListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.read<User>();
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        listTileTheme: Theme.of(context).listTileTheme.copyWith(
-          minVerticalPadding: 0,
-          contentPadding: EdgeInsets.zero,
-          tileColor: Colors.transparent,
-        ),
-      ),
-      child: ListTile(
-        title: Row(
-          spacing: 48,
-          children: [
-            Expanded(flex: 2, child: SelectableText(user.username)),
-            StatusLabel(status: user.status),
-            Expanded(
-              flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SelectableText(user.uuid),
-                  IconButton(
-                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: user.uuid));
-                      final snack = SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${user.uuid}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    },
-                  ),
-                ],
-              ),
+    return ListTile(
+      title: Row(
+        spacing: 48,
+        children: [
+          Expanded(flex: 2, child: SelectableText(user.username)),
+          StatusLabel(status: user.status),
+          Expanded(
+            flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SelectableText(user.uuid),
+                IconButton(
+                  icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: user.uuid));
+                    final snack = SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Скопировано в буфер обмена: ${user.uuid}'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snack);
+                  },
+                ),
+              ],
             ),
-            VerifiedLabel(isVerified: user.emailVerified),
-          ],
-        ),
-        leading: BlocBuilder<UsersSelectionBloc, List<User>>(
-          builder: (context, state) {
-            return Checkbox(
-              value: state.contains(user),
-              onChanged: (_) {
-                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleUser(user));
-              },
-            );
-          },
-        ),
-        trailing: UsersActionsPopupMenuButton(user: user),
-        onTap: () {
-          final user = context.read<User>();
-          context.goNamed(
-            AppRoutes.user.name,
-            pathParameters: {'uuid': user.uuid},
-            extra: user,
+          ),
+          VerifiedLabel(isVerified: user.emailVerified),
+        ],
+      ),
+      leading: BlocBuilder<UsersSelectionBloc, List<User>>(
+        builder: (context, state) {
+          return Checkbox(
+            value: state.contains(user),
+            onChanged: (_) {
+              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleUser(user));
+            },
           );
         },
       ),
+      trailing: UsersActionsPopupMenuButton(user: user),
+      onTap: () {
+        final user = context.read<User>();
+        context.goNamed(
+          AppRoutes.user.name,
+          pathParameters: {'uuid': user.uuid},
+          extra: user,
+        );
+      },
     );
   }
 }
