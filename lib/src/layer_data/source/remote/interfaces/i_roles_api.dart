@@ -10,5 +10,5 @@ abstract interface class IRolesApi {
 
   Future<RoleDto> createRole(CreateRoleReq req);
 
-  Future<RoleDto> deleteRole(DeleteRoleReq req);
+  Future<void> deleteRole(DeleteRoleReq req);
 }

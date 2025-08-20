@@ -10,5 +10,5 @@ abstract interface class IRolesRepository {
 
   Future<Role> createRole(CreateRoleParams params);
 
-  Future<Role> deleteRole(DeleteRoleParams params);
+  Future<void> deleteRole(DeleteRoleParams params);
 }

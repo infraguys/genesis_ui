@@ -65,14 +65,11 @@ final class RolesApi implements IRolesApi {
   }
 
   @override
-  Future<RoleDto> deleteRole(DeleteRoleReq req) async {
+  Future<void> deleteRole(DeleteRoleReq req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.delete<Map<String, dynamic>>(
+      final Response(:data, :requestOptions) = await _client.delete<void>(
         req.toPath(),
       );
-      if (data != null) {
-        return RoleDto.fromJson(data);
-      }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
