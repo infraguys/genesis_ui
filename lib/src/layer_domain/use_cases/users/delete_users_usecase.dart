@@ -8,7 +8,7 @@ class DeleteUsersUseCase {
 
   Future<List<void>> call(List<String> userUuids) async {
     return await Future.wait(
-      userUuids.map((uuid) => _repository.deleteUser(DeleteUserParams(uuid))),
+      userUuids.map((uuid) => _repository.deleteUser(DeleteUserParams(uuid: uuid))),
     );
   }
 }
