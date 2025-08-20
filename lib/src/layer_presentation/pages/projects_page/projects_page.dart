@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_table.dart';
@@ -22,8 +22,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   void initState() {
-    authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
-    context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
+    context.read<ProjectsBloc>().add(
+      ProjectsEvent.getProjects(),
+    );
     super.initState();
   }
 
@@ -34,7 +35,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         switch (state) {
           case ProjectDeletedState():
           case ProjectUpdatedState():
-            context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
+            context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
           default:
         }
       },
@@ -56,9 +57,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ],
           ),
           Expanded(
-            child: BlocBuilder<AuthUserProjectsBloc, AuthUserProjectsState>(
+            child: BlocBuilder<ProjectsBloc, ProjectsState>(
               builder: (context, state) {
-                if (state is! AuthUserProjectsLoadedState) {
+                if (state is! ProjectsLoadedState) {
                   return AppProgressIndicator();
                 }
                 return ProjectsTable(projects: state.projects);

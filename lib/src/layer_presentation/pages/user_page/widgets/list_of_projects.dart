@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 
 class ListOfProjects extends StatelessWidget {
@@ -16,18 +18,22 @@ class ListOfProjects extends StatelessWidget {
     return BlocListener<ProjectBloc, ProjectState>(
       listener: (context, state) {
         if (state is ProjectDeletedState || state is ProjectUpdatedState) {
-          context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(userUuid));
+          context.read<ProjectsBloc>().add(
+            ProjectsEvent.getProjects(
+              GetProjectsParams(userUuid: userUuid),
+            ),
+          );
         }
       },
-      child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
+      child: BlocBuilder<ProjectsBloc, ProjectsState>(
         builder: (context, state) {
-          if (state is! UserProjectsLoadedState) {
+          if (state is! ProjectsLoadedState) {
             return Center(child: CupertinoActivityIndicator());
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Проекты', style: textTheme.headlineSmall),
+              Text(context.$.projects, style: textTheme.headlineSmall),
               const SizedBox(height: 24),
               Wrap(
                 spacing: 24,

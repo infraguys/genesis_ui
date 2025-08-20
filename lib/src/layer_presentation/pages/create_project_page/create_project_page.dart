@@ -4,10 +4,10 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_user_projects_bloc/auth_user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
@@ -47,7 +47,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
       listener: (context, state) {
         if (state is ProjectCreatedState) {
           final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
-          context.read<AuthUserProjectsBloc>().add(AuthUserProjectsEvent.getProjects(authState.user.uuid));
+          context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
           final navigator = GoRouter.of(context);
 
           final snack = SnackBar(
