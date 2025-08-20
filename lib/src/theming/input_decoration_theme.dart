@@ -1,9 +1,10 @@
 part of 'app_theme.dart';
 
-final _inputDecorationThemeData = InputDecorationTheme(
+final _inputDecorationThemeData = InputDecorationThemeData(
   filled: true,
   fillColor: Colors.white.withValues(alpha: 0.05),
-  hintStyle: TextStyle(color: Color(0xFF7A7B7D).hardcoded),
+  hintStyle: TextStyle(color: Colors.white24),
+  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide.none,
     borderRadius: BorderRadius.all(Radius.circular(8)),
