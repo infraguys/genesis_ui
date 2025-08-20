@@ -11,5 +11,5 @@ abstract interface class IProjectsRepository {
 
   Future<Project> editProject(EditProjectParams params);
 
-  Future<List<Project>> getProjectsByUser(GetProjectsParams params);
+  Future<List<Project>> getProjects(GetProjectsParams params);
 }
