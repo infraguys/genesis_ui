@@ -7,6 +7,7 @@ import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_de
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 
 class RolesPage extends StatefulWidget {
   const RolesPage({super.key});
@@ -33,21 +34,17 @@ class _ProjectsPageState extends State<RolesPage> {
             BreadcrumbItem(text: context.$.role(3).toLowerCase()),
           ],
         ),
-        Row(
-          spacing: 4.0,
+        ButtonsBar(
           children: [
-            Spacer(),
             RolesDeleteIconButton(),
             RolesCreateIconButton(),
           ],
         ),
         Expanded(
           child: BlocBuilder<RolesBloc, RolesState>(
-            builder: (context, state) {
-              if (state is! RolesLoaded) {
-                return AppProgressIndicator();
-              }
-              return RolesTable(roles: state.roles);
+            builder: (context, state) => switch (state) {
+              RolesLoaded(:final roles) => RolesTable(roles: roles),
+              _ => AppProgressIndicator(),
             },
           ),
         ),
