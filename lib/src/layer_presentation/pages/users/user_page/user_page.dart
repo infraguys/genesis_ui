@@ -8,8 +8,8 @@ import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dar
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/widgets/delete_user_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/widgets/list_of_projects.dart';
+import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/delete_user_icon_button.dart';
+import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';

@@ -32,8 +32,8 @@ import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart'
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/blocs/create_user_bloc/create_user_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/user_page/user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/users_page.dart';
+import 'package:genesis/src/layer_presentation/pages/users/user_page/user_page.dart';
+import 'package:genesis/src/layer_presentation/pages/users/users_page/users_page.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';

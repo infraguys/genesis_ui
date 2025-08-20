@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_presentation/pages/users_page/widgets/change_user_password_dialog.dart';
+import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/change_user_password_dialog.dart';
 import 'package:provider/provider.dart';
 
 class UsersActionsPopupMenuButton extends StatelessWidget {
