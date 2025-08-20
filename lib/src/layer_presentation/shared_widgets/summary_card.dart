@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/theming/palette.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({
@@ -19,6 +20,7 @@ class SummaryCard extends StatelessWidget {
     final theme = Theme.of(context);
     return SizedBox(
       child: Card(
+        color: Palette.color333333,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Row(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/theming/palette.dart';
 
 class ActiveUsersCard extends StatelessWidget {
   const ActiveUsersCard({
@@ -12,6 +13,7 @@ class ActiveUsersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
     return Card(
+      color: Palette.color333333,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
