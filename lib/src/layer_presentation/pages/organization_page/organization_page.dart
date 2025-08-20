@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,7 +45,6 @@ class _OrganizationPageState extends State<OrganizationPage> {
       listener: (context, state) {
         if (state is OrganizationStateSuccess) {
           context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-          _controllersManager.clear();
           final navigator = GoRouter.of(context);
 
           final snack = SnackBar(
@@ -65,58 +66,45 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 BreadcrumbItem(text: widget.organization.name),
               ],
             ),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24,
-                children: [
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUnfocus,
-                      controller: _controllersManager.nameController,
-                      decoration: InputDecoration(
-                        hintText: context.$.name,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'required'.hardcoded;
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: _controllersManager.descriptionController,
-                      minLines: 2,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: context.$.description,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 4.0,
               children: [
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
-                    ),
-                    onPressed: () => save(context),
-                    child: Text(context.$.update),
-                  ),
-                ),
+                Spacer(),
+                DeleteOrganizationIconButton(uuid: widget.organization.uuid),
+                SaveIconButton(onPressed: () => save(context)),
               ],
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 24,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: AppTextInput(
+                          controller: _controllersManager.nameController,
+                          hintText: context.$.name,
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: AppTextInput.multiLine(
+                          controller: _controllersManager.descriptionController,
+                          hintText: context.$.description,
+                          minLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),
