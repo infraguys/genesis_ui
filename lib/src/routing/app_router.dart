@@ -120,6 +120,13 @@ GoRouter createRouter(BuildContext context) {
                 ),
                 routes: [
                   GoRoute(
+                    name: AppRoutes.createUser.name,
+                    path: 'create',
+                    pageBuilder: (_, _) => NoTransitionPage(
+                      child: Placeholder(),
+                    ),
+                  ),
+                  GoRoute(
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) {
