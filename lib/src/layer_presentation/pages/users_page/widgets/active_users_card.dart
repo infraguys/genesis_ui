@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/theming/palette.dart';
@@ -40,7 +41,8 @@ class ActiveUsersCard extends StatelessWidget {
                             style: textTheme.titleSmall!.copyWith(
                               color: Colors.black38,
                               fontWeight: FontWeight.bold,
-                            ),
+                                ) +
+                                Palette.color333333,
                           ),
                         ],
                       ),
