@@ -50,7 +50,7 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<List<Project>> getProjectsByUser(params) async {
+  Future<List<Project>> getProjects(params) async {
     final roleBindingsReq = GetRoleBindingsReq(
       GetRoleBindingsParams(userUuid: params.userUuid),
     );
