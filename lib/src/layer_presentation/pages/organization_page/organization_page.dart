@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organiza
 import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
@@ -66,10 +67,8 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 BreadcrumbItem(text: widget.organization.name),
               ],
             ),
-            Row(
-              spacing: 4.0,
+            ButtonsBar(
               children: [
-                Spacer(),
                 DeleteOrganizationIconButton(uuid: widget.organization.uuid),
                 SaveIconButton(onPressed: () => save(context)),
               ],
