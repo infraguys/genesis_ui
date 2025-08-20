@@ -53,11 +53,9 @@ class UsersPage extends StatelessWidget {
               listener: (context, _) {
                 context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
               },
-              builder: (_, state) {
-                if (state is! UsersLoadedState) {
-                  return AppProgressIndicator();
-                }
-                return UsersTable(users: state.users);
+              builder: (_, state) => switch (state) {
+                UsersLoadedState(:final users) => UsersTable(users: users),
+                _ => AppProgressIndicator(),
               },
             ),
           ),
