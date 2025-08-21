@@ -24,6 +24,7 @@ class UsersPage extends StatelessWidget {
           listener: (context, state) {
             switch (state) {
               case UserStateSuccess():
+              case UserCreatedState():
                 context.read<UsersBloc>().add(UsersEvent.getUsers());
               default:
             }
