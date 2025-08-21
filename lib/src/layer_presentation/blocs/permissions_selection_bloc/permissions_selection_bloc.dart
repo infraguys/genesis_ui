@@ -27,7 +27,6 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
     } else {
       emit(event.permissions);
     }
-    emit(event.permissions);
   }
 
   void _onClear(_Clear _, Emitter<List<Permission>> emit) {

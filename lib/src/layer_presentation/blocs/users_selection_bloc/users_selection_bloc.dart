@@ -26,7 +26,6 @@ class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
     } else {
       emit(event.users);
     }
-    emit(event.users);
   }
 
   void _onClear(_Clear event, Emitter<List<User>> emit) {

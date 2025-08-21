@@ -26,7 +26,6 @@ class RolesSelectionBloc extends Bloc<RolesSelectionEvent, List<Role>> {
     } else {
       emit(event.roles);
     }
-    emit(event.roles);
   }
 
   void _onClear(_Clear _, Emitter<List<Role>> emit) {
