@@ -55,7 +55,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
       body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
           final scaffoldMessenger = ScaffoldMessenger.of(context);
-          if (state is RoleSuccessState) {
+          if (state is RoleCreatedState) {
             final navigator = GoRouter.of(context);
             context.read<RolesBloc>().add(RolesEvent.getRoles());
             scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
