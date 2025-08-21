@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/delete_users_icon_button.dart';
@@ -18,50 +17,36 @@ class UsersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<UserBloc, UserState>(
-          listener: (context, state) {
-            switch (state) {
-              case UserStateSuccess():
-              case UserCreatedState():
-                context.read<UsersBloc>().add(UsersEvent.getUsers());
-              default:
-            }
-          },
+    return Column(
+      spacing: 24.0,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Breadcrumbs(
+          items: [
+            BreadcrumbItem(text: context.$.users),
+          ],
+        ),
+        ButtonsBar(
+          children: [
+            DeleteUsersIconButton(),
+            UsersBlockIconButton(),
+            UsersConfirmEmailIconButton(),
+            UsersCreateIconButton(),
+          ],
+        ),
+        Expanded(
+          child: BlocConsumer<UsersBloc, UsersState>(
+            listenWhen: (_, current) => current is UsersLoadedState,
+            listener: (context, _) {
+              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
+            },
+            builder: (_, state) => switch (state) {
+              UsersLoadedState(:final users) => UsersTable(users: users),
+              _ => AppProgressIndicator(),
+            },
+          ),
         ),
       ],
-      child: Column(
-        spacing: 24.0,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Breadcrumbs(
-            items: [
-              BreadcrumbItem(text: context.$.users),
-            ],
-          ),
-          ButtonsBar(
-            children: [
-              DeleteUsersIconButton(),
-              UsersBlockIconButton(),
-              UsersConfirmEmailIconButton(),
-              UsersCreateIconButton(),
-            ],
-          ),
-          Expanded(
-            child: BlocConsumer<UsersBloc, UsersState>(
-              listenWhen: (_, current) => current is UsersLoadedState,
-              listener: (context, _) {
-                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
-              },
-              builder: (_, state) => switch (state) {
-                UsersLoadedState(:final users) => UsersTable(users: users),
-                _ => AppProgressIndicator(),
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
