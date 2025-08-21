@@ -5,14 +5,18 @@ sealed class RoleState {
 
   factory RoleState.loading() = RoleLoadingState;
 
-  factory RoleState.success() = RoleSuccessState;
+  factory RoleState.updated() = RoleUpdatedState;
+
+  factory RoleState.created() = RoleCreatedState;
 }
 
 class RoleInitialState implements RoleState {}
 
 class RoleLoadingState implements RoleState {}
 
-final class RoleSuccessState implements RoleState {}
+final class RoleUpdatedState implements RoleState {}
+
+final class RoleCreatedState implements RoleState {}
 
 final class RoleFailureState implements RoleState {
   RoleFailureState(this.message);
