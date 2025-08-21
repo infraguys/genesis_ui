@@ -68,17 +68,17 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
                 SaveIconButton(onPressed: () => save(context)),
               ],
             ),
-            Form(
-              key: _formKey,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: AppTextInput(
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth * 0.4,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24,
+                      children: [
+                        AppTextInput(
                           controller: _controllersManager.nameController,
                           hintText: context.$.name,
                           validator: (value) => switch (value) {
@@ -86,19 +86,16 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
                             _ => null,
                           },
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: AppTextInput.multiLine(
+                        AppTextInput.multiLine(
                           controller: _controllersManager.descriptionController,
                           hintText: context.$.description,
                           maxLines: 3,
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
