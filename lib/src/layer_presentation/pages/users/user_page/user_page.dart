@@ -8,6 +8,7 @@ import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dar
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/delete_user_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -61,15 +62,18 @@ class _UserPageState extends State<UserPage> {
         listener: (context, state) {
           final navigator = GoRouter.of(context);
           final scaffoldMessenger = ScaffoldMessenger.of(context);
+          var snack = AppSnackBar.success(context.$.success);
 
-          final snack = switch (state) {
-            UserStateSuccess() => AppSnackBar.success(context.$.success),
-            UserStateFailure(:final message) => AppSnackBar.failure(message),
-            _ => null,
-          };
-          if (snack != null) {
-            scaffoldMessenger.showSnackBar(snack).closed.then((_) => navigator.pop());
+          switch (state) {
+            case UserUpdatedState():
+            case UserDeletedState():
+              context.read<UsersBloc>().add(UsersEvent.getUsers());
+            case UserFailureState(:final message):
+              snack = AppSnackBar.failure(message);
+            default:
           }
+
+          scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
         },
         child: SingleChildScrollView(
           child: Column(
