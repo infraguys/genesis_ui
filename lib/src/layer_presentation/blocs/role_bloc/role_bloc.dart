@@ -9,7 +9,7 @@ part 'role_state.dart';
 class RoleBloc extends Bloc<RoleEvent, RoleState> {
   RoleBloc(this._rolesRepository) : super(RoleState.initial()) {
     on(_onCreateRole);
-    // on(_onUpdateRole);
+    on(_onUpdateRole);
   }
 
   final IRolesRepository _rolesRepository;
@@ -18,6 +18,8 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
     final useCase = CreateRoleUseCase(_rolesRepository);
     emit(RoleState.loading());
     await useCase(event.params);
-    emit(RoleState.success());
+    emit(RoleState.created());
   }
+
+  Future<void> _onUpdateRole(_UpdateRole event, Emitter<RoleState> emit) async {}
 }
