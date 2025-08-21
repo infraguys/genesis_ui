@@ -6,13 +6,15 @@ import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateRolePage extends StatefulWidget {
   const CreateRolePage({super.key});
@@ -52,16 +54,15 @@ class _CreateRolePageState extends State<CreateRolePage> {
     return Scaffold(
       body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
+          final scaffoldMessenger = ScaffoldMessenger.of(context);
           if (state is RoleSuccessState) {
-            _controllersManager.clear();
-            _permissionsSelectionBloc.add(PermissionsSelectionEvent.unSelectAll());
-            final snack = SnackBar(
-              backgroundColor: Palette.color6DCF91,
-              content: Text(context.$.success),
-              duration: const Duration(milliseconds: 500),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snack);
+            final navigator = GoRouter.of(context);
+            context.read<RolesBloc>().add(RolesEvent.getRoles());
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+          } else if (state case RoleFailureState(:final message)) {
+            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           }
+          _permissionsSelectionBloc.add(PermissionsSelectionEvent.unSelectAll());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
