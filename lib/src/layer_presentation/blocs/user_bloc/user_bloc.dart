@@ -32,7 +32,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(UserState.loading());
     try {
       final createdUser = await useCase(event.params);
-      emit(UserState.createdUser(createdUser));
+      emit(UserState.created(createdUser));
     } on NetworkException catch (e) {
       emit(UserState.failure(e.message));
     }
@@ -40,14 +40,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final useCase = DeleteUserUseCase(_repository);
-    emit(UserStateLoading());
+    emit(UserLoadingState());
     useCase(event.params);
-    emit(UserState.success());
+    emit(UserState.deleted());
   }
 
   Future<void> _onChangeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {
     final useCase = ChangeUserPasswordUseCase(_repository);
-    emit(UserStateLoading());
+    emit(UserLoadingState());
     useCase(event.params);
   }
 
@@ -55,13 +55,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = UpdateUserUseCase(_repository);
     emit(UserState.loading());
     await useCase(event.params);
-    emit(UserState.success());
+    emit(UserState.updated());
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
     emit(UserState.loading());
     final useCase = ConfirmEmailsUseCase(_repository);
     await useCase(event.params.toList());
-    emit(UserState.success());
+    emit(UserState.confirmed());
   }
 }
