@@ -9,8 +9,11 @@ import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permission
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class RolePage extends StatefulWidget {
@@ -65,6 +68,7 @@ class _RolePageState extends State<RolePage> {
                 BreadcrumbItem(text: context.$.create),
               ],
             ),
+            ButtonsBar(children: [SaveIconButton(onPressed: () => save(context))]),
             Form(
               key: _formKey,
               child: Row(
@@ -73,14 +77,9 @@ class _RolePageState extends State<RolePage> {
                 children: [
                   SizedBox(
                     width: 400,
-                    child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUnfocus,
+                    child: AppTextInput(
                       controller: _controllersManager.nameController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: context.$.name,
-                      ),
+                      hintText: context.$.name,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'required'.hardcoded;
@@ -91,13 +90,9 @@ class _RolePageState extends State<RolePage> {
                   ),
                   SizedBox(
                     width: 400,
-                    child: TextFormField(
+                    child: AppTextInput(
                       controller: _controllersManager.descriptionController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: context.$.description,
-                      ),
+                      hintText: context.$.description,
                     ),
                   ),
                 ],
@@ -113,21 +108,6 @@ class _RolePageState extends State<RolePage> {
                   return PermissionsTable(permissions: state.permissions);
                 },
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Palette.color6DCF91),
-                    ),
-                    onPressed: () => save(context),
-                    child: Text(context.$.create),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
