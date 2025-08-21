@@ -70,7 +70,6 @@ final class RolesApi implements IRolesApi {
       final Response(:data, :requestOptions) = await _client.delete<void>(
         req.toPath(),
       );
-      throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
