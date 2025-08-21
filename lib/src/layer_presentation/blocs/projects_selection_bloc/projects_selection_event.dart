@@ -1,23 +1,23 @@
 part of 'projects_selection_bloc.dart';
 
 sealed class ProjectsSelectionEvent {
-  factory ProjectsSelectionEvent.toggleProject(Project project) = _ToggleProject;
+  factory ProjectsSelectionEvent.toggle(Project project) = _Toggle;
 
-  factory ProjectsSelectionEvent.selectAll(List<Project> projects) = _SelectAll;
+  factory ProjectsSelectionEvent.toggleAll(List<Project> projects) = _ToggleAll;
 
-  factory ProjectsSelectionEvent.clearSelection() = _ClearSelection;
+  factory ProjectsSelectionEvent.clear() = _Clear;
 }
 
-final class _ToggleProject implements ProjectsSelectionEvent {
-  _ToggleProject(this.project);
+final class _Toggle implements ProjectsSelectionEvent {
+  _Toggle(this.project);
 
   final Project project;
 }
 
-final class _SelectAll implements ProjectsSelectionEvent {
-  _SelectAll(this.projects);
+final class _ToggleAll implements ProjectsSelectionEvent {
+  _ToggleAll(this.projects);
 
   final List<Project> projects;
 }
 
-final class _ClearSelection implements ProjectsSelectionEvent {}
+final class _Clear implements ProjectsSelectionEvent {}

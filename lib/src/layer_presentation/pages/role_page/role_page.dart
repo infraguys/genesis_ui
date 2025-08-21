@@ -54,7 +54,7 @@ class _RolePageState extends State<RolePage> {
           if (state is RoleUpdatedState) {
             scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
           }
-          context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
+          context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.clear());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

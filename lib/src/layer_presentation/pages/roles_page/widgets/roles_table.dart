@@ -35,7 +35,7 @@ class RolesTable extends StatelessWidget {
             },
             tristate: true,
             onChanged: (val) {
-              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.selectAll(roles));
+              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleAll(roles));
             },
           );
         },

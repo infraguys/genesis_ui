@@ -47,7 +47,7 @@ class RolesListItem extends StatelessWidget {
           return Checkbox(
             value: state.contains(role),
             onChanged: (_) {
-              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggleRole(role));
+              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.toggle(role));
             },
           );
         },

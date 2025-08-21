@@ -1,19 +1,23 @@
 part of 'roles_selection_bloc.dart';
 
 sealed class RolesSelectionEvent {
-  factory RolesSelectionEvent.toggleRole(Role role) = _ToggleRole;
+  factory RolesSelectionEvent.toggle(Role role) = _Toggle;
 
-  factory RolesSelectionEvent.selectAll(List<Role> roles) = _SelectAll;
+  factory RolesSelectionEvent.toggleAll(List<Role> roles) = _ToggleAll;
+
+  factory RolesSelectionEvent.clear() = _Clear;
 }
 
-class _ToggleRole implements RolesSelectionEvent {
-  _ToggleRole(this.role);
+final class _Toggle implements RolesSelectionEvent {
+  _Toggle(this.role);
 
   final Role role;
 }
 
-class _SelectAll implements RolesSelectionEvent {
-  _SelectAll(this.roles);
+final class _ToggleAll implements RolesSelectionEvent {
+  _ToggleAll(this.roles);
 
   final List<Role> roles;
 }
+
+final class _Clear implements RolesSelectionEvent {}

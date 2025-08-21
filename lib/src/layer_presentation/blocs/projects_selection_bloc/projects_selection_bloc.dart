@@ -4,13 +4,13 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 part 'projects_selection_event.dart';
 
 class ProjectsSelectionBloc extends Bloc<ProjectsSelectionEvent, List<Project>> {
-  ProjectsSelectionBloc() : super([]) {
-    on(_onToggleProject);
-    on(_onSelectAll);
-    on(_onClearSelection);
+  ProjectsSelectionBloc() : super(List.empty()) {
+    on(_onToggle);
+    on(_onToggleAll);
+    on(_onClear);
   }
 
-  void _onToggleProject(_ToggleProject event, Emitter<List<Project>> emit) {
+  void _onToggle(_Toggle event, Emitter<List<Project>> emit) {
     final updatedProjects = List.of(state);
     if (updatedProjects.contains(event.project)) {
       updatedProjects.remove(event.project);
@@ -20,16 +20,15 @@ class ProjectsSelectionBloc extends Bloc<ProjectsSelectionEvent, List<Project>> 
     emit(updatedProjects);
   }
 
-  void _onSelectAll(_SelectAll event, Emitter<List<Project>> emit) {
+  void _onToggleAll(_ToggleAll event, Emitter<List<Project>> emit) {
     if (state.length == event.projects.length) {
-      emit([]);
-      return;
+      emit(List.empty());
     } else {
       emit(event.projects);
     }
   }
 
-  void _onClearSelection(_ClearSelection event, Emitter<List<Project>> emit) {
+  void _onClear(_Clear event, Emitter<List<Project>> emit) {
     emit(List.empty());
   }
 }

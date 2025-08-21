@@ -47,7 +47,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           child: BlocConsumer<OrganizationsBloc, OrganizationsState>(
             listenWhen: (_, current) => current is OrganizationsLoadedState,
             listener: (context, _) {
-              context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clearSelection());
+              context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
             },
             builder: (_, state) {
               if (state is! OrganizationsLoadedState) {

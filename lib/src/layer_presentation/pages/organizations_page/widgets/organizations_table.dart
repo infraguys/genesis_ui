@@ -35,7 +35,7 @@ class OrganizationsTable extends StatelessWidget {
             },
             tristate: true,
             onChanged: (val) {
-              context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.selectAll(organizations));
+              context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.toggleAll(organizations));
             },
           );
         },

@@ -47,7 +47,7 @@ class ProjectsListItem extends StatelessWidget {
           return Checkbox(
             value: state.contains(project),
             onChanged: (val) {
-              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleProject(project));
+              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggle(project));
             },
           );
         },

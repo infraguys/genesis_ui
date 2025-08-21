@@ -38,7 +38,7 @@ class UsersPage extends StatelessWidget {
           child: BlocConsumer<UsersBloc, UsersState>(
             listenWhen: (_, current) => current is UsersLoadedState,
             listener: (context, _) {
-              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clearSelection());
+              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
             },
             builder: (_, state) => switch (state) {
               UsersLoadedState(:final users) => UsersTable(users: users),

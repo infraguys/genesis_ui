@@ -47,7 +47,7 @@ class PermissionListItem extends StatelessWidget {
           return Checkbox(
             value: state.contains(permission),
             onChanged: (val) {
-              context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.togglePermission(permission));
+              context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.toggle(permission));
             },
           );
         },

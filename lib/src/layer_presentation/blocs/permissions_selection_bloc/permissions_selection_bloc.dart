@@ -6,12 +6,12 @@ part 'permissions_selection_event.dart';
 // TODO: Поменять стейт на Мар
 class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Permission>> {
   PermissionsSelectionBloc() : super(List.empty()) {
-    on(_onTogglePermission);
-    on(_onSelectAllPermissions);
-    on(_onUnSelectAllPermissions);
+    on(_onToggle);
+    on(_onToggleAll);
+    on(_onClear);
   }
 
-  void _onTogglePermission(_TogglePermission event, Emitter<List<Permission>> emit) {
+  void _onToggle(_Toggle event, Emitter<List<Permission>> emit) {
     final updatedPermissions = List.of(state);
     if (updatedPermissions.contains(event.permission)) {
       updatedPermissions.remove(event.permission);
@@ -21,17 +21,16 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
     emit(updatedPermissions);
   }
 
-  void _onSelectAllPermissions(_SelectAllPermissions event, Emitter<List<Permission>> emit) {
+  void _onToggleAll(_ToggleAll event, Emitter<List<Permission>> emit) {
     if (state.length == event.permissions.length) {
       emit(List.empty());
-      return;
     } else {
       emit(event.permissions);
     }
     emit(event.permissions);
   }
 
-  void _onUnSelectAllPermissions(_UnSelectAllPermissions _, Emitter<List<Permission>> emit) {
+  void _onClear(_Clear _, Emitter<List<Permission>> emit) {
     emit(List.empty());
   }
 }

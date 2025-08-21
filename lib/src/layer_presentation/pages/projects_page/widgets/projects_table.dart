@@ -35,7 +35,7 @@ class ProjectsTable extends StatelessWidget {
             },
             tristate: true,
             onChanged: (val) {
-              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.selectAll(projects));
+              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleAll(projects));
             },
           );
         },

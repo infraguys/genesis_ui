@@ -62,7 +62,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
           } else if (state case RoleFailureState(:final message)) {
             scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           }
-          _permissionsSelectionBloc.add(PermissionsSelectionEvent.unSelectAll());
+          _permissionsSelectionBloc.add(PermissionsSelectionEvent.clear());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

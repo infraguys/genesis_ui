@@ -50,7 +50,7 @@ class UsersListItem extends StatelessWidget {
           return Checkbox(
             value: state.contains(user),
             onChanged: (_) {
-              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleUser(user));
+              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggle(user));
             },
           );
         },

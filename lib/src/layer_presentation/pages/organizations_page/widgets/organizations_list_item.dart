@@ -49,7 +49,7 @@ class OrganizationsListItem extends StatelessWidget {
             value: state.contains(organization),
             onChanged: (_) {
               context.read<OrganizationsSelectionBloc>().add(
-                OrganizationsSelectionEvent.toggleOrganization(organization),
+                OrganizationsSelectionEvent.toggle(organization),
               );
             },
           );

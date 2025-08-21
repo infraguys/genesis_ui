@@ -4,13 +4,13 @@ import 'package:genesis/src/layer_domain/entities/user.dart';
 part 'users_selection_event.dart';
 
 class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
-  UsersSelectionBloc() : super([]) {
-    on(_onToggleUser);
-    on(_onSelectAllUsers);
-    on(_onClearSelection);
+  UsersSelectionBloc() : super(List.empty()) {
+    on(_onToggle);
+    on(_onToggleAll);
+    on(_onClear);
   }
 
-  void _onToggleUser(_ToggleUser event, Emitter<List<User>> emit) {
+  void _onToggle(_Toggle event, Emitter<List<User>> emit) {
     final updatedUsers = List.of(state);
     if (updatedUsers.contains(event.user)) {
       updatedUsers.remove(event.user);
@@ -20,17 +20,16 @@ class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
     emit(updatedUsers);
   }
 
-  void _onSelectAllUsers(_SelectAll event, Emitter<List<User>> emit) {
+  void _onToggleAll(_ToggleAll event, Emitter<List<User>> emit) {
     if (state.length == event.users.length) {
-      emit([]);
-      return;
+      emit(List.empty());
     } else {
       emit(event.users);
     }
     emit(event.users);
   }
 
-  void _onClearSelection(_ClearSelection event, Emitter<List<User>> emit) {
-    emit([]);
+  void _onClear(_Clear event, Emitter<List<User>> emit) {
+    emit(List.empty());
   }
 }

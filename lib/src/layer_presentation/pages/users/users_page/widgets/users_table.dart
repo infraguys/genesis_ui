@@ -35,7 +35,7 @@ class UsersTable extends StatelessWidget {
             },
             tristate: true,
             onChanged: (val) {
-              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.selectAll(users));
+              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleAll(users));
             },
           );
         },
