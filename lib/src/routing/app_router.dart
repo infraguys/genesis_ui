@@ -9,7 +9,6 @@ import 'package:genesis/src/layer_domain/repositories/i_organizations_repository
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
@@ -30,8 +29,8 @@ import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/sign_up_page/blocs/create_user_bloc/create_user_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/users/create_user_page/create_user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/users_page.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/page_not_found.dart';
@@ -82,10 +81,7 @@ GoRouter createRouter(BuildContext context) {
         path: '/sign_up',
         pageBuilder: (_, _) {
           return NoTransitionPage(
-            child: BlocProvider(
-              create: (context) => CreateUserBloc(context.read<IUsersRepository>()),
-              child: SignUpScreen(),
-            ),
+            child: SignUpScreen(),
           );
         },
       ),
@@ -123,7 +119,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.createUser.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: Placeholder(),
+                      child: CreateUserPage(),
                     ),
                   ),
                   GoRoute(
