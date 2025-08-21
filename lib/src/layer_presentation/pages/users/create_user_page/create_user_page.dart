@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -21,9 +22,11 @@ class CreateUserPage extends StatefulWidget {
 class _CreateUserPageState extends State<CreateUserPage> {
   final _formKey = GlobalKey<FormState>();
   final _formController = _FormController();
+  late final UserBloc _userBloc;
 
   @override
   void initState() {
+    _userBloc = context.read<UserBloc>();
     super.initState();
   }
 
@@ -33,21 +36,16 @@ class _CreateUserPageState extends State<CreateUserPage> {
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final scaffoldMessenger = ScaffoldMessenger.of(context);
+        var snack = AppSnackBar.success(context.$.success);
 
-        late SnackBar snack;
-
-        if (state is UserStateFailure) {
-          snack = AppSnackBar.failure(state.message);
-          scaffoldMessenger.showSnackBar(snack);
-        } else if (state is UserCreatedState) {
-          final snack = AppSnackBar.success(context.$.success);
-          scaffoldMessenger
-              .showSnackBar(snack)
-              .closed
-              .then(
-                (_) => navigator.pop(state.user.username),
-              );
+        switch (state) {
+          case UserCreatedState():
+            context.read<UsersBloc>().add(UsersEvent.getUsers());
+          case UserFailureState(:final message):
+            snack = AppSnackBar.failure(message);
+          default:
         }
+        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
       },
       child: Scaffold(
         body: Column(
@@ -62,7 +60,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
             ),
             ButtonsBar(
               children: [
-                SaveIconButton(onPressed: () => save(context)),
+                SaveIconButton(onPressed: save),
               ],
             ),
             LayoutBuilder(
@@ -128,9 +126,9 @@ class _CreateUserPageState extends State<CreateUserPage> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<UserBloc>().add(
+      _userBloc.add(
         UserEvent.createUser(
           CreateUserParams(
             username: _formController.username.text,
