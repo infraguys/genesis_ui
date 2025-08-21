@@ -9,12 +9,13 @@ import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permission
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:go_router/go_router.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({required this.role, super.key});
@@ -48,15 +49,12 @@ class _RolePageState extends State<RolePage> {
     return Scaffold(
       body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
-          if (state is RoleSuccessState) {
-            _controllersManager.clear();
-            context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
-            final snack = SnackBar(
-              backgroundColor: Palette.color6DCF91,
-              content: Text(context.$.success),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snack);
+          final navigator = GoRouter.of(context);
+          final scaffoldMessenger = ScaffoldMessenger.of(context);
+          if (state is RoleUpdatedState) {
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
           }
+          context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.unSelectAll());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
