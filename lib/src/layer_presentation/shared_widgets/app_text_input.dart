@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTextInput extends StatelessWidget {
   const AppTextInput({
     required this.controller,
+    this.obscureText = false,
     super.key,
     this.hintText,
     this.validator,
@@ -13,6 +14,7 @@ class AppTextInput extends StatelessWidget {
     required this.controller,
     required this.hintText,
     this.validator,
+    this.obscureText = false,
     super.key,
     final int? maxLines,
     final int? minLines,
@@ -21,6 +23,7 @@ class AppTextInput extends StatelessWidget {
 
   final TextEditingController controller;
   final String? hintText;
+  final bool obscureText;
   final int? _maxLines;
   final int? _minLines;
   final String? Function(String? value)? validator;
@@ -34,6 +37,7 @@ class AppTextInput extends StatelessWidget {
       maxLines: _maxLines,
       minLines: _minLines,
       autovalidateMode: AutovalidateMode.onUnfocus,
+      obscureText: obscureText,
       style: TextStyle(fontSize: 16, height: 20 / 16),
       decoration: InputDecoration(hintText: hintText),
       validator: validator,
