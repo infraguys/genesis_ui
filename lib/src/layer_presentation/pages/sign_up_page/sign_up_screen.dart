@@ -45,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         late SnackBar snack;
 
-        if (state is UserStateFailure) {
+        if (state is UserFailureState) {
           snack = AppSnackBar.failure(state.message);
           scaffoldMessenger.showSnackBar(snack);
         } else if (state is UserCreatedState) {
