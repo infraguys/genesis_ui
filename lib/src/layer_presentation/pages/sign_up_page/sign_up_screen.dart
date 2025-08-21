@@ -5,6 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/blocs/create_user_bloc/create_user_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,11 +18,11 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _controllers = _FormControllers();
+  final _formController = _FormController();
 
   @override
   void dispose() {
-    _controllers.dispose();
+    _formController.dispose();
     super.dispose();
   }
 
@@ -31,20 +32,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return BlocListener<CreateUserBloc, CreateUserState>(
       listener: (context, state) {
+        final navigator = GoRouter.of(context);
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+        late SnackBar snack;
+
         if (state is CreateUserStateFailure) {
-          final snack = SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(state.message),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
+          snack = AppSnackBar.failure(state.message);
+          scaffoldMessenger.showSnackBar(snack);
         } else if (state is CreateUserStateCreated) {
-          final navigator = GoRouter.of(context);
-          final snack = SnackBar(
-            duration: const Duration(milliseconds: 1000),
-            backgroundColor: Colors.green,
-            content: Text(context.$.success),
-          );
-          ScaffoldMessenger.of(context)
+          final snack = AppSnackBar.success(context.$.success);
+          scaffoldMessenger
               .showSnackBar(snack)
               .closed
               .then(
@@ -71,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textAlign: TextAlign.center,
                   ),
                   TextFormField(
-                    controller: _controllers.username,
+                    controller: _formController.username,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Username'.hardcoded),
                     validator: (value) {
@@ -82,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _controllers.firstName,
+                    controller: _formController.firstName,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'First name'.hardcoded),
                     validator: (value) {
@@ -93,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _controllers.lastName,
+                    controller: _formController.lastName,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Last name'),
                     validator: (value) {
@@ -104,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _controllers.email,
+                    controller: _formController.email,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'E-mail'),
@@ -116,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _controllers.password,
+                    controller: _formController.password,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'password'),
@@ -129,10 +127,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   ListenableBuilder(
-                    listenable: Listenable.merge(_controllers.all),
+                    listenable: Listenable.merge(_formController.all),
                     builder: (context, _) {
                       return ElevatedButton(
-                        onPressed: _controllers.allFilled ? () => createUser(context) : null,
+                        onPressed: _formController.allFilled ? () => createUser(context) : null,
                         child: Text(context.$.signUp),
                       );
                     },
@@ -159,18 +157,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void createUser(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       final event = CreateUserEvent.createUser(
-        username: _controllers.username.text,
-        firstName: _controllers.firstName.text,
-        lastName: _controllers.lastName.text,
-        email: _controllers.email.text,
-        password: _controllers.password.text,
+        username: _formController.username.text,
+        firstName: _formController.firstName.text,
+        lastName: _formController.lastName.text,
+        email: _formController.email.text,
+        password: _formController.password.text,
       );
       context.read<CreateUserBloc>().add(event);
     }
   }
 }
 
-class _FormControllers extends FormControllersManager {
+class _FormController extends FormControllersManager {
   final firstName = TextEditingController();
   final lastName = TextEditingController();
   final email = TextEditingController();
