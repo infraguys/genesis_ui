@@ -5,11 +5,11 @@ import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateOrganizationPage extends StatefulWidget {
@@ -40,17 +40,19 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
   Widget build(BuildContext context) {
     return BlocListener<OrganizationBloc, OrganizationState>(
       listener: (context, state) {
-        if (state is OrganizationStateSuccess) {
-          _controllersManager.clear();
-          context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-          final navigator = GoRouter.of(context);
-          final snack = SnackBar(
-            duration: const Duration(milliseconds: 500),
-            backgroundColor: Palette.color6DCF91,
-            content: Text(context.$.success),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack).closed.then((_) => navigator.pop());
+        final navigator = GoRouter.of(context);
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        var snack = AppSnackBar.success(context.$.success);
+
+        switch (state) {
+          case OrganizationCreatedState():
+            context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+          case OrganizationFailureState(:final message):
+            snack = AppSnackBar.failure(message);
+          default:
         }
+
+        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
       },
       child: Scaffold(
         body: Column(
