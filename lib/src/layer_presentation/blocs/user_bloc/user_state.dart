@@ -1,31 +1,39 @@
 part of 'user_bloc.dart';
 
 sealed class UserState {
-  factory UserState.init() = UserStateInit;
+  factory UserState.init() = UserInitialState;
 
-  factory UserState.loading() = UserStateLoading;
+  factory UserState.loading() = UserLoadingState;
 
-  factory UserState.success() = UserStateSuccess;
+  factory UserState.updated() = UserUpdatedState;
 
-  factory UserState.failure(String message) = UserStateFailure;
+  factory UserState.failure(String message) = UserFailureState;
 
-  factory UserState.createdUser(User user) = UserCreatedState;
+  factory UserState.created(User user) = UserCreatedState;
+
+  factory UserState.deleted() = UserDeletedState;
+
+  factory UserState.confirmed() = UserConfirmedState;
 }
 
-final class UserStateInit implements UserState {}
+final class UserInitialState implements UserState {}
 
-final class UserStateLoading implements UserState {}
+final class UserLoadingState implements UserState {}
 
-final class UserStateFailure implements UserState {
-  UserStateFailure(this.message);
+final class UserFailureState implements UserState {
+  UserFailureState(this.message);
 
   final String message;
 }
 
-final class UserStateSuccess implements UserState {}
+final class UserUpdatedState implements UserState {}
+
+final class UserConfirmedState implements UserState {}
 
 final class UserCreatedState implements UserState {
   UserCreatedState(this.user);
 
   final User user;
 }
+
+final class UserDeletedState implements UserState {}
