@@ -3,6 +3,8 @@ part of 'user_bloc.dart';
 sealed class UserEvent {
   factory UserEvent.deleteUser(DeleteUserParams params) = _DeleteUser;
 
+  factory UserEvent.createUser(CreateUserParams params) = _CreateUser;
+
   factory UserEvent.updateUser(UpdateUserParams params) = _UpdateUser;
 
   factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
@@ -10,6 +12,12 @@ sealed class UserEvent {
   factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 
   factory UserEvent.confirmEmails(List<ConfirmEmailParams> params) = _ConfirmEmails;
+}
+
+final class _CreateUser implements UserEvent {
+  _CreateUser(this.params);
+
+  final CreateUserParams params;
 }
 
 final class _DeleteUser implements UserEvent {

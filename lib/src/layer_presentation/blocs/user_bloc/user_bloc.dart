@@ -1,11 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
+import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/create_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
@@ -14,6 +18,7 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._repository) : super(UserState.init()) {
+    on(_onCreateUser);
     on(_onDeleteUser);
     on(_onChangeUserPassword);
     on(_onUpdateUser);
@@ -21,6 +26,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   final IUsersRepository _repository;
+
+  Future<void> _onCreateUser(_CreateUser event, Emitter<UserState> emit) async {
+    final useCase = CreateUserUseCase(_repository);
+    emit(UserState.loading());
+    try {
+      final createdUser = await useCase(event.params);
+      emit(UserState.createdUser(createdUser));
+    } on NetworkException catch (e) {
+      emit(UserState.failure(e.message));
+    }
+  }
 
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final useCase = DeleteUserUseCase(_repository);

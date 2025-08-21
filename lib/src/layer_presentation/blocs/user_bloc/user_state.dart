@@ -8,6 +8,8 @@ sealed class UserState {
   factory UserState.success() = UserStateSuccess;
 
   factory UserState.failure(String message) = UserStateFailure;
+
+  factory UserState.createdUser(User user) = UserCreatedState;
 }
 
 final class UserStateInit implements UserState {}
@@ -21,3 +23,9 @@ final class UserStateFailure implements UserState {
 }
 
 final class UserStateSuccess implements UserState {}
+
+final class UserCreatedState implements UserState {
+  UserCreatedState(this.user);
+
+  final User user;
+}
