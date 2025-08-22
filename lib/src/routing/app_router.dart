@@ -162,9 +162,6 @@ GoRouter createRouter(BuildContext context) {
                       child: MultiBlocProvider(
                         providers: [
                           BlocProvider(
-                            create: (context) => ProjectBloc(context.read<IProjectsRepository>()),
-                          ),
-                          BlocProvider(
                             create: (_) => OrganizationsSelectionBloc(),
                           ),
                           BlocProvider(
