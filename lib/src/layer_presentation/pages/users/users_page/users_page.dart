@@ -4,7 +4,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/delete_users_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_bloc_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_confirm_email_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_table.dart';
@@ -32,7 +31,6 @@ class UsersPage extends StatelessWidget {
             SearchInput(),
             Spacer(),
             DeleteUsersIconButton(),
-            UsersBlockIconButton(),
             UsersConfirmEmailIconButton(),
             UsersCreateIconButton(),
           ],
