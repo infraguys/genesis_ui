@@ -26,7 +26,11 @@ class MeAppbarWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 12),
               ),
             ),
-            Text('${user.firstName} ${user.lastName}'),
+            // todo: вынести в стили
+            Text(
+              '${user.firstName} ${user.lastName}',
+              style: TextStyle(color: Colors.white),
+            ),
           ],
         );
       },
