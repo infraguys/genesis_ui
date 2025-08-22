@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/delete_projects_icon_button.dart';
@@ -32,44 +31,34 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProjectBloc, ProjectState>(
-      listenWhen: (_, current) => switch (current) {
-        ProjectDeletedState() => true,
-        ProjectUpdatedState() => true,
-        _ => false,
-      },
-      listener: (context, state) {
-        context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-      },
-      child: Column(
-        spacing: 24,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Breadcrumbs(
-            items: [
-              BreadcrumbItem(text: context.$.projects),
-            ],
+    return Column(
+      spacing: 24,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Breadcrumbs(
+          items: [
+            BreadcrumbItem(text: context.$.projects),
+          ],
+        ),
+        ButtonsBar(
+          children: [
+            DeleteProjectsIconButton(),
+            ProjectsCreateIconButton(),
+          ],
+        ),
+        Expanded(
+          child: BlocConsumer<ProjectsBloc, ProjectsState>(
+            listenWhen: (_, current) => current is ProjectsLoadedState,
+            listener: (context, state) {
+              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+            },
+            builder: (_, state) => switch (state) {
+              ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects),
+              _ => AppProgressIndicator(),
+            },
           ),
-          ButtonsBar(
-            children: [
-              DeleteProjectsIconButton(),
-              ProjectsCreateIconButton(),
-            ],
-          ),
-          Expanded(
-            child: BlocConsumer<ProjectsBloc, ProjectsState>(
-              listenWhen: (_, current) => current is ProjectsLoadedState,
-              listener: (context, state) {
-                context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
-              },
-              builder: (_, state) => switch (state) {
-                ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects),
-                _ => AppProgressIndicator(),
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
