@@ -61,7 +61,8 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
           // snack = AppSnackBar.failure(message);
           default:
         }
-        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
+        // todo: не всегда возвращать true
+        scaffoldMessenger.showSnackBar(snack).closed.then((_) => navigator.pop(true));
       },
       child: Scaffold(
         body: SingleChildScrollView(
