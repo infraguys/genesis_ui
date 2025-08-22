@@ -23,9 +23,11 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
+  late final OrganizationBloc _organizationBloc;
 
   @override
   void initState() {
+    _organizationBloc = context.read<OrganizationBloc>();
     _controllersManager = _ControllersManager();
     super.initState();
   }
@@ -39,20 +41,23 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OrganizationBloc, OrganizationState>(
+      listenWhen: (_, current) => switch (current) {
+        OrganizationCreatedState() => true,
+        OrganizationFailureState() => true,
+        _ => false,
+      },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final scaffoldMessenger = ScaffoldMessenger.of(context);
-        var snack = AppSnackBar.success(context.$.success);
 
         switch (state) {
           case OrganizationCreatedState():
             context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
           case OrganizationFailureState(:final message):
-            snack = AppSnackBar.failure(message);
+            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
-
-        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
       },
       child: Scaffold(
         body: Column(
@@ -67,7 +72,7 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
             ),
             ButtonsBar(
               children: [
-                SaveIconButton(onPressed: () => save(context)),
+                SaveIconButton(onPressed: save),
               ],
             ),
             LayoutBuilder(
@@ -105,9 +110,9 @@ class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<OrganizationBloc>().add(
+      _organizationBloc.add(
         OrganizationEvent.create(
           CreateOrganizationParams(
             name: _controllersManager.nameController.text,
