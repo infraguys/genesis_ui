@@ -53,16 +53,24 @@ class _CreateRolePageState extends State<CreateRolePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<RoleBloc, RoleState>(
+        listenWhen: (_, current) => switch (current) {
+          RoleCreatedState() => true,
+          RoleFailureState() => true,
+          _ => false,
+        },
         listener: (context, state) {
           final scaffoldMessenger = ScaffoldMessenger.of(context);
-          if (state is RoleCreatedState) {
-            final navigator = GoRouter.of(context);
-            context.read<RolesBloc>().add(RolesEvent.getRoles());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
-          } else if (state case RoleFailureState(:final message)) {
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+          final navigator = GoRouter.of(context);
+
+          switch (state) {
+            case RoleCreatedState():
+              context.read<RolesBloc>().add(RolesEvent.getRoles());
+              scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+            case RoleFailureState(:final message):
+              scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            default:
           }
-          _permissionsSelectionBloc.add(PermissionsSelectionEvent.clear());
+          // _permissionsSelectionBloc.add(PermissionsSelectionEvent.clear());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,12 +137,15 @@ class _CreateRolePageState extends State<CreateRolePage> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
-      final params = CreateRoleParams(
-        name: _controllersManager.nameController.text,
-        description: _controllersManager.descriptionController.text,
-        permissions: _permissionsSelectionBloc.state,
+      _roleBloc.add(
+        RoleEvent.create(
+          CreateRoleParams(
+            name: _controllersManager.nameController.text,
+            description: _controllersManager.descriptionController.text,
+            permissions: _permissionsSelectionBloc.state,
+          ),
+        ),
       );
-      _roleBloc.add(RoleEvent.create(params));
     }
   }
 }
