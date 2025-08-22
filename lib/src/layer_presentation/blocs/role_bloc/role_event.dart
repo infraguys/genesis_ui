@@ -1,17 +1,17 @@
 part of 'role_bloc.dart';
 
 sealed class RoleEvent {
-  factory RoleEvent.create(CreateRoleParams params) = _CreateRole;
+  factory RoleEvent.create(CreateRoleParams params) = _Create;
 
-  factory RoleEvent.update() = _UpdateRole;
+  factory RoleEvent.update() = _Update;
 }
 
-final class _CreateRole implements RoleEvent {
-  const _CreateRole(this.params);
+final class _Create implements RoleEvent {
+  const _Create(this.params);
 
   final CreateRoleParams params;
 }
 
-final class _UpdateRole implements RoleEvent {
-  const _UpdateRole();
+final class _Update implements RoleEvent {
+  const _Update();
 }
