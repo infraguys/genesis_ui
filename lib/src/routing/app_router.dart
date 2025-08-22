@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
@@ -14,6 +15,7 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
@@ -162,6 +164,12 @@ GoRouter createRouter(BuildContext context) {
                       child: MultiBlocProvider(
                         providers: [
                           BlocProvider(
+                            create: (context) {
+                              final repository = context.read<IProjectsRepository>();
+                              return ProjectBloc(repository);
+                            },
+                          ),
+                          BlocProvider(
                             create: (_) => OrganizationsSelectionBloc(),
                           ),
                           BlocProvider(
@@ -174,6 +182,22 @@ GoRouter createRouter(BuildContext context) {
                         child: CreateProjectPage(),
                       ),
                     ),
+                  ),
+                  GoRoute(
+                    name: AppRoutes.user.name,
+                    path: ':uuid',
+                    pageBuilder: (_, state) {
+                      final _ = state.pathParameters['uuid']!;
+                      final user = state.extra as Project;
+                      return NoTransitionPage(
+                        child: BlocProvider(
+                          create: (context) {
+                            return ProjectBloc(context.read<IProjectsRepository>());
+                          },
+                          child: Placeholder(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
