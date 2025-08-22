@@ -100,7 +100,7 @@ class ProjectsTable extends StatelessWidget {
       onTap: (index) {
         final project = projects[index];
         context.goNamed(
-          AppRoutes.projects.name,
+          AppRoutes.project.name,
           pathParameters: {'uuid': project.uuid},
           extra: project,
         );
