@@ -14,12 +14,12 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
 
   final IRolesRepository _rolesRepository;
 
-  Future<void> _onCreateRole(_CreateRole event, Emitter<RoleState> emit) async {
+  Future<void> _onCreateRole(_Create event, Emitter<RoleState> emit) async {
     final useCase = CreateRoleUseCase(_rolesRepository);
     emit(RoleState.loading());
     await useCase(event.params);
     emit(RoleState.created());
   }
 
-  Future<void> _onUpdateRole(_UpdateRole event, Emitter<RoleState> emit) async {}
+  Future<void> _onUpdateRole(_Update event, Emitter<RoleState> emit) async {}
 }
