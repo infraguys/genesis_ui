@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/core/network/endpoints/role_bindings_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/permission_bindings_endpoints.dart';
 
 final class CreatePermissionBindingReq implements JsonEncodable, PathEncodable {
   CreatePermissionBindingReq({required String permissionUuid, required String roleUuid})
@@ -20,6 +20,6 @@ final class CreatePermissionBindingReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return RoleBindingsEndpoints.createRoleBinding();
+    return PermissionBindingsEndpoints.createPermissionBinding();
   }
 }
