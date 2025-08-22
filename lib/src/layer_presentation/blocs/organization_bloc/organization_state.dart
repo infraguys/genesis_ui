@@ -5,7 +5,7 @@ sealed class OrganizationState {
 
   factory OrganizationState.loading() = OrganizationLoadingState;
 
-  factory OrganizationState.created() = OrganizationUpdatedState;
+  factory OrganizationState.created() = OrganizationCreatedState;
 
   factory OrganizationState.updated() = OrganizationUpdatedState;
 
