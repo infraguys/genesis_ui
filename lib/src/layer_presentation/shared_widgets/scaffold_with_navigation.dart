@@ -84,7 +84,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.admin_panel_settings),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
-                      title: Text(context.$.role(3)),
+                      title: Text(context.$.roles),
                       onTap: () => context.goNamed(AppRoutes.roles.name),
                     ),
                     ListTile(

@@ -15,7 +15,8 @@
   "users": "Users",
   "project": "Project",
   "projects": "Projects",
-  "role": "{count, plural, =0{No roles} one{Role} other{Roles}}",
+  "role": "Role",
+  "roles": "Roles",
   "description": "Description",
   "extensions": "Extensions",
   "firstName": "First name",
@@ -51,6 +52,7 @@
   "block": "Block",
   "confirmEmail": "Confirm email",
   "changeEmail": "Change email",
+  "verification": "Verification",
   "verified": "Verified",
   "unverified": "Unverified",
   "requiredField": "This field is required"

@@ -33,6 +33,11 @@ class _CreateUserPageState extends State<CreateUserPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
+      listenWhen: (_, current) => switch (current) {
+        UserCreatedState() => true,
+        UserFailureState() => true,
+        _ => false,
+      },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final scaffoldMessenger = ScaffoldMessenger.of(context);

@@ -179,8 +179,14 @@ abstract class AppLocalizations {
   /// No description provided for @role.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No roles} one{Role} other{Roles}}'**
-  String role(num count);
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get roles;
 
   /// No description provided for @description.
   ///
@@ -385,6 +391,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change email'**
   String get changeEmail;
+
+  /// No description provided for @verification.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification'**
+  String get verification;
 
   /// No description provided for @verified.
   ///

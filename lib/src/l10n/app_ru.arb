@@ -13,7 +13,8 @@
     "users": "Пользователи",
     "project": "Проект",
     "projects": "Проекты",
-    "role": "{count, plural, =0{Ролей нет} one{Роль} few{Роли} many{Ролей} other{Роли}}",
+    "role": "Роль",
+    "roles": "Роли",
     "description": "Описание",
     "extensions": "Расширения",
     "firstName": "Имя",
@@ -46,6 +47,7 @@
     "block": "Блокировать",
     "confirmEmail": "Подтвердить email",
     "changeEmail": "Изменить email",
+    "verification": "Верификация",
     "verified": "Подтвержден",
     "unverified": "Не подтвержден",
     "requiredField": "Обязательное поле"

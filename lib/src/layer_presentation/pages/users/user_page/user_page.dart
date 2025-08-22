@@ -59,6 +59,12 @@ class _UserPageState extends State<UserPage> {
 
     return Scaffold(
       body: BlocListener<UserBloc, UserState>(
+        listenWhen: (previous, current) => switch (current) {
+          UserUpdatedState() => true,
+          UserDeletedState() => true,
+          UserFailureState() => true,
+          _ => false,
+        },
         listener: (context, state) {
           final navigator = GoRouter.of(context);
           final scaffoldMessenger = ScaffoldMessenger.of(context);
@@ -175,7 +181,7 @@ class _UserPageState extends State<UserPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 spacing: 8.0,
                                 children: [
-                                  Text('Верификация'),
+                                  Text(context.$.verification),
                                   VerifiedLabel(isVerified: widget.user.emailVerified),
                                 ],
                               ),

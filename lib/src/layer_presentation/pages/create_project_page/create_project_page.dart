@@ -132,7 +132,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                   },
                 ),
               ),
-              Text(context.$.role(3), style: TextStyle(color: Colors.white54, fontSize: 24)),
+              Text(context.$.roles, style: TextStyle(color: Colors.white54, fontSize: 24)),
               SizedBox(
                 height: 405,
                 child: BlocBuilder<RolesBloc, RolesState>(

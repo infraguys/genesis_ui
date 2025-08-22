@@ -62,8 +62,8 @@ class _RolePageState extends State<RolePage> {
           children: [
             Breadcrumbs(
               items: [
-                BreadcrumbItem(text: context.$.role(3)),
-                BreadcrumbItem(text: context.$.create),
+                BreadcrumbItem(text: context.$.roles),
+                BreadcrumbItem(text: widget.role.name),
               ],
             ),
             ButtonsBar(children: [SaveIconButton(onPressed: () => save(context))]),

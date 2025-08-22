@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/permission_list_item.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class PermissionsTable extends StatelessWidget {
   const PermissionsTable({required this.permissions, super.key});
@@ -13,33 +20,117 @@ class PermissionsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppTable<Permission>(
-      entities: permissions,
-      headerLeading: BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
-        builder: (context, state) {
-          return Checkbox(
-            value: switch (state.length) {
-              0 => false,
-              final len when len == permissions.length => true,
-              _ => null,
+    return AppTable(
+      columnSpans: [
+        TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FractionalTableSpanExtent(4 / 10)),
+        TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+      ],
+      headerCells: [
+        BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+          builder: (context, state) {
+            return Checkbox(
+              tristate: true,
+              onChanged: (_) => context.read<PermissionsSelectionBloc>().add(
+                PermissionsSelectionEvent.toggleAll(permissions),
+              ),
+              value: switch (state.length) {
+                0 => false,
+                final len when len == permissions.length => true,
+                _ => null,
+              },
+            );
+          },
+        ),
+        Text(context.$.role, style: TextStyle(color: Colors.white)),
+        Text(context.$.status, style: TextStyle(color: Colors.white)),
+        Text(context.$.uuid, style: TextStyle(color: Colors.white)),
+        Text(context.$.createdAt, style: TextStyle(color: Colors.white)),
+      ],
+      length: permissions.length,
+      cellsBuilder: (index) {
+        final role = permissions[index];
+        return [
+          BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+            builder: (context, state) {
+              return Checkbox(
+                value: state.contains(role),
+                onChanged: (_) => context.read<PermissionsSelectionBloc>().add(
+                  PermissionsSelectionEvent.toggle(role),
+                ),
+              );
             },
-            tristate: true,
-            onChanged: (val) {
-              context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.toggleAll(permissions));
-            },
-          );
-        },
-      ),
-      item: PermissionListItem(),
-      title: Row(
-        spacing: 48,
-        children: [
-          Expanded(flex: 2, child: Text(context.$.name)),
-          Expanded(child: Text(context.$.status)),
-          Expanded(flex: 4, child: Text(context.$.uuid)),
-          Spacer(flex: 2),
-        ],
-      ),
+          ),
+          Text(role.name, style: TextStyle(color: Colors.white)),
+          StatusLabel(status: role.status),
+          RichText(
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: SelectableText(
+                    role.uuid,
+                    style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
+                  ),
+                ),
+                WidgetSpan(child: const SizedBox(width: 8)),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: IconButton(
+                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: role.uuid));
+                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${role.uuid}');
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            DateFormat('dd.MM.yyyy HH:mm').format(role.createdAt),
+            style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
+          ),
+        ];
+      },
+      onTap: (index) {
+        final permission = permissions[index];
+        context.goNamed(
+          AppRoutes.role.name,
+          pathParameters: {'uuid': permission.uuid},
+          extra: permission,
+        );
+      },
     );
+    // return AppTable<Permission>(
+    //   entities: permissions,
+    //   headerLeading: BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+    //     builder: (context, state) {
+    //       return Checkbox(
+    //         value: switch (state.length) {
+    //           0 => false,
+    //           final len when len == permissions.length => true,
+    //           _ => null,
+    //         },
+    //         tristate: true,
+    //         onChanged: (val) {
+    //           context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.toggleAll(permissions));
+    //         },
+    //       );
+    //     },
+    //   ),
+    //   item: PermissionListItem(),
+    //   title: Row(
+    //     spacing: 48,
+    //     children: [
+    //       Expanded(flex: 2, child: Text(context.$.name)),
+    //       Expanded(child: Text(context.$.status)),
+    //       Expanded(flex: 4, child: Text(context.$.uuid)),
+    //       Spacer(flex: 2),
+    //     ],
+    //   ),
+    // );
   }
 }

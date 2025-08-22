@@ -23,18 +23,16 @@ class VerifiedLabel extends StatelessWidget {
     final textTheme = TextTheme.of(context);
     return SizedBox(
       width: 144,
+      height: 24,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: _labelStatusColor,
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Center(
-            child: Text(
-              _isVerified ? context.$.verified : context.$.unverified,
-              style: textTheme.labelLarge! + _textStatusColor,
-            ),
+        child: Center(
+          child: Text(
+            _isVerified ? context.$.verified : context.$.unverified,
+            style: textTheme.labelLarge! + _textStatusColor,
           ),
         ),
       ),
