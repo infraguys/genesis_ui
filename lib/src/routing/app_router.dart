@@ -112,7 +112,7 @@ GoRouter createRouter(BuildContext context) {
                 path: '/users',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: BlocProvider(
-                    create: (context) => UsersSelectionBloc(),
+                    create: (_) => UsersSelectionBloc(),
                     child: UsersPage(),
                   ),
                 ),
@@ -132,9 +132,7 @@ GoRouter createRouter(BuildContext context) {
                       final user = state.extra as User;
                       return NoTransitionPage(
                         child: BlocProvider(
-                          create: (context) {
-                            return UserProjectsBloc(context.read<IProjectsRepository>());
-                          },
+                          create: (context) => UserProjectsBloc(context.read<IProjectsRepository>()),
                           child: UserPage(user: user),
                         ),
                       );
@@ -152,7 +150,7 @@ GoRouter createRouter(BuildContext context) {
                 path: '/projects',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: BlocProvider(
-                    create: (context) => ProjectsSelectionBloc(),
+                    create: (_) => ProjectsSelectionBloc(),
                     child: ProjectsPage(),
                   ),
                 ),
@@ -164,10 +162,7 @@ GoRouter createRouter(BuildContext context) {
                       child: MultiBlocProvider(
                         providers: [
                           BlocProvider(
-                            create: (context) {
-                              final repository = context.read<IProjectsRepository>();
-                              return ProjectBloc(repository);
-                            },
+                            create: (context) => ProjectBloc(context.read<IProjectsRepository>()),
                           ),
                           BlocProvider(
                             create: (_) => OrganizationsSelectionBloc(),
@@ -184,16 +179,14 @@ GoRouter createRouter(BuildContext context) {
                     ),
                   ),
                   GoRoute(
-                    name: AppRoutes.user.name,
+                    name: AppRoutes.project.name,
                     path: ':uuid',
                     pageBuilder: (_, state) {
                       final _ = state.pathParameters['uuid']!;
-                      final user = state.extra as Project;
+                      final project = state.extra as Project;
                       return NoTransitionPage(
                         child: BlocProvider(
-                          create: (context) {
-                            return ProjectBloc(context.read<IProjectsRepository>());
-                          },
+                          create: (context) => ProjectBloc(context.read<IProjectsRepository>()),
                           child: Placeholder(),
                         ),
                       );
@@ -211,7 +204,7 @@ GoRouter createRouter(BuildContext context) {
                 path: '/roles',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: BlocProvider(
-                    create: (context) => RolesSelectionBloc(),
+                    create: (_) => RolesSelectionBloc(),
                     child: RolesPage(),
                   ),
                 ),
@@ -272,7 +265,7 @@ GoRouter createRouter(BuildContext context) {
                 path: '/organizations',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: BlocProvider(
-                    create: (context) => OrganizationsSelectionBloc(),
+                    create: (_) => OrganizationsSelectionBloc(),
                     child: OrganizationsPage(),
                   ),
                 ),
