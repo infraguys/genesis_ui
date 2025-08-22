@@ -4,11 +4,13 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/delete_projects_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_create_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -31,13 +33,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
+      listenWhen: (_, current) => switch (current) {
+        ProjectDeletedState() => true,
+        ProjectUpdatedState() => true,
+        _ => false,
+      },
       listener: (context, state) {
-        switch (state) {
-          case ProjectDeletedState():
-          case ProjectUpdatedState():
-            context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-          default:
-        }
+        context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
       },
       child: Column(
         spacing: 24,
@@ -48,22 +50,21 @@ class _ProjectsPageState extends State<ProjectsPage> {
               BreadcrumbItem(text: context.$.projects),
             ],
           ),
-          Row(
-            spacing: 4.0,
+          ButtonsBar(
             children: [
-              Spacer(),
-              ProjectsDeleteIconButton(),
+              DeleteProjectsIconButton(),
               ProjectsCreateIconButton(),
             ],
           ),
           Expanded(
-            child: BlocBuilder<ProjectsBloc, ProjectsState>(
-              builder: (context, state) {
-                if (state is! ProjectsLoadedState) {
-                  return AppProgressIndicator();
-                }
-                return ProjectsTable(projects: state.projects);
-                //       return AddProjectCardButton();
+            child: BlocConsumer<ProjectsBloc, ProjectsState>(
+              listenWhen: (_, current) => current is ProjectsLoadedState,
+              listener: (context, state) {
+                context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+              },
+              builder: (_, state) => switch (state) {
+                ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects),
+                _ => AppProgressIndicator(),
               },
             ),
           ),
