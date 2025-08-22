@@ -106,33 +106,5 @@ class ProjectsTable extends StatelessWidget {
         );
       },
     );
-    // return AppTable<Project>(
-    //   entities: projects,
-    //   item: ProjectsListItem(),
-    //   title: Row(
-    //     spacing: 48,
-    //     children: [
-    //       Expanded(flex: 2, child: Text(context.$.project)),
-    //       Expanded(child: Text(context.$.status)),
-    //       Expanded(flex: 4, child: Text(context.$.uuid)),
-    //       Spacer(flex: 2),
-    //     ],
-    //   ),
-    //   headerLeading: BlocBuilder<ProjectsSelectionBloc, List<Project>>(
-    //     builder: (context, state) {
-    //       return Checkbox(
-    //         value: switch (state.length) {
-    //           0 => false,
-    //           final len when len == projects.length => true,
-    //           _ => null,
-    //         },
-    //         tristate: true,
-    //         onChanged: (val) {
-    //           context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleAll(projects));
-    //         },
-    //       );
-    //     },
-    //   ),
-    // );
   }
 }
