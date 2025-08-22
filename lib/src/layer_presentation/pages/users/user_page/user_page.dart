@@ -33,7 +33,6 @@ class _UserPageState extends State<UserPage> {
   final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
 
-  bool get isValid => _formKey.currentState?.validate() ?? false;
 
   @override
   void initState() {
@@ -228,7 +227,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   void save(BuildContext context) {
-    if (isValid) {
+    if (_formKey.currentState!.validate()) {
       context.read<UserBloc>().add(
         UserEvent.updateUser(
           UpdateUserParams(
