@@ -12,6 +12,7 @@ enum AppRoutes {
 
   /// projects
   projects,
+  project,
   createProject,
 
   /// roles
