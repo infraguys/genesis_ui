@@ -11,6 +11,7 @@ import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/us
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({super.key});
@@ -26,8 +27,10 @@ class UsersPage extends StatelessWidget {
             BreadcrumbItem(text: context.$.users),
           ],
         ),
-        ButtonsBar(
+        ButtonsBar.withoutLeftSpacer(
           children: [
+            SearchInput(),
+            Spacer(),
             DeleteUsersIconButton(),
             UsersBlockIconButton(),
             UsersConfirmEmailIconButton(),
