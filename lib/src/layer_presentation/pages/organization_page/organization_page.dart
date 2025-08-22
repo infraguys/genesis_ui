@@ -27,9 +27,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
+  late final OrganizationBloc _organizationBloc;
 
   @override
   void initState() {
+    _organizationBloc = context.read<OrganizationBloc>();
     _controllersManager = _ControllersManager(widget.organization);
     super.initState();
   }
@@ -43,21 +45,25 @@ class _OrganizationPageState extends State<OrganizationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OrganizationBloc, OrganizationState>(
+      listenWhen: (_, current) => switch (current) {
+        OrganizationUpdatedState() => true,
+        OrganizationDeletedState() => true,
+        OrganizationFailureState() => true,
+        _ => false,
+      },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final scaffoldMessenger = ScaffoldMessenger.of(context);
-        var snack = AppSnackBar.success(context.$.success);
 
         switch (state) {
           case OrganizationUpdatedState():
           case OrganizationDeletedState():
             context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
           case OrganizationFailureState(:final message):
-            snack = AppSnackBar.failure(message);
+            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
-
-        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
       },
       child: Scaffold(
         body: Column(
@@ -73,7 +79,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
             ButtonsBar(
               children: [
                 DeleteOrganizationIconButton(uuid: widget.organization.uuid),
-                SaveIconButton(onPressed: () => save(context)),
+                SaveIconButton(onPressed: save),
               ],
             ),
             LayoutBuilder(
@@ -114,9 +120,9 @@ class _OrganizationPageState extends State<OrganizationPage> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<OrganizationBloc>().add(
+      _organizationBloc.add(
         OrganizationEvent.update(
           UpdateOrganizationParams(
             uuid: widget.organization.uuid,
