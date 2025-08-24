@@ -50,5 +50,6 @@
     "verification": "Верификация",
     "verified": "Подтвержден",
     "unverified": "Не подтвержден",
-    "requiredField": "Обязательное поле"
+    "requiredField": "Обязательное поле",
+    "search": "Поиск"
 }

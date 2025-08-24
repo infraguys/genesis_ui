@@ -55,5 +55,6 @@
   "verification": "Verification",
   "verified": "Verified",
   "unverified": "Unverified",
-  "requiredField": "This field is required"
+  "requiredField": "This field is required",
+  "search": "Search"
 }
