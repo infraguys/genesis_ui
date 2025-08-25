@@ -48,11 +48,11 @@ class ListOfProjects extends StatelessWidget {
                     },
                   ),
                 ),
-                for (final project in state.projects)
+                for (final it in state.projectsWithRoles)
                   SizedBox(
                     width: 500,
                     height: 250,
-                    child: ProjectCard(project: project),
+                    child: ProjectCard(project: it.project, roles: it.roles),
                   ),
               ],
             ),
