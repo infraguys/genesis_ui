@@ -86,9 +86,18 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
-  Future<UserDto> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
+  Future<UserDto> getUser(req) async {
+    try {
+      final Response(:data) = await _client.get<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(req.toPath());
+      }
+      return UserDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
