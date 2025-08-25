@@ -3,6 +3,7 @@ import 'package:genesis/src/layer_domain/params/users/change_user_password_param
 import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
+import 'package:genesis/src/layer_domain/params/users/get_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 
@@ -21,5 +22,5 @@ abstract interface class IUsersRepository {
 
   Future<User> confirmEmail(ConfirmEmailParams params);
 
-  Future<User> getUser();
+  Future<User> getUser(GetUserParams params);
 }
