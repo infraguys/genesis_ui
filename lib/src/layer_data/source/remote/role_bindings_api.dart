@@ -38,4 +38,15 @@ final class RoleBindingsApi implements IRoleBindingsApi {
       throw NetworkException(e);
     }
   }
+
+  @override
+  Future<void> deleteRoleBinding(req) async {
+    try {
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
+        req.toPath(),
+      );
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
 }
