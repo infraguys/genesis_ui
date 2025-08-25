@@ -12,7 +12,3 @@ final class ConfirmEmailReq implements PathEncodable {
     return UsersEndpoints.confirmUserEmail(_params.uuid);
   }
 }
-
-extension ConfirmEmailParamsX on ConfirmEmailParams {
-  ConfirmEmailReq toReq() => ConfirmEmailReq(this);
-}
