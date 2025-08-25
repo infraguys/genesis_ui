@@ -74,4 +74,19 @@ final class RolesApi implements IRolesApi {
       throw NetworkException(e);
     }
   }
+
+  @override
+  Future<RoleDto> getRole(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+      return RoleDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
 }
