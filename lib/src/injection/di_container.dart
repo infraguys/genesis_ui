@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
 import 'package:genesis/src/layer_data/repositories/organizations_repository.dart';
 import 'package:genesis/src/layer_data/repositories/permissions_repository.dart';
 import 'package:genesis/src/layer_data/repositories/projects_repository.dart';
+import 'package:genesis/src/layer_data/repositories/role_bindings_repository.dart';
 import 'package:genesis/src/layer_data/repositories/roles_repository.dart';
 import 'package:genesis/src/layer_data/repositories/users_repository.dart';
 import 'package:genesis/src/layer_data/source/local/token_dao.dart';
@@ -24,12 +25,14 @@ import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
@@ -98,6 +101,12 @@ class DiContainer extends StatelessWidget {
               return PermissionsRepository(permissionsApi);
             },
           ),
+          RepositoryProvider<IRoleBindingsRepository>(
+            create: (context) {
+              final roleBindingsApi = RoleBindingsApi(context.read<RestClient>());
+              return RoleBindingsRepository(roleBindingsApi);
+            },
+          ),
         ],
         child: MultiProvider(
           providers: [
@@ -144,6 +153,12 @@ class DiContainer extends StatelessWidget {
               create: (context) {
                 final repository = context.read<IOrganizationsRepository>();
                 return OrganizationsBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<IRoleBindingsRepository>();
+                return RoleBindingsBloc(repository);
               },
             ),
             Provider(
