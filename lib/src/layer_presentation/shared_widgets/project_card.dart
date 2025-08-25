@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/hexagon_icon_button.dart';
@@ -55,8 +56,9 @@ class ProjectCard extends StatelessWidget {
                   Wrap(
                     children: roles!
                         .map(
-                          (it) => InputChip(
-                            label: Text(it.name),
+                          (it) => Chip(
+                            label: Text(it.name.capitalize, style: TextStyle(fontSize: 14)),
+                            deleteIcon: Icon(Icons.close),
                             onDeleted: () {},
                           ),
                         )
