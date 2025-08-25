@@ -5,7 +5,8 @@ sealed class UserProjectsState {
 
   factory UserProjectsState.loading() = UserProjectsLoadingState;
 
-  factory UserProjectsState.loaded(List<Project> projects) = UserProjectsLoadedState;
+  factory UserProjectsState.loaded(List<({Project project, List<Role> roles})> projectsWithRoles) =
+      UserProjectsLoadedState;
 }
 
 final class UserProjectsInitState implements UserProjectsState {}
@@ -13,7 +14,7 @@ final class UserProjectsInitState implements UserProjectsState {}
 final class UserProjectsLoadingState implements UserProjectsState {}
 
 final class UserProjectsLoadedState implements UserProjectsState {
-  const UserProjectsLoadedState(this.projects);
+  const UserProjectsLoadedState(this.projectsWithRoles);
 
-  final List<Project> projects;
+  final List<({Project project, List<Role> roles})> projectsWithRoles;
 }
