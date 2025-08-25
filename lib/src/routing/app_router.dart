@@ -15,7 +15,6 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
@@ -27,6 +26,7 @@ import 'package:genesis/src/layer_presentation/pages/create_role_page/create_rol
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
@@ -182,9 +182,19 @@ GoRouter createRouter(BuildContext context) {
                       final _ = state.pathParameters['uuid']!;
                       final project = state.extra as Project;
                       return NoTransitionPage(
-                        child: BlocProvider(
-                          create: (context) => ProjectBloc(context.read<IProjectsRepository>()),
-                          child: Placeholder(),
+                        child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (_) => OrganizationsSelectionBloc(),
+                            ),
+                            BlocProvider(
+                              create: (_) => UsersSelectionBloc(),
+                            ),
+                            BlocProvider(
+                              create: (_) => RolesSelectionBloc(),
+                            ),
+                          ],
+                          child: ProjectPage(project: project),
                         ),
                       );
                     },
