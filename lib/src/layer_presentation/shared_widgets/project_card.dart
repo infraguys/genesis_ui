@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/hexagon_icon_button.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
     required this.project,
+    required this.roles,
     super.key,
   }) : _isEmpty = false,
        _onTap = null;
@@ -15,10 +17,12 @@ class ProjectCard extends StatelessWidget {
     VoidCallback? onTap,
   }) : _isEmpty = true,
        project = null,
+       roles = null,
        _onTap = onTap;
 
   final bool _isEmpty;
   final Project? project;
+  final List<Role>? roles;
   final VoidCallback? _onTap;
 
   @override
@@ -47,6 +51,17 @@ class ProjectCard extends StatelessWidget {
                   // todo: вынести в типографику
                   Text(project!.name, style: TextStyle(color: Colors.white, fontSize: 20)),
                   Text(project!.description, style: TextStyle(color: Colors.white, fontSize: 14)),
+                  SizedBox(height: 50),
+                  Wrap(
+                    children: roles!
+                        .map(
+                          (it) => InputChip(
+                            label: Text(it.name),
+                            onDeleted: () {},
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ],
               ),
             ),
