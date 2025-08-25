@@ -4,6 +4,7 @@ import 'package:genesis/src/layer_data/requests/users/change_user_password_req.d
 import 'package:genesis/src/layer_data/requests/users/confirm_email_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/delete_user_req.dart';
+import 'package:genesis/src/layer_data/requests/users/get_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
@@ -19,35 +20,31 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<List<User>> getUsers(params) async {
-    final req = GetUsersReq(params);
-    final listOfUserDto = await _usersApi.getUsers(req);
+    final listOfUserDto = await _usersApi.getUsers(GetUsersReq(params));
     return listOfUserDto.map((it) => it.toEntity()).toList();
   }
 
   @override
   Future<User> changeUserPassword(ChangeUserPasswordParams params) async {
-    final req = ChangeUserPasswordReq(params);
-    final dto = await _usersApi.changeUserPassword(req);
+    final dto = await _usersApi.changeUserPassword(ChangeUserPasswordReq(params));
     return dto.toEntity();
   }
 
   @override
   Future<User> confirmEmail(params) async {
-    final dto = await _usersApi.confirmEmail(params.toReq());
+    final dto = await _usersApi.confirmEmail(ConfirmEmailReq(params));
     return dto.toEntity();
   }
 
   @override
   Future<User> createUser(CreateUserParams params) async {
-    final req = CreateUserReq(params);
-    final dto = await _usersApi.createUser(req);
+    final dto = await _usersApi.createUser(CreateUserReq(params));
     return dto.toEntity();
   }
 
   @override
   Future<void> deleteUser(params) async {
-    final req = DeleteUserReq(params);
-    await _usersApi.deleteUser(req);
+    await _usersApi.deleteUser(DeleteUserReq(params));
   }
 
   @override
@@ -58,14 +55,13 @@ class UsersRepository implements IUsersRepository {
 
   @override
   Future<User> updateUser(params) async {
-    final req = UpdateUserReq(params);
-    final dto = await _usersApi.updateUser(req);
+    final dto = await _usersApi.updateUser(UpdateUserReq(params));
     return dto.toEntity();
   }
 
   @override
-  Future<User> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
+  Future<User> getUser(params) async {
+    final dto = await _usersApi.getUser(GetUserReq(params));
+    return dto.toEntity();
   }
 }
