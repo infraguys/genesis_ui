@@ -5,20 +5,28 @@ sealed class UserState {
 
   factory UserState.loading() = UserLoadingState;
 
-  factory UserState.updated() = UserUpdatedState;
+  factory UserState.loaded(User user) = UserLoadedState;
 
-  factory UserState.failure(String message) = UserFailureState;
+  factory UserState.updated() = UserUpdatedState;
 
   factory UserState.created(User user) = UserCreatedState;
 
   factory UserState.deleted() = UserDeletedState;
 
   factory UserState.confirmed() = UserConfirmedState;
+
+  factory UserState.failure(String message) = UserFailureState;
 }
 
 final class UserInitialState implements UserState {}
 
 final class UserLoadingState implements UserState {}
+
+final class UserLoadedState implements UserState {
+  UserLoadedState(this.user);
+
+  final User user;
+}
 
 final class UserFailureState implements UserState {
   UserFailureState(this.message);
