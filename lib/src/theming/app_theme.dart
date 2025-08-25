@@ -119,6 +119,9 @@ class AppTheme {
           foregroundColor: Colors.white,
         ),
       ),
+      chipTheme: ChipThemeData(
+        side: BorderSide.none,
+      ),
     );
   }
 }
