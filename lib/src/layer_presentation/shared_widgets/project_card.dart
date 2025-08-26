@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
@@ -41,11 +40,8 @@ class ProjectCard extends StatelessWidget {
                     spacing: 6.0,
                     children: roles!
                         .map(
-                          (it) => Chip(
-                            color: WidgetStatePropertyAll(Palette.color6DCF91.withValues(alpha: 10)),
-                            surfaceTintColor: Colors.transparent,
-                            label: Text(it.name.capitalize, style: TextStyle(fontSize: 14)),
-                            deleteIcon: Icon(Icons.close),
+                          (it) => InputChip(
+                            label: Text(it.name),
                             onDeleted: () {
                               context.read<RoleBindingsBloc>().add(
                                 RoleBindingsEvent.delete(
