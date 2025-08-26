@@ -120,7 +120,18 @@ class AppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        side: BorderSide.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          side: BorderSide(width: 0.1),
+        ),
+        color: WidgetStatePropertyAll(Palette.color252D29),
+        iconTheme: IconThemeData(color: Colors.white),
+        labelStyle: TextStyle(
+          color: Palette.color6DCF91,
+          fontSize: 14,
+          height: 16 / 14,
+          fontWeight: FontWeight.w400,
+        ),
       ),
     );
   }
