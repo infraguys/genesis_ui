@@ -11,7 +11,7 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/create_user_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/delete_user_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/get_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
