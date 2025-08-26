@@ -23,8 +23,7 @@ class DeleteUsersIconButton extends StatelessWidget {
               builder: (context) => DeleteUserDialog(
                 users: state,
                 onDelete: () {
-                  final userUuids = state.map((user) => user.uuid);
-                  context.read<UsersBloc>().add(UsersEvent.deleteUsers(userUuids.toList()));
+                  context.read<UsersBloc>().add(UsersEvent.deleteUsers(state));
                 },
               ),
             );
