@@ -123,7 +123,10 @@ class DiContainer extends StatelessWidget {
               },
             ),
             BlocProvider(
-              create: (context) => ProjectBloc(context.read<IProjectsRepository>()),
+              create: (context) => ProjectBloc(
+                projectsRepository: context.read<IProjectsRepository>(),
+                roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+              ),
             ),
             BlocProvider(
               create: (context) {
