@@ -21,9 +21,7 @@ class DeleteUserIconButton extends StatelessWidget {
             users: List.generate(1, (_) => user),
             onDelete: () {
               context.read<UserBloc>().add(
-                UserEvent.deleteUser(
-                  DeleteUserParams(uuid: user.uuid),
-                ),
+                UserEvent.deleteUser(DeleteUserParams(user.uuid)),
               );
             },
           ),
