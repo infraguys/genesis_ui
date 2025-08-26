@@ -16,14 +16,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class RoleBindingPage extends StatefulWidget {
-  const RoleBindingPage({super.key});
+class AttachProjectPage extends StatefulWidget {
+  const AttachProjectPage({super.key});
 
   @override
-  State<RoleBindingPage> createState() => _RoleBindingPageState();
+  State<AttachProjectPage> createState() => _AttachProjectPageState();
 }
 
-class _RoleBindingPageState extends State<RoleBindingPage> {
+class _AttachProjectPageState extends State<AttachProjectPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<RoleBindingsBloc, RoleBindingsState>(
@@ -53,7 +53,7 @@ class _RoleBindingPageState extends State<RoleBindingPage> {
               items: [
                 BreadcrumbItem(text: context.$.users),
                 BreadcrumbItem(text: 'cecece'),
-                BreadcrumbItem(text: 'role_binding'),
+                BreadcrumbItem(text: 'attach_project'),
               ],
             ),
             ButtonsBar(
