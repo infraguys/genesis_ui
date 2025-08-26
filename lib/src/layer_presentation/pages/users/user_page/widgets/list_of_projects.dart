@@ -47,7 +47,7 @@ class ListOfProjects extends StatelessWidget {
                       onTap: () async {
                         final bloc = context.read<UserProjectsBloc>();
                         final isCreated = await context.pushNamed<bool>(
-                          AppRoutes.roleBinding.name,
+                          AppRoutes.attachProject.name,
                           pathParameters: GoRouterState.of(context).pathParameters,
                         );
                         if (isCreated == true) {
