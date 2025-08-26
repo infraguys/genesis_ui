@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
-import 'package:genesis/src/layer_data/dtos/roles_bindings.dart';
+import 'package:genesis/src/layer_data/dtos/role_binding_dto.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/get_role_bindings_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_api.dart';
 
@@ -23,7 +23,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
   }
 
   @override
-  Future<List<RolesBindingDto>> getRoleBindings(GetRoleBindingsReq req) async {
+  Future<List<RoleBindingDto>> getRoleBindings(GetRoleBindingsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),
@@ -31,9 +31,9 @@ final class RoleBindingsApi implements IRoleBindingsApi {
       );
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => RolesBindingDto.fromJson(it)).toList();
+        return castedData.map((it) => RoleBindingDto.fromJson(it)).toList();
       }
-      return [];
+      return List.empty();
     } on DioException catch (e) {
       throw NetworkException(e);
     }
@@ -42,7 +42,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
   @override
   Future<void> deleteRoleBinding(req) async {
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.delete<Map<String, dynamic>>(
         req.toPath(),
       );
     } on DioException catch (e) {
