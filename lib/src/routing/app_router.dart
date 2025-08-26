@@ -28,6 +28,7 @@ import 'package:genesis/src/layer_presentation/pages/organization_page/organizat
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_binding_page/role_binding_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
@@ -137,6 +138,25 @@ GoRouter createRouter(BuildContext context) {
                         ),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        name: AppRoutes.roleBinding.name,
+                        path: 'role_binding',
+                        pageBuilder: (_, _) => NoTransitionPage(
+                          child: MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) => RolesSelectionBloc(),
+                              ),
+                              BlocProvider(
+                                create: (_) => ProjectsSelectionBloc(),
+                              ),
+                            ],
+                            child: RoleBindingPage(),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
