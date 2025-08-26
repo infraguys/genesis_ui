@@ -18,8 +18,6 @@ final class ForceConfirmEmailsUseCase {
   final IUsersRepository _repository;
 
   Future<List<User>> call(List<ConfirmEmailParams> listOfParams) async {
-    return await Future.wait(
-      listOfParams.where((it) => !it.verified).map(_repository.forceConfirmEmail),
-    );
+    return await Future.wait(listOfParams.map(_repository.forceConfirmEmail));
   }
 }
