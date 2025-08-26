@@ -28,7 +28,7 @@ class ProjectCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       color: Palette.color333333,
       child: Padding(
-        padding: EdgeInsets.all(18.0),
+        padding: EdgeInsets.all(16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
