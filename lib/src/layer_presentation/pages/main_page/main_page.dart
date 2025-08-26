@@ -1,60 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/main_page/widgets/table_view.dart';
+import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/active_users_card.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/summary_card.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
-  @override
-  State<DashboardPage> createState() => _DashboardPageState();
-}
-
-class _DashboardPageState extends State<DashboardPage> {
-  @override
-  void initState() {
-    context.read<UsersBloc>().add(UsersEvent.getUsers());
-    super.initState();
-  }
 
   @override
   Widget build(context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
+        spacing: 24.0,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 20,
-          ),
           Row(
             spacing: 10,
             children: [
-              Flexible(
-                child: SummaryCard(
-                  title: 'Total Nodes',
-                  value: 38.toString(),
-                  secondaryTitle: 'Broken',
-                  secondaryValue: '0',
-                ),
+              // Flexible(
+              //   child: SummaryCard(
+              //     title: 'Total Nodes',
+              //     value: 38.toString(),
+              //     secondaryTitle: 'Broken',
+              //     secondaryValue: '0',
+              //   ),
+              // ),
+              Expanded(
+                // width: 200,
+                // height: 100,
+                child: ActiveUsersCard(),
               ),
-              Flexible(child: ActiveUsersCard()),
-              Flexible(
-                child: SummaryCard(
-                  title: 'Resource Usage',
-                  value: '62.3%',
-                  secondaryTitle: '',
-                  secondaryValue: '',
-                ),
+              Expanded(
+                // width: 200,
+                // height: 100,
+                child: VerifiedUsersCountCard(),
               ),
+              // Flexible(
+              //   child: SummaryCard(
+              //     title: 'Resource Usage',
+              //     value: '62.3%',
+              //     secondaryTitle: '',
+              //     secondaryValue: '',
+              //   ),
+              // ),
             ],
           ),
-          const SizedBox(
-            height: 20.0,
+          Expanded(
+            child: Center(
+              child: Text('Dashboard content goes here', style: TextStyle(fontSize: 24)),
+            ),
           ),
-          Expanded(child: AppTableView()),
+          // Expanded(child: AppTableView()),
         ],
       ),
     );
