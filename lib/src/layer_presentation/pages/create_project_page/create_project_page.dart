@@ -163,7 +163,7 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
           description: _controllersManager.descriptionController.text,
           organizationUuid: context.read<OrganizationsSelectionBloc>().state.first.uuid,
           userUuid: context.read<UsersSelectionBloc>().state.first.uuid,
-          roleUuid: context.read<RolesSelectionBloc>().state.first.uuid,
+          roleUuid: context.read<RolesSelectionBloc>().state.map((it) => it.uuid).toList(),
         ),
       );
     }
