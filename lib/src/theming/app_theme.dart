@@ -70,10 +70,14 @@ class AppTheme {
       appBarTheme: _appbarThemeData,
       navigationDrawerTheme: _navigationDrawerThemeData,
       drawerTheme: _drawerThemeData,
-      cardTheme: CardThemeData(color: Colors.white),
+      cardTheme: CardThemeData(
+        color: Palette.color333333,
+      ),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
-      textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white,
+      ),
       listTileTheme: ListTileThemeData(
         textColor: Colors.white,
         iconColor: Palette.colorAFA8A4,
