@@ -12,6 +12,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UsersBloc(this._usersRepository) : super(UsersInitState()) {
     on(_getUsers);
     on(_onDeleteUsers);
+    add(UsersEvent.getUsers());
   }
 
   final IUsersRepository _usersRepository;
