@@ -19,6 +19,7 @@ enum AppRoutes {
   roles,
   role,
   createRole,
+  roleBinding,
 
   /// organizations
   organizations,
