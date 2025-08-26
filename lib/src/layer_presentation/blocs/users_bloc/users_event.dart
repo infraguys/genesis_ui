@@ -3,7 +3,7 @@ part of 'users_bloc.dart';
 sealed class UsersEvent {
   factory UsersEvent.getUsers() = _GetUsers;
 
-  factory UsersEvent.deleteUsers(List<String> userUuids) = _DeleteUsers;
+  factory UsersEvent.deleteUsers(List<User> users) = _DeleteUsers;
 
   factory UsersEvent.forceConfirmEmails(List<User> users) = _ForceConfirmEmails;
 }
@@ -11,9 +11,9 @@ sealed class UsersEvent {
 final class _GetUsers implements UsersEvent {}
 
 final class _DeleteUsers implements UsersEvent {
-  _DeleteUsers(this.userUuids);
+  _DeleteUsers(this.users);
 
-  final List<String> userUuids;
+  final List<User> users;
 }
 
 final class _ForceConfirmEmails implements UsersEvent {
