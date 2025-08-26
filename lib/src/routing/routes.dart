@@ -14,12 +14,13 @@ enum AppRoutes {
   projects,
   project,
   createProject,
+  attachProject,
 
   /// roles
   roles,
   role,
   createRole,
-  roleBinding,
+  attachRoles,
 
   /// organizations
   organizations,
