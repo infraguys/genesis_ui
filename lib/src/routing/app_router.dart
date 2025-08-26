@@ -20,6 +20,8 @@ import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
@@ -28,7 +30,6 @@ import 'package:genesis/src/layer_presentation/pages/organization_page/organizat
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
-import 'package:genesis/src/layer_presentation/pages/role_binding_page/role_binding_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
@@ -140,8 +141,8 @@ GoRouter createRouter(BuildContext context) {
                     },
                     routes: [
                       GoRoute(
-                        name: AppRoutes.roleBinding.name,
-                        path: 'role_binding',
+                        name: AppRoutes.attachProject.name,
+                        path: 'attach/project',
                         pageBuilder: (_, _) => NoTransitionPage(
                           child: MultiBlocProvider(
                             providers: [
@@ -152,9 +153,26 @@ GoRouter createRouter(BuildContext context) {
                                 create: (_) => ProjectsSelectionBloc(),
                               ),
                             ],
-                            child: RoleBindingPage(),
+                            child: AttachProjectPage(),
                           ),
                         ),
+                      ),
+                      GoRoute(
+                        name: AppRoutes.attachRoles.name,
+                        path: 'attach/project/:projectUuid/attach_roles',
+                        pageBuilder: (_, state) {
+                          final projectUuid = state.pathParameters['projectUuid']!;
+                          return NoTransitionPage(
+                            child: MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (_) => RolesSelectionBloc(),
+                                ),
+                              ],
+                              child: AttachRolesPage(projectUuid: projectUuid),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
