@@ -34,23 +34,20 @@ class _CreateUserPageState extends State<CreateUserPage> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listenWhen: (_, current) => switch (current) {
-        UserCreatedState() => true,
-        UserFailureState() => true,
+        UserCreatedState() || UserFailureState() => true,
         _ => false,
       },
       listener: (context, state) {
-        final navigator = GoRouter.of(context);
         final scaffoldMessenger = ScaffoldMessenger.of(context);
-        var snack = AppSnackBar.success(context.$.success);
 
         switch (state) {
           case UserCreatedState():
             context.read<UsersBloc>().add(UsersEvent.getUsers());
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(context.pop);
           case UserFailureState(:final message):
-            snack = AppSnackBar.failure(message);
+            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
-        scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
       },
       child: Scaffold(
         body: Column(
