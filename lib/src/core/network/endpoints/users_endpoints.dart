@@ -17,6 +17,8 @@ abstract class UsersEndpoints {
   static String changeUserPassword(String uuid) => '$_user/actions/change_password/invoke'.fillUuid(uuid);
 
   static String confirmUserEmail(String uuid) => '$_user/actions/confirm_email/invoke'.fillUuid(uuid);
+
+  static String forceConfirmUserEmail(String uuid) => '$_user/actions/force_confirm_email/invoke'.fillUuid(uuid);
 }
 
 // ignore: camel_case_extensions
