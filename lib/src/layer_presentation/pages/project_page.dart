@@ -40,7 +40,6 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
     context.read<UsersBloc>().add(UsersEvent.getUsers());
-    context.read<RolesBloc>().add(RolesEvent.getRoles());
     _controllersManager = _ControllersManager(widget.project);
     super.initState();
   }
@@ -144,7 +143,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 height: 405,
                 child: BlocBuilder<RolesBloc, RolesState>(
                   builder: (context, state) {
-                    if (state is! RolesLoaded) {
+                    if (state is! RolesLoadedState) {
                       return AppProgressIndicator();
                     }
                     return RolesTable(roles: state.roles);
