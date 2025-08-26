@@ -22,7 +22,9 @@ class ListOfProjects extends StatelessWidget {
     return BlocListener<RoleBindingsBloc, RoleBindingsState>(
       listenWhen: (_, current) => current is RoleBindingsDeletedState,
       listener: (context, state) {
-        UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid));
+        context.read<UserProjectsBloc>().add(
+          UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid)),
+        );
       },
       child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
         builder: (context, state) {
@@ -44,8 +46,11 @@ class ListOfProjects extends StatelessWidget {
                     child: AddProjectCard(
                       onTap: () async {
                         final bloc = context.read<UserProjectsBloc>();
-                        final isCreated = await context.pushNamed<bool>(AppRoutes.createProject.name);
-                        if (isCreated != null && isCreated) {
+                        final isCreated = await context.pushNamed<bool>(
+                          AppRoutes.roleBinding.name,
+                          pathParameters: GoRouterState.of(context).pathParameters,
+                        );
+                        if (isCreated == true) {
                           bloc.add(UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid)));
                         }
                       },
