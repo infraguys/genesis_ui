@@ -13,6 +13,9 @@ final class GetRoleBindingsReq implements QueryEncodable, PathEncodable {
     return {
       'user': ?_params.userUuid,
       'project': ?_params.projectUuid,
+      'role': ?_params.roleUuid,
+      'created_at': ?_params.createdAt?.toIso8601String(),
+      'updated_at': ?_params.updatedAt?.toIso8601String(),
     };
   }
 
