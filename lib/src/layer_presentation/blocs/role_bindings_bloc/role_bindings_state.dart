@@ -7,6 +7,8 @@ sealed class RoleBindingsState {
 
   factory RoleBindingsState.loaded() = RoleBindingsLoadedState;
 
+  factory RoleBindingsState.created() = RoleBindingsCreatedState;
+
   factory RoleBindingsState.deleted() = RoleBindingsDeletedState;
 }
 
@@ -16,4 +18,12 @@ final class RoleBindingsLoadingState implements RoleBindingsState {}
 
 final class RoleBindingsLoadedState implements RoleBindingsState {}
 
+final class RoleBindingsCreatedState implements RoleBindingsState {}
+
 final class RoleBindingsDeletedState implements RoleBindingsState {}
+
+final class RoleBindingsFailureState implements RoleBindingsState {
+  RoleBindingsFailureState(this.message);
+
+  final String message;
+}
