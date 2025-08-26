@@ -13,7 +13,9 @@ sealed class UserEvent {
 
   factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 
-  factory UserEvent.confirmEmails(List<ConfirmEmailParams> params) = _ConfirmEmails;
+  factory UserEvent.confirmEmails(List<ConfirmEmailParams> users) = _ConfirmEmails;
+
+  factory UserEvent.forceConfirmEmail(User user) = _ForceConfirmEmail;
 }
 
 final class _GetUser implements UserEvent {
@@ -56,4 +58,10 @@ final class _ConfirmEmails implements UserEvent {
   _ConfirmEmails(this.params);
 
   final List<ConfirmEmailParams> params;
+}
+
+final class _ForceConfirmEmail implements UserEvent {
+  _ForceConfirmEmail(this.user);
+
+  final User user;
 }
