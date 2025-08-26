@@ -13,6 +13,7 @@ class RolesBloc extends Bloc<RolesEvent, RolesState> {
   RolesBloc(this._repository) : super(RolesState.init()) {
     on(_onGetRoles);
     on(_onDeleteRoles);
+    add(RolesEvent.getRoles());
   }
 
   final IRolesRepository _repository;
