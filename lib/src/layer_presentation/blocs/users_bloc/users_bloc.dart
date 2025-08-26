@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
+import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
@@ -29,8 +30,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   Future<void> _onDeleteUsers(_DeleteUsers event, Emitter<UsersState> emit) async {
     final useCase = DeleteUsersUseCase(_usersRepository);
+    final listOfParams = event.users.map((user) => DeleteUserParams(user.uuid));
     emit(UsersState.loading());
-    await useCase(event.userUuids);
+    await useCase(listOfParams.toList());
     add(UsersEvent.getUsers());
   }
 
