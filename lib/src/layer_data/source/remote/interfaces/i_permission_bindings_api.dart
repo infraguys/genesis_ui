@@ -1,6 +1,6 @@
-import 'package:genesis/src/layer_data/dtos/permission_dto.dart';
+import 'package:genesis/src/layer_data/dtos/permission_binding_dto.dart';
 import 'package:genesis/src/layer_data/requests/permission_bindings/create_permission_binding_req.dart';
 
 abstract interface class IPermissionBindingsApi {
-  Future<PermissionDto> createPermissionBinding(CreatePermissionBindingReq req);
+  Future<PermissionBindingDto> createPermissionBinding(CreatePermissionBindingReq req);
 }
