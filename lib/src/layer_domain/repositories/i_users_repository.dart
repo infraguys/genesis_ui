@@ -22,5 +22,7 @@ abstract interface class IUsersRepository {
 
   Future<User> confirmEmail(ConfirmEmailParams params);
 
+  Future<User> forceConfirmEmail(ConfirmEmailParams params);
+
   Future<User> getUser(GetUserParams params);
 }
