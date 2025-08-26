@@ -62,6 +62,21 @@ final class UsersApi implements IUsersApi {
   }
 
   @override
+  Future<UserDto> forceConfirmEmail(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+      return UserDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
   Future<UserDto> createUser(req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
