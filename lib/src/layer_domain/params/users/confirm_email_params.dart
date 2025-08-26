@@ -1,6 +1,5 @@
 final class ConfirmEmailParams {
-  ConfirmEmailParams({required this.uuid, required this.verified});
+  ConfirmEmailParams({required this.uuid});
 
   final String uuid;
-  final bool verified;
 }
