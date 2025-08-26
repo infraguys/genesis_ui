@@ -9,19 +9,8 @@ import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indic
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 
-class RolesPage extends StatefulWidget {
+class RolesPage extends StatelessWidget {
   const RolesPage({super.key});
-
-  @override
-  State<RolesPage> createState() => _ProjectsPageState();
-}
-
-class _ProjectsPageState extends State<RolesPage> {
-  @override
-  void initState() {
-    context.read<RolesBloc>().add(RolesEvent.getRoles());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +32,7 @@ class _ProjectsPageState extends State<RolesPage> {
         Expanded(
           child: BlocBuilder<RolesBloc, RolesState>(
             builder: (context, state) => switch (state) {
-              RolesLoaded(:final roles) => RolesTable(roles: roles),
+              RolesLoadedState(:final roles) => RolesTable(roles: roles),
               _ => AppProgressIndicator(),
             },
           ),
