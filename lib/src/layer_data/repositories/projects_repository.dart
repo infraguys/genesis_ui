@@ -3,7 +3,6 @@ import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
-import 'package:genesis/src/layer_data/requests/role_bindings/create_role_binding_req.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/get_role_bindings_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_role_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
@@ -11,7 +10,6 @@ import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/get_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
@@ -25,18 +23,7 @@ final class ProjectsRepository implements IProjectsRepository {
 
   @override
   Future<Project> createProject(params) async {
-    final req = CreateProjectReq(params);
-    final projectDto = await _projectsApi.createProject(req);
-
-    final createRoleBindingReq = CreateRoleBindingReq(
-      CreateRoleBindingParams(
-        userUuid: params.userUuid,
-        roleUuid: params.roleUuid,
-        projectUuid: projectDto.uuid,
-      ),
-    );
-    await _roleBindingsApi.createRoleBinding(createRoleBindingReq);
-
+    final projectDto = await _projectsApi.createProject(CreateProjectReq(params));
     return projectDto.toEntity();
   }
 
@@ -58,13 +45,19 @@ final class ProjectsRepository implements IProjectsRepository {
     final roleBindingsReq = GetRoleBindingsReq(GetRoleBindingsParams(userUuid: params.userUuid));
     final roleBindingDtos = await _roleBindingsApi.getRoleBindings(roleBindingsReq);
 
+    // todo: нужен рефакторинг
+
     final List<({Project project, List<Role> roles})> result = [];
 
+    String projectId = '';
     for (var binding in roleBindingDtos) {
       if (binding.project == null) {
         continue;
+      } else if (projectId == binding.project!.split('/').last) {
+        continue;
       }
-      final projectId = binding.project!.split('/').last;
+
+      projectId = binding.project!.split('/').last;
       final projectDto = await _projectsApi.getProject(GetProjectReq(projectId));
       final project = projectDto.toEntity();
       final rolesDto = await Future.wait(
