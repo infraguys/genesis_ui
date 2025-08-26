@@ -7,6 +7,7 @@ import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
 import 'package:genesis/src/layer_data/repositories/organizations_repository.dart';
+import 'package:genesis/src/layer_data/repositories/permission_bindings_repository.dart';
 import 'package:genesis/src/layer_data/repositories/permissions_repository.dart';
 import 'package:genesis/src/layer_data/repositories/projects_repository.dart';
 import 'package:genesis/src/layer_data/repositories/role_bindings_repository.dart';
@@ -23,6 +24,7 @@ import 'package:genesis/src/layer_data/source/remote/roles_api.dart';
 import 'package:genesis/src/layer_data/source/remote/users_api.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
@@ -85,8 +87,7 @@ class DiContainer extends StatelessWidget {
           RepositoryProvider<IRolesRepository>(
             create: (context) {
               final rolesApi = RolesApi(context.read<RestClient>());
-              final permissionBindingsApi = PermissionBindingApi(context.read<RestClient>());
-              return RolesRepository(rolesApi, permissionBindingsApi);
+              return RolesRepository(rolesApi);
             },
           ),
           RepositoryProvider<IOrganizationsRepository>(
@@ -105,6 +106,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final roleBindingsApi = RoleBindingsApi(context.read<RestClient>());
               return RoleBindingsRepository(roleBindingsApi);
+            },
+          ),
+          RepositoryProvider<IPermissionBindingsRepository>(
+            create: (context) {
+              final permissionBindingsApi = PermissionBindingsApi(context.read<RestClient>());
+              return PermissionBindingsRepository(permissionBindingsApi);
             },
           ),
         ],
