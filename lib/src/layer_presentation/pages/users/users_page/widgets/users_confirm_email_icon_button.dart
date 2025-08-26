@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon_button.dart';
 
@@ -15,13 +16,9 @@ class UsersConfirmEmailIconButton extends StatelessWidget {
           return SizedBox.shrink();
         }
         return ConfirmEmailIconButton(
-          onPressed: null,
-          // onPressed: () {
-          //   final listOfParams = state.map((it) => ConfirmEmailParams(uuid: it.uuid, verified: it.emailVerified));
-          //   context.read<UserBloc>().add(
-          //     UserEvent.confirmEmails(listOfParams.toList()),
-          //   );
-          // },
+          onPressed: () {
+            context.read<UsersBloc>().add(UsersEvent.forceConfirmEmails(state));
+          },
         );
       },
     );
