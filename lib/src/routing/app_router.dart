@@ -7,6 +7,7 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
@@ -267,7 +268,10 @@ GoRouter createRouter(BuildContext context) {
                             create: (_) => PermissionsSelectionBloc(),
                           ),
                           BlocProvider(
-                            create: (_) => RoleBloc(context.read<IRolesRepository>()),
+                            create: (_) => RoleBloc(
+                              rolesRepository: context.read<IRolesRepository>(),
+                              permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+                            ),
                           ),
                         ],
                         child: CreateRolePage(),
@@ -290,7 +294,10 @@ GoRouter createRouter(BuildContext context) {
                               create: (_) => PermissionsSelectionBloc(),
                             ),
                             BlocProvider(
-                              create: (_) => RoleBloc(context.read<IRolesRepository>()),
+                              create: (_) => RoleBloc(
+                                rolesRepository: context.read<IRolesRepository>(),
+                                permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+                              ),
                             ),
                           ],
                           child: RolePage(role: role),
