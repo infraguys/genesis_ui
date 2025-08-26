@@ -4,6 +4,7 @@ import 'package:genesis/src/layer_data/requests/users/change_user_password_req.d
 import 'package:genesis/src/layer_data/requests/users/confirm_email_req.dart';
 import 'package:genesis/src/layer_data/requests/users/create_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/delete_user_req.dart';
+import 'package:genesis/src/layer_data/requests/users/force_confirm_email_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
@@ -24,6 +25,8 @@ abstract interface class IUsersApi {
   Future<UserDto> resetUserPassword();
 
   Future<UserDto> confirmEmail(ConfirmEmailReq req);
+
+  Future<UserDto> forceConfirmEmail(ForceConfirmEmailReq req);
 
   Future<List<UserRoleDto>> getUserRoles(String userUuid);
 }
