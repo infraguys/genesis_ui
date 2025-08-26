@@ -1,19 +1,19 @@
 part of 'roles_bloc.dart';
 
 sealed class RolesState {
-  factory RolesState.init() = RolesInit;
+  factory RolesState.init() = RolesInitState;
 
-  factory RolesState.loading() = RolesLoading;
+  factory RolesState.loading() = RolesLoadingState;
 
-  factory RolesState.loaded(List<Role> roles) = RolesLoaded;
+  factory RolesState.loaded(List<Role> roles) = RolesLoadedState;
 }
 
-final class RolesInit implements RolesState {}
+final class RolesInitState implements RolesState {}
 
-final class RolesLoading implements RolesState {}
+final class RolesLoadingState implements RolesState {}
 
-final class RolesLoaded implements RolesState {
-  RolesLoaded(this.roles);
+final class RolesLoadedState implements RolesState {
+  RolesLoadedState(this.roles);
 
   final List<Role> roles;
 }
