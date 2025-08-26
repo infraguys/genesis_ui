@@ -8,6 +8,8 @@ sealed class RoleBindingsEvent {
   }) = _Delete;
 
   factory RoleBindingsEvent.get(GetRoleBindingsParams params) = _GetBinding;
+
+  factory RoleBindingsEvent.createBindings(List<CreateRoleBindingParams> params) = _CreateBindings;
 }
 
 final class _Delete implements RoleBindingsEvent {
@@ -22,4 +24,10 @@ final class _GetBinding implements RoleBindingsEvent {
   const _GetBinding(this.params);
 
   final GetRoleBindingsParams params;
+}
+
+final class _CreateBindings implements RoleBindingsEvent {
+  const _CreateBindings(this.listOfParams);
+
+  final List<CreateRoleBindingParams> listOfParams;
 }
