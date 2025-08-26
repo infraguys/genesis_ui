@@ -47,7 +47,7 @@ final class ProjectsRepository implements IProjectsRepository {
 
     // todo: нужен рефакторинг
 
-    final List<({Project project, List<Role> roles})> result = [];
+    final Set<({Project project, List<Role> roles})> result = {};
 
     String projectId = '';
     for (var binding in roleBindingDtos) {
@@ -72,7 +72,7 @@ final class ProjectsRepository implements IProjectsRepository {
       result.add((project: project, roles: roles));
     }
 
-    return result;
+    return result.toList();
   }
 
   @override
