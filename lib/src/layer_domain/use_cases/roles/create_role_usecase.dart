@@ -7,7 +7,7 @@ final class CreateRoleUseCase {
 
   final IRolesRepository _repository;
 
-  Future<Role?> call(CreateRoleParams params) async {
+  Future<Role> call(CreateRoleParams params) async {
     return await _repository.createRole(params);
   }
 }
