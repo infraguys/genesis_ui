@@ -5,13 +5,13 @@ class AppSnackBar extends SnackBar {
     : super(
         backgroundColor: Colors.green,
         content: Text(message),
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 1000),
       );
 
   AppSnackBar.failure(String message, {super.key})
     : super(
         backgroundColor: Colors.red,
         content: Text(message),
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 2000),
       );
 }
