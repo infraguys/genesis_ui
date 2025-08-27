@@ -1,5 +1,5 @@
 final class DeleteRoleParams {
-  DeleteRoleParams({required this.uuid});
+  DeleteRoleParams(this.uuid);
 
   final String uuid;
 }
