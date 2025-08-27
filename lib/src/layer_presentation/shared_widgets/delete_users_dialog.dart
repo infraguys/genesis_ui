@@ -4,23 +4,23 @@ import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
-class DeleteUserDialog extends StatelessWidget {
-  const DeleteUserDialog({required this.users, super.key, this.onDelete});
+class DeleteUsersDialog extends StatelessWidget {
+  const DeleteUsersDialog({required this.users, super.key, this.onDelete});
 
   final List<User> users;
   final VoidCallback? onDelete;
 
-  String getContent(List<User> users) {
+  String getContent(BuildContext context) {
     if (users.length == 1) {
-      return 'Удалить пользователя ${users.single.username}?';
+      return context.$.deleteUser(users.single.username);
     }
-    return 'Удалить выбранных(${users.length}) пользователей?';
+    return context.$.deleteUsers(users.length);
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text(getContent(users)),
+      content: Text(getContent(context)),
       actions: [
         TextButton(
           onPressed: context.pop,
