@@ -17,8 +17,6 @@ final class CreatePermissionBindingsUseCase {
   final IPermissionBindingsRepository _repository;
 
   Future<void> call(List<CreatePermissionBindingParams> listOfParams) async {
-    await Future.wait(
-      listOfParams.map((params) => _repository.createPermissionBinding(params)),
-    );
+    await Future.wait(listOfParams.map(_repository.createPermissionBinding));
   }
 }
