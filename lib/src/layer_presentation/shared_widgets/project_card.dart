@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/hexagon_icon_button.dart';
@@ -77,7 +76,9 @@ class ProjectCard extends StatelessWidget {
                 );
 
                 if (isCreated == true) {
-                  bloc.add(UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid)));
+                  bloc.add(
+                    UserProjectsEvent.getProjects(userUuid),
+                  );
                 }
               },
             ),

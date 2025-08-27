@@ -1,5 +1,6 @@
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/get_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
@@ -14,6 +15,12 @@ final class RolesRepository implements IRolesRepository {
   Future<List<Role>> getRolesByUserUuid(userUuid) async {
     final rolesDto = await _rolesApi.getRolesByUserUuid(userUuid);
     return rolesDto.map((dto) => dto.toEntity()).toList();
+  }
+
+  @override
+  Future<Role> getRole(params) async {
+    final roleDto = await _rolesApi.getRole(GetRoleReq(params));
+    return roleDto.toEntity();
   }
 
   @override

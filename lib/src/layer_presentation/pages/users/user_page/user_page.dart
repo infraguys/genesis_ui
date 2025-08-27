@@ -4,7 +4,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
@@ -32,14 +31,13 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
-
+  late final UserBloc _userBloc;
 
   @override
   void initState() {
+    _userBloc = context.read<UserBloc>();
     context.read<UserProjectsBloc>().add(
-      UserProjectsEvent.getProjects(
-        GetProjectsParams(userUuid: widget.user.uuid),
-      ),
+      UserProjectsEvent.getProjects(widget.user.uuid),
     );
     // context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUser(widget.user.uuid));
     _controllersManager = _ControllersManager(widget.user);
@@ -94,9 +92,7 @@ class _UserPageState extends State<UserPage> {
               ButtonsBar(
                 children: [
                   DeleteUserIconButton(user: widget.user),
-                  SaveIconButton(
-                    onPressed: () => save(context),
-                  ),
+                  SaveIconButton(onPressed: save),
                 ],
               ),
               LayoutBuilder(
@@ -226,9 +222,9 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<UserBloc>().add(
+      _userBloc.add(
         UserEvent.updateUser(
           UpdateUserParams(
             uuid: widget.user.uuid,

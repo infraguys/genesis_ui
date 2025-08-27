@@ -10,6 +10,7 @@ import 'package:genesis/src/layer_domain/repositories/i_organizations_repository
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
@@ -135,7 +136,11 @@ GoRouter createRouter(BuildContext context) {
                       final user = state.extra as User;
                       return NoTransitionPage(
                         child: BlocProvider(
-                          create: (context) => UserProjectsBloc(context.read<IProjectsRepository>()),
+                          create: (context) => UserProjectsBloc(
+                            projectsRepository: context.read<IProjectsRepository>(),
+                            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+                            rolesRepository: context.read<IRolesRepository>(),
+                          ),
                           child: UserPage(user: user),
                         ),
                       );

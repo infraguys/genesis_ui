@@ -1,9 +1,15 @@
 final class GetProjectsParams {
   const GetProjectsParams({
-    this.userUuid,
-    this.projectName,
+    this.name,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.organization,
   });
 
-  final String? userUuid;
-  final String? projectName;
+  final String? name;
+  final String? description;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? organization;
 }

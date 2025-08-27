@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/add_project_card.dart';
@@ -17,13 +15,11 @@ class ListOfProjects extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
-
     return BlocListener<RoleBindingsBloc, RoleBindingsState>(
       listenWhen: (_, current) => current is RoleBindingsDeletedState,
       listener: (context, state) {
         context.read<UserProjectsBloc>().add(
-          UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid)),
+          UserProjectsEvent.getProjects(userUuid),
         );
       },
       child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
@@ -31,39 +27,32 @@ class ListOfProjects extends StatelessWidget {
           if (state is! UserProjectsLoadedState) {
             return AppProgressIndicator();
           }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          return Wrap(
+            spacing: 24,
+            runSpacing: 24,
             children: [
-              Text(context.$.projects, style: textTheme.headlineSmall),
-              const SizedBox(height: 24),
-              Wrap(
-                spacing: 24,
-                runSpacing: 24,
-                children: [
-                  SizedBox(
-                    width: 500,
-                    height: 250,
-                    child: AddProjectCard(
-                      onTap: () async {
-                        final bloc = context.read<UserProjectsBloc>();
-                        final isCreated = await context.pushNamed<bool>(
-                          AppRoutes.attachProject.name,
-                          pathParameters: GoRouterState.of(context).pathParameters,
-                        );
-                        if (isCreated == true) {
-                          bloc.add(UserProjectsEvent.getProjects(GetProjectsParams(userUuid: userUuid)));
-                        }
-                      },
-                    ),
-                  ),
-                  for (final it in state.projectsWithRoles)
-                    SizedBox(
-                      width: 500,
-                      height: 250,
-                      child: ProjectCard(project: it.project, roles: it.roles, userUuid: userUuid),
-                    ),
-                ],
+              SizedBox(
+                width: 500,
+                height: 250,
+                child: AddProjectCard(
+                  onTap: () async {
+                    final bloc = context.read<UserProjectsBloc>();
+                    final isCreated = await context.pushNamed<bool>(
+                      AppRoutes.attachProject.name,
+                      pathParameters: GoRouterState.of(context).pathParameters,
+                    );
+                    if (isCreated == true) {
+                      bloc.add(UserProjectsEvent.getProjects(userUuid));
+                    }
+                  },
+                ),
               ),
+              for (final it in state.projectsWithRoles)
+                SizedBox(
+                  width: 500,
+                  height: 250,
+                  child: ProjectCard(project: it.project, roles: it.roles, userUuid: userUuid),
+                ),
             ],
           );
         },
