@@ -149,8 +149,10 @@ class DiContainer extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) {
-                final repository = context.read<IRolesRepository>();
-                return RolesBloc(repository);
+                return RolesBloc(
+                  rolesRepository: context.read<IRolesRepository>(),
+                  permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+                );
               },
             ),
             BlocProvider(
