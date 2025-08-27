@@ -51,5 +51,23 @@
     "verified": "Подтвержден",
     "unverified": "Не подтвержден",
     "requiredField": "Обязательное поле",
-    "search": "Поиск"
+    "search": "Поиск",
+    "deleteRole": "Удалить роль {roleName}?",
+      "@deleteRole": {
+        "placeholders": {
+          "roleName": {
+            "type": "String",
+            "example": "Eugene"
+          }
+        }
+      },
+      "deleteRoles": "Удалить выбранные({count}) роли?",
+      "@deleteRoles": {
+          "placeholders": {
+            "count": {
+              "type": "int",
+              "example": "3"
+            }
+          }
+        }
 }

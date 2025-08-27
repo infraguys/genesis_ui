@@ -56,5 +56,23 @@
   "verified": "Verified",
   "unverified": "Unverified",
   "requiredField": "This field is required",
-  "search": "Search"
+  "search": "Search",
+  "deleteRole": "Delete role {roleName}?",
+  "@deleteRole": {
+    "placeholders": {
+      "roleName": {
+        "type": "String",
+        "example": "Eugene"
+      }
+    }
+  },
+  "deleteRoles": "Delete selected ({count}) roles?",
+  "@deleteRoles": {
+      "placeholders": {
+        "count": {
+          "type": "int",
+          "example": "3"
+        }
+      }
+    }
 }

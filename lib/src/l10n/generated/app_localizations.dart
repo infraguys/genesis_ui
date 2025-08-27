@@ -421,6 +421,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
+
+  /// No description provided for @deleteRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete role {roleName}?'**
+  String deleteRole(String roleName);
+
+  /// No description provided for @deleteRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) roles?'**
+  String deleteRoles(int count);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
