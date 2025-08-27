@@ -1,5 +1,5 @@
 final class GetRolesParams {
-  GetRolesParams({
+  const GetRolesParams({
     this.userUuid,
     this.projectUuid,
   });
