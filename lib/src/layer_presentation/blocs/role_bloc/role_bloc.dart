@@ -3,7 +3,7 @@ import 'package:genesis/src/layer_domain/params/permission_bindings_params/creat
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecase/create_permission_bindings.dart';
+import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/create_permission_bindings.dart';
 import 'package:genesis/src/layer_domain/use_cases/roles/create_role_usecase.dart';
 
 part 'role_event.dart';
