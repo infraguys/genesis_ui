@@ -1,6 +1,5 @@
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
-import 'package:genesis/src/layer_domain/params/roles/delete_role_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/get_role_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/get_roles_params.dart';
 
@@ -13,5 +12,5 @@ abstract interface class IRolesRepository {
 
   Future<Role> createRole(CreateRoleParams params);
 
-  Future<void> deleteRole(DeleteRoleParams params);
+  Future<void> deleteRole(String uuid);
 }
