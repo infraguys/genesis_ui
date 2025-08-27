@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/proje
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
@@ -24,8 +25,10 @@ class ProjectsPage extends StatelessWidget {
             BreadcrumbItem(text: context.$.projects),
           ],
         ),
-        ButtonsBar(
+        ButtonsBar.withoutLeftSpacer(
           children: [
+            SearchInput(),
+            Spacer(),
             DeleteProjectsIconButton(),
             ProjectsCreateIconButton(),
           ],

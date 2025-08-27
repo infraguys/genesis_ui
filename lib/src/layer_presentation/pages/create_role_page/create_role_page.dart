@@ -82,7 +82,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 BreadcrumbItem(text: context.$.create),
               ],
             ),
-            ButtonsBar(
+            ButtonsBar.withoutLeftSpacer(
               children: [
                 SaveIconButton(onPressed: save),
               ],

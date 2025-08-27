@@ -8,6 +8,7 @@ import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_ta
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class RolesPage extends StatelessWidget {
   const RolesPage({super.key});
@@ -23,8 +24,10 @@ class RolesPage extends StatelessWidget {
             BreadcrumbItem(text: context.$.roles),
           ],
         ),
-        ButtonsBar(
+        ButtonsBar.withoutLeftSpacer(
           children: [
+            SearchInput(),
+            Spacer(),
             RolesDeleteIconButton(),
             RolesCreateIconButton(),
           ],
