@@ -38,7 +38,7 @@ final class RolesRepository implements IRolesRepository {
   }
 
   @override
-  Future<void> deleteRole(params) async {
-    await _rolesApi.deleteRole(params.toReq());
+  Future<void> deleteRole(uuid) async {
+    await _rolesApi.deleteRole(DeleteRoleReq(uuid));
   }
 }
