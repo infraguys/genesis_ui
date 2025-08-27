@@ -17,7 +17,7 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
   Future<void> _getPermissions(_GetPermissions event, Emitter<PermissionsState> emit) async {
     final useCase = GetPermissionsUseCases(_repository);
     emit(PermissionsState.loading());
-    final permissions = await useCase(GetPermissionsParams());
+    final permissions = await useCase(event.params);
     emit(PermissionsState.loaded(permissions));
   }
 }
