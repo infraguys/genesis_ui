@@ -29,11 +29,11 @@ final class RoleBindingsApi implements IRoleBindingsApi {
         req.toPath(),
         queryParameters: req.toQuery(),
       );
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => RoleBindingDto.fromJson(it)).toList();
+      if (data == null) {
+        return List.empty();
       }
-      return List.empty();
+      final dtos = List.castFrom<dynamic, Map<String, dynamic>>(data).map(RoleBindingDto.fromJson);
+      return dtos.toList();
     } on DioException catch (e) {
       throw NetworkException(e);
     }
