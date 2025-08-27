@@ -25,12 +25,16 @@ class RoleBindingsBloc extends Bloc<RoleBindingsEvent, RoleBindingsState> {
   }
 
   Future<void> _onDeleteBinding(_Delete event, Emitter<RoleBindingsState> emit) async {
-    final getBindingUseCase = GetRoleBindingsUseCase(_repository);
+    final getBindingsUseCase = GetRoleBindingsUseCase(_repository);
     final deleteRoleBindingUseCase = DeleteRoleBindingUseCase(_repository);
 
     emit(RoleBindingsState.loading());
-    final bindings = await getBindingUseCase(
-      GetRoleBindingsParams(userUuid: event.userUuid, roleUuid: event.roleUuid, projectUuid: event.projectUuid),
+    final bindings = await getBindingsUseCase(
+      GetRoleBindingsParams(
+        userUuid: event.userUuid,
+        roleUuid: event.roleUuid,
+        projectUuid: event.projectUuid,
+      ),
     );
     await deleteRoleBindingUseCase(bindings.single.uuid);
     emit(RoleBindingsState.deleted());
