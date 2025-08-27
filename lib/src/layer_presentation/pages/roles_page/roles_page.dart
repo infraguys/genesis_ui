@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/delete_roles_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_create_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -29,7 +29,7 @@ class RolesPage extends StatelessWidget {
           children: [
             SearchInput(),
             Spacer(),
-            RolesDeleteIconButton(),
+            DeleteRoleIconButton(),
             RolesCreateIconButton(),
           ],
         ),
