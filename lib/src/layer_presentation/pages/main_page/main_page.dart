@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/active_users_card.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
