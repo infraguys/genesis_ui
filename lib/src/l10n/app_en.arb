@@ -1,78 +1,96 @@
 {
-  "@@locale" : "en",
-  "signOut": "Sign out",
-  "main": "Main",
-  "pageNotFound": "Page not found",
-  "goBack": "Go back",
-  "genesis": "Genesis",
-  "core": "Core",
-  "loading": "Loading",
-  "password": "Password",
-  "signIn": "Sign in",
-  "signOut": "Sign out",
-  "signUp": "Sign up",
-  "user": "User",
-  "users": "Users",
-  "project": "Project",
-  "projects": "Projects",
-  "role": "Role",
-  "roles": "Roles",
-  "description": "Description",
-  "extensions": "Extensions",
-  "firstName": "First name",
-  "lastName": "Last name",
-  "surName": "Surname",
-  "email": "email",
-  "uuid": "uuid",
-  "iam": "Iam",
-  "changePassword": "Change password",
-  "oldPassword": "Old password",
-  "newPassword": "New password",
-  "cancel": "Cancel",
-  "ok": "Ok",
-  "success": "Success",
-  "delete": "Delete",
-  "username": "Username",
-  "save": "Save",
-  "deleteProject": "Delete the project?",
-  "active": "Active",
-  "inactive": "Inactive",
-  "status": "Status",
-  "edit": "Edit",
-  "update": "Update",
-  "add": "Add",
-  "create": "Create",
-  "createdAt": "Created at",
-  "updatedAt": "Updated at",
-  "permissions": "Permissions",
-  "uuid": "Uuid",
-  "name": "Name",
-  "organization": "Organization",
-  "organizations": "Organizations",
-  "block": "Block",
-  "confirmEmail": "Confirm email",
-  "changeEmail": "Change email",
-  "verification": "Verification",
-  "verified": "Verified",
-  "unverified": "Unverified",
-  "requiredField": "This field is required",
-  "search": "Search",
-  "deleteRole": "Delete role {roleName}?",
-  "@deleteRole": {
-    "placeholders": {
-      "roleName": {
-        "type": "String",
-        "example": "Eugene"
-      }
-    }
-  },
-  "deleteRoles": "Delete selected ({count}) roles?",
-  "@deleteRoles": {
-      "placeholders": {
-        "count": {
-          "type": "int",
-          "example": "3"
+    "@@locale" : "en",
+    "signOut": "Sign out",
+    "main": "Main",
+    "pageNotFound": "Page not found",
+    "goBack": "Go back",
+    "genesis": "Genesis",
+    "core": "Core",
+    "loading": "Loading",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signUp": "Sign up",
+    "user": "User",
+    "users": "Users",
+    "project": "Project",
+    "projects": "Projects",
+    "role": "Role",
+    "roles": "Roles",
+    "description": "Description",
+    "extensions": "Extensions",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "surName": "Surname",
+    "email": "email",
+    "uuid": "uuid",
+    "iam": "Iam",
+    "changePassword": "Change password",
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "cancel": "Cancel",
+    "ok": "Ok",
+    "success": "Success",
+    "delete": "Delete",
+    "username": "Username",
+    "save": "Save",
+    "deleteProject": "Delete the project?",
+    "active": "Active",
+    "inactive": "Inactive",
+    "status": "Status",
+    "edit": "Edit",
+    "update": "Update",
+    "add": "Add",
+    "create": "Create",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "permissions": "Permissions",
+    "uuid": "Uuid",
+    "name": "Name",
+    "organization": "Organization",
+    "organizations": "Organizations",
+    "block": "Block",
+    "confirmEmail": "Confirm email",
+    "changeEmail": "Change email",
+    "verification": "Verification",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "requiredField": "This field is required",
+    "search": "Search",
+    "deleteRole": "Delete role {name}?",
+    "@deleteRole": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Admin"
+            }
+        }
+    },
+    "deleteRoles": "Delete selected ({count}) roles?",
+    "@deleteRoles": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "deleteUser": "Delete user {name}?",
+    "@deleteUser": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Eugene"
+            }
+        }
+      },
+    "deleteUsers": "Delete selected ({count}) users?",
+    "@deleteUsers": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
         }
       }
-    }
 }

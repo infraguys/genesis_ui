@@ -425,14 +425,26 @@ abstract class AppLocalizations {
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:
-  /// **'Delete role {roleName}?'**
-  String deleteRole(String roleName);
+  /// **'Delete role {name}?'**
+  String deleteRole(String name);
 
   /// No description provided for @deleteRoles.
   ///
   /// In en, this message translates to:
   /// **'Delete selected ({count}) roles?'**
   String deleteRoles(int count);
+
+  /// No description provided for @deleteUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete user {name}?'**
+  String deleteUser(String name);
+
+  /// No description provided for @deleteUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) users?'**
+  String deleteUsers(int count);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

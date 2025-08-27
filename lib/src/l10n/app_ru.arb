@@ -52,22 +52,40 @@
     "unverified": "Не подтвержден",
     "requiredField": "Обязательное поле",
     "search": "Поиск",
-    "deleteRole": "Удалить роль {roleName}?",
-      "@deleteRole": {
+    "deleteRole": "Удалить роль {name}?",
+    "@deleteRole": {
         "placeholders": {
-          "roleName": {
-            "type": "String",
-            "example": "Eugene"
-          }
-        }
-      },
-      "deleteRoles": "Удалить выбранные({count}) роли?",
-      "@deleteRoles": {
-          "placeholders": {
-            "count": {
-              "type": "int",
-              "example": "3"
+            "name": {
+                "type": "String",
+                "example": "Admin"
             }
-          }
         }
+    },
+    "deleteRoles": "Удалить выбранные({count}) роли?",
+    "@deleteRoles": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "deleteUser": "Delete user {name}?",
+        "@deleteUser": {
+            "placeholders": {
+                "name": {
+                    "type": "String",
+                    "example": "Eugene"
+                }
+            }
+          },
+    "deleteUsers": "Delete selected ({count}) users?",
+    "@deleteUsers": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    }
 }
