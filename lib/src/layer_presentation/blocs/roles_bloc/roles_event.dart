@@ -1,17 +1,15 @@
 part of 'roles_bloc.dart';
 
 sealed class RolesEvent {
-  factory RolesEvent.getRoles() = _GetRoles;
+  factory RolesEvent.getRoles([GetRolesParams params]) = _GetRoles;
 
   factory RolesEvent.deleteRoles(List<Role> roles) = _DeleteRoles;
 }
 
 final class _GetRoles implements RolesEvent {
-  _GetRoles({this.userUuid, this.projectUuid});
+  const _GetRoles([this.params = const GetRolesParams()]);
 
-  final String? userUuid;
-
-  final String? projectUuid;
+  final GetRolesParams params;
 }
 
 final class _DeleteRoles implements RolesEvent {
