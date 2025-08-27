@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 
 final class DeleteRolesUseCase {
@@ -5,7 +6,8 @@ final class DeleteRolesUseCase {
 
   final IRolesRepository _repository;
 
-  Future<List<void>> call(List<String> uuids) async {
+  Future<List<void>> call(List<Role> roles) async {
+    final uuids = roles.map((role) => role.uuid).toList();
     return await Future.wait(uuids.map(_repository.deleteRole));
   }
 }
