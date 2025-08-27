@@ -25,7 +25,7 @@ final class RolesApi implements IRolesApi {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => RoleDto.fromJson(it)).toList();
       }
-      return [];
+      return List.empty();
     } on DioException catch (e) {
       throw NetworkException(e);
     }
