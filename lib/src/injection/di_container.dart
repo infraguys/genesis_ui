@@ -152,6 +152,7 @@ class DiContainer extends StatelessWidget {
                 return RolesBloc(
                   rolesRepository: context.read<IRolesRepository>(),
                   permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+                  roleBindingsRepository: context.read<IRoleBindingsRepository>(),
                 );
               },
             ),
