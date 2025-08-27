@@ -3,6 +3,7 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_binding_dto.dart';
+import 'package:genesis/src/layer_data/requests/permission_bindings/get_permission_bindings_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_permission_bindings_api.dart';
 
 final class PermissionBindingsApi implements IPermissionBindingsApi {
@@ -11,16 +12,45 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
   final RestClient _client;
 
   @override
+  Future<List<PermissionBindingDto>> getPermissionBindings(GetPermissionBindingsReq req) async {
+    try {
+      final Response(:data) = await _client.get<List<dynamic>>(
+        req.toPath(),
+        queryParameters: req.toQuery(),
+      );
+
+      if (data != null) {
+        final dtos = List.castFrom<dynamic, Map<String, dynamic>>(data).map(PermissionBindingDto.fromJson);
+        return dtos.toList();
+      }
+      return List.empty();
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
   Future<PermissionBindingDto> createPermissionBinding(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      if (data != null) {
-        return PermissionBindingDto.fromJson(data);
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
       }
-      throw DataNotFoundException(requestOptions.uri.path);
+      return PermissionBindingDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
+  Future<void> deletePermissionBinding(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.delete<Map<String, dynamic>>(
+        req.toPath(),
+      );
     } on DioException catch (e) {
       throw NetworkException(e);
     }
