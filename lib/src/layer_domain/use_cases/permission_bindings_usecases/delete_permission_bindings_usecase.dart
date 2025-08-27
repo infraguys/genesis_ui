@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_domain/entities/permission_binding.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 
 final class DeletePermissionBindingUseCase {
@@ -15,7 +16,10 @@ final class DeletePermissionBindingsUseCase {
 
   final IPermissionBindingsRepository _repository;
 
-  Future<void> call(List<String> uuids) async {
-    await Future.wait(uuids.map(_repository.deletePermissionBinding));
+  Future<void> call(List<PermissionBinding> bindings) async {
+    if (bindings.isNotEmpty) {
+      final uuids = bindings.map((it) => it.uuid).toList();
+      await Future.wait(uuids.map(_repository.deletePermissionBinding));
+    }
   }
 }
