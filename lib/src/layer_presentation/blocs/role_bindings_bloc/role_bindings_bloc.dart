@@ -3,7 +3,7 @@ import 'package:genesis/src/layer_domain/params/role_bindings/create_role_bindin
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/role_bindings/create_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/delete_role_binding_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/role_bindings/delete_role_bindings_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindings_usecase.dart';
 
 part 'role_bindings_event.dart';
@@ -26,12 +26,13 @@ class RoleBindingsBloc extends Bloc<RoleBindingsEvent, RoleBindingsState> {
 
   Future<void> _onDeleteBinding(_Delete event, Emitter<RoleBindingsState> emit) async {
     final getBindingUseCase = GetRoleBindingsUseCase(_repository);
+    final deleteRoleBindingUseCase = DeleteRoleBindingUseCase(_repository);
+
     emit(RoleBindingsState.loading());
     final bindings = await getBindingUseCase(
       GetRoleBindingsParams(userUuid: event.userUuid, roleUuid: event.roleUuid, projectUuid: event.projectUuid),
     );
-    final useCase = DeleteRoleBindingUseCase(_repository);
-    await useCase(bindings.single.uuid);
+    await deleteRoleBindingUseCase(bindings.single.uuid);
     emit(RoleBindingsState.deleted());
   }
 
