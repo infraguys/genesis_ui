@@ -23,4 +23,10 @@ class AuthRepository implements IAuthRepository {
     final userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     return userDto.toEntity();
   }
+
+  @override
+  Future<User> restoreSession() async {
+    final userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
+    return userDto.toEntity();
+  }
 }
