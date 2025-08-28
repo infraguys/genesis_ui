@@ -11,14 +11,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
-class OrganizationsPage extends StatefulWidget {
-  const OrganizationsPage({super.key});
+class _OrganizationsView extends StatefulWidget {
+  const _OrganizationsView();
 
   @override
-  State<OrganizationsPage> createState() => _OrganizationsPageState();
+  State<_OrganizationsView> createState() => _OrganizationsViewState();
 }
 
-class _OrganizationsPageState extends State<OrganizationsPage> {
+class _OrganizationsViewState extends State<_OrganizationsView> {
   @override
   void initState() {
     context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
@@ -60,6 +60,18 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class OrganizationsPage extends StatelessWidget {
+  const OrganizationsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => OrganizationsSelectionBloc(),
+      child: _OrganizationsView(),
     );
   }
 }

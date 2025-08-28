@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
+import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -12,14 +13,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class CreateOrganizationPage extends StatefulWidget {
-  const CreateOrganizationPage({super.key});
+class _CreateOrganizationView extends StatefulWidget {
+  const _CreateOrganizationView();
 
   @override
-  State<CreateOrganizationPage> createState() => _CreateOrganizationPageState();
+  State<_CreateOrganizationView> createState() => _CreateOrganizationViewState();
 }
 
-class _CreateOrganizationPageState extends State<CreateOrganizationPage> {
+class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -130,4 +131,16 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
+}
+
+class CreateOrganizationPage extends StatelessWidget {
+  const CreateOrganizationPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => OrganizationBloc(context.read<IOrganizationsRepository>()),
+      child: const _CreateOrganizationView(),
+    );
+  }
 }

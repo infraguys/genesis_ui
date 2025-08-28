@@ -22,16 +22,16 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class ProjectPage extends StatefulWidget {
-  const ProjectPage({required this.project, super.key});
+class _ProjectView extends StatefulWidget {
+  const _ProjectView({required this.project});
 
   final Project project;
 
   @override
-  State<ProjectPage> createState() => _ProjectPageState();
+  State<_ProjectView> createState() => _ProjectViewState();
 }
 
-class _ProjectPageState extends State<ProjectPage> {
+class _ProjectViewState extends State<_ProjectView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -182,4 +182,28 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
+}
+
+class ProjectPage extends StatelessWidget {
+  const ProjectPage({required this.project, super.key});
+
+  final Project project;
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => OrganizationsSelectionBloc(),
+        ),
+        BlocProvider(
+          create: (_) => UsersSelectionBloc(),
+        ),
+        BlocProvider(
+          create: (_) => RolesSelectionBloc(),
+        ),
+      ],
+      child: _ProjectView(project: project),
+    );
+  }
 }

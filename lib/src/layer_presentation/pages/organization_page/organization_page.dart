@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
+import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_icon_button.dart';
@@ -14,16 +15,16 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class OrganizationPage extends StatefulWidget {
-  const OrganizationPage({required this.organization, super.key});
+class _OrganizationView extends StatefulWidget {
+  const _OrganizationView({required this.organization});
 
   final Organization organization;
 
   @override
-  State<OrganizationPage> createState() => _OrganizationPageState();
+  State<_OrganizationView> createState() => _OrganizationViewState();
 }
 
-class _OrganizationPageState extends State<OrganizationPage> {
+class _OrganizationViewState extends State<_OrganizationView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -145,4 +146,18 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
+}
+
+class OrganizationPage extends StatelessWidget {
+  const OrganizationPage({required this.organization, super.key});
+
+  final Organization organization;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => OrganizationBloc(context.read<IOrganizationsRepository>()),
+      child: _OrganizationView(organization: organization),
+    );
+  }
 }

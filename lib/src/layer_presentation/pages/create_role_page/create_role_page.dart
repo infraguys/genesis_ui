@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
+import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
@@ -17,14 +20,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
 
-class CreateRolePage extends StatefulWidget {
-  const CreateRolePage({super.key});
+class _CreateRoleView extends StatefulWidget {
+  const _CreateRoleView();
 
   @override
-  State<CreateRolePage> createState() => _CreateRolePageState();
+  State<_CreateRoleView> createState() => _CreateRoleViewState();
 }
 
-class _CreateRolePageState extends State<CreateRolePage> {
+class _CreateRoleViewState extends State<_CreateRoleView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -155,4 +158,29 @@ class _ControllersManager extends FormControllersManager {
 
   @override
   List<TextEditingController> get all => [nameController, descriptionController];
+}
+
+class CreateRolePage extends StatelessWidget {
+  const CreateRolePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => PermissionsSelectionBloc(),
+        ),
+        BlocProvider(
+          create: (_) => RoleBloc(
+            rolesRepository: context.read<IRolesRepository>(),
+            permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+          ),
+        ),
+      ],
+      child: _CreateRoleView(),
+    );
+  }
 }

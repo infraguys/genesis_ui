@@ -5,18 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
@@ -137,11 +126,9 @@ GoRouter createRouter(BuildContext context) {
                       GoRoute(
                         name: AppRoutes.attachRoles.name,
                         path: 'attach/project/:projectUuid/attach_roles',
-                        pageBuilder: (_, state) {
-                          return NoTransitionPage(
-                            child: AttachRolesPage(projectUUID: state.pathParameters['projectUuid']!),
-                          );
-                        },
+                        pageBuilder: (_, state) => NoTransitionPage(
+                          child: AttachRolesPage(projectUUID: state.pathParameters['projectUuid']!),
+                        ),
                       ),
                     ],
                   ),
@@ -163,45 +150,15 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.createProject.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider(
-                            create: (_) => OrganizationsSelectionBloc(),
-                          ),
-                          BlocProvider(
-                            create: (_) => UsersSelectionBloc(),
-                          ),
-                          BlocProvider(
-                            create: (_) => RolesSelectionBloc(),
-                          ),
-                        ],
-                        child: CreateProjectPage(),
-                      ),
+                      child: CreateProjectPage(),
                     ),
                   ),
                   GoRoute(
                     name: AppRoutes.project.name,
                     path: ':uuid',
-                    pageBuilder: (_, state) {
-                      final _ = state.pathParameters['uuid']!;
-                      final project = state.extra as Project;
-                      return NoTransitionPage(
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (_) => OrganizationsSelectionBloc(),
-                            ),
-                            BlocProvider(
-                              create: (_) => UsersSelectionBloc(),
-                            ),
-                            BlocProvider(
-                              create: (_) => RolesSelectionBloc(),
-                            ),
-                          ],
-                          child: ProjectPage(project: project),
-                        ),
-                      );
-                    },
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: ProjectPage(project: state.extra as Project),
+                    ),
                   ),
                 ],
               ),
@@ -214,61 +171,22 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.roles.name,
                 path: '/roles',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: BlocProvider(
-                    create: (_) => RolesSelectionBloc(),
-                    child: RolesPage(),
-                  ),
+                  child: RolesPage(),
                 ),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createRole.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider(
-                            create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
-                          ),
-                          BlocProvider(
-                            create: (_) => PermissionsSelectionBloc(),
-                          ),
-                          BlocProvider(
-                            create: (_) => RoleBloc(
-                              rolesRepository: context.read<IRolesRepository>(),
-                              permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
-                            ),
-                          ),
-                        ],
-                        child: CreateRolePage(),
-                      ),
+                      child: CreateRolePage(),
                     ),
                   ),
                   GoRoute(
                     name: AppRoutes.role.name,
                     path: ':uuid',
-                    pageBuilder: (_, state) {
-                      final _ = state.pathParameters['uuid']!;
-                      final role = state.extra as Role;
-                      return NoTransitionPage(
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
-                            ),
-                            BlocProvider(
-                              create: (_) => PermissionsSelectionBloc(),
-                            ),
-                            BlocProvider(
-                              create: (_) => RoleBloc(
-                                rolesRepository: context.read<IRolesRepository>(),
-                                permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
-                              ),
-                            ),
-                          ],
-                          child: RolePage(role: role),
-                        ),
-                      );
-                    },
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: RolePage(role: state.extra as Role),
+                    ),
                   ),
                 ],
               ),
@@ -281,39 +199,22 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.organizations.name,
                 path: '/organizations',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: BlocProvider(
-                    create: (_) => OrganizationsSelectionBloc(),
-                    child: OrganizationsPage(),
-                  ),
+                  child: OrganizationsPage(),
                 ),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createOrganization.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: MultiBlocProvider(
-                        providers: [
-                          BlocProvider(
-                            create: (_) => OrganizationBloc(context.read<IOrganizationsRepository>()),
-                          ),
-                        ],
-                        child: CreateOrganizationPage(),
-                      ),
+                      child: CreateOrganizationPage(),
                     ),
                   ),
                   GoRoute(
                     name: AppRoutes.organization.name,
                     path: ':uuid',
-                    pageBuilder: (_, state) {
-                      final _ = state.pathParameters['uuid']!;
-                      final organization = state.extra as Organization;
-                      return NoTransitionPage(
-                        child: BlocProvider(
-                          create: (context) => OrganizationBloc(context.read<IOrganizationsRepository>()),
-                          child: OrganizationPage(organization: organization),
-                        ),
-                      );
-                    },
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: OrganizationPage(organization: state.extra as Organization),
+                    ),
                   ),
                 ],
               ),

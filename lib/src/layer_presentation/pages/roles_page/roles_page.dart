@@ -11,8 +11,8 @@ import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
-class RolesPage extends StatelessWidget {
-  const RolesPage({super.key});
+class _RolesView extends StatelessWidget {
+  const _RolesView();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,18 @@ class RolesPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class RolesPage extends StatelessWidget {
+  const RolesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => RolesSelectionBloc(),
+      child: _RolesView(),
     );
   }
 }
