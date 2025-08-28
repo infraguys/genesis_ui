@@ -8,8 +8,6 @@ import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
@@ -19,7 +17,6 @@ import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
@@ -131,14 +128,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: BlocProvider(
-                        create: (context) => UserProjectsBloc(
-                          projectsRepository: context.read<IProjectsRepository>(),
-                          roleBindingsRepository: context.read<IRoleBindingsRepository>(),
-                          rolesRepository: context.read<IRolesRepository>(),
-                        ),
-                        child: UserPage(),
-                      ),
+                      child: UserPage(userUUID: state.pathParameters['uuid']!),
                     ),
                     routes: [
                       GoRoute(
