@@ -7,6 +7,8 @@ sealed class AuthEvent {
   }) = _SingIn;
 
   factory AuthEvent.signOut() = _SingOut;
+
+  factory AuthEvent.restoreSession() = _RestoreSession;
 }
 
 final class _SingIn implements AuthEvent {
@@ -17,3 +19,5 @@ final class _SingIn implements AuthEvent {
 }
 
 final class _SingOut implements AuthEvent {}
+
+final class _RestoreSession implements AuthEvent {}
