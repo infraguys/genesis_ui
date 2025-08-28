@@ -14,6 +14,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
 
 class CreateRolePage extends StatefulWidget {
@@ -27,17 +28,13 @@ class _CreateRolePageState extends State<CreateRolePage> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
-  late final PermissionsBloc _permissionsBloc;
   late final PermissionsSelectionBloc _permissionsSelectionBloc;
   late final RoleBloc _roleBloc;
 
   @override
   void initState() {
-    _permissionsBloc = context.read<PermissionsBloc>();
     _permissionsSelectionBloc = context.read<PermissionsSelectionBloc>();
     _roleBloc = context.read<RoleBloc>();
-
-    _permissionsBloc.add(PermissionsEvent.getPermissions());
 
     _controllersManager = _ControllersManager();
     super.initState();
@@ -84,6 +81,8 @@ class _CreateRolePageState extends State<CreateRolePage> {
             ),
             ButtonsBar.withoutLeftSpacer(
               children: [
+                SearchInput(),
+                Spacer(),
                 SaveIconButton(onPressed: save),
               ],
             ),
