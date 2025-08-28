@@ -45,8 +45,6 @@ class _UserViewState extends State<_UserView> {
     _userBloc = context.read<UserBloc>();
     _userBloc.add(UserEvent.getUser(widget.userUUID));
     context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(widget.userUUID));
-    // context.read<UserRolesBloc>().add(UserRolesEvent.getRolesByUser(widget.user.uuid));
-    // _controllersManager = _ControllersManager(user);
   }
 
   @override
@@ -62,30 +60,25 @@ class _UserViewState extends State<_UserView> {
     return Scaffold(
       body: BlocConsumer<UserBloc, UserState>(
         listenWhen: (previous, current) => switch (current) {
-          UserUpdatedState() => true,
-          UserDeletedState() => true,
-          UserFailureState() => true,
-          UserLoadedState() => true,
+          UserUpdatedState() || UserDeletedState() || UserFailureState() || UserLoadedState() => true,
           _ => false,
         },
         listener: (context, state) {
           final navigator = GoRouter.of(context);
           final scaffoldMessenger = ScaffoldMessenger.of(context);
-          var snack = AppSnackBar.success(context.$.success);
 
           switch (state) {
             case UserUpdatedState():
             case UserDeletedState():
               context.read<UsersBloc>().add(UsersEvent.getUsers());
+              scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
             case UserLoadedState(:final user):
               this.user = user;
               _controllersManager = _ControllersManager(this.user);
             case UserFailureState(:final message):
-              snack = AppSnackBar.failure(message);
+              scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
             default:
           }
-
-          // scaffoldMessenger.showSnackBar(snack).closed.then(navigator.pop);
         },
         builder: (context, state) {
           if (state is! UserLoadedState) {
