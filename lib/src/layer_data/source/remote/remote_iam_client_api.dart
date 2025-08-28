@@ -12,8 +12,6 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
 
   final RestClient _client;
 
-  static const _iamClientUrl = '/iam/clients';
-
   @override
   Future<TokenDto> createTokenByPassword(SignInReq req) async {
     try {
