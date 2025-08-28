@@ -67,8 +67,8 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<User> getUser(params) async {
-    final dto = await _usersApi.getUser(GetUserReq(params));
+  Future<User> getUser(uuid) async {
+    final dto = await _usersApi.getUser(GetUserReq(uuid));
     return dto.toEntity();
   }
 }
