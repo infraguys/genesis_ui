@@ -1,7 +1,7 @@
 part of 'user_bloc.dart';
 
 sealed class UserEvent {
-  factory UserEvent.getUser(GetUserParams params) = _GetUser;
+  factory UserEvent.getUser(final String uuid) = _GetUser;
 
   factory UserEvent.deleteUser(DeleteUserParams params) = _DeleteUser;
 
@@ -19,9 +19,9 @@ sealed class UserEvent {
 }
 
 final class _GetUser implements UserEvent {
-  _GetUser(this.params);
+  _GetUser(this.uuid);
 
-  final GetUserParams params;
+  final String uuid;
 }
 
 final class _CreateUser implements UserEvent {
