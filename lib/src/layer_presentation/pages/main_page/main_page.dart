@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/layer_presentation/pages/main_page/widgets/projects_summary_card.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
 
@@ -33,6 +34,11 @@ class DashboardPage extends StatelessWidget {
                 // width: 200,
                 // height: 100,
                 child: VerifiedUsersCountCard(),
+              ),
+              Expanded(
+                // width: 200,
+                // height: 100,
+                child: ProjectsSummaryCard(),
               ),
               // Flexible(
               //   child: SummaryCard(
