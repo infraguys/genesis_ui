@@ -10,6 +10,7 @@ part 'permissions_state.dart';
 class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
   PermissionsBloc(this._repository) : super(PermissionsState.initial()) {
     on(_getPermissions);
+    add(PermissionsEvent.getPermissions());
   }
 
   final IPermissionsRepository _repository;
