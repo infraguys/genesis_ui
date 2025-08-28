@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -131,20 +130,16 @@ GoRouter createRouter(BuildContext context) {
                   GoRoute(
                     name: AppRoutes.user.name,
                     path: ':uuid',
-                    pageBuilder: (_, state) {
-                      final _ = state.pathParameters['uuid']!;
-                      final user = state.extra as User;
-                      return NoTransitionPage(
-                        child: BlocProvider(
-                          create: (context) => UserProjectsBloc(
-                            projectsRepository: context.read<IProjectsRepository>(),
-                            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
-                            rolesRepository: context.read<IRolesRepository>(),
-                          ),
-                          child: UserPage(user: user),
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: BlocProvider(
+                        create: (context) => UserProjectsBloc(
+                          projectsRepository: context.read<IProjectsRepository>(),
+                          roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+                          rolesRepository: context.read<IRolesRepository>(),
                         ),
-                      );
-                    },
+                        child: UserPage(),
+                      ),
+                    ),
                     routes: [
                       GoRoute(
                         name: AppRoutes.attachProject.name,
