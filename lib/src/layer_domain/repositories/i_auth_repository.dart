@@ -3,4 +3,6 @@ import 'package:genesis/src/layer_domain/params/sign_in_params.dart';
 
 abstract interface class IAuthRepository {
   Future<User> signIn(SignInParams params);
+
+  Future<User> restoreSession();
 }
