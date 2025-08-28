@@ -33,7 +33,6 @@ class _RolePageState extends State<RolePage> {
 
   @override
   void initState() {
-    context.read<PermissionsBloc>().add(PermissionsEvent.getPermissions());
     _controllersManager = _ControllersManager(widget.role);
     super.initState();
   }
@@ -66,7 +65,11 @@ class _RolePageState extends State<RolePage> {
                 BreadcrumbItem(text: widget.role.name),
               ],
             ),
-            ButtonsBar(children: [SaveIconButton(onPressed: () => save(context))]),
+            ButtonsBar(
+              children: [
+                SaveIconButton(onPressed: () => save(context)),
+              ],
+            ),
             Form(
               key: _formKey,
               child: Row(
