@@ -5,7 +5,6 @@ import 'package:genesis/src/layer_domain/params/users/change_user_password_param
 import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
-import 'package:genesis/src/layer_domain/params/users/get_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
@@ -34,7 +33,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = GetUserUseCase(_repository);
     emit(UserState.loading());
     try {
-      final user = await useCase(event.params);
+      final user = await useCase(event.uuid);
       emit(UserState.loaded(user));
     } on NetworkException catch (e) {
       emit(UserState.failure(e.message));
