@@ -139,16 +139,8 @@ GoRouter createRouter(BuildContext context) {
                         name: AppRoutes.attachRoles.name,
                         path: 'attach/project/:projectUuid/attach_roles',
                         pageBuilder: (_, state) {
-                          final projectUuid = state.pathParameters['projectUuid']!;
                           return NoTransitionPage(
-                            child: MultiBlocProvider(
-                              providers: [
-                                BlocProvider(
-                                  create: (_) => RolesSelectionBloc(),
-                                ),
-                              ],
-                              child: AttachRolesPage(projectUuid: projectUuid),
-                            ),
+                            child: AttachRolesPage(projectUUID: state.pathParameters['projectUuid']!),
                           );
                         },
                       ),

@@ -13,10 +13,10 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class AttachRolesPage extends StatelessWidget {
-  const AttachRolesPage({required this.projectUuid, super.key});
+class _AttachRolesView extends StatelessWidget {
+  const _AttachRolesView({required this.projectUUID});
 
-  final String projectUuid;
+  final String projectUUID;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class AttachRolesPage extends StatelessWidget {
                         return CreateRoleBindingParams(
                           userUuid: GoRouterState.of(context).pathParameters['uuid']!,
                           roleUuid: role.uuid,
-                          projectUuid: projectUuid,
+                          projectUuid: projectUUID,
                         );
                       },
                     ).toList();
@@ -85,6 +85,20 @@ class AttachRolesPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AttachRolesPage extends StatelessWidget {
+  const AttachRolesPage({required this.projectUUID, super.key});
+
+  final String projectUUID;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => RolesSelectionBloc(),
+      child: _AttachRolesView(projectUUID: projectUUID),
     );
   }
 }
