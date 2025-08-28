@@ -12,8 +12,8 @@ import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
-class UsersPage extends StatelessWidget {
-  const UsersPage({super.key});
+class _UsersView extends StatelessWidget {
+  const _UsersView();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +48,18 @@ class UsersPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class UsersPage extends StatelessWidget {
+  const UsersPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UsersSelectionBloc(),
+      child: _UsersView(),
     );
   }
 }

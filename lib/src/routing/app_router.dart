@@ -110,12 +110,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.users.name,
                 path: '/users',
-                pageBuilder: (_, _) => NoTransitionPage(
-                  child: BlocProvider(
-                    create: (_) => UsersSelectionBloc(),
-                    child: UsersPage(),
-                  ),
-                ),
+                pageBuilder: (_, _) => NoTransitionPage(child: UsersPage()),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createUser.name,
