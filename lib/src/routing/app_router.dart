@@ -14,7 +14,6 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
@@ -157,10 +156,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.projects.name,
                 path: '/projects',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: BlocProvider(
-                    create: (_) => ProjectsSelectionBloc(),
-                    child: ProjectsPage(),
-                  ),
+                  child: ProjectsPage(),
                 ),
                 routes: [
                   GoRoute(
