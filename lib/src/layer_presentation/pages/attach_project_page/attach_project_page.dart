@@ -16,14 +16,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class AttachProjectPage extends StatefulWidget {
-  const AttachProjectPage({super.key});
+class _AttachProjectView extends StatefulWidget {
+  const _AttachProjectView();
 
   @override
-  State<AttachProjectPage> createState() => _AttachProjectPageState();
+  State<_AttachProjectView> createState() => _AttachProjectViewState();
 }
 
-class _AttachProjectPageState extends State<AttachProjectPage> {
+class _AttachProjectViewState extends State<_AttachProjectView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<RoleBindingsBloc, RoleBindingsState>(
@@ -106,6 +106,25 @@ class _AttachProjectPageState extends State<AttachProjectPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AttachProjectPage extends StatelessWidget {
+  const AttachProjectPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => RolesSelectionBloc(),
+        ),
+        BlocProvider(
+          create: (_) => ProjectsSelectionBloc(),
+        ),
+      ],
+      child: _AttachProjectView(),
     );
   }
 }

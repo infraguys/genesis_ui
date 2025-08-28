@@ -110,7 +110,9 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.users.name,
                 path: '/users',
-                pageBuilder: (_, _) => NoTransitionPage(child: UsersPage()),
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: UsersPage(),
+                ),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createUser.name,
@@ -130,17 +132,7 @@ GoRouter createRouter(BuildContext context) {
                         name: AppRoutes.attachProject.name,
                         path: 'attach/project',
                         pageBuilder: (_, _) => NoTransitionPage(
-                          child: MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (_) => RolesSelectionBloc(),
-                              ),
-                              BlocProvider(
-                                create: (_) => ProjectsSelectionBloc(),
-                              ),
-                            ],
-                            child: AttachProjectPage(),
-                          ),
+                          child: AttachProjectPage(),
                         ),
                       ),
                       GoRoute(
