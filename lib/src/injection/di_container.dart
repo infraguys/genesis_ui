@@ -118,8 +118,7 @@ class DiContainer extends StatelessWidget {
           providers: [
             BlocProvider(
               create: (context) {
-                final repository = context.read<IAuthRepository>();
-                return AuthBloc(repository);
+                return AuthBloc(context.read<IAuthRepository>())..add(AuthEvent.restoreSession());
               },
             ),
             BlocProvider(
