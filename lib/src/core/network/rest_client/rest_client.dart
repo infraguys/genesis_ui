@@ -85,6 +85,8 @@ class RestClient {
   }
 
   static Dio _createDio(SecureStorageClient secureStorage) {
+    String? token;
+
     final dio = Dio()
       ..options = BaseOptions(
         baseUrl: Env.apiUrl,
@@ -96,7 +98,10 @@ class RestClient {
           LogInterceptor(request: false, requestHeader: false, responseHeader: false),
           InterceptorsWrapper(
             onRequest: (options, handler) async {
-              final token = await secureStorage.read('access_token');
+              if (token == null || (token != null && token!.isEmpty)) {
+                token = await secureStorage.read('access_token');
+              }
+
               if (token != null) {
                 options.headers['Authorization'] = 'Bearer $token';
               }
