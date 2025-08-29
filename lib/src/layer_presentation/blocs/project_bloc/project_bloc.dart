@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/delete_project_params.dart';
@@ -44,7 +45,11 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(ProjectLoadingState());
 
     final createdProject = await createProjectUseCase(
-      CreateProjectParams(name: event.name, description: event.description, organizationUuid: event.organizationUuid),
+      CreateProjectParams(
+        name: event.name,
+        description: event.description,
+        organizationUuid: event.organizationUuid,
+      ),
     );
 
     final listOfParams = event.roleUuid.map(

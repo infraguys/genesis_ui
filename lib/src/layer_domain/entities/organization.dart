@@ -11,7 +11,7 @@ class Organization extends Equatable {
     required this.status,
   });
 
-  final String uuid;
+  final OrganizationUUID uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -28,3 +28,5 @@ class Organization extends Equatable {
     status,
   ];
 }
+
+extension type OrganizationUUID(String value) {}

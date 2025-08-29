@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/organizations/create_organization_params.dart';
-import 'package:genesis/src/layer_domain/params/organizations/delete_organization_params.dart';
 import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/create_organization_usecase.dart';
@@ -36,7 +36,7 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   Future<void> _onDeleteOrganization(_Delete event, Emitter<OrganizationState> emit) async {
     final useCase = DeleteOrganizationUseCase(_repository);
     emit(OrganizationState.loading());
-    await useCase(event.params);
+    await useCase(event.uuid);
     emit(OrganizationState.deleted());
   }
 }

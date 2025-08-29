@@ -171,7 +171,7 @@ class _UpdateProjectDialogState extends State<UpdateProjectDialog> {
                             uuid: project.uuid,
                             name: _controllersManager.projectNameController.text,
                             description: _controllersManager.projectDescriptionController.text,
-                            organizationUuid: _selectedOrganization!.uuid,
+                            organizationUuid: _selectedOrganization!.uuid.value,
                             status: projectStatus,
                           ),
                         );

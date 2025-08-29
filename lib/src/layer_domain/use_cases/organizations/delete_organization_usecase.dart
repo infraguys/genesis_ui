@@ -1,4 +1,4 @@
-import 'package:genesis/src/layer_domain/params/organizations/delete_organization_params.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 
 final class DeleteOrganizationUseCase {
@@ -6,7 +6,7 @@ final class DeleteOrganizationUseCase {
 
   final IOrganizationsRepository _repository;
 
-  Future<void> call(DeleteOrganizationParams params) async {
+  Future<void> call(OrganizationUUID params) async {
     await _repository.deleteOrganization(params);
   }
 }

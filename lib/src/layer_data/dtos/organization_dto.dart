@@ -34,7 +34,7 @@ class OrganizationDto implements IDto<Organization> {
   @override
   Organization toEntity() {
     return Organization(
-      uuid: uuid,
+      uuid: OrganizationUUID(uuid),
       name: name,
       description: description,
       createdAt: createdAt,

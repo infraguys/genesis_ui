@@ -25,11 +25,11 @@ class OrganizationsListItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(organization.uuid),
+                Text(organization.uuid.value),
                 IconButton(
                   icon: Icon(Icons.copy, color: Colors.white, size: 18),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: organization.uuid));
+                    Clipboard.setData(ClipboardData(text: organization.uuid.value));
                     final snack = SnackBar(
                       backgroundColor: Colors.green,
                       content: Text('Скопировано в буфер обмена: ${organization.uuid}'),
@@ -58,7 +58,7 @@ class OrganizationsListItem extends StatelessWidget {
       onTap: () {
         context.goNamed(
           AppRoutes.organization.name,
-          pathParameters: {'uuid': organization.uuid},
+          pathParameters: {'uuid': organization.uuid.value},
           extra: organization,
         );
       },

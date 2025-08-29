@@ -1,18 +1,14 @@
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
-import 'package:genesis/src/layer_domain/params/organizations/delete_organization_params.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 final class DeleteOrganizationReq implements PathEncodable {
-  DeleteOrganizationReq(this._params);
+  DeleteOrganizationReq(this._uuid);
 
-  final DeleteOrganizationParams _params;
+  final OrganizationUUID _uuid;
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.deleteOrganization(_params.uuid);
+    return OrganizationsEndpoints.deleteOrganization(_uuid.value);
   }
-}
-
-extension DeleteOrganizationParamsX on DeleteOrganizationParams {
-  DeleteOrganizationReq toReq() => DeleteOrganizationReq(this);
 }

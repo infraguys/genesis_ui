@@ -18,8 +18,8 @@ final class OrganizationsRepository implements IOrganizationsRepository {
   }
 
   @override
-  Future<void> deleteOrganization(params) async {
-    await _organizationsApi.deleteOrganization(params.toReq());
+  Future<void> deleteOrganization(uuid) async {
+    await _organizationsApi.deleteOrganization(DeleteOrganizationReq(uuid));
   }
 
   @override
@@ -36,7 +36,7 @@ final class OrganizationsRepository implements IOrganizationsRepository {
 
   @override
   Future<Organization> updateOrganization(params) async {
-    final dto = await _organizationsApi.editOrganization(params.toReq());
+    final dto = await _organizationsApi.editOrganization(UpdateOrganizationReq(params));
     return dto.toEntity();
   }
 
