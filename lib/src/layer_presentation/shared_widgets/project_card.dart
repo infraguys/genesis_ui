@@ -4,7 +4,6 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/hexagon_icon_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
@@ -62,25 +61,29 @@ class ProjectCard extends StatelessWidget {
                 ],
               ),
             ),
-            HexagonIconButton(
-              iconData: Icons.add,
-              onPressed: () async {
-                final bloc = context.read<UserProjectsBloc>();
-                final isCreated = await context.pushNamed<bool>(
-                  AppRoutes.attachRoles.name,
-                  pathParameters: {
-                    'projectUuid': project.uuid,
-                    ...GoRouterState.of(context).pathParameters,
-                  },
-                  extra: GoRouterState.of(context).extra,
-                );
-
-                if (isCreated == true) {
-                  bloc.add(
-                    UserProjectsEvent.getProjects(userUuid),
+            SizedBox.square(
+              dimension: 44,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
+                ),
+                child: Icon(Icons.add, color: Palette.color1B1B1D),
+                onPressed: () async {
+                  final bloc = context.read<UserProjectsBloc>();
+                  final isCreated = await context.pushNamed<bool>(
+                    AppRoutes.attachRoles.name,
+                    pathParameters: {
+                      'projectUuid': project.uuid,
+                      ...GoRouterState.of(context).pathParameters,
+                    },
+                    extra: GoRouterState.of(context).extra,
                   );
-                }
-              },
+
+                  if (isCreated == true) {
+                    bloc.add(UserProjectsEvent.getProjects(userUuid));
+                  }
+                },
+              ),
             ),
           ],
         ),
