@@ -1,6 +1,8 @@
 part of 'project_bloc.dart';
 
 sealed class ProjectEvent {
+  factory ProjectEvent.getProject(String uuid) = _GetProject;
+
   factory ProjectEvent.create({
     required String userUuid,
     required String name,
@@ -56,4 +58,10 @@ final class _Update implements ProjectEvent {
   final String? description;
   final String organizationUuid;
   final ProjectStatus? status;
+}
+
+final class _GetProject implements ProjectEvent {
+  _GetProject(this.uuid);
+
+  final String uuid;
 }
