@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository
 import 'package:genesis/src/layer_domain/use_cases/projects/create_project_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/projects/delete_project_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/projects/edit_project_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/projects/get_project_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/role_bindings/create_role_bindings_usecase.dart';
 
 part 'project_event.dart';
@@ -24,10 +25,18 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on(_onCreateProject);
     on(_onDeleteProject);
     on(_onUpdateProject);
+    on(_onGetProject);
   }
 
   final IProjectsRepository _projectsRepository;
   final IRoleBindingsRepository _roleBindingsRepository;
+
+  Future<void> _onGetProject(_GetProject event, Emitter<ProjectState> emit) async {
+    final useCase = GetProjectUseCase(_projectsRepository);
+    emit(ProjectLoadingState());
+    final project = await useCase(event.uuid);
+    emit(ProjectLoadedState(project));
+  }
 
   Future<void> _onCreateProject(_Create event, Emitter<ProjectState> emit) async {
     final createProjectUseCase = CreateProjectUseCase(_projectsRepository);
