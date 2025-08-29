@@ -1,10 +1,7 @@
 part of 'auth_bloc.dart';
 
 sealed class AuthEvent {
-  factory AuthEvent.signIn({
-    required String username,
-    required String password,
-  }) = _SingIn;
+  factory AuthEvent.signIn({required String username, required String password}) = _SingIn;
 
   factory AuthEvent.signOut() = _SingOut;
 

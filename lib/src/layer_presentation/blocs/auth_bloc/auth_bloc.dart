@@ -21,10 +21,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signIn(_SingIn event, Emitter<AuthState> emit) async {
     final useCase = SignInUseCase(_iamClientRepository);
-    final params = SignInParams(username: event.username, password: event.password);
 
     try {
-      final user = await useCase(params);
+      final user = await useCase(SignInParams(username: event.username, password: event.password));
       emit(AuthState.authenticated(user));
     } on DataNotFoundException catch (e) {
       emit(AuthState.failure(e.message));
@@ -35,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signOut(_, Emitter<AuthState> emit) async {
+  Future<void> _signOut(_SingOut _, Emitter<AuthState> emit) async {
     emit(AuthState.unauthenticated());
   }
 

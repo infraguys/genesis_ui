@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/params/projects/delete_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/projects/delete_projects_usecase.dart';
@@ -30,7 +29,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     final useCase = DeleteProjectsUseCase(_projectsRepository);
     emit(ProjectsState.loading());
 
-    await useCase(event.listOfParams);
+    await useCase(event.projects);
     add(ProjectsEvent.getProjects());
   }
 }

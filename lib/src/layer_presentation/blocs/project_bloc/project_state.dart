@@ -1,6 +1,20 @@
 part of 'project_bloc.dart';
 
-sealed class ProjectState {}
+sealed class ProjectState {
+  factory ProjectState.initial() = ProjectInitialState;
+
+  factory ProjectState.loading() = ProjectLoadingState;
+
+  factory ProjectState.loaded(Project project) = ProjectLoadedState;
+
+  factory ProjectState.created(Project project) = ProjectCreatedState;
+
+  factory ProjectState.updated(Project project) = ProjectUpdatedState;
+
+  factory ProjectState.deleted() = ProjectDeletedState;
+
+  factory ProjectState.failure(String message) = ProjectFailureState;
+}
 
 final class ProjectInitialState implements ProjectState {}
 

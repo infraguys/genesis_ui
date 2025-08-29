@@ -3,7 +3,7 @@ part of 'projects_bloc.dart';
 sealed class ProjectsEvent {
   factory ProjectsEvent.getProjects([GetProjectsParams? params]) = _Get;
 
-  factory ProjectsEvent.deleteProjects(List<DeleteProjectParams> listOfParams) = _DeleteProjects;
+  factory ProjectsEvent.deleteProjects(List<Project> projects) = _DeleteProjects;
 }
 
 final class _Get implements ProjectsEvent {
@@ -13,7 +13,7 @@ final class _Get implements ProjectsEvent {
 }
 
 final class _DeleteProjects implements ProjectsEvent {
-  const _DeleteProjects(this.listOfParams);
+  const _DeleteProjects(this.projects);
 
-  final List<DeleteProjectParams> listOfParams;
+  final List<Project> projects;
 }
