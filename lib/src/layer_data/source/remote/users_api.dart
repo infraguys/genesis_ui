@@ -3,15 +3,12 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
-import 'package:genesis/src/layer_data/dtos/user_role_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
 
 final class UsersApi implements IUsersApi {
   UsersApi(this._client);
 
   final RestClient _client;
-
-  static const _usersUrl = '/iam/users/';
 
   @override
   Future<List<UserDto>> getUsers(req) async {
@@ -135,21 +132,5 @@ final class UsersApi implements IUsersApi {
     } on DioException catch (e) {
       throw NetworkException(e);
     }
-  }
-
-  @override
-  Future<List<UserRoleDto>> getUserRoles(String userUuid) async {
-    final url = '$_usersUrl/$userUuid/actions/get_my_roles';
-
-    try {
-      final Response(:data) = await _client.get<List<dynamic>>(url);
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => UserRoleDto.fromJson(it)).toList();
-      }
-    } on DioException catch (e) {
-      throw NetworkException(e);
-    }
-    return [];
   }
 }
