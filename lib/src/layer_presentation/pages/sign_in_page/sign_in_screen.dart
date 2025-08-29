@@ -29,7 +29,6 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    final $ = context.$;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
@@ -79,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: _controllerManager.passwordController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: $.password),
+                    decoration: InputDecoration(hintText: context.$.password),
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -93,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     builder: (context, _) {
                       return ElevatedButton(
                         onPressed: _controllerManager.allFilled ? () => signIn(context) : null,
-                        child: Text($.signIn),
+                        child: Text(context.$.signIn),
                       );
                     },
                   ),
@@ -104,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         _controllerManager.usernameController.text = username;
                       }
                     },
-                    child: Text($.signUp),
+                    child: Text(context.$.signUp),
                   ),
                 ],
               ),
