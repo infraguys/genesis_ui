@@ -2,26 +2,32 @@ part of 'project_bloc.dart';
 
 sealed class ProjectState {}
 
-final class ProjectInitialState extends ProjectState {}
+final class ProjectInitialState implements ProjectState {}
 
-final class ProjectLoadingState extends ProjectState {}
+final class ProjectLoadingState implements ProjectState {}
 
-final class ProjectLoadedState extends ProjectState {
+final class ProjectLoadedState implements ProjectState {
   ProjectLoadedState(this.project);
 
   final Project project;
 }
 
-final class ProjectCreatedState extends ProjectState {
+final class ProjectCreatedState implements ProjectState {
   ProjectCreatedState(this.project);
 
   final Project project;
 }
 
-final class ProjectUpdatedState extends ProjectState {
+final class ProjectUpdatedState implements ProjectState {
   ProjectUpdatedState(this.project);
 
   final Project project;
 }
 
-final class ProjectDeletedState extends ProjectState {}
+final class ProjectDeletedState implements ProjectState {}
+
+final class ProjectFailureState implements ProjectState {
+  ProjectFailureState(this.message);
+
+  final String message;
+}
