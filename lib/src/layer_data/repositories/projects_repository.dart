@@ -37,8 +37,8 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<Project> getProject(params) async {
-    final dto = await _projectsApi.getProject(GetProjectReq(params));
+  Future<Project> getProject(uuid) async {
+    final dto = await _projectsApi.getProject(GetProjectReq(uuid));
     return dto.toEntity();
   }
 
