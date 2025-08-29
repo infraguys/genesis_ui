@@ -38,23 +38,20 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
     emit(UserProjectsState.loading());
 
     final Set<({Project project, List<Role> roles})> result = {};
-    final bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUuid: event.userUuid));
-    final filteredBindings = bindings.where((it) => it.project != null).toList();
-    String projectId = '';
+    var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUuid: event.userUuid));
+    bindings = bindings.where((it) => it.projectUUID != null).toList();
 
-    for (var binding in filteredBindings) {
-      if (projectId == binding.project!.split('/').last) {
-        continue;
-      }
-      projectId = binding.project!.split('/').last;
-      final project = await getProjectUseCase(GetProjectParams(uuid: binding.project!.split('/').last));
-      final x = binding.project!.split('/').last;
-      final filterBindings = bindings.where((binding) => x == projectId).toList();
+    final projectUUIDs = bindings.map((b) => b.projectUUID!).toSet().toList();
 
+    final projects = await Future.wait(
+      projectUUIDs.map((uuid) => getProjectUseCase(GetProjectParams(uuid: uuid))),
+    );
+
+    for (final project in projects) {
+      final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
       final roles = await Future.wait(
-        filterBindings.map((e) => getRoleUseCase(GetRoleParams(uuid: e.role.split('/').last))),
+        projectsBindings.map((binding) => getRoleUseCase(GetRoleParams(uuid: binding.roleUUID))),
       );
-
       result.add((project: project, roles: roles));
     }
 
