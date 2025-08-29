@@ -35,9 +35,9 @@ class RoleBindingDto implements IDto<RoleBinding> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
-      project: project,
-      user: user,
-      role: role,
+      projectUUID: project?.split('/').last,
+      userUUID: user.split('/').last,
+      roleUUID: role.split('/').last,
     );
   }
 }
