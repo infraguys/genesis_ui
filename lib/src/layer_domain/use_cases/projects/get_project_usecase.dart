@@ -1,5 +1,4 @@
 import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_project_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class GetProjectUseCase {
@@ -7,7 +6,7 @@ final class GetProjectUseCase {
 
   final IProjectsRepository _projectsRepository;
 
-  Future<Project> call(GetProjectParams params) async {
-    return await _projectsRepository.getProject(params);
+  Future<Project> call(String uuid) async {
+    return await _projectsRepository.getProject(uuid);
   }
 }
