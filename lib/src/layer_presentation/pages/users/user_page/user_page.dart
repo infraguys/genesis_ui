@@ -37,7 +37,6 @@ class _UserViewState extends State<_UserView> {
   final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
   late final UserBloc _userBloc;
-  late final User user;
 
   @override
   void initState() {
@@ -68,13 +67,12 @@ class _UserViewState extends State<_UserView> {
           final scaffoldMessenger = ScaffoldMessenger.of(context);
 
           switch (state) {
+            case UserLoadedState(:final user):
+              _controllersManager = _ControllersManager(user);
             case UserUpdatedState():
             case UserDeletedState():
               context.read<UsersBloc>().add(UsersEvent.getUsers());
               scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
-            case UserLoadedState(:final user):
-              this.user = user;
-              _controllersManager = _ControllersManager(this.user);
             case UserFailureState(:final message):
               scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
             default:
@@ -84,6 +82,7 @@ class _UserViewState extends State<_UserView> {
           if (state is! UserLoadedState) {
             return AppProgressIndicator();
           }
+          final user = state.user;
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +97,7 @@ class _UserViewState extends State<_UserView> {
                 ButtonsBar(
                   children: [
                     DeleteUserIconButton(user: user),
-                    SaveIconButton(onPressed: save),
+                    SaveIconButton(onPressed: () => save(user.uuid)),
                   ],
                 ),
                 LayoutBuilder(
@@ -229,12 +228,12 @@ class _UserViewState extends State<_UserView> {
     );
   }
 
-  void save() {
+  void save(String userUUID) {
     if (_formKey.currentState!.validate()) {
       _userBloc.add(
         UserEvent.updateUser(
           UpdateUserParams(
-            uuid: user.uuid,
+            uuid: userUUID,
             username: _controllersManager.usernameController.text,
             description: _controllersManager.descriptionController.text,
             firstName: _controllersManager.firstNameController.text,
