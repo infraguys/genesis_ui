@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
@@ -14,7 +13,7 @@ import 'package:genesis/src/layer_presentation/pages/create_role_page/create_rol
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
-import 'package:genesis/src/layer_presentation/pages/project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
@@ -157,7 +156,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.project.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: ProjectPage(project: state.extra as Project),
+                      child: ProjectPage(uuid: state.pathParameters['uuid']!),
                     ),
                   ),
                 ],
