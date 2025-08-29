@@ -6,18 +6,18 @@ class RoleBinding extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.project,
-    required this.user,
-    required this.role,
+    required this.projectUUID,
+    required this.userUUID,
+    required this.roleUUID,
   });
 
   final String uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
-  final String? project;
-  final String user;
-  final String role;
+  final String? projectUUID;
+  final String userUUID;
+  final String roleUUID;
 
   @override
   List<Object?> get props => [
@@ -25,8 +25,8 @@ class RoleBinding extends Equatable {
     createdAt,
     updatedAt,
     status,
-    project,
-    user,
-    role,
+    projectUUID,
+    userUUID,
+    roleUUID,
   ];
 }
