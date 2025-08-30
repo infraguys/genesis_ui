@@ -14,6 +14,4 @@ abstract interface class IOrganizationsApi {
   Future<void> deleteOrganization(DeleteOrganizationReq req);
 
   Future<OrganizationDto> getOrganizationByUuid(String uuid);
-
-  Future<List<OrganizationDto>> getOrganizationByUser(String userUuid);
 }

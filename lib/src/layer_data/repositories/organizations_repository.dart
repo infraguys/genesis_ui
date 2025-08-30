@@ -39,10 +39,4 @@ final class OrganizationsRepository implements IOrganizationsRepository {
     final dto = await _organizationsApi.editOrganization(UpdateOrganizationReq(params));
     return dto.toEntity();
   }
-
-  @override
-  Future<List<Organization>> getOrganizationByUser(String userUuid) async {
-    final listOfOrganizationDto = await _organizationsApi.getOrganizationByUser(userUuid);
-    return listOfOrganizationDto.map((dto) => dto.toEntity()).toList();
-  }
 }
