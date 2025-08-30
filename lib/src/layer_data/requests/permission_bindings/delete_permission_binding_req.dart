@@ -8,6 +8,6 @@ final class DeletePermissionBindingReq implements PathEncodable {
 
   @override
   String toPath() {
-    return PermissionBindingsEndpoints.deleteRoleBinding(_uuid);
+    return PermissionBindingsEndpoints.deletePermissionBinding(_uuid);
   }
 }

@@ -10,9 +10,9 @@ abstract class PermissionBindingsEndpoints {
 
   static String getPermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
 
-  static String updateRoleBinding(String uuid) => _permissionBinding.fillUuid(uuid);
+  static String updatePermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
 
-  static String deleteRoleBinding(String uuid) => _permissionBinding.fillUuid(uuid);
+  static String deletePermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
 }
 
 // ignore: camel_case_extensions
