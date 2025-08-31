@@ -44,7 +44,10 @@ class _CreateUserViewState extends State<_CreateUserView> {
         switch (state) {
           case UserCreatedState():
             context.read<UsersBloc>().add(UsersEvent.getUsers());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(context.pop);
+            scaffoldMessenger.showSnackBar(
+              AppSnackBar.success(context.$.msgUserCreated(state.user.username)),
+            );
+            context.pop();
           case UserFailureState(:final message):
             scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           default:
