@@ -62,7 +62,7 @@ class _UserViewState extends State<_UserView> {
         },
         listener: (context, state) {
           final navigator = GoRouter.of(context);
-          final messengeer = ScaffoldMessenger.of(context);
+          final messenger = ScaffoldMessenger.of(context);
 
           switch (state) {
             case UserLoadedState(:final user):
@@ -70,16 +70,16 @@ class _UserViewState extends State<_UserView> {
 
             case UserUpdatedState():
               _userBloc.add(UserEvent.getUser(widget.userUUID));
-              messengeer.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
               context.read<UsersBloc>().add(UsersEvent.getUsers());
 
-            case UserDeletedState():
-              messengeer.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted));
+            case UserDeletedState(:final user):
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(user.username)));
               context.read<UsersBloc>().add(UsersEvent.getUsers());
               navigator.pop();
 
             case UserFailureState(:final message):
-              messengeer.showSnackBar(AppSnackBar.failure(message));
+              messenger.showSnackBar(AppSnackBar.failure(message));
             default:
           }
         },
