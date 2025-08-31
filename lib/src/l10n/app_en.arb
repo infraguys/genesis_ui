@@ -87,7 +87,7 @@
       }
     }
   },
-  "msgUserCreated": "User {username} created",
+  "msgUserCreated": "User {username} has been created",
   "@msgUserCreated": {
     "placeholders": {
       "username": {
@@ -95,7 +95,7 @@
       }
     }
   },
-  "msgUserUpdated": "User {username} data updated",
+  "msgUserUpdated": "User {username} has been updated",
   "@msgUserUpdated": {
     "placeholders": {
       "username": {
@@ -103,5 +103,28 @@
       }
     }
   },
-  "msgUserDeleted": "User deleted"
+  "msgUserDeleted": "User {username} has been deleted",
+  "@msgUserDeleted": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationUpdated": "Organization {name} has been updated",
+  "@msgOrganizationUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationDeleted": "Organization {name} has been deleted",
+  "@msgOrganizationDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

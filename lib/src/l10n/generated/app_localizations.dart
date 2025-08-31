@@ -449,20 +449,32 @@ abstract class AppLocalizations {
   /// No description provided for @msgUserCreated.
   ///
   /// In en, this message translates to:
-  /// **'User {username} created'**
+  /// **'User {username} has been created'**
   String msgUserCreated(String username);
 
   /// No description provided for @msgUserUpdated.
   ///
   /// In en, this message translates to:
-  /// **'User {username} data updated'**
+  /// **'User {username} has been updated'**
   String msgUserUpdated(String username);
 
   /// No description provided for @msgUserDeleted.
   ///
   /// In en, this message translates to:
-  /// **'User deleted'**
-  String get msgUserDeleted;
+  /// **'User {username} has been deleted'**
+  String msgUserDeleted(String username);
+
+  /// No description provided for @msgOrganizationUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization {name} has been updated'**
+  String msgOrganizationUpdated(String name);
+
+  /// No description provided for @msgOrganizationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization {name} has been deleted'**
+  String msgOrganizationDeleted(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

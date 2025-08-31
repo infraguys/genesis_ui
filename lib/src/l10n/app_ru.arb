@@ -100,5 +100,28 @@
       }
     }
   },
-  "msgUserDeleted": "Пользователь удален"
+  "msgUserDeleted": "Пользователь {username} удален",
+  "@msgUserDeleted": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationUpdated": "Данные организации {name} обновлены",
+  "@msgOrganizationUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationDeleted": "Организация {name} удалена",
+  "@msgOrganizationDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }
