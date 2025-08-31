@@ -50,8 +50,8 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<void> deleteUser(params) async {
-    await _usersApi.deleteUser(DeleteUserReq(params));
+  Future<void> deleteUser(uuid) async {
+    await _usersApi.deleteUser(DeleteUserReq(uuid));
   }
 
   @override
