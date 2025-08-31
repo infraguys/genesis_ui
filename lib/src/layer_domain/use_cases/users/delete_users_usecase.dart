@@ -6,8 +6,8 @@ class DeleteUserUseCase {
 
   final IUsersRepository _repository;
 
-  Future<void> call(String uuid) async {
-    await _repository.deleteUser(uuid);
+  Future<void> call(User user) async {
+    await _repository.deleteUser(user.uuid);
   }
 }
 
