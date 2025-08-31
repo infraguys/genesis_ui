@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_users_dialog.dart';
@@ -20,9 +19,7 @@ class DeleteUserIconButton extends StatelessWidget {
           context: context,
           builder: (context) => DeleteUsersDialog(
             users: List.generate(1, (_) => user),
-            onDelete: () {
-              userBloc.add(UserEvent.deleteUser(DeleteUserParams(user.uuid)));
-            },
+            onDelete: () => userBloc.add(UserEvent.deleteUser(user)),
           ),
         );
       },
