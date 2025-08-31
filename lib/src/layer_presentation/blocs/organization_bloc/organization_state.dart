@@ -7,9 +7,9 @@ sealed class OrganizationState {
 
   factory OrganizationState.created() = OrganizationCreatedState;
 
-  factory OrganizationState.updated() = OrganizationUpdatedState;
+  factory OrganizationState.updated(Organization organization) = OrganizationUpdatedState;
 
-  factory OrganizationState.deleted() = OrganizationDeletedState;
+  factory OrganizationState.deleted(Organization organization) = OrganizationDeletedState;
 
   factory OrganizationState.failure(String message) = OrganizationFailureState;
 }
@@ -20,9 +20,17 @@ final class OrganizationLoadingState implements OrganizationState {}
 
 final class OrganizationCreatedState implements OrganizationState {}
 
-final class OrganizationUpdatedState implements OrganizationState {}
+final class OrganizationUpdatedState implements OrganizationState {
+  OrganizationUpdatedState(this.organization);
 
-final class OrganizationDeletedState implements OrganizationState {}
+  final Organization organization;
+}
+
+final class OrganizationDeletedState implements OrganizationState {
+  OrganizationDeletedState(this.organization);
+
+  final Organization organization;
+}
 
 final class OrganizationFailureState implements OrganizationState {
   OrganizationFailureState(this.message);
