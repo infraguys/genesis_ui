@@ -11,7 +11,7 @@ sealed class UserState {
 
   factory UserState.created(User user) = UserCreatedState;
 
-  factory UserState.deleted() = UserDeletedState;
+  factory UserState.deleted(User user) = UserDeletedState;
 
   factory UserState.confirmed() = UserConfirmedState;
 
@@ -48,4 +48,8 @@ final class UserCreatedState implements UserState {
   final User user;
 }
 
-final class UserDeletedState implements UserState {}
+final class UserDeletedState implements UserState {
+  UserDeletedState(this.user);
+
+  final User user;
+}
