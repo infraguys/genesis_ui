@@ -47,22 +47,25 @@ class _OrganizationViewState extends State<_OrganizationView> {
   Widget build(BuildContext context) {
     return BlocListener<OrganizationBloc, OrganizationState>(
       listenWhen: (_, current) => switch (current) {
-        OrganizationUpdatedState() => true,
-        OrganizationDeletedState() => true,
-        OrganizationFailureState() => true,
+        OrganizationUpdatedState() || OrganizationDeletedState() || OrganizationFailureState() => true,
         _ => false,
       },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case OrganizationUpdatedState():
-          case OrganizationDeletedState():
+          case OrganizationUpdatedState(:final organization):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
             context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+
+          case OrganizationDeletedState(:final organization):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationDeleted(organization.name)));
+            context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+            navigator.pop();
+
           case OrganizationFailureState(:final message):
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
@@ -79,7 +82,7 @@ class _OrganizationViewState extends State<_OrganizationView> {
             ),
             ButtonsBar(
               children: [
-                DeleteOrganizationIconButton(uuid: widget.organization.uuid),
+                DeleteOrganizationIconButton(organization: widget.organization),
                 SaveIconButton(onPressed: save),
               ],
             ),
