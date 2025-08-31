@@ -1,91 +1,95 @@
 {
-    "@@locale" : "ru",
-    "signOut": "Выход",
-    "main": "Главная",
-    "pageNotFound": "Страница не найдена",
-    "goBack": "Назад",
-    "loading": "Загрузка",
-    "password": "Пароль",
-    "signIn": "Войти",
-    "signOut": "Выйти",
-    "signUp": "Зарегистрироваться",
-    "user": "Пользователь",
-    "users": "Пользователи",
-    "project": "Проект",
-    "projects": "Проекты",
-    "role": "Роль",
-    "roles": "Роли",
-    "description": "Описание",
-    "extensions": "Расширения",
-    "firstName": "Имя",
-    "lastName": "Фамилия",
-    "surName": "Отчество",
-    "iam": "Управление",
-    "changePassword": "Изменить пароль",
-    "oldPassword": "Старый пароль",
-    "newPassword": "Новый пароль",
-    "cancel": "Отмена",
-    "ok": "Подтвердить",
-    "success": "Успешно",
-    "delete": "Удалить",
-    "username": "Имя пользователя",
-    "save": "Сохранить",
-    "deleteProject": "Удалить проект?",
-    "active": "Активный",
-    "inactive": "Неактивный",
-    "status": "Статус",
-    "edit": "Редактировать",
-    "update": "Обновить",
-    "add": "Добавить",
-    "create": "Создать",
-    "createdAt": "Создано",
-    "updatedAt": "Обновлено",
-    "permissions": "Разрешения",
-    "name": "Имя",
-    "organization": "Организация",
-    "organizations": "Организации",
-    "block": "Блокировать",
-    "confirmEmail": "Подтвердить email",
-    "changeEmail": "Изменить email",
-    "verification": "Верификация",
-    "verified": "Подтвержден",
-    "unverified": "Не подтвержден",
-    "requiredField": "Обязательное поле",
-    "search": "Поиск",
-    "deleteRole": "Удалить роль {name}?",
-    "@deleteRole": {
-        "placeholders": {
-            "name": {
-                "type": "String",
-                "example": "Admin"
-            }
+  "@@locale" : "ru",
+  "signOut": "Выход",
+  "main": "Главная",
+  "pageNotFound": "Страница не найдена",
+  "goBack": "Назад",
+  "loading": "Загрузка",
+  "password": "Пароль",
+  "signIn": "Войти",
+  "signOut": "Выйти",
+  "signUp": "Зарегистрироваться",
+  "user": "Пользователь",
+  "users": "Пользователи",
+  "project": "Проект",
+  "projects": "Проекты",
+  "role": "Роль",
+  "roles": "Роли",
+  "description": "Описание",
+  "extensions": "Расширения",
+  "firstName": "Имя",
+  "lastName": "Фамилия",
+  "surName": "Отчество",
+  "iam": "Управление",
+  "changePassword": "Изменить пароль",
+  "oldPassword": "Старый пароль",
+  "newPassword": "Новый пароль",
+  "cancel": "Отмена",
+  "ok": "Подтвердить",
+  "success": "Успешно",
+  "delete": "Удалить",
+  "username": "Имя пользователя",
+  "save": "Сохранить",
+  "deleteProject": "Удалить проект?",
+  "active": "Активный",
+  "inactive": "Неактивный",
+  "status": "Статус",
+  "edit": "Редактировать",
+  "update": "Обновить",
+  "add": "Добавить",
+  "create": "Создать",
+  "createdAt": "Создано",
+  "updatedAt": "Обновлено",
+  "permissions": "Разрешения",
+  "name": "Имя",
+  "organization": "Организация",
+  "organizations": "Организации",
+  "block": "Блокировать",
+  "confirmEmail": "Подтвердить email",
+  "changeEmail": "Изменить email",
+  "verification": "Верификация",
+  "verified": "Подтвержден",
+  "unverified": "Не подтвержден",
+  "requiredField": "Обязательное поле",
+  "search": "Поиск",
+  "deleteRole": "Удалить роль {name}?",
+  "@deleteRole": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRoles": "Удалить выбранные({count}) роли?",
+  "@deleteRoles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteUser": "Delete user {name}?",
+  "@deleteUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteUsers": "Delete selected ({count}) users?",
+  "@deleteUsers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgUserCreated": "Пользователь {username} создан.",
+    "@msgUserCreated": {
+      "placeholders": {
+        "username": {
+          "type": "String"
         }
-    },
-    "deleteRoles": "Удалить выбранные({count}) роли?",
-    "@deleteRoles": {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "3"
-            }
-        }
-    },
-    "deleteUser": "Delete user {name}?",
-        "@deleteUser": {
-            "placeholders": {
-                "name": {
-                    "type": "String",
-                    "example": "Eugene"
-                }
-            }
-          },
-    "deleteUsers": "Delete selected ({count}) users?",
-    "@deleteUsers": {
-        "placeholders": {
-            "count": {
-                "type": "int",
-                "example": "3"
-            }
-        }
+      }
     }
 }

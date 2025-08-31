@@ -92,12 +92,6 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
 
-  /// No description provided for @signOut.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
-  String get signOut;
-
   /// No description provided for @main.
   ///
   /// In en, this message translates to:
@@ -145,6 +139,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get signIn;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
 
   /// No description provided for @signUp.
   ///
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
-  /// **'email'**
+  /// **'Email'**
   String get email;
 
   /// No description provided for @uuid.
@@ -445,6 +445,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete selected ({count}) users?'**
   String deleteUsers(int count);
+
+  /// No description provided for @msgUserCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'User \${username} created'**
+  String msgUserCreated(String username);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
