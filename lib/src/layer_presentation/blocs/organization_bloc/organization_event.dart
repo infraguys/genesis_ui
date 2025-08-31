@@ -5,7 +5,7 @@ sealed class OrganizationEvent {
 
   factory OrganizationEvent.update(UpdateOrganizationParams params) = _Update;
 
-  factory OrganizationEvent.delete(OrganizationUUID uuid) = _Delete;
+  factory OrganizationEvent.delete(Organization organization) = _Delete;
 }
 
 final class _Create implements OrganizationEvent {
@@ -21,7 +21,7 @@ final class _Update implements OrganizationEvent {
 }
 
 final class _Delete implements OrganizationEvent {
-  const _Delete(this.uuid);
+  const _Delete(this.organization);
 
-  final OrganizationUUID uuid;
+  final Organization organization;
 }
