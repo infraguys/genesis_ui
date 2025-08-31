@@ -5,15 +5,15 @@ import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organizat
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_icon_button.dart';
 
 class DeleteOrganizationIconButton extends StatelessWidget {
-  const DeleteOrganizationIconButton({required this.uuid, super.key});
+  const DeleteOrganizationIconButton({required this.organization, super.key});
 
-  final OrganizationUUID uuid;
+  final Organization organization;
 
   @override
   Widget build(BuildContext context) {
     return DeleteIconButton(
       onPressed: () {
-        context.read<OrganizationBloc>().add(OrganizationEvent.delete(uuid));
+        context.read<OrganizationBloc>().add(OrganizationEvent.delete(organization));
       },
     );
   }
