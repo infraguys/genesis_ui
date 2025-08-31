@@ -7,7 +7,7 @@ sealed class UserState {
 
   factory UserState.loaded(User user) = UserLoadedState;
 
-  factory UserState.updated() = UserUpdatedState;
+  factory UserState.updated(User user) = UserUpdatedState;
 
   factory UserState.created(User user) = UserCreatedState;
 
@@ -34,7 +34,11 @@ final class UserFailureState implements UserState {
   final String message;
 }
 
-final class UserUpdatedState implements UserState {}
+final class UserUpdatedState implements UserState {
+  UserUpdatedState(this.user);
+
+  final User user;
+}
 
 final class UserConfirmedState implements UserState {}
 
