@@ -40,10 +40,8 @@ class _UserViewState extends State<_UserView> {
 
   @override
   void initState() {
-    super.initState();
     _userBloc = context.read<UserBloc>();
-    _userBloc.add(UserEvent.getUser(widget.userUUID));
-    context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(widget.userUUID));
+    super.initState();
   }
 
   @override
@@ -64,17 +62,24 @@ class _UserViewState extends State<_UserView> {
         },
         listener: (context, state) {
           final navigator = GoRouter.of(context);
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
+          final messengeer = ScaffoldMessenger.of(context);
 
           switch (state) {
             case UserLoadedState(:final user):
               _controllersManager = _ControllersManager(user);
+
             case UserUpdatedState():
-            case UserDeletedState():
+              _userBloc.add(UserEvent.getUser(widget.userUUID));
+              messengeer.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
               context.read<UsersBloc>().add(UsersEvent.getUsers());
-              scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+
+            case UserDeletedState():
+              messengeer.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted));
+              context.read<UsersBloc>().add(UsersEvent.getUsers());
+              navigator.pop();
+
             case UserFailureState(:final message):
-              scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+              messengeer.showSnackBar(AppSnackBar.failure(message));
             default:
           }
         },
@@ -289,7 +294,7 @@ class UserPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) {
-            return UserBloc(context.read<IUsersRepository>());
+            return UserBloc(context.read<IUsersRepository>())..add(UserEvent.getUser(userUUID));
           },
         ),
         BlocProvider(
@@ -298,7 +303,7 @@ class UserPage extends StatelessWidget {
               projectsRepository: context.read<IProjectsRepository>(),
               roleBindingsRepository: context.read<IRoleBindingsRepository>(),
               rolesRepository: context.read<IRolesRepository>(),
-            );
+            )..add(UserProjectsEvent.getProjects(userUUID));
           },
         ),
       ],
