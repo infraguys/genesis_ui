@@ -4,7 +4,6 @@ import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
-import 'package:genesis/src/layer_domain/params/users/delete_user_params.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
@@ -54,8 +53,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final useCase = DeleteUserUseCase(_repository);
     emit(UserLoadingState());
-    useCase(event.params);
-    emit(UserState.deleted());
+    await useCase(event.user.uuid);
+    emit(UserState.deleted(event.user));
   }
 
   Future<void> _onChangeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {
