@@ -85,11 +85,20 @@
     }
   },
   "msgUserCreated": "Пользователь {username} создан.",
-    "@msgUserCreated": {
-      "placeholders": {
-        "username": {
-          "type": "String"
-        }
+  "@msgUserCreated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
       }
     }
+  },
+  "msgUserUpdated": "Данные пользователя {username} обновлены",
+  "@msgUserUpdated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserDeleted": "Пользователь удален"
 }

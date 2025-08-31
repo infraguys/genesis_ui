@@ -88,11 +88,20 @@
     }
   },
   "msgUserCreated": "User {username} created",
-    "@msgUserCreated": {
-      "placeholders": {
-        "username": {
-          "type": "String"
-        }
+  "@msgUserCreated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
       }
     }
+  },
+  "msgUserUpdated": "User {username} data updated",
+  "@msgUserUpdated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserDeleted": "User deleted"
 }
