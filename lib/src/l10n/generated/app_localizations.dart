@@ -449,7 +449,7 @@ abstract class AppLocalizations {
   /// No description provided for @msgUserCreated.
   ///
   /// In en, this message translates to:
-  /// **'User \${username} created'**
+  /// **'User {username} created'**
   String msgUserCreated(String username);
 }
 

@@ -68,7 +68,7 @@
       }
     }
   },
-  "deleteUser": "Delete user {name}?",
+  "deleteUser": "Удалить пользователя {name}?",
   "@deleteUser": {
     "placeholders": {
       "name": {
@@ -76,7 +76,7 @@
       }
     }
   },
-  "deleteUsers": "Delete selected ({count}) users?",
+  "deleteUsers": "Удалить выбранных({count}) пользователей?",
   "@deleteUsers": {
     "placeholders": {
       "count": {
