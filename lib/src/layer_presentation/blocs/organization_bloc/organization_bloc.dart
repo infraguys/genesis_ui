@@ -29,14 +29,14 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   Future<void> _onUpdateOrganization(_Update event, Emitter<OrganizationState> emit) async {
     final useCase = UpdateOrganizationUseCase(_repository);
     emit(OrganizationState.loading());
-    await useCase(event.params);
-    emit(OrganizationState.updated());
+    final organization = await useCase(event.params);
+    emit(OrganizationState.updated(organization));
   }
 
   Future<void> _onDeleteOrganization(_Delete event, Emitter<OrganizationState> emit) async {
     final useCase = DeleteOrganizationUseCase(_repository);
     emit(OrganizationState.loading());
-    await useCase(event.uuid);
-    emit(OrganizationState.deleted());
+    await useCase(event.organization.uuid);
+    emit(OrganizationState.deleted(event.organization));
   }
 }
