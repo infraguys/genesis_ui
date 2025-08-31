@@ -15,14 +15,13 @@ class DeleteUserIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeleteIconButton(
       onPressed: () async {
+        final userBloc = context.read<UserBloc>();
         await showDialog<void>(
           context: context,
           builder: (context) => DeleteUsersDialog(
             users: List.generate(1, (_) => user),
             onDelete: () {
-              context.read<UserBloc>().add(
-                UserEvent.deleteUser(DeleteUserParams(user.uuid)),
-              );
+              userBloc.add(UserEvent.deleteUser(DeleteUserParams(user.uuid)));
             },
           ),
         );
