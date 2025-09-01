@@ -1,9 +1,11 @@
+import 'package:genesis/src/layer_domain/entities/permission.dart';
+
 final class CreatePermissionBindingParams {
   const CreatePermissionBindingParams({
-    required this.permissionUuid,
+    required this.permissionUUID,
     required this.roleUuid,
   });
 
-  final String permissionUuid;
+  final PermissionUUID permissionUUID;
   final String roleUuid;
 }
