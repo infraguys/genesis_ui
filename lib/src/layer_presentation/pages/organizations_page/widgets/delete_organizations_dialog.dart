@@ -34,7 +34,7 @@ class DeleteOrganizationsDialog extends StatelessWidget {
           style: TextButton.styleFrom(foregroundColor: Palette.colorF04C4C),
           onPressed: () {
             context.pop();
-            onDelete?.call(organizations);
+            onDelete?.call();
           },
           child: Text(context.$.ok),
         ),

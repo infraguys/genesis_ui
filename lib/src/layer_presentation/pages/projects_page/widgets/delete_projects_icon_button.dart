@@ -23,8 +23,8 @@ class DeleteProjectsIconButton extends StatelessWidget {
               builder: (context) {
                 return DeleteProjectsDialog(
                   projects: state,
-                  onDelete: (projects) {
-                    context.read<ProjectsBloc>().add(ProjectsEvent.deleteProjects(projects));
+                  onDelete: () {
+                    context.read<ProjectsBloc>().add(ProjectsEvent.deleteProjects(state));
                   },
                 );
               },
