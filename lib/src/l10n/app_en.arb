@@ -126,5 +126,21 @@
         "type": "String"
       }
     }
+  },
+  "msgRoleUpdated": "Role {name} has been updated",
+  "@msgRoleUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgRoleDeleted": "Role {name} has been deleted",
+  "@msgRoleDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

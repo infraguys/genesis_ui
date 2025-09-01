@@ -475,6 +475,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Organization {name} has been deleted'**
   String msgOrganizationDeleted(String name);
+
+  /// No description provided for @msgRoleUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Role {name} has been updated'**
+  String msgRoleUpdated(String name);
+
+  /// No description provided for @msgRoleDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Role {name} has been deleted'**
+  String msgRoleDeleted(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

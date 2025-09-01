@@ -123,5 +123,21 @@
         "type": "String"
       }
     }
+  },
+  "msgRoleUpdated": "Данные роли {name} роли обновлены",
+  "@msgRoleUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgRoleDeleted": "Роль {name} удалена",
+  "@msgRoleDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }
