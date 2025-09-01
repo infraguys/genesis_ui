@@ -106,9 +106,25 @@ class _RoleViewState extends State<_RoleView> {
             Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
-                builder: (context, state) => switch (state) {
-                  PermissionsLoadedState() => PermissionsTable(permissions: state.permissions),
-                  _ => AppProgressIndicator(),
+                builder: (context, state) {
+                  return switch (state) {
+                    PermissionsLoadedState(:final permissions) =>
+                      BlocListener<PermissionBindingsBloc, PermissionBindingsState>(
+                        listenWhen: (_, current) => current is PermissionBindingsLoaded,
+                        listener: (context, state) {
+                          if (state is PermissionBindingsLoaded) {
+                            context.read<PermissionsSelectionBloc>().add(
+                              PermissionsSelectionEvent.setCheckedFromResponse(
+                                bindings: state.bindings,
+                                allPermissions: permissions,
+                              ),
+                            );
+                          }
+                        },
+                        child: PermissionsTable(permissions: permissions),
+                      ),
+                    _ => AppProgressIndicator(),
+                  };
                 },
               ),
             ),
