@@ -11,6 +11,8 @@ import 'package:genesis/src/layer_presentation/blocs/permission_bindings_bloc/pe
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/role_page/widgets/delete_role_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
@@ -21,9 +23,9 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:go_router/go_router.dart';
 
 class _RoleView extends StatefulWidget {
-  const _RoleView({required this.role});
+  const _RoleView({required this.uuid});
 
-  final Role role;
+  final RoleUUID uuid;
 
   @override
   State<_RoleView> createState() => _RoleViewState();
@@ -31,12 +33,13 @@ class _RoleView extends StatefulWidget {
 
 class _RoleViewState extends State<_RoleView> {
   final _formKey = GlobalKey<FormState>();
+  late RoleBloc _roleBloc;
 
   late _ControllersManager _controllersManager;
 
   @override
   void initState() {
-    _controllersManager = _ControllersManager(widget.role);
+    _roleBloc = context.read<RoleBloc>();
     super.initState();
   }
 
@@ -49,102 +52,113 @@ class _RoleViewState extends State<_RoleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<RoleBloc, RoleState>(
+      body: BlocConsumer<RoleBloc, RoleState>(
         listener: (context, state) {
           final navigator = GoRouter.of(context);
           final messenger = ScaffoldMessenger.of(context);
 
           switch (state) {
+            case RoleLoadedState(:final role):
+              _controllersManager = _ControllersManager(role);
             case RoleUpdatedState():
+              context.read<RoleBloc>().add(RoleEvent.getRole(widget.uuid));
               messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            // context.read<RoleBloc>().add(RoleEvent)
+              context.read<RolesBloc>().add(RolesEvent.getRoles());
             default:
           }
 
           // context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.clear());
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.roles),
-                BreadcrumbItem(text: widget.role.name),
-              ],
-            ),
-            ButtonsBar(
-              children: [
-                SaveIconButton(onPressed: () => save(context)),
-              ],
-            ),
-            Form(
-              key: _formKey,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 24,
-                children: [
-                  SizedBox(
-                    width: 400,
-                    child: AppTextInput(
-                      controller: _controllersManager.nameController,
-                      hintText: context.$.name,
-                      validator: (value) => switch (value) {
-                        _ when value!.isEmpty => context.$.requiredField,
-                        _ => null,
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 400,
-                    child: AppTextInput(
-                      controller: _controllersManager.descriptionController,
-                      hintText: context.$.description,
-                    ),
-                  ),
+        builder: (context, state) {
+          if (state is! RoleLoadedState) {
+            return const AppProgressIndicator();
+          }
+          final role = state.role;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              Breadcrumbs(
+                items: [
+                  BreadcrumbItem(text: context.$.roles),
+                  BreadcrumbItem(text: role.name),
                 ],
               ),
-            ),
-            Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
-            Expanded(
-              child: BlocBuilder<PermissionsBloc, PermissionsState>(
-                builder: (context, state) {
-                  return switch (state) {
-                    PermissionsLoadedState(:final permissions) =>
-                      BlocListener<PermissionBindingsBloc, PermissionBindingsState>(
-                        listenWhen: (_, current) => current is PermissionBindingsLoaded,
-                        listener: (context, state) {
-                          if (state is PermissionBindingsLoaded) {
-                            context.read<PermissionsSelectionBloc>().add(
-                              PermissionsSelectionEvent.setCheckedFromResponse(
-                                bindings: state.bindings,
-                                allPermissions: permissions,
-                              ),
-                            );
-                          }
-                        },
-                        child: PermissionsTable(permissions: permissions),
-                      ),
-                    _ => AppProgressIndicator(),
-                  };
-                },
+              ButtonsBar(
+                children: [
+                  DeleteRoleElevatedButton(role: role),
+                  SaveIconButton(onPressed: save),
+                ],
               ),
-            ),
-          ],
-        ),
+              Form(
+                key: _formKey,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 24,
+                  children: [
+                    SizedBox(
+                      width: 400,
+                      child: AppTextInput(
+                        controller: _controllersManager.nameController,
+                        hintText: context.$.name,
+                        validator: (value) => switch (value) {
+                          _ when value!.isEmpty => context.$.requiredField,
+                          _ => null,
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: AppTextInput(
+                        controller: _controllersManager.descriptionController,
+                        hintText: context.$.description,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
+              Expanded(
+                child: BlocBuilder<PermissionsBloc, PermissionsState>(
+                  builder: (context, state) {
+                    return switch (state) {
+                      PermissionsLoadedState(:final permissions) =>
+                        BlocListener<PermissionBindingsBloc, PermissionBindingsState>(
+                          listenWhen: (_, current) => current is PermissionBindingsLoaded,
+                          listener: (context, state) {
+                            if (state is PermissionBindingsLoaded) {
+                              context.read<PermissionsSelectionBloc>().add(
+                                PermissionsSelectionEvent.setCheckedFromResponse(
+                                  bindings: state.bindings,
+                                  allPermissions: permissions,
+                                ),
+                              );
+                            }
+                          },
+                          child: PermissionsTable(permissions: permissions),
+                        ),
+                      _ => AppProgressIndicator(),
+                    };
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
       final params = UpdateRoleParams(
-        uuid: widget.role.uuid,
+        uuid: widget.uuid,
         name: _controllersManager.nameController.text,
         description: _controllersManager.descriptionController.text,
         permissions: context.read<PermissionsSelectionBloc>().state,
       );
-      context.read<RoleBloc>().add(RoleEvent.update(params));
+      _roleBloc.add(RoleEvent.update(params));
     }
   }
 }
@@ -162,9 +176,9 @@ class _ControllersManager extends FormControllersManager {
 }
 
 class RolePage extends StatelessWidget {
-  const RolePage({required this.role, super.key});
+  const RolePage({required this.uuid, super.key});
 
-  final Role role;
+  final RoleUUID uuid;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +187,7 @@ class RolePage extends StatelessWidget {
         BlocProvider(
           create: (context) {
             return PermissionBindingsBloc(context.read<IPermissionBindingsRepository>())
-              ..add(PermissionBindingsEvent.getBindings(role));
+              ..add(PermissionBindingsEvent.getBindings(uuid));
           },
         ),
         BlocProvider(
@@ -184,12 +198,12 @@ class RolePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RoleBloc(
-            rolesRepository: context.read<IRolesRepository>(),
-            permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
-          ),
+            context.read<IRolesRepository>(),
+            context.read<IPermissionBindingsRepository>(),
+          )..add(RoleEvent.getRole(uuid)),
         ),
       ],
-      child: _RoleView(role: role),
+      child: _RoleView(uuid: uuid),
     );
   }
 }
