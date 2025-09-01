@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -21,10 +22,12 @@ class OrganizationsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTable(
       columnSpans: [
+        TableSpan(extent: FixedSpanExtent(40.0)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(4 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
         BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
@@ -95,6 +98,7 @@ class OrganizationsTable extends StatelessWidget {
             DateFormat('dd.MM.yyyy HH:mm').format(organization.createdAt),
             style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
           ),
+          OrganizationsActionPopupMenuButton(organization: organization)
         ];
       },
       onTap: (index) {
