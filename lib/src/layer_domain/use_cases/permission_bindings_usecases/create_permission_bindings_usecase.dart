@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/params/permission_bindings_params/create_permission_binding_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 
@@ -16,7 +17,15 @@ final class CreatePermissionBindingsUseCase {
 
   final IPermissionBindingsRepository _repository;
 
-  Future<void> call(List<CreatePermissionBindingParams> listOfParams) async {
-    await Future.wait(listOfParams.map(_repository.createPermissionBinding));
+  Future<void> call({required List<Permission> permissions, required String roleUUID}) async {
+    if (permissions.isNotEmpty) {
+      await Future.wait(
+        permissions.map(
+          (permission) => _repository.createPermissionBinding(
+            CreatePermissionBindingParams(permissionUUID: permission.uuid, roleUuid: roleUUID),
+          ),
+        ),
+      );
+    }
   }
 }
