@@ -4,8 +4,8 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
-class DeleteIconButton extends StatelessWidget {
-  const DeleteIconButton({required this.onPressed, super.key});
+class DeleteElevatedButton extends StatelessWidget {
+  const DeleteElevatedButton({required this.onPressed, super.key});
 
   final VoidCallback? onPressed;
 
