@@ -54,23 +54,22 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
     return Scaffold(
       body: BlocListener<RoleBloc, RoleState>(
         listenWhen: (_, current) => switch (current) {
-          RoleCreatedState() => true,
-          RoleFailureState() => true,
+          RoleCreatedState() || RoleFailureState() => true,
           _ => false,
         },
         listener: (context, state) {
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
+          final messenger = ScaffoldMessenger.of(context);
           final navigator = GoRouter.of(context);
 
           switch (state) {
             case RoleCreatedState():
               context.read<RolesBloc>().add(RolesEvent.getRoles());
-              scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+              messenger.showSnackBar(AppSnackBar.success(context.$.success));
+              navigator.pop();
             case RoleFailureState(:final message):
-              scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+              messenger.showSnackBar(AppSnackBar.failure(message));
             default:
           }
-          // _permissionsSelectionBloc.add(PermissionsSelectionEvent.clear());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
