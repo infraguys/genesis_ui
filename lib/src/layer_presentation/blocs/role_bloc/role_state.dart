@@ -10,6 +10,8 @@ sealed class RoleState {
   factory RoleState.updated(Role role) = RoleUpdatedState;
 
   factory RoleState.created() = RoleCreatedState;
+
+  factory RoleState.deleted(Role role) = RoleDeletedState;
 }
 
 class RoleInitialState implements RoleState {}
@@ -34,4 +36,10 @@ final class RoleFailureState implements RoleState {
   RoleFailureState(this.message);
 
   final String message;
+}
+
+final class RoleDeletedState implements RoleState {
+  RoleDeletedState(this.role);
+
+  final Role role;
 }
