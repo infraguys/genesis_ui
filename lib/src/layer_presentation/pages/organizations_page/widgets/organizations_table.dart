@@ -98,7 +98,7 @@ class OrganizationsTable extends StatelessWidget {
             DateFormat('dd.MM.yyyy HH:mm').format(organization.createdAt),
             style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
           ),
-          OrganizationsActionPopupMenuButton(organization: organization)
+          OrganizationsActionPopupMenuButton(organization: organization),
         ];
       },
       onTap: (index) {
