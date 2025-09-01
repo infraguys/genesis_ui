@@ -5,6 +5,7 @@ import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
@@ -174,8 +175,9 @@ class CreateRolePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RoleBloc(
-            context.read<IRolesRepository>(),
-            context.read<IPermissionBindingsRepository>(),
+            rolesRepository: context.read<IRolesRepository>(),
+            permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
           ),
         ),
       ],
