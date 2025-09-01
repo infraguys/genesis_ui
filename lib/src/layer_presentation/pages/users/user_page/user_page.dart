@@ -12,7 +12,7 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/delete_user_icon_button.dart';
+import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/delete_user_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -101,7 +101,7 @@ class _UserViewState extends State<_UserView> {
                 ),
                 ButtonsBar(
                   children: [
-                    DeleteUserIconButton(user: user),
+                    DeleteUserElevatedButton(user: user),
                     SaveIconButton(onPressed: () => save(user.uuid)),
                   ],
                 ),
