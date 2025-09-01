@@ -6,6 +6,7 @@ import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/roles/update_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_presentation/blocs/permission_bindings_bloc/permission_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
@@ -60,10 +61,14 @@ class _RoleViewState extends State<_RoleView> {
           switch (state) {
             case RoleLoadedState(:final role):
               _controllersManager = _ControllersManager(role);
-            case RoleUpdatedState():
-              context.read<RoleBloc>().add(RoleEvent.getRole(widget.uuid));
-              messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            case RoleUpdatedState(:final role):
+              context.read<RoleBloc>().add(RoleEvent.get(widget.uuid));
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleUpdated(role.name)));
               context.read<RolesBloc>().add(RolesEvent.getRoles());
+            case RoleDeletedState(:final role):
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleDeleted(role.name)));
+              context.read<RolesBloc>().add(RolesEvent.getRoles());
+              navigator.pop();
             default:
           }
 
@@ -198,9 +203,10 @@ class RolePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RoleBloc(
-            context.read<IRolesRepository>(),
-            context.read<IPermissionBindingsRepository>(),
-          )..add(RoleEvent.getRole(uuid)),
+            rolesRepository: context.read<IRolesRepository>(),
+            permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+          )..add(RoleEvent.get(uuid)),
         ),
       ],
       child: _RoleView(uuid: uuid),
