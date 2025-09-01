@@ -17,10 +17,13 @@ class DeleteUserIconButton extends StatelessWidget {
         final userBloc = context.read<UserBloc>();
         await showDialog<void>(
           context: context,
-          builder: (context) => DeleteUsersDialog(
-            users: List.generate(1, (_) => user),
-            onDelete: () => userBloc.add(UserEvent.deleteUser(user)),
-          ),
+          builder: (context) {
+            final users = List.generate(1, (_) => user);
+            return DeleteUsersDialog(
+              users: users,
+              onDelete: () => userBloc.add(UserEvent.deleteUser(users.single)),
+            );
+          },
         );
       },
     );
