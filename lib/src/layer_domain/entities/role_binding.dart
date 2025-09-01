@@ -11,7 +11,7 @@ class RoleBinding extends Equatable {
     required this.roleUUID,
   });
 
-  final String uuid;
+  final RoleBindingUUID uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
@@ -30,3 +30,5 @@ class RoleBinding extends Equatable {
     roleUUID,
   ];
 }
+
+extension type RoleBindingUUID(String value) {}

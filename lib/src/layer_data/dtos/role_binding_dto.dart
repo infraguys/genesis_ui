@@ -31,7 +31,7 @@ class RoleBindingDto implements IDto<RoleBinding> {
   @override
   RoleBinding toEntity() {
     return RoleBinding(
-      uuid: uuid,
+      uuid: RoleBindingUUID(uuid),
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,

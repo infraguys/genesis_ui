@@ -14,7 +14,7 @@ final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {
   Map<String, dynamic> toJson() {
     return {
       'user': '/v1/iam/users/${_params.userUUID}',
-      'role': '/v1/iam/roles/${_params.roleUUID}',
+      'role': '/v1/iam/roles/${_params.roleUUID.value}',
       'project': ?_params.projectUUID.notNull((it) => ProjectsEndpoints.getProject(it.value)),
     };
   }

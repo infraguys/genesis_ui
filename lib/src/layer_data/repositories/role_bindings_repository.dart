@@ -17,7 +17,7 @@ final class RoleBindingsRepository implements IRoleBindingsRepository {
 
   @override
   Future<void> deleteRoleBinding(uuid) async {
-    await _roleBindingsApi.deleteRoleBinding(DeleteRoleBindingReq(uuid: uuid));
+    await _roleBindingsApi.deleteRoleBinding(DeleteRoleBindingReq(uuid));
   }
 
   @override
