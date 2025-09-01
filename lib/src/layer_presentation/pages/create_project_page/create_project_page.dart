@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
+import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
@@ -184,6 +186,12 @@ class CreateProjectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => ProjectBloc(
+            projectsRepository: context.read<IProjectsRepository>(),
+            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+          ),
+        ),
         BlocProvider(
           create: (_) => OrganizationsSelectionBloc(),
         ),
