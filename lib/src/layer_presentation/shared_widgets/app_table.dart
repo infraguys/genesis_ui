@@ -22,30 +22,41 @@ class AppTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final totalWidth = constraints.maxWidth;
         return TableView.builder(
-          columnCount: headerCells.length,
+          columnCount: columnSpans.length,
           rowCount: length + 1,
           pinnedRowCount: 1,
           columnBuilder: (index) {
-            const checkboxColumnPx = 40.0;
-            final totalWidth = constraints.maxWidth;
-            final rest = totalWidth - checkboxColumnPx;
+            final fixedWidth = columnSpans.fold<double>(0, (previousValue, element) {
+              final extent = element.extent;
+              final currentValue = switch (extent) {
+                FixedSpanExtent(:final pixels) => pixels,
+                _ => 0,
+              };
+              return previousValue + currentValue;
+            });
+
+            final rest = totalWidth - (fixedWidth);
             final remainingRatio = (rest / totalWidth).clamp(0.0, 1.0);
             late final TableSpanExtent scaledExtent;
-            if (index > 0) {
-              final span = columnSpans[index - 1];
+            if (index > 0 || index < columnSpans.length - 1) {
+              final span = columnSpans[index];
               final extent = span.extent;
+
               scaledExtent = switch (extent) {
-                FixedTableSpanExtent(:final pixels) => FixedTableSpanExtent(pixels * remainingRatio),
-                FractionalTableSpanExtent(:final fraction) => FractionalTableSpanExtent(fraction * remainingRatio),
+                FractionalSpanExtent(:final fraction) => FractionalSpanExtent(fraction * remainingRatio),
                 _ => extent,
               };
             }
 
-            return switch (index) {
-              0 => TableSpan(extent: FixedSpanExtent(checkboxColumnPx)),
-              _ => TableSpan(extent: scaledExtent),
-            };
+            if (index == 0) {
+              return columnSpans[index];
+            }
+            if (index == columnSpans.length - 1) {
+              return columnSpans[index];
+            }
+            return TableSpan(extent: scaledExtent);
           },
           rowBuilder: (index) => TableSpan(
             extent: const FixedTableSpanExtent(40),
@@ -64,9 +75,30 @@ class AppTable extends StatelessWidget {
               final cellList = cellsBuilder(vicinity.yIndex - 1);
               child = cellList[vicinity.xIndex];
             }
+
+            if (isStickyHeader && vicinity.xIndex == 4) {
+              return TableViewCell(
+                columnMergeSpan: 2,
+                columnMergeStart: 4,
+                child: ColoredBox(
+                  color: Palette.color333333,
+                  child: GestureDetector(
+                    onTap: vicinity.yIndex == 0 ? null : () => onTap(vicinity.yIndex - 1),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: child,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+
             return TableViewCell(
               child: ColoredBox(
-                color: isStickyHeader ? Colors.white.withValues(alpha: 0.05) : Colors.transparent,
+                color: isStickyHeader ? Palette.color333333 : Colors.transparent,
                 child: GestureDetector(
                   onTap: vicinity.yIndex == 0 ? null : () => onTap(vicinity.yIndex - 1),
                   child: MouseRegion(
@@ -88,38 +120,3 @@ class AppTable extends StatelessWidget {
     );
   }
 }
-
-// class _AppTableHeaderDelegate extends SliverPersistentHeaderDelegate {
-//   _AppTableHeaderDelegate({required this.title, this.headerLeading});
-//
-//   final Widget title;
-//   final Widget? headerLeading;
-//
-//   @override
-//   double get minExtent => 48.0;
-//
-//   @override
-//   double get maxExtent => 48.0;
-//
-//   @override
-//   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-//     return Material(
-//       color: Theme.of(context).scaffoldBackgroundColor,
-//       child: ListTile(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.only(
-//             topLeft: Radius.circular(8),
-//             topRight: Radius.circular(8),
-//           ),
-//         ),
-//         minTileHeight: maxExtent,
-//         contentPadding: EdgeInsets.zero,
-//         leading: headerLeading,
-//         title: title,
-//       ),
-//     );
-//   }
-//
-//   @override
-//   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;
-// }
