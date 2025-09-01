@@ -11,7 +11,7 @@ class Permission extends Equatable {
     required this.status,
   });
 
-  final String uuid;
+  final PermissionUUID uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -19,5 +19,14 @@ class Permission extends Equatable {
   final Status status;
 
   @override
-  List<Object?> get props => [uuid, name, description, createdAt, updatedAt, status];
+  List<Object?> get props => [
+    uuid,
+    name,
+    description,
+    createdAt,
+    updatedAt,
+    status,
+  ];
 }
+
+extension type PermissionUUID(String value) {}
