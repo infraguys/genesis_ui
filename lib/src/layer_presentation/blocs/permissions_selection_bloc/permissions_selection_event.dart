@@ -5,6 +5,11 @@ sealed class PermissionsSelectionEvent {
 
   factory PermissionsSelectionEvent.toggleAll(List<Permission> permissions) = _ToggleAll;
 
+  factory PermissionsSelectionEvent.setCheckedFromResponse({
+    required List<PermissionBinding> bindings,
+    required List<Permission> allPermissions,
+  }) = _SetCheckedFromResponse;
+
   factory PermissionsSelectionEvent.clear() = _Clear;
 }
 
@@ -18,6 +23,13 @@ final class _ToggleAll implements PermissionsSelectionEvent {
   _ToggleAll(this.permissions);
 
   final List<Permission> permissions;
+}
+
+final class _SetCheckedFromResponse implements PermissionsSelectionEvent {
+  _SetCheckedFromResponse({required this.bindings, required this.allPermissions});
+
+  final List<PermissionBinding> bindings;
+  final List<Permission> allPermissions;
 }
 
 final class _Clear implements PermissionsSelectionEvent {}
