@@ -51,11 +51,9 @@ class _OrganizationsViewState extends State<_OrganizationsView> {
             listener: (context, _) {
               context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
             },
-            builder: (_, state) {
-              if (state is! OrganizationsLoadedState) {
-                return AppProgressIndicator();
-              }
-              return OrganizationsTable(organizations: state.organizations);
+            builder: (_, state) => switch (state) {
+              OrganizationsLoadedState(:final organizations) => OrganizationsTable(organizations: organizations),
+              _ => AppProgressIndicator(),
             },
           ),
         ),
