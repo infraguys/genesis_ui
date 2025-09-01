@@ -5,7 +5,21 @@ import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
 class DeleteUsersDialog extends StatelessWidget {
-  const DeleteUsersDialog({required this.users, super.key, this.onDelete});
+  const DeleteUsersDialog._({required this.users, super.key, this.onDelete});
+
+  DeleteUsersDialog.single({required User user, Key? key, VoidCallback? onDelete})
+    : this._(
+        key: key,
+        users: List.generate(1, (_) => user),
+        onDelete: onDelete,
+      );
+
+  const DeleteUsersDialog.multiple({required List<User> users, Key? key, VoidCallback? onDelete})
+    : this._(
+        key: key,
+        users: users,
+        onDelete: onDelete,
+      );
 
   final List<User> users;
   final VoidCallback? onDelete;
