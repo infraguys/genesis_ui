@@ -3,15 +3,13 @@ class PermissionBinding {
     required this.uuid,
     required this.createdAt,
     required this.updatedAt,
-    required this.role,
-    required this.permission,
-    this.projectId,
+    required this.roleUUID,
+    required this.permissionUUID,
   });
 
   final String uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String? projectId;
-  final String role;
-  final String permission;
+  final String roleUUID;
+  final String permissionUUID;
 }
