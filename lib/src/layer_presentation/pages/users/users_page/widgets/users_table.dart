@@ -14,9 +14,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class UsersTable extends StatelessWidget {
-  const UsersTable({required this.users, super.key});
+  const UsersTable({
+    required this.users,
+    this.allowMultiSelect = true,
+    super.key,
+  });
 
   final List<User> users;
+  final bool allowMultiSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,11 @@ class UsersTable extends StatelessWidget {
           builder: (context, state) {
             return Checkbox(
               tristate: true,
-              onChanged: (_) => context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleAll(users)),
+              onChanged: (_) {
+                if (allowMultiSelect) {
+                  context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleAll(users));
+                }
+              },
               value: switch (state.length) {
                 0 => false,
                 final len when len == users.length => true,
@@ -56,7 +65,12 @@ class UsersTable extends StatelessWidget {
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(user),
-                onChanged: (_) => context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggle(user)),
+                onChanged: (_) {
+                  if (!allowMultiSelect) {
+                    context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
+                  }
+                  context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggle(user));
+                },
               );
             },
           ),
