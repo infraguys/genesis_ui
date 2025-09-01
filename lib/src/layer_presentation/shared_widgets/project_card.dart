@@ -48,9 +48,9 @@ class ProjectCard extends StatelessWidget {
                             onDeleted: () {
                               context.read<RoleBindingsBloc>().add(
                                 RoleBindingsEvent.delete(
-                                  userUuid: userUuid,
-                                  roleUuid: it.uuid,
-                                  projectUuid: project.uuid,
+                                  userUUID: userUuid,
+                                  roleUUID: it.uuid,
+                                  projectUUID: project.uuid,
                                 ),
                               );
                             },
@@ -73,7 +73,7 @@ class ProjectCard extends StatelessWidget {
                   final isCreated = await context.pushNamed<bool>(
                     AppRoutes.attachRoles.name,
                     pathParameters: {
-                      'projectUuid': project.uuid,
+                      'projectUuid': project.uuid.value,
                       ...GoRouterState.of(context).pathParameters,
                     },
                     extra: GoRouterState.of(context).extra,

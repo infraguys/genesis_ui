@@ -25,8 +25,7 @@ final class ProjectsRepository implements IProjectsRepository {
 
   @override
   Future<void> deleteProject(uuid) async {
-    final req = DeleteProjectReq(uuid);
-    await _projectsApi.deleteProject(req);
+    await _projectsApi.deleteProject(DeleteProjectReq(uuid));
   }
 
   @override

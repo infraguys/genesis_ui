@@ -11,7 +11,7 @@ class Project extends Equatable {
     required this.organizationUuid,
   });
 
-  final String uuid;
+  final ProjectUUID uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -36,3 +36,5 @@ enum ProjectStatus {
   active,
   inProgress,
 }
+
+extension type ProjectUUID(String value) {}

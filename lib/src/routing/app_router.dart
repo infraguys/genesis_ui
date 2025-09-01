@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
@@ -126,7 +127,7 @@ GoRouter createRouter(BuildContext context) {
                         name: AppRoutes.attachRoles.name,
                         path: 'attach/project/:projectUuid/attach_roles',
                         pageBuilder: (_, state) => NoTransitionPage(
-                          child: AttachRolesPage(projectUUID: state.pathParameters['projectUuid']!),
+                          child: AttachRolesPage(projectUUID: ProjectUUID(state.pathParameters['projectUuid']!)),
                         ),
                       ),
                     ],

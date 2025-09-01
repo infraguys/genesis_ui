@@ -12,7 +12,7 @@ final class GetRoleBindingsReq implements QueryEncodable, PathEncodable {
   Map<String, dynamic> toQuery() {
     return {
       'user': ?_params.userUuid,
-      'project': ?_params.projectUuid,
+      'project': ?_params.projectUUID?.value,
       'role': ?_params.roleUuid,
       'created_at': ?_params.createdAt?.toIso8601String(),
       'updated_at': ?_params.updatedAt?.toIso8601String(),

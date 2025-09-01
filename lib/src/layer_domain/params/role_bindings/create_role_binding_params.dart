@@ -1,11 +1,13 @@
+import 'package:genesis/src/layer_domain/entities/project.dart';
+
 final class CreateRoleBindingParams {
   CreateRoleBindingParams({
-    required this.userUuid,
-    required this.roleUuid,
-    this.projectUuid,
+    required this.userUUID,
+    required this.roleUUID,
+    this.projectUUID,
   });
 
-  final String userUuid;
-  final String roleUuid;
-  final String? projectUuid;
+  final String userUUID;
+  final String roleUUID;
+  final ProjectUUID? projectUUID;
 }

@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class DeleteProjectUseCase {
@@ -5,7 +6,7 @@ final class DeleteProjectUseCase {
 
   final IProjectsRepository _repository;
 
-  Future<void> call(String uuid) async {
+  Future<void> call(ProjectUUID uuid) async {
     await _repository.deleteProject(uuid);
   }
 }

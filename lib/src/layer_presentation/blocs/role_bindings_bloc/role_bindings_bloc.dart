@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
@@ -31,9 +32,9 @@ class RoleBindingsBloc extends Bloc<RoleBindingsEvent, RoleBindingsState> {
     emit(RoleBindingsState.loading());
     final bindings = await getBindingsUseCase(
       GetRoleBindingsParams(
-        userUuid: event.userUuid,
-        roleUuid: event.roleUuid,
-        projectUuid: event.projectUuid,
+        userUuid: event.userUUID,
+        roleUuid: event.roleUUID,
+        projectUUID: event.projectUUID,
       ),
     );
     await deleteRoleBindingsUseCase(bindings);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
@@ -16,7 +17,7 @@ import 'package:go_router/go_router.dart';
 class _AttachRolesView extends StatelessWidget {
   const _AttachRolesView({required this.projectUUID});
 
-  final String projectUUID;
+  final ProjectUUID projectUUID;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +58,9 @@ class _AttachRolesView extends StatelessWidget {
                     final listOfParams = context.read<RolesSelectionBloc>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
-                          userUuid: GoRouterState.of(context).pathParameters['uuid']!,
-                          roleUuid: role.uuid,
-                          projectUuid: projectUUID,
+                          userUUID: GoRouterState.of(context).pathParameters['uuid']!,
+                          roleUUID: role.uuid,
+                          projectUUID: projectUUID,
                         );
                       },
                     ).toList();
@@ -92,7 +93,7 @@ class _AttachRolesView extends StatelessWidget {
 class AttachRolesPage extends StatelessWidget {
   const AttachRolesPage({required this.projectUUID, super.key});
 
-  final String projectUUID;
+  final ProjectUUID projectUUID;
 
   @override
   Widget build(BuildContext context) {
