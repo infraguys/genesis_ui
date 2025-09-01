@@ -4,10 +4,11 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
+import 'package:genesis/src/layer_domain/params/roles/update_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/layer_presentation/blocs/permission_bindings_bloc/permission_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
@@ -105,11 +106,9 @@ class _RoleViewState extends State<_RoleView> {
             Text(context.$.permissions, style: TextStyle(color: Colors.white54, fontSize: 24)),
             Expanded(
               child: BlocBuilder<PermissionsBloc, PermissionsState>(
-                builder: (context, state) {
-                  if (state is! PermissionsLoadedState) {
-                    return AppProgressIndicator();
-                  }
-                  return PermissionsTable(permissions: state.permissions);
+                builder: (context, state) => switch (state) {
+                  PermissionsLoadedState() => PermissionsTable(permissions: state.permissions),
+                  _ => AppProgressIndicator(),
                 },
               ),
             ),
@@ -121,12 +120,13 @@ class _RoleViewState extends State<_RoleView> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final params = CreateRoleParams(
+      final params = UpdateRoleParams(
+        uuid: widget.role.uuid,
         name: _controllersManager.nameController.text,
         description: _controllersManager.descriptionController.text,
         permissions: context.read<PermissionsSelectionBloc>().state,
       );
-      context.read<RoleBloc>().add(RoleEvent.create(params));
+      context.read<RoleBloc>().add(RoleEvent.update(params));
     }
   }
 }
@@ -152,6 +152,12 @@ class RolePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) {
+            return PermissionBindingsBloc(context.read<IPermissionBindingsRepository>())
+              ..add(PermissionBindingsEvent.getBindings(role));
+          },
+        ),
         BlocProvider(
           create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
         ),
