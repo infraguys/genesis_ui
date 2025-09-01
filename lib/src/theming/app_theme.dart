@@ -137,6 +137,15 @@ class AppTheme {
           fontWeight: FontWeight.w400,
         ),
       ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: Palette.color333333,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        labelTextStyle: WidgetStatePropertyAll(TextStyle(color: Colors.white)),
+        iconColor: Palette.color7C7774,
+        menuPadding: EdgeInsets.zero,
+      ),
     );
   }
 }
