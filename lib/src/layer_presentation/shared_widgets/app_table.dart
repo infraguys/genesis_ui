@@ -8,7 +8,7 @@ class AppTable extends StatelessWidget {
     required this.headerCells,
     required this.length,
     required this.cellsBuilder,
-    required this.onTap,
+    this.onTap,
     super.key,
   });
 
@@ -16,7 +16,7 @@ class AppTable extends StatelessWidget {
   final List<Widget> headerCells;
   final int length;
   final List<Widget> Function(int index) cellsBuilder;
-  final void Function(int index) onTap;
+  final void Function(int index)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class AppTable extends StatelessWidget {
                 child: ColoredBox(
                   color: Palette.color333333,
                   child: GestureDetector(
-                    onTap: vicinity.yIndex == 0 ? null : () => onTap(vicinity.yIndex - 1),
+                    onTap: vicinity.yIndex == 0 ? null : () => onTap?.call(vicinity.yIndex - 1),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Align(
@@ -100,7 +100,7 @@ class AppTable extends StatelessWidget {
               child: ColoredBox(
                 color: isStickyHeader ? Palette.color333333 : Colors.transparent,
                 child: GestureDetector(
-                  onTap: vicinity.yIndex == 0 ? null : () => onTap(vicinity.yIndex - 1),
+                  onTap: vicinity.yIndex == 0 ? null : () => onTap?.call(vicinity.yIndex - 1),
                   child: MouseRegion(
                     cursor: isStickyHeader ? SystemMouseCursors.basic : SystemMouseCursors.click,
                     child: Padding(
