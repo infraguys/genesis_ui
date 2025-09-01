@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
@@ -22,10 +23,12 @@ class RolesTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTable(
       columnSpans: [
+        TableSpan(extent: FixedSpanExtent(40.0)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(4 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
         BlocBuilder<RolesSelectionBloc, List<Role>>(
@@ -93,6 +96,7 @@ class RolesTable extends StatelessWidget {
             DateFormat('dd.MM.yyyy HH:mm').format(role.createdAt),
             style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
           ),
+          RolesActionPopupMenuButton(role: role),
         ];
       },
       onTap: (index) {
