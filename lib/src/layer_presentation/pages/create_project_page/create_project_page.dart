@@ -52,18 +52,17 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
       },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
-        var snack = AppSnackBar.success(context.$.success);
+        final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
           case ProjectCreatedState():
             context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-          // case UserFailureState(:final message):
-          // snack = AppSnackBar.failure(message);
+            messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            navigator.pop();
+          case ProjectFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
-        // todo: не всегда возвращать true
-        scaffoldMessenger.showSnackBar(snack).closed.then((_) => navigator.pop(true));
       },
       child: Scaffold(
         body: SingleChildScrollView(

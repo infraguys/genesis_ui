@@ -43,20 +43,20 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
   Widget build(BuildContext context) {
     return BlocListener<OrganizationBloc, OrganizationState>(
       listenWhen: (_, current) => switch (current) {
-        OrganizationCreatedState() => true,
-        OrganizationFailureState() => true,
+        OrganizationCreatedState() || OrganizationFailureState() => true,
         _ => false,
       },
       listener: (context, state) {
         final navigator = GoRouter.of(context);
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
           case OrganizationCreatedState():
             context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+            messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            navigator.pop();
           case OrganizationFailureState(:final message):
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
