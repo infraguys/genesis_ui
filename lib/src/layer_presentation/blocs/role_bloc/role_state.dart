@@ -5,6 +5,8 @@ sealed class RoleState {
 
   factory RoleState.loading() = RoleLoadingState;
 
+  factory RoleState.loaded(Role role) = RoleLoadedState;
+
   factory RoleState.updated(Role role) = RoleUpdatedState;
 
   factory RoleState.created() = RoleCreatedState;
@@ -13,6 +15,12 @@ sealed class RoleState {
 class RoleInitialState implements RoleState {}
 
 class RoleLoadingState implements RoleState {}
+
+class RoleLoadedState implements RoleState {
+  RoleLoadedState(this.role);
+
+  final Role role;
+}
 
 final class RoleUpdatedState implements RoleState {
   RoleUpdatedState(this.role);
