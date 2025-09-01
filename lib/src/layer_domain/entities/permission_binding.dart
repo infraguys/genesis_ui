@@ -7,9 +7,11 @@ class PermissionBinding {
     required this.permissionUUID,
   });
 
-  final String uuid;
+  final PermissionBindingUUID uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String roleUUID;
   final String permissionUUID;
 }
+
+extension type PermissionBindingUUID(String value) {}

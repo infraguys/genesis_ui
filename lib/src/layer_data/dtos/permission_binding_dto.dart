@@ -27,7 +27,7 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
   @override
   PermissionBinding toEntity() {
     return PermissionBinding(
-      uuid: uuid,
+      uuid: PermissionBindingUUID(uuid),
       createdAt: createdAt,
       updatedAt: updatedAt,
       roleUUID: role.split('/').last,

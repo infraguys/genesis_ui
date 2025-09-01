@@ -7,5 +7,5 @@ abstract interface class IPermissionBindingsRepository {
 
   Future<List<PermissionBinding>> getPermissionBindings(GetPermissionBindingsParams params);
 
-  Future<void> deletePermissionBinding(String uuid);
+  Future<void> deletePermissionBinding(PermissionBindingUUID uuid);
 }

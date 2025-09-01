@@ -6,7 +6,7 @@ final class DeletePermissionBindingUseCase {
 
   final IPermissionBindingsRepository _repository;
 
-  Future<void> call(String uuid) async {
+  Future<void> call(PermissionBindingUUID uuid) async {
     return await _repository.deletePermissionBinding(uuid);
   }
 }
