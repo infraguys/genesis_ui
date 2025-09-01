@@ -7,32 +7,32 @@ import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart'
 import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/create_permission_bindings_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/get_permission_bindings_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/roles/create_role_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/roles/get_role_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/roles/update_role_usecase.dart';
 
 part 'role_event.dart';
 part 'role_state.dart';
 
 class RoleBloc extends Bloc<RoleEvent, RoleState> {
-  RoleBloc({
-    required IRolesRepository rolesRepository,
-    required IPermissionBindingsRepository permissionBindingsRepository,
-  }) : _rolesRepository = rolesRepository,
-       _iPermissionBindingsRepository = permissionBindingsRepository,
-       super(RoleState.initial()) {
+  RoleBloc(this._rolesRepository, this._permissionBindingsRepository) : super(RoleState.initial()) {
     on(_onCreate);
     on(_onUpdate);
+    on(_onGetRole);
   }
 
   final IRolesRepository _rolesRepository;
-  final IPermissionBindingsRepository _iPermissionBindingsRepository;
+  final IPermissionBindingsRepository _permissionBindingsRepository;
 
   Future<void> _onGetRole(_GetRole event, Emitter<RoleState> emit) async {
-    emit(RoleState.created());
+    final useCase = GetRoleUseCase(_rolesRepository);
+    emit(RoleState.loading());
+    final role = await useCase(event.uuid);
+    emit(RoleState.loaded(role));
   }
 
   Future<void> _onCreate(_Create event, Emitter<RoleState> emit) async {
     final useCase = CreateRoleUseCase(_rolesRepository);
-    final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_iPermissionBindingsRepository);
+    final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_permissionBindingsRepository);
     emit(RoleState.loading());
     final role = await useCase(event.params);
 
@@ -43,8 +43,8 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
 
   Future<void> _onUpdate(_Update event, Emitter<RoleState> emit) async {
     final updateUseCase = UpdateRoleUseCase(_rolesRepository);
-    final getPermissionBindingsUseCase = GetPermissionBindingsUseCase(_iPermissionBindingsRepository);
-    final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_iPermissionBindingsRepository);
+    final getPermissionBindingsUseCase = GetPermissionBindingsUseCase(_permissionBindingsRepository);
+    final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_permissionBindingsRepository);
     emit(RoleState.loading());
     final role = await updateUseCase(event.params);
     // final bindings = await getPermissionBindingsUseCase(GetPermissionBindingsParams(role: role.uuid));
