@@ -31,7 +31,7 @@ final class PermissionDto implements IDto<Permission> {
   @override
   Permission toEntity() {
     return Permission(
-      uuid: uuid,
+      uuid: PermissionUUID(uuid),
       name: name,
       description: description,
       createdAt: createdAt,
