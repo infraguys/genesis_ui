@@ -14,7 +14,7 @@ final class CreatePermissionBindingReq implements JsonEncodable, PathEncodable {
   Map<String, dynamic> toJson() {
     return {
       'role': RolesEndpoints.getRole(_params.roleUuid),
-      'permission': PermissionsEndpoints.getPermission(_params.permissionUuid),
+      'permission': PermissionsEndpoints.getPermission(_params.permissionUUID.value),
     };
   }
 
