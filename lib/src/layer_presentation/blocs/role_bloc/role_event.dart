@@ -3,7 +3,7 @@ part of 'role_bloc.dart';
 sealed class RoleEvent {
   factory RoleEvent.create(CreateRoleParams params) = _Create;
 
-  factory RoleEvent.update() = _Update;
+  factory RoleEvent.update(UpdateRoleParams params) = _Update;
 }
 
 final class _Create implements RoleEvent {
@@ -13,5 +13,7 @@ final class _Create implements RoleEvent {
 }
 
 final class _Update implements RoleEvent {
-  const _Update();
+  const _Update(this.params);
+
+  final UpdateRoleParams params;
 }
