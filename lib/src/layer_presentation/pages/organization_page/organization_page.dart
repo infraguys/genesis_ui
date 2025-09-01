@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_domain/params/organizations/update_organizatio
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_icon_button.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -82,7 +82,7 @@ class _OrganizationViewState extends State<_OrganizationView> {
             ),
             ButtonsBar(
               children: [
-                DeleteOrganizationIconButton(organization: widget.organization),
+                DeleteOrganizationElevatedButton(organization: widget.organization),
                 SaveIconButton(onPressed: save),
               ],
             ),
