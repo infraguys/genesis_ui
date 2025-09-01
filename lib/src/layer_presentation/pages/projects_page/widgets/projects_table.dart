@@ -5,6 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
@@ -23,10 +24,12 @@ class ProjectsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTable(
       columnSpans: [
+        TableSpan(extent: FixedSpanExtent(40.0)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(4 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
         BlocBuilder<ProjectsSelectionBloc, List<Project>>(
@@ -95,6 +98,7 @@ class ProjectsTable extends StatelessWidget {
             DateFormat('dd.MM.yyyy HH:mm').format(project.createdAt),
             style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
           ),
+          ProjectsActionPopupMenuButton(project: project),
         ];
       },
       onTap: (index) {
