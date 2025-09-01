@@ -174,8 +174,8 @@ class CreateRolePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => RoleBloc(
-            rolesRepository: context.read<IRolesRepository>(),
-            permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
+            context.read<IRolesRepository>(),
+            context.read<IPermissionBindingsRepository>(),
           ),
         ),
       ],
