@@ -120,7 +120,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
                     if (state is! OrganizationsLoadedState) {
                       return AppProgressIndicator();
                     }
-                    return OrganizationsTable(organizations: state.organizations);
+                    return OrganizationsTable(organizations: state.organizations, allowMultiSelect: false);
                   },
                 ),
               ),
@@ -132,7 +132,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
                     if (state is! UsersLoadedState) {
                       return AppProgressIndicator();
                     }
-                    return UsersTable(users: state.users);
+                    return UsersTable(users: state.users, allowMultiSelect: false);
                   },
                 ),
               ),
