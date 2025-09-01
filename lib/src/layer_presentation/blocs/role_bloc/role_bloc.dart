@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/permission_bindings_params/create_permission_binding_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/update_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
@@ -32,10 +31,8 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
     final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_iPermissionBindingsRepository);
     emit(RoleState.loading());
     final role = await useCase(event.params);
-    final listOfBindingsParams = event.params.permissions.map(
-      (it) => CreatePermissionBindingParams(permissionUuid: it.uuid, roleUuid: role.uuid),
-    );
-    await createPermissionBindingsUseCase(listOfBindingsParams.toList());
+
+    await createPermissionBindingsUseCase(permissions: event.params.permissions, roleUUID: role.uuid);
 
     emit(RoleState.created());
   }
