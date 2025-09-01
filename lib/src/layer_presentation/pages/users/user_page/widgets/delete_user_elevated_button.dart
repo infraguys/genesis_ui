@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_users_dialog.dart';
 
 class DeleteUserElevatedButton extends StatelessWidget {
@@ -12,7 +12,7 @@ class DeleteUserElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DeleteIconButton(
+    return DeleteElevatedButton(
       onPressed: () async {
         final userBloc = context.read<UserBloc>();
         await showDialog<void>(
