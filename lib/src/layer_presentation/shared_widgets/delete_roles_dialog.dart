@@ -5,11 +5,21 @@ import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
 
 class DeleteRolesDialog extends StatelessWidget {
-  const DeleteRolesDialog({
-    required this.roles,
-    super.key,
-    this.onDelete,
-  });
+  const DeleteRolesDialog._({required this.roles, super.key, this.onDelete});
+
+  DeleteRolesDialog.single({required Role role, Key? key, VoidCallback? onDelete})
+    : this._(
+        key: key,
+        roles: List.generate(1, (_) => role),
+        onDelete: onDelete,
+      );
+
+  const DeleteRolesDialog.multiple({required List<Role> roles, Key? key, VoidCallback? onDelete})
+    : this._(
+        key: key,
+        roles: roles,
+        onDelete: onDelete,
+      );
 
   final List<Role> roles;
   final VoidCallback? onDelete;
@@ -40,6 +50,5 @@ class DeleteRolesDialog extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }
