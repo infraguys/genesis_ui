@@ -24,7 +24,7 @@ class UsersActionsPopupMenuButton extends StatelessWidget {
           final users = List.generate(1, (_) => user);
           final child = switch (value) {
             // _PopupBtnValue.changePassword => ChangeUserPasswordDialog(),
-            _PopupBtnValue.delete => DeleteUsersDialog(
+            _PopupBtnValue.delete => DeleteUsersDialog.multiple(
               users: users,
               onDelete: () => context.read<UsersBloc>().add(UsersEvent.deleteUsers(users)),
             ),
