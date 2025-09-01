@@ -4,12 +4,12 @@ final class UpdateRoleParams {
   UpdateRoleParams({
     required this.uuid,
     required this.name,
+    required this.permissions,
     this.description,
-    this.permissions,
   });
 
   final String uuid;
   final String name;
   final String? description;
-  final List<Permission>? permissions;
+  final List<Permission> permissions;
 }
