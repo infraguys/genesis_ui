@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
 
-class DeleteRoleIconButton extends StatelessWidget {
-  const DeleteRoleIconButton({super.key});
+class DeleteRolesElevatedButton extends StatelessWidget {
+  const DeleteRolesElevatedButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class DeleteRoleIconButton extends StatelessWidget {
           onPressed: () async {
             await showDialog<void>(
               context: context,
-              builder: (context) => DeleteRolesDialog(
+              builder: (context) => DeleteRolesDialog.multiple(
                 roles: state,
                 onDelete: () {
                   context.read<RolesBloc>().add(RolesEvent.deleteRoles(state));
