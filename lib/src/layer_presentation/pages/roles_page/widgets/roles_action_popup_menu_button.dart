@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/delete_roles_dialog.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class RolesActionPopupMenuButton extends StatelessWidget {
@@ -24,7 +24,7 @@ class RolesActionPopupMenuButton extends StatelessWidget {
         onSelected: (value) {
           final roles = List.generate(1, (_) => role);
           final child = switch (value) {
-            _PopupBtnValue.deleteRole => DeleteRolesDialog(
+            _PopupBtnValue.deleteRole => DeleteRolesDialog.multiple(
               roles: roles,
               onDelete: () => context.read<RolesBloc>().add(RolesEvent.deleteRoles(roles)),
             ),
