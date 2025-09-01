@@ -51,7 +51,7 @@ class UserDto implements IDto<User> {
   @override
   User toEntity() {
     return User(
-      uuid: uuid,
+      uuid: UserUUID(uuid),
       username: username,
       description: description,
       createdAt: createdAt,

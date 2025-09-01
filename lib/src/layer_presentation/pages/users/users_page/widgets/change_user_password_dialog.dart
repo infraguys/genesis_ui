@@ -85,7 +85,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
     userBloc.add(
       UserEvent.changePassword(
         ChangeUserPasswordParams(
-          uuid: user.uuid,
+          uuidUUID: user.uuid,
           oldPassword: _controllers.oldPassword.text,
           newPassword: _controllers.newPassword.text,
         ),

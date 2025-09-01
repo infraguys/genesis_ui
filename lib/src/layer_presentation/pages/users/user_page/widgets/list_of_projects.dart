@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/add_project_card.dart';
@@ -11,7 +12,7 @@ import 'package:go_router/go_router.dart';
 class ListOfProjects extends StatelessWidget {
   const ListOfProjects({required this.userUuid, super.key});
 
-  final String userUuid;
+  final UserUUID userUuid;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class ListOfProjects extends StatelessWidget {
                 SizedBox(
                   width: 500,
                   height: 250,
-                  child: ProjectCard(project: it.project, roles: it.roles, userUuid: userUuid),
+                  child: ProjectCard(project: it.project, roles: it.roles, userUUID: userUuid),
                 ),
             ],
           );

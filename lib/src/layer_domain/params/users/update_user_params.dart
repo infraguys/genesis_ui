@@ -1,3 +1,5 @@
+import 'package:genesis/src/layer_domain/entities/user.dart';
+
 class UpdateUserParams {
   UpdateUserParams({
     required this.uuid,
@@ -10,7 +12,7 @@ class UpdateUserParams {
     this.email,
   });
 
-  final String uuid;
+  final UserUUID uuid;
   final String? username;
   final String? description;
   final String? firstName;

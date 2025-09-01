@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
 import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
@@ -36,11 +35,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   Future<void> _onForceConfirmEmails(_ForceConfirmEmails event, Emitter<UsersState> emit) async {
     final useCase = ForceConfirmEmailsUseCase(_usersRepository);
-    final listOfParams = event.users
-        .where((user) => !user.emailVerified)
-        .map((user) => ConfirmEmailParams(uuid: user.uuid));
+    final uuids = event.users.where((user) => !user.emailVerified).map((user) => user.uuid);
     emit(UsersState.loading());
-    await useCase(listOfParams.toList());
+    await useCase(uuids.toList());
     add(UsersEvent.getUsers());
   }
 }

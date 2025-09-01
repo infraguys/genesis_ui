@@ -82,7 +82,7 @@ class UsersTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    user.uuid,
+                    user.uuid.value,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -92,10 +92,10 @@ class UsersTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: user.uuid));
+                      Clipboard.setData(ClipboardData(text: user.uuid.value));
                       final snack = SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${user.uuid}'),
+                        content: Text('Скопировано в буфер обмена: ${user.uuid.value}'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
@@ -112,7 +112,7 @@ class UsersTable extends StatelessWidget {
         final user = users[index];
         context.goNamed(
           AppRoutes.user.name,
-          pathParameters: {'uuid': user.uuid},
+          pathParameters: {'uuid': user.uuid.value},
           extra: user,
         );
       },

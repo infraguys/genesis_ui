@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
 import 'package:genesis/src/layer_domain/params/roles/get_role_params.dart';
@@ -37,7 +38,7 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
     emit(UserProjectsState.loading());
 
     final Set<({Project project, List<Role> roles})> result = {};
-    var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUuid: event.userUuid));
+    var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUUID: event.userUuid));
     bindings = bindings.where((it) => it.projectUUID != null).toList();
 
     final projectUUIDs = bindings.map((b) => b.projectUUID!).toSet().toList();

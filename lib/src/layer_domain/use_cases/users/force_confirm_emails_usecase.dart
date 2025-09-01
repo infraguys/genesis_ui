@@ -1,5 +1,4 @@
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/confirm_email_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 
 final class ForceConfirmEmailUseCase {
@@ -7,8 +6,8 @@ final class ForceConfirmEmailUseCase {
 
   final IUsersRepository _repository;
 
-  Future<User> call(ConfirmEmailParams params) async {
-    return await _repository.forceConfirmEmail(params);
+  Future<User> call(UserUUID uuid) async {
+    return await _repository.forceConfirmEmail(uuid);
   }
 }
 
@@ -17,7 +16,7 @@ final class ForceConfirmEmailsUseCase {
 
   final IUsersRepository _repository;
 
-  Future<List<User>> call(List<ConfirmEmailParams> listOfParams) async {
-    return await Future.wait(listOfParams.map(_repository.forceConfirmEmail));
+  Future<List<User>> call(List<UserUUID> uuids) async {
+    return await Future.wait(uuids.map(_repository.forceConfirmEmail));
   }
 }

@@ -4,7 +4,7 @@ sealed class ProjectEvent {
   factory ProjectEvent.getProject(String uuid) = _GetProject;
 
   factory ProjectEvent.create({
-    required String userUuid,
+    required UserUUID userUUID,
     required String name,
     required String description,
     required OrganizationUUID organizationUUID,
@@ -24,14 +24,14 @@ sealed class ProjectEvent {
 
 final class _Create implements ProjectEvent {
   _Create({
-    required this.userUuid,
+    required this.userUUID,
     required this.name,
     required this.description,
     required this.organizationUUID,
     required this.roleUUID,
   });
 
-  final String userUuid;
+  final UserUUID userUUID;
   final String name;
   final String description;
   final OrganizationUUID organizationUUID;

@@ -27,7 +27,7 @@ import 'package:go_router/go_router.dart';
 class _UserView extends StatefulWidget {
   const _UserView({required this.userUUID});
 
-  final String userUUID;
+  final UserUUID userUUID;
 
   @override
   State<_UserView> createState() => _UserViewState();
@@ -233,7 +233,7 @@ class _UserViewState extends State<_UserView> {
     );
   }
 
-  void save(String userUUID) {
+  void save(UserUUID userUUID) {
     if (_formKey.currentState!.validate()) {
       _userBloc.add(
         UserEvent.updateUser(
@@ -286,7 +286,7 @@ class _ControllersManager extends FormControllersManager {
 class UserPage extends StatelessWidget {
   const UserPage({required this.userUUID, super.key});
 
-  final String userUUID;
+  final UserUUID userUUID;
 
   @override
   Widget build(BuildContext context) {

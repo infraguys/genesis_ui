@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -12,13 +13,13 @@ class ProjectCard extends StatelessWidget {
   const ProjectCard({
     required this.project,
     required this.roles,
-    required this.userUuid,
+    required this.userUUID,
     super.key,
   });
 
   final Project project;
   final List<Role>? roles;
-  final String userUuid;
+  final UserUUID userUUID;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class ProjectCard extends StatelessWidget {
                             onDeleted: () {
                               context.read<RoleBindingsBloc>().add(
                                 RoleBindingsEvent.delete(
-                                  userUUID: userUuid,
+                                  userUUID: userUUID,
                                   roleUUID: it.uuid,
                                   projectUUID: project.uuid,
                                 ),
@@ -80,7 +81,7 @@ class ProjectCard extends StatelessWidget {
                   );
 
                   if (isCreated == true) {
-                    bloc.add(UserProjectsEvent.getProjects(userUuid));
+                    bloc.add(UserProjectsEvent.getProjects(userUUID));
                   }
                 },
               ),

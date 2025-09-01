@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
@@ -113,7 +114,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: UserPage(userUUID: state.pathParameters['uuid']!),
+                      child: UserPage(userUUID: UserUUID(state.pathParameters['uuid']!)),
                     ),
                     routes: [
                       GoRoute(

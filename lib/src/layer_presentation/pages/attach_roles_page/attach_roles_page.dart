@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
@@ -58,7 +59,7 @@ class _AttachRolesView extends StatelessWidget {
                     final listOfParams = context.read<RolesSelectionBloc>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
-                          userUUID: GoRouterState.of(context).pathParameters['uuid']!,
+                          userUUID: UserUUID(GoRouterState.of(context).pathParameters['uuid']!),
                           roleUUID: role.uuid,
                           projectUUID: projectUUID,
                         );

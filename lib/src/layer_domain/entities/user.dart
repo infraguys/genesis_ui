@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 
 class User extends Equatable {
@@ -20,7 +18,7 @@ class User extends Equatable {
     required this.otpEnabled,
   });
 
-  final String uuid;
+  final UserUUID uuid;
   final String username;
   final String description;
   final DateTime createdAt;
@@ -54,38 +52,40 @@ class User extends Equatable {
 
 // Copyable extension ----------
 
-extension UserCopyable on User {
-  User copyWith({
-    String? uuid,
-    String? username,
-    String? description,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    Status? status,
-    String? firstName,
-    String? lastName,
-    String? surname,
-    String? phone,
-    String? email,
-    bool? emailVerified,
-    bool? otpEnabled,
-    List<Role>? roles,
-    List<Organization>? organizations,
-  }) {
-    return User(
-      uuid: uuid ?? this.uuid,
-      username: username ?? this.username,
-      description: description ?? this.description,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      status: status ?? this.status,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      surname: surname ?? this.surname,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
-      emailVerified: emailVerified ?? this.emailVerified,
-      otpEnabled: otpEnabled ?? this.otpEnabled,
-    );
-  }
-}
+// extension UserCopyable on User {
+//   User copyWith({
+//     String? uuid,
+//     String? username,
+//     String? description,
+//     DateTime? createdAt,
+//     DateTime? updatedAt,
+//     Status? status,
+//     String? firstName,
+//     String? lastName,
+//     String? surname,
+//     String? phone,
+//     String? email,
+//     bool? emailVerified,
+//     bool? otpEnabled,
+//     List<Role>? roles,
+//     List<Organization>? organizations,
+//   }) {
+//     return User(
+//       uuid: uuid ?? this.uuid,
+//       username: username ?? this.username,
+//       description: description ?? this.description,
+//       createdAt: createdAt ?? this.createdAt,
+//       updatedAt: updatedAt ?? this.updatedAt,
+//       status: status ?? this.status,
+//       firstName: firstName ?? this.firstName,
+//       lastName: lastName ?? this.lastName,
+//       surname: surname ?? this.surname,
+//       phone: phone ?? this.phone,
+//       email: email ?? this.email,
+//       emailVerified: emailVerified ?? this.emailVerified,
+//       otpEnabled: otpEnabled ?? this.otpEnabled,
+//     );
+//   }
+// }
+
+extension type UserUUID(String value) {}

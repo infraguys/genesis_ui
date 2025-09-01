@@ -1,7 +1,7 @@
 part of 'user_bloc.dart';
 
 sealed class UserEvent {
-  factory UserEvent.getUser(final String uuid) = _GetUser;
+  factory UserEvent.getUser(UserUUID uuid) = _GetUser;
 
   factory UserEvent.deleteUser(User user) = _DeleteUser;
 
@@ -13,7 +13,7 @@ sealed class UserEvent {
 
   factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
 
-  factory UserEvent.confirmEmails(List<ConfirmEmailParams> users) = _ConfirmEmails;
+  factory UserEvent.confirmEmails(List<User> users) = _ConfirmEmails;
 
   factory UserEvent.forceConfirmEmail(User user) = _ForceConfirmEmail;
 }
@@ -21,7 +21,7 @@ sealed class UserEvent {
 final class _GetUser implements UserEvent {
   _GetUser(this.uuid);
 
-  final String uuid;
+  final UserUUID uuid;
 }
 
 final class _CreateUser implements UserEvent {
@@ -55,9 +55,9 @@ final class _ResetUserPassword implements UserEvent {
 }
 
 final class _ConfirmEmails implements UserEvent {
-  _ConfirmEmails(this.params);
+  _ConfirmEmails(this.users);
 
-  final List<ConfirmEmailParams> params;
+  final List<User> users;
 }
 
 final class _ForceConfirmEmail implements UserEvent {

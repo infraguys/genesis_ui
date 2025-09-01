@@ -32,14 +32,14 @@ class UsersRepository implements IUsersRepository {
   }
 
   @override
-  Future<User> confirmEmail(params) async {
-    final dto = await _usersApi.confirmEmail(ConfirmEmailReq(params));
+  Future<User> confirmEmail(uuid) async {
+    final dto = await _usersApi.confirmEmail(ConfirmEmailReq(uuid));
     return dto.toEntity();
   }
 
   @override
-  Future<User> forceConfirmEmail(params) async {
-    final dto = await _usersApi.forceConfirmEmail(ForceConfirmEmailReq(params));
+  Future<User> forceConfirmEmail(uuid) async {
+    final dto = await _usersApi.forceConfirmEmail(ForceConfirmEmailReq(uuid));
     return dto.toEntity();
   }
 

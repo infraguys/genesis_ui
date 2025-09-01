@@ -1,11 +1,13 @@
+import 'package:genesis/src/layer_domain/entities/user.dart';
+
 class ChangeUserPasswordParams {
   ChangeUserPasswordParams({
-    required this.uuid,
+    required this.uuidUUID,
     required this.oldPassword,
     required this.newPassword,
   });
 
-  final String uuid;
+  final UserUUID uuidUUID;
   final String oldPassword;
   final String newPassword;
 }

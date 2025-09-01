@@ -1,7 +1,7 @@
 part of 'user_projects_bloc.dart';
 
 sealed class UserProjectsEvent {
-  factory UserProjectsEvent.getProjects(String userUuid, {GetProjectsParams params}) = _GetProjects;
+  factory UserProjectsEvent.getProjects(UserUUID userUuid, {GetProjectsParams params}) = _GetProjects;
 }
 
 final class _GetProjects implements UserProjectsEvent {
@@ -11,5 +11,5 @@ final class _GetProjects implements UserProjectsEvent {
   });
 
   final GetProjectsParams params;
-  final String userUuid;
+  final UserUUID userUuid;
 }
