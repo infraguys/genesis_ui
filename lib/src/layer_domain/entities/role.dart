@@ -12,7 +12,7 @@ class Role extends Equatable {
     required this.projectId,
   });
 
-  final String uuid;
+  final RoleUUID uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -32,26 +32,28 @@ class Role extends Equatable {
   ];
 }
 
-// Copyable extension ----------
+// // Copyable extension ----------
+//
+// extension RoleCopyable on Role {
+//   Role copyWith({
+//     String? uuid,
+//     String? name,
+//     String? description,
+//     DateTime? createdAt,
+//     DateTime? updatedAt,
+//     Status? status,
+//     dynamic projectId,
+//   }) {
+//     return Role(
+//       uuid: uuid ?? this.uuid,
+//       name: name ?? this.name,
+//       description: description ?? this.description,
+//       createdAt: createdAt ?? this.createdAt,
+//       updatedAt: updatedAt ?? this.updatedAt,
+//       status: status ?? this.status,
+//       projectId: projectId ?? this.projectId,
+//     );
+//   }
+// }
 
-extension RoleCopyable on Role {
-  Role copyWith({
-    String? uuid,
-    String? name,
-    String? description,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    Status? status,
-    dynamic projectId,
-  }) {
-    return Role(
-      uuid: uuid ?? this.uuid,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      status: status ?? this.status,
-      projectId: projectId ?? this.projectId,
-    );
-  }
-}
+extension type RoleUUID(String value) {}

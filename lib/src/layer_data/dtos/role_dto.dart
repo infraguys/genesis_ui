@@ -32,7 +32,7 @@ class RoleDto implements IDto<Role> {
   @override
   Role toEntity() {
     return Role(
-      uuid: uuid,
+      uuid: RoleUUID(uuid),
       name: name,
       description: description,
       createdAt: createdAt,

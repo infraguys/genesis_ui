@@ -13,7 +13,7 @@ abstract interface class IRolesRepository {
 
   Future<Role> createRole(CreateRoleParams params);
 
-  Future<void> deleteRole(String uuid);
+  Future<void> deleteRole(RoleUUID uuid);
 
   Future<Role> updateRole(UpdateRoleParams params);
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/roles/update_role_params.dart';
@@ -53,11 +52,16 @@ class _RoleViewState extends State<_RoleView> {
       body: BlocListener<RoleBloc, RoleState>(
         listener: (context, state) {
           final navigator = GoRouter.of(context);
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
-          if (state is RoleUpdatedState) {
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success)).closed.then(navigator.pop);
+          final messenger = ScaffoldMessenger.of(context);
+
+          switch (state) {
+            case RoleUpdatedState():
+              messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            // context.read<RoleBloc>().add(RoleEvent)
+            default:
           }
-          context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.clear());
+
+          // context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.clear());
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,11 +89,9 @@ class _RoleViewState extends State<_RoleView> {
                     child: AppTextInput(
                       controller: _controllersManager.nameController,
                       hintText: context.$.name,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'required'.hardcoded;
-                        }
-                        return null;
+                      validator: (value) => switch (value) {
+                        _ when value!.isEmpty => context.$.requiredField,
+                        _ => null,
                       },
                     ),
                   ),

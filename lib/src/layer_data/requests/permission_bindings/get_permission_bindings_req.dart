@@ -11,7 +11,7 @@ final class GetPermissionBindingsReq implements PathEncodable, QueryEncodable {
   @override
   Map<String, dynamic> toQuery() {
     return {
-      'role': ?_params.role,
+      'role': ?_params.roleUUID,
       'permission': ?_params.permission,
       'created_at': ?_params.createdAt,
       'updated_at': ?_params.updatedAt,

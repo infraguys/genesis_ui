@@ -3,7 +3,7 @@ part of 'role_bindings_bloc.dart';
 sealed class RoleBindingsEvent {
   factory RoleBindingsEvent.delete({
     required final String userUUID,
-    required final String roleUUID,
+    required final RoleUUID roleUUID,
     required final ProjectUUID projectUUID,
   }) = _Delete;
 
@@ -16,7 +16,7 @@ final class _Delete implements RoleBindingsEvent {
   const _Delete({required this.userUUID, required this.roleUUID, required this.projectUUID});
 
   final String userUUID;
-  final String roleUUID;
+  final RoleUUID roleUUID;
   final ProjectUUID projectUUID;
 }
 

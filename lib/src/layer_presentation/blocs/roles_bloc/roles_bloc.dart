@@ -52,11 +52,11 @@ class RolesBloc extends Bloc<RolesEvent, RolesState> {
 
     for (var role in event.roles) {
       final permissionBindings = await getPermissionBindingsUseCase(
-        GetPermissionBindingsParams(role: role.uuid),
+        GetPermissionBindingsParams(roleUUID: role.uuid),
       );
 
       final roleBindings = await getRolesBindingsUseCase(
-        GetRoleBindingsParams(roleUuid: role.uuid),
+        GetRoleBindingsParams(roleUUID: role.uuid),
       );
 
       await deleteRolesBindingsUseCase(roleBindings);

@@ -7,8 +7,8 @@ sealed class ProjectEvent {
     required String userUuid,
     required String name,
     required String description,
-    required OrganizationUUID organizationUuid,
-    required List<String> roleUuid,
+    required OrganizationUUID organizationUUID,
+    required List<RoleUUID> roleUUID,
   }) = _Create;
 
   factory ProjectEvent.delete(ProjectUUID projectUuid) = _Delete;
@@ -27,15 +27,15 @@ final class _Create implements ProjectEvent {
     required this.userUuid,
     required this.name,
     required this.description,
-    required this.organizationUuid,
-    required this.roleUuid,
+    required this.organizationUUID,
+    required this.roleUUID,
   });
 
   final String userUuid;
   final String name;
   final String description;
-  final OrganizationUUID organizationUuid;
-  final List<String> roleUuid;
+  final OrganizationUUID organizationUUID;
+  final List<RoleUUID> roleUUID;
 }
 
 final class _Delete implements ProjectEvent {

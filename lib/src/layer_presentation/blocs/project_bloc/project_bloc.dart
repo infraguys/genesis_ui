@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/projects/create_project_params.dart';
 import 'package:genesis/src/layer_domain/params/projects/edit_project_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
@@ -47,11 +48,11 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       CreateProjectParams(
         name: event.name,
         description: event.description,
-        organizationUuid: event.organizationUuid,
+        organizationUuid: event.organizationUUID,
       ),
     );
 
-    final listOfParams = event.roleUuid.map(
+    final listOfParams = event.roleUUID.map(
       (uuid) => CreateRoleBindingParams(
         userUUID: event.userUuid,
         roleUUID: uuid,

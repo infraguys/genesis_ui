@@ -1,4 +1,5 @@
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 
 final class CreateRoleBindingParams {
   CreateRoleBindingParams({
@@ -8,6 +9,6 @@ final class CreateRoleBindingParams {
   });
 
   final String userUUID;
-  final String roleUUID;
+  final RoleUUID roleUUID;
   final ProjectUUID? projectUUID;
 }

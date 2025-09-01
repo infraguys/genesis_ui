@@ -18,7 +18,7 @@ class PermissionBindingsBloc extends Bloc<PermissionBindingsEvent, PermissionBin
   Future<void> _onGetBindings(_GetBindings event, Emitter<PermissionBindingsState> emit) async {
     final useCase = GetPermissionBindingsUseCase(_repository);
     emit(PermissionBindingsState.loading());
-    final bindings = await useCase(GetPermissionBindingsParams(role: event.role.uuid));
+    final bindings = await useCase(GetPermissionBindingsParams(roleUUID: event.role.uuid));
     emit(PermissionBindingsState.loaded(bindings));
   }
 }

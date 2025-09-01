@@ -73,7 +73,7 @@ class RolesTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    role.uuid,
+                    role.uuid.value,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -83,7 +83,7 @@ class RolesTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: role.uuid));
+                      Clipboard.setData(ClipboardData(text: role.uuid.value));
                       final snack = AppSnackBar.success('Скопировано в буфер обмена: ${role.uuid}');
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
@@ -103,7 +103,7 @@ class RolesTable extends StatelessWidget {
         final role = roles[index];
         context.goNamed(
           AppRoutes.role.name,
-          pathParameters: {'uuid': role.uuid},
+          pathParameters: {'uuid': role.uuid.value},
           extra: role,
         );
       },

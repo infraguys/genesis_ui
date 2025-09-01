@@ -171,9 +171,9 @@ class _ProjectViewState extends State<_ProjectView> {
         ProjectEvent.create(
           name: _controllersManager.nameController.text,
           description: _controllersManager.descriptionController.text,
-          organizationUuid: context.read<OrganizationsSelectionBloc>().state.first.uuid,
+          organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
           userUuid: context.read<UsersSelectionBloc>().state.first.uuid,
-          roleUuid: context.read<RolesSelectionBloc>().state.map((role) => role.uuid).toList(),
+          roleUUID: context.read<RolesSelectionBloc>().state.map((role) => role.uuid).toList(),
         ),
       );
     }
