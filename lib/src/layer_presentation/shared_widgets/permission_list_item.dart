@@ -24,11 +24,11 @@ class PermissionListItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('...${permission.uuid.split('-').last}'),
+                Text('...${permission.uuid.value.split('-').last}'),
                 IconButton(
                   icon: Icon(Icons.copy, color: Colors.white, size: 18),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: permission.uuid));
+                    Clipboard.setData(ClipboardData(text: permission.uuid.value));
                     final snack = SnackBar(
                       backgroundColor: Colors.green,
                       content: Text('Скопировано в буфер обмена: ${permission.uuid}'),
