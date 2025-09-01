@@ -22,10 +22,12 @@ class PermissionsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppTable(
       columnSpans: [
+        TableSpan(extent: FixedSpanExtent(40.0)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(4 / 10)),
         TableSpan(extent: FractionalTableSpanExtent(2 / 10)),
+        TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
         BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
@@ -93,6 +95,7 @@ class PermissionsTable extends StatelessWidget {
             DateFormat('dd.MM.yyyy HH:mm').format(role.createdAt),
             style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
           ),
+          SizedBox.shrink(),
         ];
       },
       onTap: (index) {
@@ -104,33 +107,5 @@ class PermissionsTable extends StatelessWidget {
         );
       },
     );
-    // return AppTable<Permission>(
-    //   entities: permissions,
-    //   headerLeading: BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
-    //     builder: (context, state) {
-    //       return Checkbox(
-    //         value: switch (state.length) {
-    //           0 => false,
-    //           final len when len == permissions.length => true,
-    //           _ => null,
-    //         },
-    //         tristate: true,
-    //         onChanged: (val) {
-    //           context.read<PermissionsSelectionBloc>().add(PermissionsSelectionEvent.toggleAll(permissions));
-    //         },
-    //       );
-    //     },
-    //   ),
-    //   item: PermissionListItem(),
-    //   title: Row(
-    //     spacing: 48,
-    //     children: [
-    //       Expanded(flex: 2, child: Text(context.$.name)),
-    //       Expanded(child: Text(context.$.status)),
-    //       Expanded(flex: 4, child: Text(context.$.uuid)),
-    //       Spacer(flex: 2),
-    //     ],
-    //   ),
-    // );
   }
 }
