@@ -20,12 +20,14 @@ class DeleteProjectsIconButton extends StatelessWidget {
           onPressed: () async {
             await showDialog<void>(
               context: context,
-              builder: (context) => DeleteProjectsDialog(
-                projects: state,
-                onDelete: () {
-                  context.read<ProjectsBloc>().add(ProjectsEvent.deleteProjects(state));
-                },
-              ),
+              builder: (context) {
+                return DeleteProjectsDialog(
+                  projects: state,
+                  onDelete: (projects) {
+                    context.read<ProjectsBloc>().add(ProjectsEvent.deleteProjects(projects));
+                  },
+                );
+              },
             );
           },
         );
