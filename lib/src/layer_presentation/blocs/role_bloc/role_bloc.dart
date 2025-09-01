@@ -26,6 +26,10 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
   final IRolesRepository _rolesRepository;
   final IPermissionBindingsRepository _iPermissionBindingsRepository;
 
+  Future<void> _onGetRole(_GetRole event, Emitter<RoleState> emit) async {
+    emit(RoleState.created());
+  }
+
   Future<void> _onCreate(_Create event, Emitter<RoleState> emit) async {
     final useCase = CreateRoleUseCase(_rolesRepository);
     final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_iPermissionBindingsRepository);

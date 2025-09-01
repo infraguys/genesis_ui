@@ -1,5 +1,8 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/role_binding.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'role_binding_dto.g.dart';
@@ -35,9 +38,9 @@ class RoleBindingDto implements IDto<RoleBinding> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
-      projectUUID: project?.split('/').last,
-      userUUID: user.split('/').last,
-      roleUUID: role.split('/').last,
+      projectUUID: project != null ? ProjectUUID(project!.split('/').last) : null,
+      userUUID: UserUUID(user.split('/').last),
+      roleUUID: RoleUUID(role.split('/').last),
     );
   }
 }

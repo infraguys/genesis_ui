@@ -11,7 +11,7 @@ abstract interface class IProjectsRepository {
 
   Future<Project> editProject(EditProjectParams params);
 
-  Future<Project> getProject(String uuid);
+  Future<Project> getProject(ProjectUUID uuid);
 
   Future<List<({Project project, List<Role> roles})>> getProjectsByUser(GetProjectsParams params);
 

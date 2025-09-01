@@ -27,7 +27,7 @@ import 'package:go_router/go_router.dart';
 class _ProjectView extends StatefulWidget {
   const _ProjectView({required this.uuid});
 
-  final String uuid;
+  final ProjectUUID uuid;
 
   @override
   State<_ProjectView> createState() => _ProjectViewState();
@@ -195,7 +195,7 @@ class _ControllersManager extends FormControllersManager {
 class ProjectPage extends StatelessWidget {
   const ProjectPage({required this.uuid, super.key});
 
-  final String uuid;
+  final ProjectUUID uuid;
 
   @override
   Widget build(BuildContext context) {

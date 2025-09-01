@@ -4,7 +4,6 @@ import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
-import 'package:genesis/src/layer_domain/params/roles/get_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
@@ -47,10 +46,11 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
       projectUUIDs.map((uuid) => getProjectUseCase(uuid)),
     );
 
+    // todo: ипсравить projectUUID
     for (final project in projects) {
       final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
       final roles = await Future.wait(
-        projectsBindings.map((binding) => getRoleUseCase(GetRoleParams(uuid: binding.roleUUID))),
+        projectsBindings.map((binding) => getRoleUseCase(binding.roleUUID)),
       );
       result.add((project: project, roles: roles));
     }

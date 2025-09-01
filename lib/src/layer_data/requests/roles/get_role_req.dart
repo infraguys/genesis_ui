@@ -1,20 +1,14 @@
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/roles_endpoints.dart';
-import 'package:genesis/src/layer_domain/params/roles/get_role_params.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 
-final class GetRoleReq implements QueryEncodable, PathEncodable {
-  const GetRoleReq(this._params);
+final class GetRoleReq implements PathEncodable {
+  const GetRoleReq(this._uuid);
 
-  final GetRoleParams _params;
-
-  @override
-  Map<String, dynamic> toQuery() {
-    return {};
-  }
+  final RoleUUID _uuid;
 
   @override
   String toPath() {
-    return RolesEndpoints.getRole(_params.uuid);
+    return RolesEndpoints.getRole(_uuid.value);
   }
 }

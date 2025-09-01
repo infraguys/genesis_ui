@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 
 class RoleBinding extends Equatable {
   const RoleBinding({
@@ -15,9 +18,9 @@ class RoleBinding extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
-  final String? projectUUID;
-  final String userUUID;
-  final String roleUUID;
+  final ProjectUUID? projectUUID;
+  final UserUUID userUUID;
+  final RoleUUID roleUUID;
 
   @override
   List<Object?> get props => [
