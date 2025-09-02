@@ -8,6 +8,7 @@ import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/us
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
@@ -17,37 +18,51 @@ class _UsersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 24.0,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Breadcrumbs(
-          items: [
-            BreadcrumbItem(text: context.$.users),
-          ],
-        ),
-        ButtonsBar.withoutLeftSpacer(
-          children: [
-            SearchInput(),
-            Spacer(),
-            DeleteUsersElevatedButton(),
-            UsersConfirmEmailIconButton(),
-            UsersCreateIconButton(),
-          ],
-        ),
-        Expanded(
-          child: BlocConsumer<UsersBloc, UsersState>(
-            listenWhen: (_, current) => current is UsersLoadedState,
-            listener: (context, _) {
-              context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
-            },
-            builder: (_, state) => switch (state) {
-              UsersLoadedState(:final users) => UsersTable(users: users),
-              _ => AppProgressIndicator(),
-            },
+    return BlocListener<UsersBloc, UsersState>(
+      listenWhen: (_, current) => current is UsersDeletedState,
+      listener: (context, state) {
+        final messenger = ScaffoldMessenger.of(context);
+
+        switch (state) {
+          case UsersDeletedState(:final users) when users.length == 1:
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(users.single.username)));
+          case UsersDeletedState(:final users) when users.length > 1:
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgUsersDeleted(users.length)));
+          default:
+        }
+      },
+      child: Column(
+        spacing: 24.0,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Breadcrumbs(
+            items: [
+              BreadcrumbItem(text: context.$.users),
+            ],
           ),
-        ),
-      ],
+          ButtonsBar.withoutLeftSpacer(
+            children: [
+              SearchInput(),
+              Spacer(),
+              DeleteUsersElevatedButton(),
+              UsersConfirmEmailIconButton(),
+              UsersCreateIconButton(),
+            ],
+          ),
+          Expanded(
+            child: BlocConsumer<UsersBloc, UsersState>(
+              listenWhen: (_, current) => current is UsersLoadedState,
+              listener: (context, _) {
+                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
+              },
+              builder: (_, state) => switch (state) {
+                UsersLoadedState(:final users) => UsersTable(users: users),
+                _ => AppProgressIndicator(),
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
