@@ -29,4 +29,6 @@ class Permission extends Equatable {
   ];
 }
 
-extension type PermissionUUID(String value) {}
+extension type PermissionUUID(String value) {
+  bool isEqualTo(PermissionUUID other) => value == other.value;
+}

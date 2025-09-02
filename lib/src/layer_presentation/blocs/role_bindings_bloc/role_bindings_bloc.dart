@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/layer_domain/entities/role_binding.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
 import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';

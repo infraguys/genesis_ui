@@ -10,7 +10,7 @@ final class OrganizationsApi implements IOrganizationsApi {
   OrganizationsApi(this._client);
 
   final RestClient _client;
-  
+
   @override
   Future<OrganizationDto> createOrganization(req) async {
     try {
@@ -18,10 +18,10 @@ final class OrganizationsApi implements IOrganizationsApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data != null) {
-        return OrganizationDto.fromJson(data);
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
       }
-      throw DataNotFoundException(requestOptions.uri.path);
+      return OrganizationDto.fromJson(data);
     } on DioException catch (e) {
       throw NetworkException(e);
     }
@@ -51,11 +51,11 @@ final class OrganizationsApi implements IOrganizationsApi {
         req.toPath(),
         queryParameters: req.toQuery(),
       );
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => OrganizationDto.fromJson(it)).toList();
+      if (data == null) {
+        return List.empty();
       }
-      return [];
+      final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+      return castedData.map((it) => OrganizationDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw NetworkException(e);
     }
@@ -68,10 +68,25 @@ final class OrganizationsApi implements IOrganizationsApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data != null) {
-        return OrganizationDto.fromJson(data);
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
       }
-      throw DataNotFoundException(requestOptions.uri.path);
+      return OrganizationDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
+  Future<OrganizationDto> getOrganization(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+      return OrganizationDto.fromJson(data);
     } on DioException catch (e) {
       throw NetworkException(e);
     }

@@ -1,3 +1,6 @@
+import 'package:genesis/src/layer_domain/entities/permission.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
+
 class PermissionBinding {
   PermissionBinding({
     required this.uuid,
@@ -10,8 +13,10 @@ class PermissionBinding {
   final PermissionBindingUUID uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String roleUUID;
-  final String permissionUUID;
+  final RoleUUID roleUUID;
+  final PermissionUUID permissionUUID;
 }
 
-extension type PermissionBindingUUID(String value) {}
+extension type PermissionBindingUUID(String value) {
+  bool isEqualTo(PermissionBindingUUID other) => value == other.value;
+}

@@ -124,12 +124,27 @@ class _ProjectViewState extends State<_ProjectView> {
                 Text(context.$.organizations, style: TextStyle(color: Colors.white54, fontSize: 24)),
                 SizedBox(
                   height: 405,
-                  child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
-                    builder: (context, state) {
-                      if (state is! OrganizationsLoadedState) {
-                        return AppProgressIndicator();
+                  child: BlocConsumer<OrganizationsBloc, OrganizationsState>(
+                    listener: (context, state) {
+                      if (state is OrganizationsLoadedState) {
+                        final bloc = context.read<OrganizationsSelectionBloc>();
+                        Future.microtask(
+                          () {
+                            bloc.add(
+                              OrganizationsSelectionEvent.setCheckedFromResponse(
+                                project,
+                                organizations: state.organizations,
+                              ),
+                            );
+                          },
+                        );
                       }
-                      return OrganizationsTable(organizations: state.organizations);
+                    },
+                    builder: (context, state) {
+                      if (state is OrganizationsLoadedState) {
+                        return OrganizationsTable(organizations: state.organizations);
+                      }
+                      return AppProgressIndicator();
                     },
                   ),
                 ),

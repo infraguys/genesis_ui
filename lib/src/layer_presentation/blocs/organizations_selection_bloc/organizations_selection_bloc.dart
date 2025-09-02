@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
 
 part 'organizations_selection_event.dart';
 
@@ -7,6 +8,7 @@ class OrganizationsSelectionBloc extends Bloc<OrganizationsSelectionEvent, List<
   OrganizationsSelectionBloc() : super(List.empty()) {
     on(_onToggle);
     on(_onToggleAll);
+    on(_onSetCheckedFromResponse);
     on(_onClear);
   }
 
@@ -26,6 +28,11 @@ class OrganizationsSelectionBloc extends Bloc<OrganizationsSelectionEvent, List<
     } else {
       emit(event.organizations);
     }
+  }
+
+  void _onSetCheckedFromResponse(_SetCheckedFromResponse event, Emitter<List<Organization>> emit) {
+    final organizations = event.organizations.where((it) => it.uuid.isEqualTo(event.project.organizationUUID));
+    emit(organizations.toList());
   }
 
   void _onClear(_Clear _, Emitter<List<Organization>> emit) {

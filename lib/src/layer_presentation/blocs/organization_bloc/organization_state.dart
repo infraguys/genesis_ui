@@ -12,11 +12,19 @@ sealed class OrganizationState {
   factory OrganizationState.deleted(Organization organization) = OrganizationDeletedState;
 
   factory OrganizationState.failure(String message) = OrganizationFailureState;
+
+  factory OrganizationState.loaded(Organization organization) = OrganizationLoadedState;
 }
 
 final class OrganizationInitialState implements OrganizationState {}
 
 final class OrganizationLoadingState implements OrganizationState {}
+
+final class OrganizationLoadedState implements OrganizationState {
+  OrganizationLoadedState(this.organization);
+
+  final Organization organization;
+}
 
 final class OrganizationCreatedState implements OrganizationState {}
 

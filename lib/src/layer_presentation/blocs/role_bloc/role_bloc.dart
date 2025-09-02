@@ -79,14 +79,15 @@ class RoleBloc extends Bloc<RoleEvent, RoleState> {
     final updateUseCase = UpdateRoleUseCase(_rolesRepository);
     final getPermissionBindingsUseCase = GetPermissionBindingsUseCase(_permissionBindingsRepository);
     final createPermissionBindingsUseCase = CreatePermissionBindingsUseCase(_permissionBindingsRepository);
+    final deletePermissionBindingsUseCase = DeletePermissionBindingsUseCase(_permissionBindingsRepository);
     emit(RoleState.loading());
     final role = await updateUseCase(event.params);
-    // final bindings = await getPermissionBindingsUseCase(GetPermissionBindingsParams(role: role.uuid));
-    // final newPermissions = event.params.permissions;
-    // for (var permission in newPermissions) {
-    //   final isExist = bindings.any((it) => it.permissionUUID == permission.uuid);
-    //
-    // }
+
+    final bindings = await getPermissionBindingsUseCase(GetPermissionBindingsParams(roleUUID: role.uuid));
+    final newPermissions = event.params.permissions;
+
+    await deletePermissionBindingsUseCase(bindings);
+    await createPermissionBindingsUseCase(permissions: newPermissions, roleUUID: role.uuid);
 
     emit(RoleState.updated(role));
   }

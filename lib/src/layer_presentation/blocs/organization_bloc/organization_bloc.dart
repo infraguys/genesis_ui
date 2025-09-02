@@ -5,6 +5,7 @@ import 'package:genesis/src/layer_domain/params/organizations/update_organizatio
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/create_organization_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/delete_organization_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/organizations/get_organization_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/organizations/update_organization_usecase.dart';
 
 part 'organization_event.dart';
@@ -12,12 +13,20 @@ part 'organization_state.dart';
 
 class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   OrganizationBloc(this._repository) : super(OrganizationState.initial()) {
+    on(_onGetOrganization);
     on(_onCreateOrganization);
     on(_onUpdateOrganization);
     on(_onDeleteOrganization);
   }
 
   final IOrganizationsRepository _repository;
+
+  Future<void> _onGetOrganization(_Get event, Emitter<OrganizationState> emit) async {
+    final useCase = GetOrganizationUseCase(_repository);
+    emit(OrganizationState.loading());
+    final organization = await useCase(event.uuid);
+    emit(OrganizationState.loaded(organization));
+  }
 
   Future<void> _onCreateOrganization(_Create event, Emitter<OrganizationState> emit) async {
     final useCase = CreateOrganizationUseCase(_repository);

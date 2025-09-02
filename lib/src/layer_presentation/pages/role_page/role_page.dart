@@ -128,6 +128,7 @@ class _RoleViewState extends State<_RoleView> {
                 child: BlocBuilder<PermissionsBloc, PermissionsState>(
                   builder: (context, state) {
                     return switch (state) {
+                      // todo: подумать как переписать
                       PermissionsLoadedState(:final permissions) =>
                         BlocListener<PermissionBindingsBloc, PermissionBindingsState>(
                           listenWhen: (_, current) => current is PermissionBindingsLoaded,

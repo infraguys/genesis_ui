@@ -8,6 +8,7 @@ import 'package:genesis/src/layer_domain/repositories/i_organizations_repository
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -16,9 +17,9 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:go_router/go_router.dart';
 
 class _OrganizationView extends StatefulWidget {
-  const _OrganizationView({required this.organization});
+  const _OrganizationView({required this.uuid});
 
-  final Organization organization;
+  final OrganizationUUID uuid;
 
   @override
   State<_OrganizationView> createState() => _OrganizationViewState();
@@ -29,11 +30,12 @@ class _OrganizationViewState extends State<_OrganizationView> {
 
   late _ControllersManager _controllersManager;
   late final OrganizationBloc _organizationBloc;
+  late final OrganizationsBloc _organizationsBloc;
 
   @override
   void initState() {
     _organizationBloc = context.read<OrganizationBloc>();
-    _controllersManager = _ControllersManager(widget.organization);
+    _organizationsBloc = context.read<OrganizationsBloc>();
     super.initState();
   }
 
@@ -45,81 +47,98 @@ class _OrganizationViewState extends State<_OrganizationView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OrganizationBloc, OrganizationState>(
-      listenWhen: (_, current) => switch (current) {
-        OrganizationUpdatedState() || OrganizationDeletedState() || OrganizationFailureState() => true,
-        _ => false,
-      },
-      listener: (context, state) {
-        final navigator = GoRouter.of(context);
-        final messenger = ScaffoldMessenger.of(context);
+    return Scaffold(
+      body: BlocConsumer<OrganizationBloc, OrganizationState>(
+        listenWhen: (_, current) {
+          switch (current) {
+            case OrganizationUpdatedState():
+            case OrganizationDeletedState():
+            case OrganizationLoadedState():
+            case OrganizationFailureState():
+              return true;
+            default:
+              return false;
+          }
+        },
+        listener: (context, state) {
+          final navigator = GoRouter.of(context);
+          final messenger = ScaffoldMessenger.of(context);
 
-        switch (state) {
-          case OrganizationUpdatedState(:final organization):
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
-            context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
+          switch (state) {
+            case OrganizationLoadedState(:final organization):
+              _controllersManager = _ControllersManager(organization);
 
-          case OrganizationDeletedState(:final organization):
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationDeleted(organization.name)));
-            context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-            navigator.pop();
+            case OrganizationUpdatedState(:final organization):
+              _organizationBloc.add(OrganizationEvent.get(widget.uuid));
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
+              _organizationsBloc.add(OrganizationsEvent.getOrganizations());
 
-          case OrganizationFailureState(:final message):
-            messenger.showSnackBar(AppSnackBar.failure(message));
-          default:
-        }
-      },
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.organizations),
-                BreadcrumbItem(text: widget.organization.name),
-              ],
-            ),
-            ButtonsBar(
-              children: [
-                DeleteOrganizationElevatedButton(organization: widget.organization),
-                SaveIconButton(onPressed: save),
-              ],
-            ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: AppTextInput(
-                          controller: _controllersManager.nameController,
-                          hintText: context.$.name,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
+            case OrganizationDeletedState(:final organization):
+              messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationDeleted(organization.name)));
+              _organizationsBloc.add(OrganizationsEvent.getOrganizations());
+              navigator.pop();
+
+            case OrganizationFailureState(:final message):
+              messenger.showSnackBar(AppSnackBar.failure(message));
+            default:
+          }
+        },
+        builder: (context, state) {
+          if (state is! OrganizationLoadedState) {
+            return AppProgressIndicator();
+          }
+          final organization = state.organization;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              Breadcrumbs(
+                items: [
+                  BreadcrumbItem(text: context.$.organizations),
+                  BreadcrumbItem(text: organization.name),
+                ],
+              ),
+              ButtonsBar(
+                children: [
+                  DeleteOrganizationElevatedButton(organization: organization),
+                  SaveIconButton(onPressed: save),
+                ],
+              ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24,
+                      children: [
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
+                          child: AppTextInput(
+                            controller: _controllersManager.nameController,
+                            hintText: context.$.name,
+                            validator: (value) => switch (value) {
+                              _ when value!.isEmpty => context.$.requiredField,
+                              _ => null,
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: AppTextInput.multiLine(
-                          controller: _controllersManager.descriptionController,
-                          hintText: context.$.description,
-                          minLines: 3,
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
+                          child: AppTextInput.multiLine(
+                            controller: _controllersManager.descriptionController,
+                            hintText: context.$.description,
+                            minLines: 3,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -129,7 +148,7 @@ class _OrganizationViewState extends State<_OrganizationView> {
       _organizationBloc.add(
         OrganizationEvent.update(
           UpdateOrganizationParams(
-            uuid: widget.organization.uuid,
+            uuid: widget.uuid,
             name: _controllersManager.nameController.text,
             description: _controllersManager.descriptionController.text,
           ),
@@ -152,15 +171,17 @@ class _ControllersManager extends FormControllersManager {
 }
 
 class OrganizationPage extends StatelessWidget {
-  const OrganizationPage({required this.organization, super.key});
+  const OrganizationPage({required this.uuid, super.key});
 
-  final Organization organization;
+  final OrganizationUUID uuid;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OrganizationBloc(context.read<IOrganizationsRepository>()),
-      child: _OrganizationView(organization: organization),
+      create: (context) => OrganizationBloc(
+        context.read<IOrganizationsRepository>(),
+      )..add(OrganizationEvent.get(uuid)),
+      child: _OrganizationView(uuid: uuid),
     );
   }
 }

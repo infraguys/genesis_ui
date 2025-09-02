@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 class Project extends Equatable {
   const Project({
@@ -8,7 +9,7 @@ class Project extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.organizationUuid,
+    required this.organizationUUID,
   });
 
   final ProjectUUID uuid;
@@ -17,7 +18,7 @@ class Project extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final ProjectStatus status;
-  final String organizationUuid;
+  final OrganizationUUID organizationUUID;
 
   @override
   List<Object?> get props => [
@@ -27,7 +28,7 @@ class Project extends Equatable {
     createdAt,
     updatedAt,
     status,
-    organizationUuid,
+    organizationUUID,
   ];
 }
 

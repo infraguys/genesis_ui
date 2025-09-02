@@ -56,7 +56,7 @@ class _UserViewState extends State<_UserView> {
 
     return Scaffold(
       body: BlocConsumer<UserBloc, UserState>(
-        listenWhen: (previous, current) => switch (current) {
+        listenWhen: (_, current) => switch (current) {
           UserUpdatedState() || UserDeletedState() || UserFailureState() || UserLoadedState() => true,
           _ => false,
         },

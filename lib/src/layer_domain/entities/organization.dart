@@ -29,4 +29,6 @@ class Organization extends Equatable {
   ];
 }
 
-extension type OrganizationUUID(String value) {}
+extension type OrganizationUUID(String value) {
+  bool isEqualTo(OrganizationUUID other) => value == other.value;
+}

@@ -1,6 +1,7 @@
 import 'package:genesis/src/layer_data/requests/organizations/create_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/delete_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/edit_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organizations/get_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
 import 'package:genesis/src/layer_data/source/remote/interfaces/i_organizations_api.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
@@ -30,13 +31,19 @@ final class OrganizationsRepository implements IOrganizationsRepository {
 
   @override
   Future<List<Organization>> getOrganizations(params) async {
-    final listOfOrganizationDto = await _organizationsApi.getOrganizations(params.toReq());
-    return listOfOrganizationDto.map((dto) => dto.toEntity()).toList();
+    final dtos = await _organizationsApi.getOrganizations(GetOrganizationsReq(params));
+    return dtos.map((dto) => dto.toEntity()).toList();
   }
 
   @override
   Future<Organization> updateOrganization(params) async {
     final dto = await _organizationsApi.editOrganization(UpdateOrganizationReq(params));
+    return dto.toEntity();
+  }
+
+  @override
+  Future<Organization> getOrganization(uuid) async {
+    final dto = await _organizationsApi.getOrganization(GetOrganizationReq(uuid));
     return dto.toEntity();
   }
 }

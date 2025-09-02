@@ -5,7 +5,7 @@ sealed class RoleBindingsState {
 
   factory RoleBindingsState.loading() = RoleBindingsLoadingState;
 
-  factory RoleBindingsState.loaded() = RoleBindingsLoadedState;
+  factory RoleBindingsState.loaded(List<RoleBinding> bindings) = RoleBindingsLoadedState;
 
   factory RoleBindingsState.created() = RoleBindingsCreatedState;
 
@@ -16,7 +16,11 @@ final class RoleBindingsInitialState implements RoleBindingsState {}
 
 final class RoleBindingsLoadingState implements RoleBindingsState {}
 
-final class RoleBindingsLoadedState implements RoleBindingsState {}
+final class RoleBindingsLoadedState implements RoleBindingsState {
+  RoleBindingsLoadedState(this.bindings);
+
+  final List<RoleBinding> bindings;
+}
 
 final class RoleBindingsCreatedState implements RoleBindingsState {}
 

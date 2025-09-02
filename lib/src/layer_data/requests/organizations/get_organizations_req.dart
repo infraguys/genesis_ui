@@ -32,7 +32,3 @@ final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
     return OrganizationsEndpoints.getOrganizations();
   }
 }
-
-extension GetOrganizationsParamsX on GetOrganizationsParams {
-  GetOrganizationsReq toReq() => GetOrganizationsReq(this);
-}

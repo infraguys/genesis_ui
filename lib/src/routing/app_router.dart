@@ -214,7 +214,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.organization.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: OrganizationPage(organization: state.extra as Organization),
+                      child: OrganizationPage(uuid: OrganizationUUID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],

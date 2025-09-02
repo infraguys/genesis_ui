@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -40,7 +41,7 @@ class ProjectDto implements IDto<Project> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status.toProjectStatus(),
-      organizationUuid: organization,
+      organizationUUID: OrganizationUUID(organization),
     );
   }
 }

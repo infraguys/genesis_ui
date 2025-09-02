@@ -34,7 +34,7 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
   void _onSetCheckedFromResponse(_SetCheckedFromResponse event, Emitter<List<Permission>> emit) {
     final permissions = <Permission>[];
     for (var binding in event.bindings) {
-      final permission = event.allPermissions.singleWhere((it) => it.uuid == binding.permissionUUID);
+      final permission = event.allPermissions.singleWhere((it) => it.uuid.isEqualTo(binding.permissionUUID));
       permissions.add(permission);
     }
     emit(permissions);

@@ -8,6 +8,8 @@ abstract interface class IOrganizationsRepository {
 
   Future<Organization> createOrganization(CreateOrganizationParams params);
 
+  Future<Organization> getOrganization(OrganizationUUID uuid);
+
   Future<Organization> updateOrganization(UpdateOrganizationParams params);
 
   Future<void> deleteOrganization(OrganizationUUID params);

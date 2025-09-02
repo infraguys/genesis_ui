@@ -1,5 +1,7 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/entities/permission_binding.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'permission_binding_dto.g.dart';
@@ -30,8 +32,8 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
       uuid: PermissionBindingUUID(uuid),
       createdAt: createdAt,
       updatedAt: updatedAt,
-      roleUUID: role.split('/').last,
-      permissionUUID: permission.split('/').last,
+      roleUUID: RoleUUID(role.split('/').last),
+      permissionUUID: PermissionUUID(permission.split('/').last),
     );
   }
 }
