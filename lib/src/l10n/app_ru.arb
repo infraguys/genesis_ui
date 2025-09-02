@@ -108,6 +108,14 @@
       }
     }
   },
+  "msgUsersDeleted": "Пользователи({count}) удалены",
+  "@msgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "msgOrganizationUpdated": "Данные организации {name} обновлены",
   "@msgOrganizationUpdated": {
     "placeholders": {

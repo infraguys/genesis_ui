@@ -30,6 +30,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     final useCase = DeleteUsersUseCase(_usersRepository);
     emit(UsersState.loading());
     await useCase(event.users);
+    emit(UsersState.deleted(event.users));
     add(UsersEvent.getUsers());
   }
 

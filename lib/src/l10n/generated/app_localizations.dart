@@ -464,6 +464,12 @@ abstract class AppLocalizations {
   /// **'User {username} has been deleted'**
   String msgUserDeleted(String username);
 
+  /// No description provided for @msgUsersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Users({count}) have been deleted'**
+  String msgUsersDeleted(int count);
+
   /// No description provided for @msgOrganizationUpdated.
   ///
   /// In en, this message translates to:

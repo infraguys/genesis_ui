@@ -111,6 +111,14 @@
       }
     }
   },
+  "msgUsersDeleted": "Users({count}) have been deleted",
+  "@msgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "msgOrganizationUpdated": "Organization {name} has been updated",
   "@msgOrganizationUpdated": {
     "placeholders": {
