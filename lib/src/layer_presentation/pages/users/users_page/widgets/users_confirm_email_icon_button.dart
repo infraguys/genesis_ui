@@ -5,8 +5,8 @@ import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart'
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon_button.dart';
 
-class UsersConfirmEmailIconButton extends StatelessWidget {
-  const UsersConfirmEmailIconButton({super.key});
+class UsersConfirmEmailElevatedButton extends StatelessWidget {
+  const UsersConfirmEmailElevatedButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class UsersConfirmEmailIconButton extends StatelessWidget {
         if (state.isEmpty) {
           return SizedBox.shrink();
         }
-        return ConfirmEmailIconButton(
+        return ConfirmEmailElevatedButton(
           onPressed: () {
             context.read<UsersBloc>().add(UsersEvent.forceConfirmEmails(state));
           },

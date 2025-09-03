@@ -9,6 +9,7 @@ import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_us
 import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/create_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
+import 'package:genesis/src/layer_domain/use_cases/users/force_confirm_emails_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/get_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
@@ -23,6 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on(_onChangeUserPassword);
     on(_onUpdateUser);
     on(_onConfirmEmail);
+    on(_onForceConfirmEmail);
   }
 
   final IUsersRepository _repository;
@@ -74,5 +76,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = ConfirmEmailsUseCase(_repository);
     await useCase(event.users);
     emit(UserState.confirmed());
+  }
+
+  Future<void> _onForceConfirmEmail(_ForceConfirmEmail event, Emitter<UserState> emit) async {
+    final useCase = ForceConfirmEmailUseCase(_repository);
+    emit(UserState.loading());
+    await useCase(event.user.uuid);
+    add(UserEvent.getUser(event.user.uuid));
   }
 }
