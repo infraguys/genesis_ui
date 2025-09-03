@@ -119,25 +119,16 @@ class _ProjectViewState extends State<_ProjectView> {
                 Text(context.$.organizations, style: TextStyle(color: Colors.white54, fontSize: 24)),
                 SizedBox(
                   height: 405,
-                  child: BlocConsumer<OrganizationsBloc, OrganizationsState>(
-                    listener: (context, state) {
-                      if (state is OrganizationsLoadedState) {
-                        final bloc = context.read<OrganizationsSelectionBloc>();
-                        Future.microtask(
-                          () {
-                            bloc.add(
-                              OrganizationsSelectionEvent.setCheckedFromResponse(
-                                project,
-                                organizations: state.organizations,
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    },
+                  child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
                     builder: (context, state) {
                       if (state is OrganizationsLoadedState) {
-                        return OrganizationsTable(organizations: state.organizations);
+                        context.read<OrganizationsSelectionBloc>().add(
+                          OrganizationsSelectionEvent.setCheckedFromResponse(
+                            project,
+                            organizations: state.organizations,
+                          ),
+                        );
+                        return OrganizationsTable(organizations: state.organizations, allowMultiSelect: false);
                       }
                       return AppProgressIndicator();
                     },
@@ -153,15 +144,14 @@ class _ProjectViewState extends State<_ProjectView> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      // context.read<ProjectBloc>().add(
-      //   ProjectEvent.update(
-      //     name: _controllersManager.nameController.text,
-      //     description: _controllersManager.descriptionController.text,
-      //     organizationUUI: context.read<OrganizationsSelectionBloc>().state.first.uuid,
-      //     userUUID: context.read<UsersSelectionBloc>().state.first.uuid,
-      //     roleUUID: context.read<RolesSelectionBloc>().state.map((role) => role.uuid).toList(),
-      //   ),
-      // );
+      context.read<ProjectBloc>().add(
+        ProjectEvent.update(
+          uuid: widget.uuid,
+          name: _controllersManager.nameController.text,
+          description: _controllersManager.descriptionController.text,
+          organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
+        ),
+      );
     }
   }
 }
