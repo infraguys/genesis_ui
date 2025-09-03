@@ -162,8 +162,8 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
           name: _controllersManager.nameController.text,
           description: _controllersManager.descriptionController.text,
           organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
-          userUUID: context.read<UsersSelectionBloc>().state.first.uuid,
-          roleUUID: context.read<RolesSelectionBloc>().state.map((it) => it.uuid).toList(),
+          userUUID: context.read<UsersSelectionBloc>().state.firstOrNull?.uuid,
+          roles: context.read<RolesSelectionBloc>().state,
         ),
       );
     }
