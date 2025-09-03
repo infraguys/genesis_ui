@@ -9,9 +9,7 @@ import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organiza
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -155,15 +153,15 @@ class _ProjectViewState extends State<_ProjectView> {
 
   void save(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<ProjectBloc>().add(
-        ProjectEvent.create(
-          name: _controllersManager.nameController.text,
-          description: _controllersManager.descriptionController.text,
-          organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
-          userUUID: context.read<UsersSelectionBloc>().state.first.uuid,
-          roleUUID: context.read<RolesSelectionBloc>().state.map((role) => role.uuid).toList(),
-        ),
-      );
+      // context.read<ProjectBloc>().add(
+      //   ProjectEvent.update(
+      //     name: _controllersManager.nameController.text,
+      //     description: _controllersManager.descriptionController.text,
+      //     organizationUUI: context.read<OrganizationsSelectionBloc>().state.first.uuid,
+      //     userUUID: context.read<UsersSelectionBloc>().state.first.uuid,
+      //     roleUUID: context.read<RolesSelectionBloc>().state.map((role) => role.uuid).toList(),
+      //   ),
+      // );
     }
   }
 }
