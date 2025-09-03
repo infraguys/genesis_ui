@@ -45,7 +45,7 @@ class _UsersView extends StatelessWidget {
               SearchInput(),
               Spacer(),
               DeleteUsersElevatedButton(),
-              UsersConfirmEmailIconButton(),
+              UsersConfirmEmailElevatedButton(),
               UsersCreateIconButton(),
             ],
           ),

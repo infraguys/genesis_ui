@@ -3,8 +3,8 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
-class ConfirmEmailIconButton extends StatelessWidget {
-  const ConfirmEmailIconButton({required this.onPressed, super.key});
+class ConfirmEmailElevatedButton extends StatelessWidget {
+  const ConfirmEmailElevatedButton({required this.onPressed, super.key});
 
   final VoidCallback? onPressed;
 
