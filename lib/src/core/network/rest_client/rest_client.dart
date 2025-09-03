@@ -87,7 +87,7 @@ class RestClient {
   static Dio _createDio(SecureStorageClient secureStorage) {
     String? token;
 
-    final dio = Dio()
+    return Dio()
       ..options = BaseOptions(
         baseUrl: Env.apiUrl,
         connectTimeout: const Duration(seconds: 15),
@@ -110,7 +110,5 @@ class RestClient {
           ),
         ],
       );
-
-    return dio;
   }
 }

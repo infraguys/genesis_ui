@@ -1,9 +1,51 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
 abstract class Env {
+  static Future<void> loadConfig() async {
+    if (kIsWeb) {
+      final uri = Uri.base.resolve('config.json?ts=${DateTime.now().millisecondsSinceEpoch}');
+      final Response(:data, :statusCode) = await Dio().getUri<Map<String, dynamic>>(
+        uri,
+        options: Options(
+          headers: {'Cache-Control': 'no-cache'},
+        ),
+      );
+      if (data == null) {
+        throw Exception('Failed to load config: HTTP $statusCode');
+      }
+      _setConfig(data);
+    } else {
+      throw UnimplementedError();
+    }
+    // Натив: сначала Documents, потом assets
+    //   try {
+    //     // dart:io путь к файлу
+    //     final dir = await getApplicationDocumentsDirectory(); // path_provider
+    //     final file = File('${dir.path}/config.json');
+    //     if (await file.exists()) {
+    //       return jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    //     }
+    //   } catch (_) {/* пропускаем и идём к assets */}
+    //   final asset = await rootBundle.loadString('assets/config.json');
+    //   return jsonDecode(asset) as Map<String, dynamic>;
+    // }
+  }
+
+  static late final String _apiUrl;
+  static late final String _versionApi;
+
+  static void _setConfig(Map<String, dynamic> config) {
+    _apiUrl = config['api_url'] as String? ?? String.fromEnvironment('api_url');
+    _versionApi = config['version_api'] as String? ?? String.fromEnvironment('version_api', defaultValue: 'v1');
+  }
+
   static final _envString = String.fromEnvironment('env', defaultValue: EnvMode.unknown.name);
 
   // todo: поменять на _base_api_url
-  static const apiUrl = String.fromEnvironment('api_url');
-  static const versionApi = String.fromEnvironment('version_api', defaultValue: 'v1');
+  static String get apiUrl => _apiUrl;
+
+  static String get versionApi => _versionApi;
 
   // Iam client config
   static const iamClientUuid = String.fromEnvironment('iam_client_uuid');

@@ -9,10 +9,13 @@ import 'package:genesis/src/theming/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 void main() async {
-  configureAppUrlStrategy();
-  runApp(const App());
   WidgetsFlutterBinding.ensureInitialized();
+  await Env.loadConfig();
+
+  configureAppUrlStrategy();
   EquatableConfig.stringify = Env.mode.isDev;
+
+  runApp(const App());
 }
 
 class App extends StatefulWidget {

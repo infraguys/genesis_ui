@@ -1,8 +1,8 @@
 import 'package:genesis/src/core/env/env.dart';
 
 abstract class PermissionsEndpoints {
-  static const _permissions = '/${Env.versionApi}/iam/permissions/';
-  static const _permission = '/${Env.versionApi}/iam/permissions/:uuid';
+  static final _permissions = '/${Env.versionApi}/iam/permissions/';
+  static final _permission = '/${Env.versionApi}/iam/permissions/:uuid';
 
   static String getPermissions() => _permissions;
 

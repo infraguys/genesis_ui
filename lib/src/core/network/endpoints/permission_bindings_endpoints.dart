@@ -1,8 +1,8 @@
 import 'package:genesis/src/core/env/env.dart';
 
 abstract class PermissionBindingsEndpoints {
-  static const String _permissionBindings = '/${Env.versionApi}/iam/permission_bindings/';
-  static const String _permissionBinding = '/${Env.versionApi}/iam/permission_bindings/:uuid';
+  static final _permissionBindings = '/${Env.versionApi}/iam/permission_bindings/';
+  static final _permissionBinding = '/${Env.versionApi}/iam/permission_bindings/:uuid';
 
   static String getPermissionBindings() => _permissionBindings;
 
