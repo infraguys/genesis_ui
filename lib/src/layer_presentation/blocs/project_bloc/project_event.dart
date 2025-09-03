@@ -4,11 +4,11 @@ sealed class ProjectEvent {
   factory ProjectEvent.getProject(ProjectUUID uuid) = _GetProject;
 
   factory ProjectEvent.create({
-    required UserUUID userUUID,
     required String name,
     required String description,
-    required OrganizationUUID organizationUUID,
-    required List<RoleUUID> roleUUID,
+    required Organization organization,
+    required User? user,
+    required List<Role> roles,
   }) = _Create;
 
   factory ProjectEvent.delete(ProjectUUID projectUuid) = _Delete;
@@ -24,18 +24,18 @@ sealed class ProjectEvent {
 
 final class _Create implements ProjectEvent {
   _Create({
-    required this.userUUID,
+    required this.user,
     required this.name,
     required this.description,
-    required this.organizationUUID,
-    required this.roleUUID,
+    required this.organization,
+    required this.roles,
   });
 
-  final UserUUID userUUID;
   final String name;
   final String description;
-  final OrganizationUUID organizationUUID;
-  final List<RoleUUID> roleUUID;
+  final Organization organization;
+  final User? user;
+  final List<Role> roles;
 }
 
 final class _Delete implements ProjectEvent {
