@@ -85,7 +85,7 @@ class _AttachProjectViewState extends State<_AttachProjectView> {
                 },
                 buildWhen: (previous, current) => previous.runtimeType != current.runtimeType,
                 builder: (_, state) => switch (state) {
-                  ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects),
+                  ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects, allowMultiSelect: false),
                   _ => AppProgressIndicator(),
                 },
               ),
