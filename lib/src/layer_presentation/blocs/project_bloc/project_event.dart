@@ -6,8 +6,8 @@ sealed class ProjectEvent {
   factory ProjectEvent.create({
     required String name,
     required String description,
-    required Organization organization,
-    required User? user,
+    required OrganizationUUID organizationUUID,
+    required UserUUID? userUUID,
     required List<Role> roles,
   }) = _Create;
 
@@ -24,17 +24,17 @@ sealed class ProjectEvent {
 
 final class _Create implements ProjectEvent {
   _Create({
-    required this.user,
+    required this.userUUID,
     required this.name,
     required this.description,
-    required this.organization,
+    required this.organizationUUID,
     required this.roles,
   });
 
   final String name;
   final String description;
-  final Organization organization;
-  final User? user;
+  final OrganizationUUID organizationUUID;
+  final UserUUID? userUUID;
   final List<Role> roles;
 }
 
