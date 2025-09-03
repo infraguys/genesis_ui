@@ -49,14 +49,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       CreateProjectParams(
         name: event.name,
         description: event.description,
-        organizationUuid: event.organization.uuid,
+        organizationUuid: event.organizationUUID,
       ),
     );
 
-    if (event.user != null) {
+    if (event.userUUID != null) {
       final listOfParams = event.roles.map(
         (role) => CreateRoleBindingParams(
-          userUUID: event.user!.uuid,
+          userUUID: event.userUUID!,
           roleUUID: role.uuid,
           projectUUID: createdProject.uuid,
         ),
