@@ -16,9 +16,14 @@ import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class ProjectsTable extends StatelessWidget {
-  const ProjectsTable({required this.projects, super.key});
+  const ProjectsTable({
+    required this.projects,
+    super.key,
+    this.allowMultiSelect = true,
+  });
 
   final List<Project> projects;
+  final bool allowMultiSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +41,11 @@ class ProjectsTable extends StatelessWidget {
           builder: (context, state) {
             return Checkbox(
               tristate: true,
-              onChanged: (_) => context.read<ProjectsSelectionBloc>().add(
-                ProjectsSelectionEvent.toggleAll(projects),
-              ),
+              onChanged: (_) {
+                if (allowMultiSelect) {
+                  context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleAll(projects));
+                }
+              },
               value: switch (state.length) {
                 0 => false,
                 final len when len == projects.length => true,
@@ -60,9 +67,12 @@ class ProjectsTable extends StatelessWidget {
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(project),
-                onChanged: (_) => context.read<ProjectsSelectionBloc>().add(
-                  ProjectsSelectionEvent.toggle(project),
-                ),
+                onChanged: (_) {
+                  if (!allowMultiSelect) {
+                    context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+                  }
+                  context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggle(project));
+                },
               );
             },
           ),
