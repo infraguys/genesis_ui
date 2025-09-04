@@ -30,6 +30,7 @@ import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/layer_presentation/blocs/app_bloc/app_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
@@ -115,6 +116,11 @@ class DiContainer extends StatelessWidget {
         ],
         child: MultiProvider(
           providers: [
+            BlocProvider(
+              create: (context) {
+                return AppBloc(context.read<RestClient>())..add(AppEvent.loading());
+              },
+            ),
             BlocProvider(
               create: (context) {
                 return AuthBloc(context.read<IAuthRepository>())..add(AuthEvent.restoreSession());
