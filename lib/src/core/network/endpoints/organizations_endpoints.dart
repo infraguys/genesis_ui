@@ -1,8 +1,8 @@
-import 'package:genesis/src/core/env/env.dart';
+
 
 abstract class OrganizationsEndpoints {
-  static final _organizations = '/${Env.versionApi}/iam/organizations/';
-  static final _organization = '/${Env.versionApi}/iam/organizations/:uuid';
+  static const _organizations = '/iam/organizations/';
+  static const _organization = '/iam/organizations/:uuid';
 
   static String getOrganizations() => _organizations;
 

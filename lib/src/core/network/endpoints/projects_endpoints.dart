@@ -1,8 +1,8 @@
-import 'package:genesis/src/core/env/env.dart';
+
 
 abstract class ProjectsEndpoints {
-  static final _projects = '/${Env.versionApi}/iam/projects/';
-  static final _project = '/${Env.versionApi}/iam/projects/:uuid';
+  static const _projects = '/iam/projects/';
+  static const _project = '/iam/projects/:uuid';
 
   static String getProjects() => _projects;
 

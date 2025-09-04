@@ -1,8 +1,8 @@
-import 'package:genesis/src/core/env/env.dart';
+
 
 abstract class UsersEndpoints {
-  static final _users = '/${Env.versionApi}/iam/users/';
-  static final _user = '/${Env.versionApi}/iam/users/:uuid';
+  static const _users = '/iam/users/';
+  static const _user = '/iam/users/:uuid';
 
   static String getUsers() => _users;
 

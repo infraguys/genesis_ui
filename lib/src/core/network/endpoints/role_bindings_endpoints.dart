@@ -1,8 +1,8 @@
-import 'package:genesis/src/core/env/env.dart';
+
 
 abstract class RoleBindingsEndpoints {
-  static final _roleBindings = '/${Env.versionApi}/iam/role_bindings/';
-  static final _roleBinding = '/${Env.versionApi}/iam/role_bindings/:uuid';
+  static const _roleBindings = '/iam/role_bindings/';
+  static const _roleBinding = '/iam/role_bindings/:uuid';
 
   static String getRoleBindings() => _roleBindings;
 

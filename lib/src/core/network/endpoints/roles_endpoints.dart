@@ -1,8 +1,8 @@
-import 'package:genesis/src/core/env/env.dart';
+
 
 abstract class RolesEndpoints {
-  static final _roles = '/${Env.versionApi}/iam/roles/';
-  static final _role = '/${Env.versionApi}/iam/roles/:uuid';
+  static const _roles = '/iam/roles/';
+  static const _role = '/iam/roles/:uuid';
 
   static String getRoles() => _roles;
 

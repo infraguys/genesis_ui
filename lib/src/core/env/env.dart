@@ -14,9 +14,6 @@ abstract class Env {
       if (data == null) {
         throw Exception('Failed to load config: HTTP $statusCode');
       }
-      _setConfig(data);
-    } else {
-      throw UnimplementedError();
     }
     // Натив: сначала Documents, потом assets
     //   try {
@@ -32,20 +29,14 @@ abstract class Env {
     // }
   }
 
-  static late final String _apiUrl;
-  static late final String _versionApi;
-
-  static void _setConfig(Map<String, dynamic> config) {
-    _apiUrl = config['api_url'] as String? ?? String.fromEnvironment('api_url');
-    _versionApi = config['version_api'] as String? ?? String.fromEnvironment('version_api', defaultValue: 'v1');
-  }
+  // static void _setConfig(Map<String, dynamic> config) {
+  //   _apiUrl = config['api_url'] as String? ?? String.fromEnvironment('api_url');
+  //
+  // }
 
   static final _envString = String.fromEnvironment('env', defaultValue: EnvMode.unknown.name);
 
-  // todo: поменять на _base_api_url
-  static String get apiUrl => _apiUrl;
-
-  static String get versionApi => _versionApi;
+  static const apiUrl = String.fromEnvironment('api_url');
 
   // Iam client config
   static const iamClientUuid = String.fromEnvironment('iam_client_uuid');
