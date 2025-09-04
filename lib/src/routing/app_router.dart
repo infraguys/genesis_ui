@@ -21,6 +21,7 @@ import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/users/create_user_page/create_user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/users/users_page/users_page.dart';
@@ -62,6 +63,11 @@ GoRouter createRouter(BuildContext context) {
       };
     },
     routes: [
+      GoRoute(
+        name: 'splash',
+        path: '/splash',
+        pageBuilder: (_, _) => NoTransitionPage(child: const SplashScreen()),
+      ),
       GoRoute(
         name: AppRoutes.signIn.name,
         path: '/sign_in',
