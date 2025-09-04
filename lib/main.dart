@@ -10,7 +10,6 @@ import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Env.loadConfig();
 
   configureAppUrlStrategy();
   EquatableConfig.stringify = Env.mode.isDev;

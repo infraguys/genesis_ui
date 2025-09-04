@@ -31,8 +31,76 @@
 
     <title>genesis</title>
     <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --bg: #1B1B1D; /* фон сплэша */
+            --fg: #e2e8f0; /* цвет текста/прелоадера */
+        }
+
+        #splash {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            background: var(--bg);
+            color: var(--fg);
+            z-index: 999999;
+            transition: opacity .25s ease;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .loader-bar {
+            position: relative;
+            width: 200px; /* длина полоски */
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            overflow: hidden;
+            margin: 20px auto 0;
+        }
+
+        .loader-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--fg), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+<div id="splash">
+    <div style="text-align:center">
+        <img src="../assets/images/logo.svg" alt="logo" width="250" height="250">
+        <div class="loader-bar"></div>
+    </div>
+</div>
 <script src="flutter_bootstrap.js" async></script>
+<script>
+    function hideSplash() {
+        window.removeEventListener('flutter-first-frame', hideSplash);
+        const el = document.getElementById('splash');
+        if (el) {
+            el.classList.add('fade-out');
+            setTimeout(() => el.remove(), 300); // подождать завершения transition
+        }
+    }
+
+    // Это событие кидает сам Flutter при первом кадре
+    window.addEventListener('flutter-first-frame', hideSplash);
+</script>
 </body>
 </html>
