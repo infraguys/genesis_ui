@@ -3,7 +3,7 @@ import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 final class TokenDao {
   TokenDao(this._client);
 
-  final SecureStorageClient _client;
+  final ISecureStorageClient _client;
 
   static const _tokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';

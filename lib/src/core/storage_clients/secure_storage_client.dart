@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 
-class FlutterSecureStorageClient implements SecureStorageClient {
+class FlutterSecureStorageClient implements ISecureStorageClient {
   final _storage = FlutterSecureStorage();
 
   @override
