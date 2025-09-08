@@ -11,13 +11,13 @@ final class SharedPrefStorage implements ISimpleStorageClient {
   @override
   Future<String?> read(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.get(key);
-    return null;
+    return prefs.getString(key);
   }
 
   @override
   Future<void> write({required String key, required String value}) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
+    final res = await prefs.setString(key, value);
+    print(res);
   }
 }

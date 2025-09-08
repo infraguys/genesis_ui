@@ -1,3 +1,7 @@
-import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
+abstract interface class ISecureStorageClient {
+  Future<void> writeSecure({required String key, required String value});
 
-abstract interface class ISecureStorageClient implements ISimpleStorageClient {}
+  Future<String?> readSecure(String key);
+
+  Future<void> deleteSecure(String key);
+}

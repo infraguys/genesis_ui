@@ -1,6 +1,9 @@
 part of 'app_router.dart';
 
 enum AppRoutes {
+  splash,
+  domainSetup,
+
   /// auth
   signIn,
   signUp,

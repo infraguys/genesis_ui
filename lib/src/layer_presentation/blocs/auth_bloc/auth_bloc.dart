@@ -8,7 +8,6 @@ import 'package:genesis/src/layer_domain/use_cases/auth_usecases/restore_session
 import 'package:genesis/src/layer_domain/use_cases/users/sign_in_use_case.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -41,6 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _restoreSession(_RestoreSession event, Emitter<AuthState> emit) async {
     final useCase = RestoreSessionUseCase(_iamClientRepository);
+    emit(AuthState.loading());
     try {
       final user = await useCase();
       emit(AuthState.authenticated(user));

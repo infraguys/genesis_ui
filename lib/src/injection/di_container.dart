@@ -13,6 +13,7 @@ import 'package:genesis/src/layer_data/repositories/projects_repository.dart';
 import 'package:genesis/src/layer_data/repositories/role_bindings_repository.dart';
 import 'package:genesis/src/layer_data/repositories/roles_repository.dart';
 import 'package:genesis/src/layer_data/repositories/users_repository.dart';
+import 'package:genesis/src/layer_data/source/local/api_url_dao.dart';
 import 'package:genesis/src/layer_data/source/local/token_dao.dart';
 import 'package:genesis/src/layer_data/source/remote/organizations_api.dart';
 import 'package:genesis/src/layer_data/source/remote/permission_binding_api.dart';
@@ -30,7 +31,6 @@ import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_presentation/blocs/app_bloc/app_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
@@ -38,6 +38,7 @@ import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bin
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -53,18 +54,18 @@ class DiContainer extends StatelessWidget {
         Provider<ISimpleStorageClient>(
           create: (_) => SharedPrefStorage(),
         ),
-        Provider<SecureStorageClient>(
+        Provider<ISecureStorageClient>(
           create: (_) => FlutterSecureStorageClient(),
         ),
         Provider<RestClient>(
-          create: (context) => RestClient(context.read<SecureStorageClient>()),
+          create: (context) => RestClient(context.read<ISecureStorageClient>()),
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<IAuthRepository>(
             create: (context) {
-              final tokenDao = TokenDao(context.read<SecureStorageClient>());
+              final tokenDao = TokenDao(context.read<ISecureStorageClient>());
               final iamApi = RemoteIamClientApi(context.read<RestClient>());
               return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
             },
@@ -114,16 +115,17 @@ class DiContainer extends StatelessWidget {
             },
           ),
         ],
-        child: MultiProvider(
+        child: MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) {
-                return AppBloc(context.read<RestClient>())..add(AppEvent.loading());
+                final dao = ApiUrlDao(context.read<ISimpleStorageClient>());
+                return DomainSetupCubit(dao)..readApiUrl();
               },
             ),
             BlocProvider(
               create: (context) {
-                return AuthBloc(context.read<IAuthRepository>())..add(AuthEvent.restoreSession());
+                return AuthBloc(context.read<IAuthRepository>());
               },
             ),
             BlocProvider(

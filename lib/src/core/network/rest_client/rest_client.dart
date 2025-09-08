@@ -1,12 +1,19 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 
 /// [RestClient] is Singleton
 class RestClient {
-  RestClient(SecureStorageClient secureStorage) : _dio = _createDio(secureStorage);
+  factory RestClient(ISecureStorageClient secureStorage) => _instance ??= RestClient._(secureStorage);
+
+  RestClient._(ISecureStorageClient secureStorage) : _dio = _createDio(secureStorage);
+
+  static RestClient? _instance;
+
+  void setBaseUrl(String url) {
+    _dio.options.baseUrl = url;
+  }
 
   late final Dio _dio;
 
@@ -84,12 +91,11 @@ class RestClient {
     );
   }
 
-  static Dio _createDio(SecureStorageClient secureStorage) {
+  static Dio _createDio(ISecureStorageClient secureStorage) {
     String? token;
 
     return Dio()
       ..options = BaseOptions(
-        baseUrl: Env.apiUrl,
         connectTimeout: const Duration(seconds: 15),
         contentType: Headers.jsonContentType,
       )
@@ -99,7 +105,7 @@ class RestClient {
           InterceptorsWrapper(
             onRequest: (options, handler) async {
               if (token == null || (token != null && token!.isEmpty)) {
-                token = await secureStorage.read('access_token');
+                token = await secureStorage.readSecure('access_token');
               }
 
               if (token != null) {
