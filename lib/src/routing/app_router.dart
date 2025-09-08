@@ -19,6 +19,8 @@ import 'package:genesis/src/layer_presentation/pages/project_page/project_page.d
 import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/domain_setup_page.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
@@ -30,11 +32,6 @@ import 'package:genesis/src/layer_presentation/shared_widgets/scaffold_with_navi
 import 'package:go_router/go_router.dart';
 
 part 'routes.dart';
-
-final _authRoutes = [
-  '/sign_in',
-  '/sign_up',
-];
 
 GoRouter createRouter(BuildContext context) {
   print('router');
@@ -49,24 +46,54 @@ GoRouter createRouter(BuildContext context) {
 
   return GoRouter(
     debugLogDiagnostics: true,
-    refreshListenable: _GoRouterRefreshStream(authBloc.stream),
+    initialLocation: '/splash',
+    refreshListenable: Listenable.merge(
+      [
+        _GoRouterAuthListenable(context),
+        _GoRouterConfigListenable(context),
+      ],
+    ),
     errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
     navigatorKey: rootNavKey,
     redirect: (context, state) {
-      final bloc = context.read<AuthBloc>();
-      final isAuthRoute = _authRoutes.contains(state.matchedLocation);
+      final GoRouterState(:matchedLocation) = state;
 
-      return switch (bloc.state) {
-        AuthenticatedAuthState() when isAuthRoute => '/',
-        UnauthenticatedAuthState() when !isAuthRoute => '/sign_in',
-        _ => null,
-      };
+      final authState = context.read<AuthBloc>().state;
+      final domainCubitState = context.read<DomainSetupCubit>().state;
+
+      if (domainCubitState is DomainSetupInitialState) {
+        return '/splash';
+      }
+
+      /// Если domain ещё не установлен -> на страницу ввода
+      if (domainCubitState is DomainSetupEmptyState) {
+        return '/domain_setup';
+      }
+
+      switch (authState) {
+        case AuthenticatedAuthState() when matchedLocation == '/sign_in':
+        case AuthenticatedAuthState() when matchedLocation == '/sign_up':
+        case AuthenticatedAuthState() when matchedLocation == '/splash':
+        case AuthenticatedAuthState() when matchedLocation == '/domain_setup':
+          return '/';
+        case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
+        case UnauthenticatedAuthState() when matchedLocation != '/sign_up':
+          return '/sign_in';
+        default:
+          return null;
+      }
     },
     routes: [
       GoRoute(
-        name: 'splash',
+        name: AppRoutes.splash.name,
         path: '/splash',
         pageBuilder: (_, _) => NoTransitionPage(child: const SplashScreen()),
+      ),
+
+      GoRoute(
+        name: AppRoutes.domainSetup.name,
+        path: '/domain_setup',
+        pageBuilder: (_, _) => NoTransitionPage(child: const DomainSetupPage()),
       ),
       GoRoute(
         name: AppRoutes.signIn.name,
@@ -233,15 +260,34 @@ GoRouter createRouter(BuildContext context) {
   );
 }
 
-class _GoRouterRefreshStream extends ChangeNotifier {
-  _GoRouterRefreshStream(Stream<AuthState> stream) {
+class _GoRouterAuthListenable extends ChangeNotifier {
+  _GoRouterAuthListenable(BuildContext context) {
+    final bloc = context.read<AuthBloc>();
     notifyListeners();
-    _subscription = stream.listen((state) {
-      notifyListeners();
-    });
+    _subscription = bloc.stream
+        .distinct((prev, next) => prev.runtimeType == next.runtimeType)
+        .listen((state) => notifyListeners());
   }
 
   late final StreamSubscription<AuthState> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+class _GoRouterConfigListenable extends ChangeNotifier {
+  _GoRouterConfigListenable(BuildContext context) {
+    final cubit = context.read<DomainSetupCubit>();
+    _subscription = cubit.stream
+        .where((evt) => evt is DomainSetupReadState || evt is DomainSetupEmptyState || evt is DomainSetupWrittenState)
+        .distinct((prev, next) => prev.runtimeType == next.runtimeType)
+        .listen((state) => notifyListeners());
+  }
+
+  late final StreamSubscription<DomainSetupState> _subscription;
 
   @override
   void dispose() {
