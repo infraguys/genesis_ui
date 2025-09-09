@@ -9,7 +9,6 @@ import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/proje
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class _ProjectsView extends StatelessWidget {
   const _ProjectsView();
@@ -27,7 +26,7 @@ class _ProjectsView extends StatelessWidget {
         ),
         ButtonsBar.withoutLeftSpacer(
           children: [
-            SearchInput(),
+            // SearchInput(),
             Spacer(),
             DeleteProjectsElevatedButton(),
             ProjectsCreateIconButton(),

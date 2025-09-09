@@ -5,6 +5,7 @@ class AppTextInput extends StatelessWidget {
     required this.controller,
     this.suffixIcon,
     this.obscureText = false,
+    this.onChanged,
     super.key,
     this.hintText,
     this.validator,
@@ -16,6 +17,7 @@ class AppTextInput extends StatelessWidget {
     required this.hintText,
     this.validator,
     this.obscureText = false,
+    this.onChanged,
     super.key,
     final int? maxLines,
     final int? minLines,
@@ -26,10 +28,11 @@ class AppTextInput extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final bool obscureText;
-  final Icon? suffixIcon;
+  final Widget? suffixIcon;
   final int? _maxLines;
   final int? _minLines;
   final String? Function(String? value)? validator;
+  final void Function(String value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,7 @@ class AppTextInput extends StatelessWidget {
       minLines: _minLines,
       autovalidateMode: AutovalidateMode.onUnfocus,
       obscureText: obscureText,
+      onChanged: onChanged,
       style: TextStyle(fontSize: 16, height: 20 / 16),
       decoration: InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
       validator: validator,
