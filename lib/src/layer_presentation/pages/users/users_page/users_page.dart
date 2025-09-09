@@ -11,7 +11,6 @@ import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indic
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class _UsersView extends StatelessWidget {
   const _UsersView();
@@ -42,7 +41,7 @@ class _UsersView extends StatelessWidget {
           ),
           ButtonsBar.withoutLeftSpacer(
             children: [
-              SearchInput(),
+              // SearchInput(),
               Spacer(),
               DeleteUsersElevatedButton(),
               UsersConfirmEmailElevatedButton(),

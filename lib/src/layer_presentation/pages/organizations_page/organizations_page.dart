@@ -9,7 +9,6 @@ import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 
 class _OrganizationsView extends StatefulWidget {
   const _OrganizationsView();
@@ -38,7 +37,7 @@ class _OrganizationsViewState extends State<_OrganizationsView> {
         const SizedBox(height: 24),
         ButtonsBar.withoutLeftSpacer(
           children: [
-            SearchInput(),
+            // SearchInput(),
             Spacer(),
             OrganizationsDeleteIconButton(),
             OrganizationsCreateIconButton(),

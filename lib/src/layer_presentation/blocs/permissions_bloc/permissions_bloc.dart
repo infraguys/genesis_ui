@@ -5,12 +5,12 @@ import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.d
 import 'package:genesis/src/layer_domain/use_cases/permissions/get_permissions_usecases.dart';
 
 part 'permissions_event.dart';
-
 part 'permissions_state.dart';
 
 class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
   PermissionsBloc(this._repository) : super(PermissionsState.initial()) {
     on(_getPermissions);
+    on(_onSearchPermissions);
     add(PermissionsEvent.getPermissions());
   }
 
@@ -20,6 +20,13 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
     final useCase = GetPermissionsUseCases(_repository);
     emit(PermissionsState.loading());
     final permissions = await useCase(event.params);
-    emit(PermissionsState.loaded(permissions));
+    emit(PermissionsState.loaded(permissions: permissions));
+  }
+
+  Future<void> _onSearchPermissions(_SearchPermissions event, Emitter<PermissionsState> emit) async {
+    if (state is PermissionsLoadedState) {
+      final newState = (state as PermissionsLoadedState).copyWith(query: event.query);
+      emit(newState);
+    }
   }
 }

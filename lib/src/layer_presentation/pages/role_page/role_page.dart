@@ -90,8 +90,10 @@ class _RoleViewState extends State<_RoleView> {
                   BreadcrumbItem(text: role.name),
                 ],
               ),
-              ButtonsBar(
+              ButtonsBar.withoutLeftSpacer(
                 children: [
+                  // SearchInput(),
+                  Spacer(),
                   DeleteRoleElevatedButton(role: role),
                   SaveIconButton(onPressed: save),
                 ],

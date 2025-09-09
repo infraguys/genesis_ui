@@ -4,7 +4,10 @@ import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dar
 import 'package:genesis/src/theming/palette.dart';
 
 class SearchInput extends StatelessWidget {
-  const SearchInput({super.key});
+  const SearchInput({required this.controller, super.key, this.onChanged});
+
+  final void Function(String value)? onChanged;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +16,9 @@ class SearchInput extends StatelessWidget {
         maxWidth: 400,
       ),
       child: AppTextInput(
+        onChanged: onChanged,
         hintText: context.$.search,
-        controller: TextEditingController(),
+        controller: controller,
         suffixIcon: Icon(Icons.search, color: Palette.color333333),
       ),
     );
