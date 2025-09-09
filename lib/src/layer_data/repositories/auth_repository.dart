@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/exceptions/no_token_exception.dart';
 import 'package:genesis/src/layer_data/requests/users/get_current_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
 import 'package:genesis/src/layer_data/source/local/token_dao.dart';
@@ -26,6 +27,10 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<User> restoreSession() async {
+    final token = await _tokenDao.readToken();
+    if (token == null || token.isEmpty) {
+      throw NoTokenException();
+    }
     final userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     return userDto.toEntity();
   }
