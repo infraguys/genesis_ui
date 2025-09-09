@@ -12,7 +12,7 @@ class _SplashScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<DomainSetupCubit, DomainSetupState>(
-        listenWhen: (previous, current) => current is DomainSetupReadState,
+        listenWhen: (_, current) => current is DomainSetupReadState,
         listener: (context, state) {
           if (state is DomainSetupReadState) {
             context.read<RestClient>().setBaseUrl(state.apiUrl);
