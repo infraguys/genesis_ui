@@ -29,4 +29,9 @@ class AuthRepository implements IAuthRepository {
     final userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     return userDto.toEntity();
   }
+
+  @override
+  Future<void> signOut() async {
+    await _tokenDao.deleteToken();
+  }
 }
