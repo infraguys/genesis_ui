@@ -33,4 +33,8 @@ enum AppRoutes {
   main,
   monitoring,
   vpn,
+
+  /// extensions
+  installedExtensions,
+  allExtensions,
 }
