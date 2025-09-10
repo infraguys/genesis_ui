@@ -35,14 +35,13 @@ part 'routes.dart';
 
 GoRouter createRouter(BuildContext context) {
   print('router');
-  final authBloc = context.read<AuthBloc>();
-
   final rootNavKey = GlobalKey<NavigatorState>();
   final mainNavKey = GlobalKey<NavigatorState>();
   final usersNavKey = GlobalKey<NavigatorState>();
   final projectsNavKey = GlobalKey<NavigatorState>();
   final rolesNavKey = GlobalKey<NavigatorState>();
   final organizationsNavKey = GlobalKey<NavigatorState>();
+  final extensionsNavKey = GlobalKey<NavigatorState>();
 
   return GoRouter(
     debugLogDiagnostics: true,
@@ -89,7 +88,6 @@ GoRouter createRouter(BuildContext context) {
         path: '/splash',
         pageBuilder: (_, _) => NoTransitionPage(child: const SplashScreen()),
       ),
-
       GoRoute(
         name: AppRoutes.domainSetup.name,
         path: '/domain_setup',
@@ -248,6 +246,27 @@ GoRouter createRouter(BuildContext context) {
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
                       child: OrganizationPage(uuid: OrganizationUUID(state.pathParameters['uuid']!)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: extensionsNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.allExtensions.name,
+                path: '/extensions',
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: Placeholder(),
+                ),
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.installedExtensions.name,
+                    path: 'installed',
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: Placeholder(),
                     ),
                   ),
                 ],

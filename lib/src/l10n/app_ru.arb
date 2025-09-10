@@ -17,6 +17,8 @@
   "roles": "Роли",
   "description": "Описание",
   "extensions": "Расширения",
+  "allExtensions": "Все расширения",
+  "installed": "Установленные",
   "firstName": "Имя",
   "lastName": "Фамилия",
   "surName": "Отчество",

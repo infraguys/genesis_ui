@@ -4,15 +4,10 @@ import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 part 'appbar_theme_data.dart';
-
 part 'drawer_theme_data.dart';
-
 part 'elevated_button_theme_data.dart';
-
 part 'input_decoration_theme.dart';
-
 part 'navigation_drawer_theme_data.dart';
-
 part 'text_theme.dart';
 
 class AppTheme {
@@ -40,7 +35,7 @@ class AppTheme {
       expansionTileTheme: ExpansionTileThemeData(
         textColor: Colors.white,
         collapsedTextColor: Colors.white,
-        childrenPadding: EdgeInsets.only(left: 12),
+        childrenPadding: EdgeInsets.zero,
         shape: OutlineInputBorder(borderSide: BorderSide.none),
       ),
       dialogTheme: DialogThemeData(
@@ -93,9 +88,11 @@ class AppTheme {
         ),
       ),
       expansionTileTheme: ExpansionTileThemeData(
+        collapsedBackgroundColor: Colors.white,
         textColor: Colors.white,
-        collapsedTextColor: Colors.white,
-        childrenPadding: EdgeInsets.only(left: 12),
+        collapsedTextColor: Palette.color333333,
+        iconColor: Palette.colorAFA8A4,
+        childrenPadding: EdgeInsets.zero,
         shape: OutlineInputBorder(borderSide: BorderSide.none),
       ),
       dialogTheme: DialogThemeData(

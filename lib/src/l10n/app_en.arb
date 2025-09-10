@@ -18,6 +18,8 @@
   "roles": "Roles",
   "description": "Description",
   "extensions": "Extensions",
+  "allExtensions": "All extensions",
+  "installed": "Installed",
   "firstName": "First name",
   "lastName": "Last name",
   "surName": "Surname",

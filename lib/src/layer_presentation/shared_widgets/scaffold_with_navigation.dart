@@ -94,12 +94,38 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       onTap: () => context.goNamed(AppRoutes.organizations.name),
                     ),
                     const SizedBox(height: 20.0),
-                    ListTile(
-                      leading: Icon(Icons.extension),
-                      tileColor: Colors.white,
-                      textColor: Palette.color333333,
-                      title: Text(context.$.extensions),
-                      onTap: () {},
+                    // ListTile(
+                    //   leading: Icon(Icons.extension),
+                    //   tileColor: Colors.white,
+                    //   textColor: Palette.color333333,
+                    //   title: Text(context.$.extensions),
+                    //   onTap: () {},
+                    // ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: ExpansionTile(
+                        tilePadding: EdgeInsets.only(right: 8, left: 16.0),
+                        leading: Icon(Icons.extension),
+                        title: Text(context.$.extensions),
+                        children: [
+                          const SizedBox(height: 4.0),
+                          ListTile(
+                            leading: Icon(CupertinoIcons.square_grid_2x2),
+                            title: Text(context.$.allExtensions),
+                            onTap: () {
+                              context.goNamed(AppRoutes.allExtensions.name);
+                            },
+                          ),
+                          const SizedBox(height: 4.0),
+                          ListTile(
+                            leading: Icon(CupertinoIcons.square_grid_2x2_fill),
+                            title: Text(context.$.installed),
+                            onTap: () {
+                              context.replaceNamed(AppRoutes.installedExtensions.name);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
