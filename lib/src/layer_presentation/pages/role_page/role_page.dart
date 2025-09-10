@@ -21,7 +21,10 @@ import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
+
+part './widgets/search_input.dart';
 
 class _RoleView extends StatefulWidget {
   const _RoleView({required this.uuid});
@@ -78,8 +81,8 @@ class _RoleViewState extends State<_RoleView> {
           if (state is! RoleLoadedState) {
             return const AppProgressIndicator();
           }
-          final role = state.role;
 
+          final role = state.role;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 24,
@@ -92,7 +95,7 @@ class _RoleViewState extends State<_RoleView> {
               ),
               ButtonsBar.withoutLeftSpacer(
                 children: [
-                  // SearchInput(),
+                  _SearchInput(),
                   Spacer(),
                   DeleteRoleElevatedButton(role: role),
                   SaveIconButton(onPressed: save),

@@ -28,11 +28,10 @@ final class PermissionsLoadedState implements PermissionsState {
   }
 
   PermissionsLoadedState copyWith({
-    List<Permission>? permissions,
     String? query,
   }) {
     return PermissionsLoadedState(
-      permissions: permissions ?? this.permissions,
+      permissions: _permissions,
       query: query ?? this.query,
     );
   }

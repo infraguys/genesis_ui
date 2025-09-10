@@ -14,18 +14,16 @@ class DeleteRoleElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeleteElevatedButton(
       onPressed: () async {
-        final roleBloc = context.read<RoleBloc>();
         await showDialog<void>(
           context: context,
-          builder: (context) {
+          builder: (_) {
             return DeleteRolesDialog.single(
               role: role,
-              onDelete: () => roleBloc.add(RoleEvent.delete(role)),
+              onDelete: () => context.read<RoleBloc>().add(RoleEvent.delete(role)),
             );
           },
         );
       },
     );
-    ;
   }
 }

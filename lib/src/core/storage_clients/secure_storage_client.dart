@@ -11,8 +11,7 @@ class FlutterSecureStorageClient implements ISecureStorageClient {
 
   @override
   Future<String?> readSecure(String key) async {
-    final x = await _storage.read(key: key);
-    return x;
+    return await _storage.read(key: key);
   }
 
   @override

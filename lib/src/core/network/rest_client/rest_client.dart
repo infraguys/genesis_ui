@@ -11,9 +11,7 @@ class RestClient {
 
   static RestClient? _instance;
 
-  void setBaseUrl(String url) {
-    _dio.options.baseUrl = url;
-  }
+  void setBaseUrl(String url) => _dio.options.baseUrl = url;
 
   late final Dio _dio;
 

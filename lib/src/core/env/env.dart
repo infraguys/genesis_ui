@@ -1,5 +1,3 @@
-
-
 abstract class Env {
   static const _envString = String.fromEnvironment('env');
 
@@ -16,15 +14,14 @@ abstract class Env {
     'dev' => EnvMode.dev,
     'stage' => EnvMode.stage,
     'prod' => EnvMode.prod,
-    _ => EnvMode.unknown,
+    _ => EnvMode.dev,
   };
 }
 
 enum EnvMode {
   dev,
   stage,
-  prod,
-  unknown;
+  prod;
 
   bool get isDev => this == EnvMode.dev;
 
