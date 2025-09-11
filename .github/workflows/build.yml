@@ -54,9 +54,9 @@ jobs:
 
           rm -fr "${ELEMENT_PATH}/${VERSION}"
           mkdir -p "${ELEMENT_PATH}/${VERSION}"
-          mv output/genesis-ui.raw "${ELEMENT_PATH}/${VERSION}/"
+          mv output/genesis-ui.raw.gz "${ELEMENT_PATH}/${VERSION}/"
           cd ${ELEMENT_PATH}/${VERSION}/ && \
-            sha256sum genesis-ui.raw >> ${ELEMENT_PATH}/${VERSION}/SHA256SUMS
+            sha256sum genesis-ui.raw.gz >> ${ELEMENT_PATH}/${VERSION}/SHA256SUMS
       - name: Upload the image version
         uses: actions/upload-artifact@v4
         with:
@@ -88,4 +88,4 @@ jobs:
           genesis-ci -e $CORE_ENDPOINT -u $CORE_USER -p $CORE_PASSWORD nodes add-or-update \
             -u $NODE_UUID \
             -p $PROJECT_ID \
-            -i "${REPO_ENDPOINT}/genesis_ui/${VERSION}/genesis-ui.raw"
+            -i "${REPO_ENDPOINT}/genesis_ui/${VERSION}/genesis-ui.raw.gz"
