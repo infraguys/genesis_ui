@@ -14,6 +14,7 @@ import 'package:genesis/src/layer_presentation/pages/create_project_page/create_
 import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/extensions_page/extensions_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/nodes_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';
@@ -42,6 +43,7 @@ GoRouter createRouter(BuildContext context) {
   final projectsNavKey = GlobalKey<NavigatorState>();
   final rolesNavKey = GlobalKey<NavigatorState>();
   final organizationsNavKey = GlobalKey<NavigatorState>();
+  final nodesNavKey = GlobalKey<NavigatorState>();
   final extensionsNavKey = GlobalKey<NavigatorState>();
 
   return GoRouter(
@@ -250,6 +252,18 @@ GoRouter createRouter(BuildContext context) {
                     ),
                   ),
                 ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: nodesNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.nodes.name,
+                path: '/nodes',
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: NodesPage(),
+                ),
               ),
             ],
           ),

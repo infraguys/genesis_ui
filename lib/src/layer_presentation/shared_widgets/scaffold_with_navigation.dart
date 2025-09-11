@@ -90,17 +90,18 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.business_sharp),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
-                      title: Text('Организации'.hardcoded),
+                      title: Text(context.$.organizations),
                       onTap: () => context.goNamed(AppRoutes.organizations.name),
                     ),
+                    ListTile(
+                      leading: Icon(Icons.hub_rounded),
+                      selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
+                      title: Text('Nodes'.hardcoded),
+                      onTap: () {
+                        context.goNamed(AppRoutes.nodes.name);
+                      },
+                    ),
                     const SizedBox(height: 20.0),
-                    // ListTile(
-                    //   leading: Icon(Icons.extension),
-                    //   tileColor: Colors.white,
-                    //   textColor: Palette.color333333,
-                    //   title: Text(context.$.extensions),
-                    //   onTap: () {},
-                    // ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: ExpansionTile(
@@ -121,6 +122,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                             leading: Icon(CupertinoIcons.square_grid_2x2_fill),
                             title: Text(context.$.installed),
                             onTap: () {
+                              // todo: посмотреть что будет с кнопкой назад
                               context.replaceNamed(AppRoutes.installedExtensions.name);
                             },
                           ),

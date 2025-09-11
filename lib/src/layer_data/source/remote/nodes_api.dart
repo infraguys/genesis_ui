@@ -1,0 +1,56 @@
+import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/network_exception.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
+import 'package:genesis/src/layer_data/dtos/node_dto.dart';
+import 'package:genesis/src/layer_data/requests/nodes_requests/create_node_req.dart';
+import 'package:genesis/src/layer_data/requests/nodes_requests/delete_node_req.dart';
+import 'package:genesis/src/layer_data/requests/nodes_requests/get_node_req.dart';
+import 'package:genesis/src/layer_data/requests/nodes_requests/update_node_req.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_nodes_api.dart';
+
+final class NodesApi implements INodesApi {
+  NodesApi(this._client);
+
+  final RestClient _client;
+
+  @override
+  Future<NodeDto> createNode(CreateNodeReq req) {
+    // TODO: implement createNode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteNode(DeleteNodeReq uuid) {
+    // TODO: implement deleteNode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<NodeDto> getNode(GetNodeReq req) {
+    // TODO: implement getNode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<NodeDto>> getNodes(req) async {
+    try {
+      final Response(:data) = await _client.get<List<dynamic>>(
+        req.toPath(),
+        queryParameters: req.toQuery(),
+      );
+      if (data == null) {
+        return List.empty();
+      }
+      final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+      return castedData.map((it) => NodeDto.fromJson(it)).toList();
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
+  }
+
+  @override
+  Future<NodeDto> updateNode(UpdateNodeReq req) {
+    // TODO: implement updateNode
+    throw UnimplementedError();
+  }
+}

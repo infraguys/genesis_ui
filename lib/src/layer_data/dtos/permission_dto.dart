@@ -49,6 +49,6 @@ enum _StatusDto {
 
   Status toStatus() => switch (this) {
     active => Status.active,
-    unknown => Status.unknown,
+    _ => Status.unknown,
   };
 }
