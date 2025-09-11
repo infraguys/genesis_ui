@@ -1,25 +1,28 @@
+// ignore_for_file: camel_case_extensions
+
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
+import 'package:genesis/src/core/interfaces/base_status.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class StatusLabel extends StatelessWidget {
   const StatusLabel({required Status status, super.key}) : _status = status;
 
-  final Status _status;
+  final BaseStatusEnum _status;
 
   Color get textStatusColor => switch (_status) {
     Status.active => Palette.color6DCF91,
     Status.inactive => Palette.colorF04C4C,
     // TODO: Handle unknown status
-    Status.unknown => throw UnimplementedError(),
+    _ => throw UnimplementedError(),
   };
 
   Color get labelStatusColor => switch (_status) {
     Status.active => Palette.color6DCF91.withValues(alpha: 0.10),
     Status.inactive => Palette.colorF04C4C.withValues(alpha: 0.10),
     // TODO: Handle unknown status
-    Status.unknown => throw UnimplementedError(),
+    _ => throw UnimplementedError(),
   };
 
   @override
