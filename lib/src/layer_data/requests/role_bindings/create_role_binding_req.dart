@@ -15,7 +15,7 @@ final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {
     return {
       'user': '/v1/iam/users/${_params.userUUID}',
       'role': '/v1/iam/roles/${_params.roleUUID.value}',
-      'project': ?_params.projectUUID.notNull((it) => ProjectsEndpoints.getProject(it.value)),
+      'project': ?_params.projectUUID.notNull((it) => '/v1${ProjectsEndpoints.getProject(it.value)}'),
     };
   }
 
