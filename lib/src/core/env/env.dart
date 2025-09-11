@@ -11,7 +11,6 @@ abstract class Env {
   static const scope = String.fromEnvironment('scope');
 
   static EnvMode mode = switch (_envString) {
-    'dev' => EnvMode.dev,
     'stage' => EnvMode.stage,
     'prod' => EnvMode.prod,
     _ => EnvMode.dev,

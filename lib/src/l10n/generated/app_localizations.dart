@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'Extensions'**
   String get extensions;
 
+  /// No description provided for @extension.
+  ///
+  /// In en, this message translates to:
+  /// **'Extension'**
+  String get extension;
+
   /// No description provided for @allExtensions.
   ///
   /// In en, this message translates to:

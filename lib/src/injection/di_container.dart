@@ -6,6 +6,7 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
+import 'package:genesis/src/layer_data/repositories/extensions_repository.dart';
 import 'package:genesis/src/layer_data/repositories/organizations_repository.dart';
 import 'package:genesis/src/layer_data/repositories/permission_bindings_repository.dart';
 import 'package:genesis/src/layer_data/repositories/permissions_repository.dart';
@@ -15,6 +16,7 @@ import 'package:genesis/src/layer_data/repositories/roles_repository.dart';
 import 'package:genesis/src/layer_data/repositories/users_repository.dart';
 import 'package:genesis/src/layer_data/source/local/api_url_dao.dart';
 import 'package:genesis/src/layer_data/source/local/token_dao.dart';
+import 'package:genesis/src/layer_data/source/remote/extensions_api.dart';
 import 'package:genesis/src/layer_data/source/remote/organizations_api.dart';
 import 'package:genesis/src/layer_data/source/remote/permission_binding_api.dart';
 import 'package:genesis/src/layer_data/source/remote/permissions_api.dart';
@@ -24,6 +26,7 @@ import 'package:genesis/src/layer_data/source/remote/role_bindings_api.dart';
 import 'package:genesis/src/layer_data/source/remote/roles_api.dart';
 import 'package:genesis/src/layer_data/source/remote/users_api.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_extensions_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -112,6 +115,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final permissionBindingsApi = PermissionBindingsApi(context.read<RestClient>());
               return PermissionBindingsRepository(permissionBindingsApi);
+            },
+          ),
+          RepositoryProvider<IExtensionsRepository>(
+            create: (context) {
+              final extensionApi = ExtensionsApi(context.read<RestClient>());
+              return ExtensionsRepository(extensionApi);
             },
           ),
         ],

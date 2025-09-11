@@ -18,6 +18,7 @@
   "roles": "Roles",
   "description": "Description",
   "extensions": "Extensions",
+  "extension": "Extension",
   "allExtensions": "All extensions",
   "installed": "Installed",
   "firstName": "First name",

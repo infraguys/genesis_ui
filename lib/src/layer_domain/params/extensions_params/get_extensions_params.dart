@@ -1,13 +1,13 @@
 final class GetExtensionsParams {
-  GetExtensionsParams({
-    required this.name,
-    required this.description,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.status,
-    required this.version,
-    required this.installType,
-    required this.link,
+  const GetExtensionsParams({
+    this.name,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.status,
+    this.version,
+    this.installType,
+    this.link,
   });
 
   final String? name;

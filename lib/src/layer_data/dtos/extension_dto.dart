@@ -47,15 +47,3 @@ final class ExtensionDto implements IDto<Extension> {
     );
   }
 }
-
-//  {
-//     "uuid": "12345678-2e86-5a75-aabf-1ec34371a379",
-//     "name": "core",
-//     "description": "",
-//     "created_at": "2025-09-09T15:06:53.685028Z",
-//     "updated_at": "2025-09-09T15:06:53.685030Z",
-//     "status": "NEW",
-//     "version": "0.0.1",
-//     "install_type": "MANUAL",
-//     "link": "$core"
-//   }
