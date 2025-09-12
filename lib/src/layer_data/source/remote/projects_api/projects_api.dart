@@ -3,7 +3,7 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
+import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
 
 final class ProjectsApi implements IProjectsApi {
   ProjectsApi(this._client);

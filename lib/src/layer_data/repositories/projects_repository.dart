@@ -3,9 +3,9 @@ import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_projects_api.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_role_bindings_api.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
+import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
+import 'package:genesis/src/layer_data/source/remote/role_bindings_api/i_role_bindings_api.dart';
+import 'package:genesis/src/layer_data/source/remote/roles_api/i_roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';

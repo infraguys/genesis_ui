@@ -3,8 +3,8 @@ import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
-import 'package:genesis/src/layer_data/requests/organizations/get_organizations_req.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_organizations_api.dart';
+import 'package:genesis/src/layer_data/requests/organization_requests/get_organizations_req.dart';
+import 'package:genesis/src/layer_data/source/remote/organizations_api/i_organizations_api.dart';
 
 final class OrganizationsApi implements IOrganizationsApi {
   OrganizationsApi(this._client);
@@ -36,12 +36,6 @@ final class OrganizationsApi implements IOrganizationsApi {
     } on DioException catch (e) {
       throw NetworkException(e);
     }
-  }
-
-  @override
-  Future<OrganizationDto> getOrganizationByUuid(String uuid) {
-    // TODO: implement getOrganizationByUuid
-    throw UnimplementedError();
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_roles_api.dart';
+import 'package:genesis/src/layer_data/source/remote/roles_api/i_roles_api.dart';
 
 final class RolesApi implements IRolesApi {
   RolesApi(this._client);

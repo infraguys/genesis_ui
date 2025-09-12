@@ -8,7 +8,7 @@ import 'package:genesis/src/layer_data/requests/users/force_confirm_email_req.da
 import 'package:genesis/src/layer_data/requests/users/get_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_users_req.dart';
 import 'package:genesis/src/layer_data/requests/users/update_user_req.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_users_api.dart';
+import 'package:genesis/src/layer_data/source/remote/users_api/i_users_api.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';

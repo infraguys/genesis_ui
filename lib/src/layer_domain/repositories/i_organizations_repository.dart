@@ -13,6 +13,4 @@ abstract interface class IOrganizationsRepository {
   Future<Organization> updateOrganization(UpdateOrganizationParams params);
 
   Future<void> deleteOrganization(OrganizationUUID params);
-
-  Future<Organization> getOrganizationByUuid(String uuid);
 }

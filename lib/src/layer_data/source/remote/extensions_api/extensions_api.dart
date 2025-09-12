@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/extension_dto.dart';
-import 'package:genesis/src/layer_data/source/remote/interfaces/i_extensions_api.dart';
+import 'package:genesis/src/layer_data/source/remote/extensions_api/i_extensions_api.dart';
 
 final class ExtensionsApi implements IExtensionsApi {
   ExtensionsApi(this._client);
