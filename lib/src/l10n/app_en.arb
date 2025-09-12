@@ -58,6 +58,7 @@
   "unverified": "Unverified",
   "requiredField": "This field is required",
   "search": "Search",
+  "nodes": "Nodes",
   "deleteRole": "Delete role {name}?",
   "@deleteRole": {
     "placeholders": {

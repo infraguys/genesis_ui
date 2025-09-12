@@ -9,6 +9,6 @@ final class ConfirmEmailReq implements PathEncodable {
 
   @override
   String toPath() {
-    return UsersEndpoints.confirmUserEmail(_uuid.value);
+    return UsersEndpoints.confirmUserEmail(_uuid);
   }
 }

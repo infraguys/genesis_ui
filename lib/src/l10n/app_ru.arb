@@ -55,6 +55,7 @@
   "unverified": "Не подтвержден",
   "requiredField": "Обязательное поле",
   "search": "Поиск",
+  "nodes": "Ноды",
   "deleteRole": "Удалить роль {name}?",
   "@deleteRole": {
     "placeholders": {

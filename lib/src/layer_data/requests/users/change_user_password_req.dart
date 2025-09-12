@@ -18,6 +18,6 @@ class ChangeUserPasswordReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return UsersEndpoints.changeUserPassword(_params.uuidUUID.value);
+    return UsersEndpoints.changeUserPassword(_params.uuidUUID);
   }
 }

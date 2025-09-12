@@ -440,6 +440,12 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
+  /// No description provided for @nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get nodes;
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:
