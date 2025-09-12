@@ -2,7 +2,7 @@ import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
 final class GetNodesParams {
-  GetNodesParams({
+  const GetNodesParams({
     this.createdAt,
     this.updatedAt,
     this.projectId,
