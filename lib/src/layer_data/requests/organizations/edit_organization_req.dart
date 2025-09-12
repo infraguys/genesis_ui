@@ -18,6 +18,6 @@ final class UpdateOrganizationReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.updateOrganization(_params.uuid.value);
+    return OrganizationsEndpoints.updateOrganization(_params.uuid);
   }
 }

@@ -9,6 +9,6 @@ final class DeleteProjectReq implements PathEncodable {
 
   @override
   String toPath() {
-    return ProjectsEndpoints.deleteProject(_uuid.value);
+    return ProjectsEndpoints.deleteProject(_uuid);
   }
 }

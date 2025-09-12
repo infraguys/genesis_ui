@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
@@ -96,7 +95,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ListTile(
                       leading: Icon(Icons.hub_rounded),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
-                      title: Text('Nodes'.hardcoded),
+                      title: Text(context.$.nodes),
                       onTap: () {
                         context.goNamed(AppRoutes.nodes.name);
                       },

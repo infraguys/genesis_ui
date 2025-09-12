@@ -9,6 +9,6 @@ final class DeleteOrganizationReq implements PathEncodable {
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.deleteOrganization(_uuid.value);
+    return OrganizationsEndpoints.deleteOrganization(_uuid);
   }
 }

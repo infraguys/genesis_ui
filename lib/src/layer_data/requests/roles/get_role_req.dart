@@ -9,6 +9,6 @@ final class GetRoleReq implements PathEncodable {
 
   @override
   String toPath() {
-    return RolesEndpoints.getRole(_uuid.value);
+    return RolesEndpoints.getRole(_uuid);
   }
 }

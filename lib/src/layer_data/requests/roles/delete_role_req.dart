@@ -9,6 +9,6 @@ final class DeleteRoleReq implements PathEncodable {
 
   @override
   String toPath() {
-    return RolesEndpoints.deleteRole(_uuid.value);
+    return RolesEndpoints.deleteRole(_uuid);
   }
 }

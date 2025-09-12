@@ -1,19 +1,22 @@
+import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/layer_domain/entities/permission.dart';
+
 abstract class PermissionsEndpoints {
-  static const _permissions = '/iam/permissions/';
-  static const _permission = '/iam/permissions/:uuid';
+  static const _permissions = '/${Env.versionApi}/iam/permissions/';
+  static const _permission = '/${Env.versionApi}/iam/permissions/:uuid';
 
   static String getPermissions() => _permissions;
 
   static String createPermission() => _permissions;
 
-  static String getPermission(String uuid) => _permission.fillUuid(uuid);
+  static String getPermission(PermissionUUID uuid) => _permission.fillUuid(uuid);
 
-  static String updatePermission(String uuid) => _permission.fillUuid(uuid);
+  static String updatePermission(PermissionUUID uuid) => _permission.fillUuid(uuid);
 
-  static String deletePermission(String uuid) => _permission.fillUuid(uuid);
+  static String deletePermission(PermissionUUID uuid) => _permission.fillUuid(uuid);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
+  String fillUuid(PermissionUUID uuid) => replaceFirst(':uuid', uuid.value);
 }

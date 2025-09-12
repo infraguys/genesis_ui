@@ -9,6 +9,6 @@ final class GetOrganizationReq implements PathEncodable {
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.getOrganization(_uuid.value);
+    return OrganizationsEndpoints.getOrganization(_uuid);
   }
 }

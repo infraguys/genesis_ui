@@ -9,6 +9,6 @@ final class GetUserReq implements PathEncodable {
 
   @override
   String toPath() {
-    return UsersEndpoints.getUser(_uuid.value);
+    return UsersEndpoints.getUser(_uuid);
   }
 }

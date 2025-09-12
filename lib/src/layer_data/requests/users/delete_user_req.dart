@@ -9,6 +9,6 @@ final class DeleteUserReq implements PathEncodable {
 
   @override
   String toPath() {
-    return UsersEndpoints.deleteUser(_uuid.value);
+    return UsersEndpoints.deleteUser(_uuid);
   }
 }
