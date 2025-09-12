@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 
 /// [RestClient] is Singleton
@@ -11,7 +12,7 @@ class RestClient {
 
   static RestClient? _instance;
 
-  void setBaseUrl(String url) => _dio.options.baseUrl = url;
+  void setBaseUrl(String url) => _dio.options.baseUrl = url + Env.apiPrefix;
 
   late final Dio _dio;
 

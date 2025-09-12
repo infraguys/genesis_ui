@@ -1,5 +1,5 @@
 import 'package:genesis/src/layer_data/requests/extensions_requests/get_extensions_req.dart';
-import 'package:genesis/src/layer_data/source/remote/extensions_api.dart';
+import 'package:genesis/src/layer_data/source/remote/interfaces/i_extensions_api.dart';
 import 'package:genesis/src/layer_domain/entities/extension.dart';
 import 'package:genesis/src/layer_domain/params/extensions_params/get_extensions_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_extensions_repository.dart';
@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_domain/repositories/i_extensions_repository.da
 final class ExtensionsRepository implements IExtensionsRepository {
   ExtensionsRepository(this._api);
 
-  final ExtensionsApi _api;
+  final IExtensionsApi _api;
 
   @override
   Future<Extension> getExtension(ExtensionUUID uuid) {

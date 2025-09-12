@@ -2,6 +2,8 @@ abstract class Env {
   static const _envString = String.fromEnvironment('env');
 
   // Iam client config
+
+  static const versionApi = String.fromEnvironment('version_api', defaultValue: 'v1');
   static const iamClientUuid = String.fromEnvironment('iam_client_uuid');
   static const clientId = String.fromEnvironment('client_id');
   static const clientSecret = String.fromEnvironment('client_secret');
@@ -9,6 +11,8 @@ abstract class Env {
   static const ttl = int.fromEnvironment('ttl');
   static const refreshTtl = int.fromEnvironment('refresh_ttl');
   static const scope = String.fromEnvironment('scope');
+
+  static const apiPrefix = '/api/$versionApi';
 
   static EnvMode mode = switch (_envString) {
     'stage' => EnvMode.stage,
