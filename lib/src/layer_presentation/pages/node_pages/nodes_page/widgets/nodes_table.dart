@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
@@ -33,17 +35,21 @@ class NodesTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        Checkbox(
-          tristate: true,
-          onChanged: (_) {
-            if (allowMultiSelect) {
-              // context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleAll(extensions));
-            }
-          },
-          value: switch (0) {
-            0 => false,
-            final len when len == nodes.length => true,
-            _ => null,
+        BlocBuilder<NodesSelectionCubit, List<Node>>(
+          builder: (context, state) {
+            return Checkbox(
+              tristate: true,
+              onChanged: (_) {
+                if (allowMultiSelect) {
+                  context.read<NodesSelectionCubit>().onToggleAll(nodes);
+                }
+              },
+              value: switch (state.length) {
+                0 => false,
+                final len when len == nodes.length => true,
+                _ => null,
+              },
+            );
           },
         ),
         Text('Nodes'.hardcoded, style: TextStyle(color: Colors.white)),
@@ -55,13 +61,17 @@ class NodesTable extends StatelessWidget {
       cellsBuilder: (index) {
         final node = nodes[index];
         return [
-          Checkbox(
-            value: false,
-            onChanged: (_) {
-              // if (!allowMultiSelect) {
-              //   context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
-              // }
-              // context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggle(project));
+          BlocBuilder<NodesSelectionCubit, List<Node>>(
+            builder: (context, state) {
+              return Checkbox(
+                value: state.contains(node),
+                onChanged: (_) {
+                  if (!allowMultiSelect) {
+                    context.read<NodesSelectionCubit>().onClear();
+                  }
+                  context.read<NodesSelectionCubit>().onToggle(node);
+                },
+              );
             },
           ),
           Text(node.name, style: TextStyle(color: Colors.white)),
