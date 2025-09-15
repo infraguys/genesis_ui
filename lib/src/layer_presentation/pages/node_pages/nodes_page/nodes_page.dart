@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/widgets/nodes_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/create_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
+
+part './widgets/delete_elevated_button.dart';
 
 class _NodesView extends StatelessWidget {
   const _NodesView({super.key});
@@ -28,6 +33,7 @@ class _NodesView extends StatelessWidget {
         ButtonsBar(
           children: [
             // SearchInput(),
+            _DeleteNodesElevatedButton(),
             CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createNode.name)),
           ],
         ),

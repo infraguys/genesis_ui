@@ -458,6 +458,18 @@ abstract class AppLocalizations {
   /// **'Delete selected ({count}) roles?'**
   String deleteRoles(int count);
 
+  /// No description provided for @deleteNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete node {name}?'**
+  String deleteNode(String name);
+
+  /// No description provided for @deleteNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) nodes?'**
+  String deleteNodes(int count);
+
   /// No description provided for @deleteUser.
   ///
   /// In en, this message translates to:

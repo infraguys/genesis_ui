@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_users_dialog.dart';
+part of '../user_page.dart';
 
-class DeleteUserElevatedButton extends StatelessWidget {
-  const DeleteUserElevatedButton({required this.user, super.key});
+class _DeleteUserElevatedButton extends StatelessWidget {
+  const _DeleteUserElevatedButton({required this.user, super.key});
 
   final User user;
 
@@ -18,8 +13,8 @@ class DeleteUserElevatedButton extends StatelessWidget {
         await showDialog<void>(
           context: context,
           builder: (context) {
-            return DeleteUsersDialog.single(
-              user: user,
+            return ConfirmationDialog(
+              message: context.$.deleteUser(user.username),
               onDelete: () => userBloc.add(UserEvent.deleteUser(user)),
             );
           },

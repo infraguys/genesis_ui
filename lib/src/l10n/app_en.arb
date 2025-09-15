@@ -75,6 +75,22 @@
       }
     }
   },
+  "deleteNode": "Delete node {name}?",
+  "@deleteNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteNodes": "Delete selected ({count}) nodes?",
+  "@deleteNodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "deleteUser": "Delete user {name}?",
   "@deleteUser": {
     "placeholders": {

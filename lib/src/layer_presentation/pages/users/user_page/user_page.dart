@@ -13,17 +13,20 @@ import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/confirm_user_email_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/delete_user_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
+
+part './widgets/delete_user_elevated_button.dart';
 
 class _UserView extends StatefulWidget {
   const _UserView({required this.userUUID});
@@ -102,7 +105,7 @@ class _UserViewState extends State<_UserView> {
                 ),
                 ButtonsBar(
                   children: [
-                    DeleteUserElevatedButton(user: user),
+                    _DeleteUserElevatedButton(user: user),
                     ConfirmUserEmailElevatedButton(user: user),
                     SaveIconButton(onPressed: () => save(user.uuid)),
                   ],

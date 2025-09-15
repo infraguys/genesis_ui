@@ -72,6 +72,22 @@
       }
     }
   },
+  "deleteNode": "Удалить ноду {name}?",
+  "@deleteNode": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteNodes": "Удалить выбранные ({count}) ноды?",
+  "@deleteNodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "deleteUser": "Удалить пользователя {name}?",
   "@deleteUser": {
     "placeholders": {
