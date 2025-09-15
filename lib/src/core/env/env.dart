@@ -12,7 +12,7 @@ abstract class Env {
   static const refreshTtl = int.fromEnvironment('refresh_ttl');
   static const scope = String.fromEnvironment('scope');
 
-  static const apiPrefix = '/api/$versionApi';
+  static const apiPrefix = '/api';
 
   static EnvMode mode = switch (_envString) {
     'stage' => EnvMode.stage,

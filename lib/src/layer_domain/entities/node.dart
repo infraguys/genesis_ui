@@ -1,11 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/base_status.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
-class Node {
-  Node({
+class Node extends Equatable {
+  const Node({
     required this.uuid,
     required this.createdAt,
     required this.updatedAt,
@@ -32,6 +33,22 @@ class Node {
   final String image;
   final NodeStatus status;
   final NodeType nodeType;
+
+  @override
+  List<Object?> get props => [
+    uuid,
+    createdAt,
+    updatedAt,
+    projectId,
+    name,
+    description,
+    cores,
+    ram,
+    rootDiskSize,
+    image,
+    status,
+    nodeType,
+  ];
 }
 
 enum NodeType {
