@@ -14,9 +14,16 @@ final class NodesApi implements INodesApi {
   final RestClient _client;
 
   @override
-  Future<NodeDto> createNode(CreateNodeReq req) {
-    // TODO: implement createNode
-    throw UnimplementedError();
+  Future<NodeDto> createNode(CreateNodeReq req) async {
+    try {
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
+        req.toPath(),
+        data: req.toJson(),
+      );
+      return NodeDto.fromJson(data!);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override

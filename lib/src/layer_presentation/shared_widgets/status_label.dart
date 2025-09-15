@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class StatusLabel extends StatelessWidget {
-  const StatusLabel({required Status status, super.key}) : _status = status;
+  const StatusLabel({required BaseStatusEnum status, super.key}) : _status = status;
 
   final BaseStatusEnum _status;
 

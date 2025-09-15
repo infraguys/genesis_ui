@@ -75,6 +75,16 @@ class AppTheme {
       ),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: _inputDecorationThemeData,
+        menuStyle: MenuStyle(
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+        ),
+      ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: Colors.white,
       ),

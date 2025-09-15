@@ -1,3 +1,4 @@
+import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/get_nodes_req.dart';
 import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
@@ -9,9 +10,9 @@ final class NodesRepository implements INodesRepository {
   final INodesApi _client;
 
   @override
-  Future<Node> createNode() {
-    // TODO: implement createNode
-    throw UnimplementedError();
+  Future<Node> createNode(params) async {
+    final dto = await _client.createNode(CreateNodeReq(params));
+    return dto.toEntity();
   }
 
   @override

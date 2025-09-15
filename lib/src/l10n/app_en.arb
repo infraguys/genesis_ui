@@ -1,6 +1,8 @@
 {
   "@@locale" : "en",
   "main": "Main",
+  "newText": "New",
+  "error": "Error",
   "pageNotFound": "Page not found",
   "goBack": "Go back",
   "genesis": "Genesis",

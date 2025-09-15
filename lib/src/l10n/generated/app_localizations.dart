@@ -98,6 +98,18 @@ abstract class AppLocalizations {
   /// **'Main'**
   String get main;
 
+  /// No description provided for @newText.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newText;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
   /// No description provided for @pageNotFound.
   ///
   /// In en, this message translates to:

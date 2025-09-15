@@ -4,11 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_label.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
@@ -76,7 +75,7 @@ class NodesTable extends StatelessWidget {
           ),
           Text(node.name, style: TextStyle(color: Colors.white)),
           // todo: поменять статус
-          StatusLabel(status: Status.active), // Assuming all projects are active for simplicity
+          NodeStatusLabel(status: node.status), // Assuming all projects are active for simplicity
           RichText(
             text: TextSpan(
               children: [

@@ -2,6 +2,8 @@
   "@@locale" : "ru",
   "signOut": "Выход",
   "main": "Главная",
+  "newText": "Новый",
+  "error": "Ошибка",
   "pageNotFound": "Страница не найдена",
   "goBack": "Назад",
   "loading": "Загрузка",

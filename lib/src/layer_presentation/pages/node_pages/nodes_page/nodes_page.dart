@@ -61,7 +61,7 @@ class NodesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NodesSelectionCubit(),
-      child: _NodesView(key: key),
+      child: _NodesView(),
     );
   }
 }
