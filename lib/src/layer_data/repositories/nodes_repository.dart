@@ -1,4 +1,5 @@
 import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
+import 'package:genesis/src/layer_data/requests/node_requests/delete_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/get_nodes_req.dart';
 import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
@@ -16,9 +17,8 @@ final class NodesRepository implements INodesRepository {
   }
 
   @override
-  Future<void> deleteNode(uuid) {
-    // TODO: implement deleteNode
-    throw UnimplementedError();
+  Future<void> deleteNode(uuid) async {
+    await _client.deleteNode(DeleteNodeReq(uuid));
   }
 
   @override

@@ -7,7 +7,6 @@ import 'package:genesis/src/layer_domain/use_cases/users/force_confirm_emails_us
 import 'package:genesis/src/layer_domain/use_cases/users/get_users_usecase.dart';
 
 part 'users_event.dart';
-
 part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
@@ -15,7 +14,6 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     on(_getUsers);
     on(_onDeleteUsers);
     on(_onForceConfirmEmails);
-    add(UsersEvent.getUsers());
   }
 
   final IUsersRepository _usersRepository;

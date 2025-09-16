@@ -103,9 +103,11 @@ class RestClient {
           LogInterceptor(request: false, requestHeader: false, responseHeader: false),
           InterceptorsWrapper(
             onRequest: (options, handler) async {
-              if (token == null || (token != null && token!.isEmpty)) {
-                token = await secureStorage.readSecure('access_token');
-              }
+              // if (token == null || (token != null && token!.isEmpty)) {
+              //   token = await secureStorage.readSecure('access_token');
+              // }
+
+              token = await secureStorage.readSecure('access_token');
 
               if (token != null) {
                 options.headers['Authorization'] = 'Bearer $token';

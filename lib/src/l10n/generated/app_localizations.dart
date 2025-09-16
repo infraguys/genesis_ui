@@ -541,6 +541,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Role {name} has been deleted'**
   String msgRoleDeleted(String name);
+
+  /// No description provided for @msgNodeCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {name} has been created'**
+  String msgNodeCreated(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

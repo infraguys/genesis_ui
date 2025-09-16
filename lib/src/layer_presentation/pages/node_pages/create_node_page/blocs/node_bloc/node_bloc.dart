@@ -21,6 +21,6 @@ class NodeBloc extends Bloc<NodeEvent, NodeState> {
     final useCase = CreateNodeUseCase(_repository);
     emit(NodeState.loading());
     final node = await useCase(event.params);
-    emit(NodeState.loaded(node));
+    emit(NodeState.created(node));
   }
 }

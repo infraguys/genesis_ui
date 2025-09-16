@@ -19,7 +19,9 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
         req.toPath(),
         data: req.toJson(),
         options: Options(
-          headers: {Headers.contentTypeHeader: Headers.formUrlEncodedContentType},
+          headers: {
+            Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+          },
         ),
       );
       return TokenDto.fromJson(data!);

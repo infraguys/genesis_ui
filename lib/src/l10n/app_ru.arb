@@ -169,5 +169,13 @@
         "type": "String"
       }
     }
+  },
+  "msgNodeCreated": "Нода {name} удалена",
+  "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

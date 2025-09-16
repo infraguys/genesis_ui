@@ -4,21 +4,19 @@ import 'package:genesis/src/core/network/endpoints/projects_endpoints.dart';
 import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
 
 final class GetProjectsReq implements PathEncodable, QueryEncodable {
-  const GetProjectsReq(this.params);
+  const GetProjectsReq([this._params = const GetProjectsParams()]);
 
-  final GetProjectsParams params;
+  final GetProjectsParams _params;
 
   @override
   Map<String, dynamic> toQuery() {
-    return {};
+    return {
+      'name': ?_params.name,
+    };
   }
 
   @override
   String toPath() {
     return ProjectsEndpoints.getProjects();
   }
-}
-
-extension GetProjectsParamsX on GetProjectsParams {
-  GetProjectsReq toReq() => GetProjectsReq(this);
 }

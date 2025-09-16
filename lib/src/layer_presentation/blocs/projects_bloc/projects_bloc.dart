@@ -6,14 +6,12 @@ import 'package:genesis/src/layer_domain/use_cases/projects/delete_projects_usec
 import 'package:genesis/src/layer_domain/use_cases/projects/get_projects_usecase.dart';
 
 part 'projects_event.dart';
-
 part 'projects_state.dart';
 
 class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   ProjectsBloc(this._projectsRepository) : super(ProjectsState.initial()) {
     on(_onGetProjects);
     on(_onDeleteProjects);
-    add(ProjectsEvent.getProjects());
   }
 
   final IProjectsRepository _projectsRepository;

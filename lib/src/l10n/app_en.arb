@@ -172,5 +172,13 @@
         "type": "String"
       }
     }
+  },
+  "msgNodeCreated": "Node {name} has been created",
+  "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

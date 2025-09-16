@@ -3,8 +3,8 @@ import 'package:genesis/src/layer_presentation/pages/main_page/widgets/projects_
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+class _DashboardView extends StatelessWidget {
+  const _DashboardView({super.key});
 
   @override
   Widget build(context) {
@@ -17,14 +17,6 @@ class DashboardPage extends StatelessWidget {
           Row(
             spacing: 10,
             children: [
-              // Flexible(
-              //   child: SummaryCard(
-              //     title: 'Total Nodes',
-              //     value: 38.toString(),
-              //     secondaryTitle: 'Broken',
-              //     secondaryValue: '0',
-              //   ),
-              // ),
               Expanded(
                 // width: 200,
                 // height: 100,
@@ -59,5 +51,14 @@ class DashboardPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _DashboardView();
   }
 }

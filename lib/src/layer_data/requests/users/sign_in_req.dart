@@ -15,7 +15,7 @@ final class SignInReq implements JsonEncodable, PathEncodable {
       'grant_type': Env.grantType,
       'client_id': Env.clientId,
       'client_secret': Env.clientSecret,
-      'scope': Env.scope,
+      'scope': _params.scope,
       'ttl': Env.ttl,
       'refresh_ttl': Env.refreshTtl,
       'username': _params.username,

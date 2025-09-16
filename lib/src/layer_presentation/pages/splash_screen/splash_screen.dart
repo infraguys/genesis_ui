@@ -10,16 +10,16 @@ class _SplashScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<DomainSetupCubit, DomainSetupState>(
-        listenWhen: (_, current) => current is DomainSetupReadState,
-        listener: (context, state) {
-          if (state is DomainSetupReadState) {
-            context.read<RestClient>().setBaseUrl(state.apiUrl);
-            context.read<AuthBloc>().add(AuthEvent.restoreSession());
-          }
-        },
-        child: Center(
+    return BlocListener<DomainSetupCubit, DomainSetupState>(
+      listenWhen: (_, current) => current is DomainSetupReadState,
+      listener: (context, state) {
+        if (state is DomainSetupReadState) {
+          context.read<RestClient>().setBaseUrl(state.apiUrl);
+          context.read<AuthBloc>().add(AuthEvent.restoreSession());
+        }
+      },
+      child: Scaffold(
+        body: Center(
           child: SvgPicture.asset(
             'assets/images/logo.svg',
             width: 250,

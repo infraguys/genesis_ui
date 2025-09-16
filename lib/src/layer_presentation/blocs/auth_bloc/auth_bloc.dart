@@ -13,16 +13,16 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._iamClientRepository) : super(AuthState.unauthenticated()) {
+  AuthBloc(this._authRepository) : super(AuthState.unauthenticated()) {
     on(_signIn);
     on(_signOut);
     on(_restoreSession);
   }
 
-  final IAuthRepository _iamClientRepository;
+  final IAuthRepository _authRepository;
 
   Future<void> _signIn(_SingIn event, Emitter<AuthState> emit) async {
-    final useCase = SignInUseCase(_iamClientRepository);
+    final useCase = SignInUseCase(_authRepository);
 
     try {
       final user = await useCase(SignInParams(username: event.username, password: event.password));
@@ -37,13 +37,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _signOut(_SingOut _, Emitter<AuthState> emit) async {
-    final useCase = SignOutUseCase(_iamClientRepository);
-    emit(AuthState.unauthenticated());
+    final useCase = SignOutUseCase(_authRepository);
     await useCase();
+    emit(AuthState.unauthenticated());
   }
 
   Future<void> _restoreSession(_RestoreSession event, Emitter<AuthState> emit) async {
-    final useCase = RestoreSessionUseCase(_iamClientRepository);
+    final useCase = RestoreSessionUseCase(_authRepository);
     emit(AuthState.loading());
     try {
       final user = await useCase();

@@ -17,7 +17,9 @@ class _DeleteNodesElevatedButton extends StatelessWidget {
               builder: (context) {
                 return ConfirmationDialog(
                   message: context.$.deleteNodes(state.length),
-                  onDelete: () {},
+                  onDelete: () {
+                    context.read<NodesBloc>().add(NodesEvent.deleteNodes(state));
+                  },
                 );
               },
             );

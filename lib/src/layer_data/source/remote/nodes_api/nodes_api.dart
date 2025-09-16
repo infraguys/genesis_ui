@@ -3,7 +3,6 @@ import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/node_dto.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
-import 'package:genesis/src/layer_data/requests/node_requests/delete_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/get_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/update_node_req.dart';
 import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
@@ -27,9 +26,14 @@ final class NodesApi implements INodesApi {
   }
 
   @override
-  Future<void> deleteNode(DeleteNodeReq uuid) {
-    // TODO: implement deleteNode
-    throw UnimplementedError();
+  Future<void> deleteNode(req) async {
+    try {
+      await _client.delete<void>(
+        req.toPath(),
+      );
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override

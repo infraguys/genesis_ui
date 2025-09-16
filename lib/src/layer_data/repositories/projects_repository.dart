@@ -79,7 +79,7 @@ final class ProjectsRepository implements IProjectsRepository {
 
   @override
   Future<List<Project>> getProjects(params) async {
-    final dtos = await _projectsApi.getProjects(params.toReq());
+    final dtos = await _projectsApi.getProjects(GetProjectsReq(params));
     return dtos.map((it) => it.toEntity()).toList();
   }
 }

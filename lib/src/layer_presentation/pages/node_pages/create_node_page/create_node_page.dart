@@ -6,11 +6,14 @@ import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/params/nodes_params/create_node_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:go_router/go_router.dart';
 
 class _CreateNodeView extends StatefulWidget {
   const _CreateNodeView({super.key});
@@ -40,105 +43,117 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 24,
-      children: [
-        Breadcrumbs(
-          items: [
-            BreadcrumbItem(text: context.$.nodes),
-            BreadcrumbItem(text: context.$.create),
-          ],
-        ),
-        ButtonsBar(
-          children: [
-            SaveIconButton(onPressed: save),
-          ],
-        ),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return SizedBox(
-              width: constraints.maxWidth * 0.4,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 24,
-                  children: [
-                    AppTextInput(
-                      controller: _formController.name,
-                      hintText: context.$.name,
-                      validator: (value) => switch (value) {
-                        _ when value!.isEmpty => context.$.requiredField,
-                        _ => null,
-                      },
-                    ),
-                    DropdownMenuFormField<NodeType>(
-                      controller: _formController.nodeType,
-                      menuStyle: MenuStyle(
-                        fixedSize: WidgetStatePropertyAll(
-                          Size.fromWidth(constraints.maxWidth * 0.4), // та же ширина, что и у SizedBox выше
-                        ),
+    return BlocListener<NodeBloc, NodeState>(
+      listener: (context, state) {
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        switch (state) {
+          case NodeCreatedState():
+            context.read<NodesBloc>().add(NodesEvent.getNodes());
+            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.msgNodeCreated(state.node.name)));
+            context.pop();
+          case NodeFailureState(:final message):
+            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+          default:
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 24,
+        children: [
+          Breadcrumbs(
+            items: [
+              BreadcrumbItem(text: context.$.nodes),
+              BreadcrumbItem(text: context.$.create),
+            ],
+          ),
+          ButtonsBar(
+            children: [
+              SaveIconButton(onPressed: save),
+            ],
+          ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return SizedBox(
+                width: constraints.maxWidth * 0.4,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 24,
+                    children: [
+                      AppTextInput(
+                        controller: _formController.name,
+                        hintText: context.$.name,
+                        validator: (value) => switch (value) {
+                          _ when value!.isEmpty => context.$.requiredField,
+                          _ => null,
+                        },
                       ),
-                      width: double.infinity,
-                      initialSelection: _nodeType,
-                      requestFocusOnTap: false,
-                      onSaved: (newValue) => _nodeType = newValue!,
-                      dropdownMenuEntries: [
-                        DropdownMenuEntry(
-                          value: NodeType.vm,
-                          label: 'Virtual machine',
+                      DropdownMenuFormField<NodeType>(
+                        controller: _formController.nodeType,
+                        menuStyle: MenuStyle(
+                          fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
                         ),
-                        DropdownMenuEntry(
-                          value: NodeType.hw,
-                          label: 'Hardware',
-                        ),
-                      ],
-                    ),
-                    // AppTextInput(
-                    //   controller: _formController.image,
-                    //   hintText: 'image'.hardcoded,
-                    //   validator: (value) => switch (value) {
-                    //     _ when value!.isEmpty => context.$.requiredField,
-                    //     _ => null,
-                    //   },
-                    // ),
-                    AppTextInput(
-                      controller: _formController.cores,
-                      hintText: 'cores'.hardcoded,
-                      validator: (value) => switch (value) {
-                        _ when value!.isEmpty => context.$.requiredField,
-                        _ => null,
-                      },
-                    ),
-                    AppTextInput(
-                      controller: _formController.rootDiskSize,
-                      hintText: 'root disk size'.hardcoded,
-                      validator: (value) => switch (value) {
-                        _ when value!.isEmpty => context.$.requiredField,
-                        _ => null,
-                      },
-                    ),
-                    AppTextInput(
-                      controller: _formController.ram,
-                      hintText: 'ram'.hardcoded,
-                      obscureText: true,
-                      validator: (value) => switch (value) {
-                        _ when value!.isEmpty => context.$.requiredField,
-                        _ => null,
-                      },
-                    ),
-                    AppTextInput(
-                      controller: _formController.description,
-                      hintText: context.$.description,
-                    ),
-                  ],
+                        width: double.infinity,
+                        initialSelection: _nodeType,
+                        requestFocusOnTap: false,
+                        onSaved: (newValue) => _nodeType = newValue!,
+                        dropdownMenuEntries: [
+                          DropdownMenuEntry(
+                            value: NodeType.vm,
+                            label: 'Virtual machine',
+                          ),
+                          DropdownMenuEntry(
+                            value: NodeType.hw,
+                            label: 'Hardware',
+                          ),
+                        ],
+                      ),
+                      // AppTextInput(
+                      //   controller: _formController.image,
+                      //   hintText: 'image'.hardcoded,
+                      //   validator: (value) => switch (value) {
+                      //     _ when value!.isEmpty => context.$.requiredField,
+                      //     _ => null,
+                      //   },
+                      // ),
+                      AppTextInput(
+                        controller: _formController.cores,
+                        hintText: 'cores'.hardcoded,
+                        validator: (value) => switch (value) {
+                          _ when value!.isEmpty => context.$.requiredField,
+                          _ => null,
+                        },
+                      ),
+                      AppTextInput(
+                        controller: _formController.rootDiskSize,
+                        hintText: 'root disk size'.hardcoded,
+                        validator: (value) => switch (value) {
+                          _ when value!.isEmpty => context.$.requiredField,
+                          _ => null,
+                        },
+                      ),
+                      AppTextInput(
+                        controller: _formController.ram,
+                        hintText: 'ram'.hardcoded,
+                        obscureText: true,
+                        validator: (value) => switch (value) {
+                          _ when value!.isEmpty => context.$.requiredField,
+                          _ => null,
+                        },
+                      ),
+                      AppTextInput(
+                        controller: _formController.description,
+                        hintText: context.$.description,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
