@@ -33,6 +33,9 @@
   "ok": "Подтвердить",
   "success": "Успешно",
   "delete": "Удалить",
+  "image": "Образ",
+  "rootDiskSize": "Размер корневого диска",
+  "nodeType": "Тип ноды",
   "username": "Имя пользователя",
   "save": "Сохранить",
   "deleteProject": "Удалить проект?",
@@ -42,6 +45,7 @@
   "edit": "Редактировать",
   "update": "Обновить",
   "add": "Добавить",
+  "virtualMachine": "Виртуальная машина",
   "create": "Создать",
   "createdAt": "Создано",
   "updatedAt": "Обновлено",
@@ -114,7 +118,7 @@
       }
     }
   },
-  "msgUserUpdated": "Данные пользователя {username} обновлены",
+  "msgUserUpdated": "Пользователь {username} обновлен",
   "@msgUserUpdated": {
     "placeholders": {
       "username": {
@@ -138,7 +142,7 @@
       }
     }
   },
-  "msgOrganizationUpdated": "Данные организации {name} обновлены",
+  "msgOrganizationUpdated": "Организации {name} обновлена",
   "@msgOrganizationUpdated": {
     "placeholders": {
       "name": {
@@ -154,7 +158,7 @@
       }
     }
   },
-  "msgRoleUpdated": "Данные роли {name} роли обновлены",
+  "msgRoleUpdated": "Рол {name} обновлена",
   "@msgRoleUpdated": {
     "placeholders": {
       "name": {
@@ -170,8 +174,24 @@
       }
     }
   },
-  "msgNodeCreated": "Нода {name} удалена",
+  "msgNodeCreated": "Нода {name} создана",
   "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeUpdated": "Нода {name} обновлена",
+  "@msgNodeUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeDeleted": "Нода {name} удалена",
+  "@msgNodeDeleted": {
     "placeholders": {
       "name": {
         "type": "String"

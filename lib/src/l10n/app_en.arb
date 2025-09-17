@@ -36,6 +36,9 @@
   "ok": "Ok",
   "success": "Success",
   "delete": "Delete",
+  "image": "Image",
+  "rootDiskSize": "Root disk size",
+  "nodeType": "Node type",
   "username": "Username",
   "save": "Save",
   "deleteProject": "Delete the project?",
@@ -45,6 +48,7 @@
   "edit": "Edit",
   "update": "Update",
   "add": "Add",
+  "virtualMachine": "Virtual machine",
   "create": "Create",
   "createdAt": "Created at",
   "updatedAt": "Updated at",
@@ -175,6 +179,22 @@
   },
   "msgNodeCreated": "Node {name} has been created",
   "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeUpdated": "Node {name} has been updated",
+  "@msgNodeUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeDeleted": "Node {name} has been deleted",
+  "@msgNodeDeleted": {
     "placeholders": {
       "name": {
         "type": "String"

@@ -308,6 +308,24 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
+  /// No description provided for @image.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get image;
+
+  /// No description provided for @rootDiskSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Root disk size'**
+  String get rootDiskSize;
+
+  /// No description provided for @nodeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Node type'**
+  String get nodeType;
+
   /// No description provided for @username.
   ///
   /// In en, this message translates to:
@@ -361,6 +379,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get add;
+
+  /// No description provided for @virtualMachine.
+  ///
+  /// In en, this message translates to:
+  /// **'Virtual machine'**
+  String get virtualMachine;
 
   /// No description provided for @create.
   ///
@@ -547,6 +571,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Node {name} has been created'**
   String msgNodeCreated(String name);
+
+  /// No description provided for @msgNodeUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {name} has been updated'**
+  String msgNodeUpdated(String name);
+
+  /// No description provided for @msgNodeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {name} has been deleted'**
+  String msgNodeDeleted(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
