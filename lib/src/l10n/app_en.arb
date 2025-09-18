@@ -81,16 +81,32 @@
       }
     }
   },
-  "deleteNode": "Delete node {name}?",
-  "@deleteNode": {
+  "deleteNodeConfirmation": "Delete node {name}?",
+  "@deleteNodeConfirmation": {
     "placeholders": {
       "name": {
         "type": "String"
       }
     }
   },
-  "deleteNodes": "Delete selected ({count}) nodes?",
-  "@deleteNodes": {
+  "deleteNodesConfirmation": "Delete selected ({count}) nodes?",
+  "@deleteNodesConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteOrganizationConfirmation": "Delete organization {name}?",
+  "@deleteOrganizationConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteOrganizationsConfirmation": "Delete selected ({count}) organizations?",
+  "@deleteOrganizationsConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"

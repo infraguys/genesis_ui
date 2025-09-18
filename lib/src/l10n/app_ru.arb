@@ -78,16 +78,32 @@
       }
     }
   },
-  "deleteNode": "Удалить ноду {name}?",
-  "@deleteNode": {
+  "deleteNodeConfirmation": "Удалить ноду {name}?",
+  "@deleteNodeConfirmation": {
     "placeholders": {
       "name": {
         "type": "String"
       }
     }
   },
-  "deleteNodes": "Удалить выбранные ({count}) ноды?",
-  "@deleteNodes": {
+  "deleteNodesConfirmation": "Удалить выбранные ({count}) ноды?",
+  "@deleteNodesConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteOrganizationConfirmation": "Удалить организацию {name}?",
+  "@deleteOrganizationConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteOrganizationsConfirmation": "Удалить выбранные ({count}) организации?",
+  "@deleteOrganizationsConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"
