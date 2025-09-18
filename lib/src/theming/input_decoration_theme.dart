@@ -6,6 +6,7 @@ final _inputDecorationThemeData = InputDecorationThemeData(
   hintStyle: TextStyle(color: Colors.white24),
   prefixIconColor: Colors.white24,
   contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+  helperStyle: TextStyle(fontSize: 10, height: 20 / 16),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide.none,
     borderRadius: BorderRadius.all(Radius.circular(8)),

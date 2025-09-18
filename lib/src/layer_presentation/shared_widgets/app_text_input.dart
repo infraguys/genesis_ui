@@ -45,7 +45,6 @@ class AppTextInput extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUnfocus,
       obscureText: obscureText,
       onChanged: onChanged,
-      style: TextStyle(fontSize: 16, height: 20 / 16),
       decoration: InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
       validator: validator,
     );

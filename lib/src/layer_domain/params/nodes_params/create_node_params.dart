@@ -12,7 +12,7 @@ final class CreateNodeParams {
   });
 
   final String name;
-  final String? description;
+  final String description;
   final int cores;
   final int ram;
   final int rootDiskSize;

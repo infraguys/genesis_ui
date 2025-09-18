@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/params/nodes_params/create_node_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
+
+part './widgets/name_input.dart';
 
 class _CreateNodeView extends StatefulWidget {
   const _CreateNodeView({super.key});
@@ -24,9 +25,15 @@ class _CreateNodeView extends StatefulWidget {
 
 class _CreateNodeViewState extends State<_CreateNodeView> {
   final _formKey = GlobalKey<FormState>();
-  final _formController = _FormController();
+
   late final NodeBloc _nodeBloc;
 
+  var _name = '';
+  var _description = '';
+  var _cores = 1;
+  var _ram = 1;
+  var _rootDiskSize = 15;
+  var _image = '';
   var _nodeType = NodeType.vm;
 
   @override
@@ -37,7 +44,6 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
 
   @override
   void dispose() {
-    _formController.dispose();
     super.dispose();
   }
 
@@ -56,103 +62,131 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
           default:
         }
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 24,
-        children: [
-          Breadcrumbs(
-            items: [
-              BreadcrumbItem(text: context.$.nodes),
-              BreadcrumbItem(text: context.$.create),
-            ],
-          ),
-          ButtonsBar(
-            children: [
-              SaveIconButton(onPressed: save),
-            ],
-          ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return SizedBox(
-                width: constraints.maxWidth * 0.4,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      AppTextInput(
-                        controller: _formController.name,
-                        hintText: context.$.name,
-                        validator: (value) => switch (value) {
-                          _ when value!.isEmpty => context.$.requiredField,
-                          _ => null,
-                        },
-                      ),
-                      DropdownMenuFormField<NodeType>(
-                        controller: _formController.nodeType,
-                        menuStyle: MenuStyle(
-                          fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 24,
+          children: [
+            Breadcrumbs(
+              items: [
+                BreadcrumbItem(text: context.$.nodes),
+                BreadcrumbItem(text: context.$.create),
+              ],
+            ),
+            ButtonsBar(
+              children: [
+                SaveIconButton(onPressed: save),
+              ],
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth * 0.4,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24,
+                      children: [
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUnfocus,
+                          initialValue: _name,
+                          decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
+                          onSaved: (newValue) => _name = newValue!,
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
                         ),
-                        width: double.infinity,
-                        initialSelection: _nodeType,
-                        requestFocusOnTap: false,
-                        onSaved: (newValue) => _nodeType = newValue!,
-                        dropdownMenuEntries: [
-                          DropdownMenuEntry(
-                            value: NodeType.vm,
-                            label: 'Virtual machine',
+                        DropdownMenuFormField<NodeType>(
+                          menuStyle: MenuStyle(
+                            fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
                           ),
-                          DropdownMenuEntry(
-                            value: NodeType.hw,
-                            label: 'Hardware',
+                          width: double.infinity,
+                          initialSelection: _nodeType,
+                          helperText: context.$.nodeType,
+                          requestFocusOnTap: false,
+                          onSaved: (newValue) => _nodeType = newValue!,
+                          dropdownMenuEntries: [
+                            DropdownMenuEntry(
+                              value: NodeType.vm,
+                              label: context.$.virtualMachine,
+                            ),
+                            DropdownMenuEntry(
+                              value: NodeType.hw,
+                              label: 'Hardware',
+                            ),
+                          ],
+                        ),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUnfocus,
+                          initialValue: _image,
+                          decoration: InputDecoration(hintText: context.$.image, helperText: context.$.image),
+                          onSaved: (newValue) => _image = newValue!,
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUnfocus,
+                          initialValue: _cores.toString(),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(
+                            hintText: 'cores'.hardcoded,
+                            helperText: 'cores'.hardcoded,
                           ),
-                        ],
-                      ),
-                      // AppTextInput(
-                      //   controller: _formController.image,
-                      //   hintText: 'image'.hardcoded,
-                      //   validator: (value) => switch (value) {
-                      //     _ when value!.isEmpty => context.$.requiredField,
-                      //     _ => null,
-                      //   },
-                      // ),
-                      AppTextInput(
-                        controller: _formController.cores,
-                        hintText: 'cores'.hardcoded,
-                        validator: (value) => switch (value) {
-                          _ when value!.isEmpty => context.$.requiredField,
-                          _ => null,
-                        },
-                      ),
-                      AppTextInput(
-                        controller: _formController.rootDiskSize,
-                        hintText: 'root disk size'.hardcoded,
-                        validator: (value) => switch (value) {
-                          _ when value!.isEmpty => context.$.requiredField,
-                          _ => null,
-                        },
-                      ),
-                      AppTextInput(
-                        controller: _formController.ram,
-                        hintText: 'ram'.hardcoded,
-                        obscureText: true,
-                        validator: (value) => switch (value) {
-                          _ when value!.isEmpty => context.$.requiredField,
-                          _ => null,
-                        },
-                      ),
-                      AppTextInput(
-                        controller: _formController.description,
-                        hintText: context.$.description,
-                      ),
-                    ],
+                          onSaved: (newValue) => _cores = int.parse(newValue!),
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUnfocus,
+                          initialValue: _rootDiskSize.toString(),
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          decoration: InputDecoration(
+                            hintText: context.$.rootDiskSize,
+                            helperText: context.$.rootDiskSize,
+                          ),
+                          onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUnfocus,
+                          initialValue: _ram.toString(),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: InputDecoration(hintText: 'ram'.hardcoded, helperText: 'Ram'),
+                          onSaved: (newValue) => _ram = int.parse(newValue!),
+                          validator: (value) => switch (value) {
+                            _ when value!.isEmpty => context.$.requiredField,
+                            _ => null,
+                          },
+                        ),
+                        TextFormField(
+                          initialValue: _description,
+                          decoration: InputDecoration(
+                            hintText: context.$.description,
+                            helperText: context.$.description,
+                          ),
+                          onSaved: (newValue) => _description = newValue!,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -163,12 +197,12 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
       _nodeBloc.add(
         NodeEvent.create(
           CreateNodeParams(
-            name: _formController.name.text,
-            description: _formController.description.text,
-            cores: int.parse(_formController.cores.text),
-            ram: int.parse(_formController.ram.text),
-            rootDiskSize: int.parse(_formController.rootDiskSize.text),
-            image: 'http://10.20.0.1:8081/genesis-base/0.2.1/genesis-base.raw.gz',
+            name: _name,
+            description: _description,
+            cores: _cores,
+            ram: _ram,
+            rootDiskSize: _rootDiskSize,
+            image: _image,
             nodeType: _nodeType,
           ),
         ),
@@ -187,19 +221,6 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
 //   "node_type": "VM",
 //   "default_network": {}
 // }
-
-class _FormController extends FormControllersManager {
-  final name = TextEditingController();
-  final description = TextEditingController();
-  final cores = TextEditingController();
-  final ram = TextEditingController();
-  final rootDiskSize = TextEditingController();
-  final image = TextEditingController();
-  final nodeType = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [name, description, cores, ram, rootDiskSize, image, nodeType];
-}
 
 class CreateNodePage extends StatelessWidget {
   const CreateNodePage({super.key});

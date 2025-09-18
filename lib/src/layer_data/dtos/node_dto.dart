@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/layer_data/dtos/node_type_dto.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -33,13 +34,13 @@ final class NodeDto implements IDto<Node> {
   final DateTime updatedAt;
   final String projectId;
   final String name;
-  final String? description;
+  final String description;
   final int cores;
   final int ram;
   final int rootDiskSize;
   final String image;
   final _StatusDto status;
-  final _NodeTypeDto nodeType;
+  final NodeTypeDto nodeType;
 
   @override
   Node toEntity() {
@@ -55,7 +56,7 @@ final class NodeDto implements IDto<Node> {
       rootDiskSize: rootDiskSize,
       image: image,
       status: status.toNodeStatus(),
-      nodeType: nodeType.toNodeType(),
+      nodeType: nodeType.toDomain(),
     );
   }
 }
@@ -86,17 +87,17 @@ enum _StatusDto {
   };
 }
 
-@JsonEnum()
-enum _NodeTypeDto {
-  @JsonValue('HW')
-  hw,
-  @JsonValue('VM')
-  vm;
-
-  NodeType toNodeType() => switch (this) {
-    hw => NodeType.hw,
-    vm => NodeType.vm,
-  };
-}
+// @JsonEnum()
+// enum _NodeTypeDto {
+//   @JsonValue('HW')
+//   hw,
+//   @JsonValue('VM')
+//   vm;
+//
+//   NodeType toNodeType() => switch (this) {
+//     hw => NodeType.hw,
+//     vm => NodeType.vm,
+//   };
+// }
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED

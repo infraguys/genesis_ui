@@ -2,11 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
@@ -15,6 +19,7 @@ import 'package:genesis/src/layer_presentation/pages/create_role_page/create_rol
 import 'package:genesis/src/layer_presentation/pages/extensions_page/extensions_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_page/node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/nodes_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
@@ -122,7 +127,10 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.main.name,
                 path: '/',
-                pageBuilder: (_, _) {
+                pageBuilder: (context, _) {
+                  context.read<UsersBloc>().add(UsersEvent.getUsers());
+                  context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
+                  context.read<NodesBloc>().add(NodesEvent.getNodes());
                   return NoTransitionPage(child: DashboardPage());
                 },
               ),
@@ -271,6 +279,13 @@ GoRouter createRouter(BuildContext context) {
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
                       child: CreateNodePage(),
+                    ),
+                  ),
+                  GoRoute(
+                    name: AppRoutes.node.name,
+                    path: ':uuid',
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: NodePage(nodeUUID: NodeUUID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],
