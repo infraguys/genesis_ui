@@ -1,4 +1,4 @@
-part of '../node_page.dart';
+part of '../node_details_page.dart';
 
 class _DeleteNodeElevatedButton extends StatelessWidget {
   const _DeleteNodeElevatedButton({required this.node, super.key});

@@ -19,8 +19,8 @@ import 'package:genesis/src/layer_presentation/pages/create_role_page/create_rol
 import 'package:genesis/src/layer_presentation/pages/extensions_page/extensions_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/node_page/node_page.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/nodes_page.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';
@@ -271,7 +271,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.nodes.name,
                 path: '/nodes',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: NodesPage(),
+                  child: NodeListPage(),
                 ),
                 routes: [
                   GoRoute(
@@ -285,7 +285,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.node.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: NodePage(nodeUUID: NodeUUID(state.pathParameters['uuid']!)),
+                      child: NodeDetailsPage(nodeUUID: NodeUUID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],

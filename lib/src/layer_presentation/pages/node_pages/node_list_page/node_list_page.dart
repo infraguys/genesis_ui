@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/widgets/nodes_table.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/widgets/nodes_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
@@ -16,8 +16,8 @@ import 'package:go_router/go_router.dart';
 
 part './widgets/delete_elevated_button.dart';
 
-class _NodesView extends StatelessWidget {
-  const _NodesView({super.key});
+class _NodeListView extends StatelessWidget {
+  const _NodeListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,14 @@ class _NodesView extends StatelessWidget {
   }
 }
 
-class NodesPage extends StatelessWidget {
-  const NodesPage({super.key});
+class NodeListPage extends StatelessWidget {
+  const NodeListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NodesSelectionCubit(),
-      child: _NodesView(),
+      child: _NodeListView(),
     );
   }
 }

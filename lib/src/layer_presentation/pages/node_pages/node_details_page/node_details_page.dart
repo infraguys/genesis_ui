@@ -20,16 +20,16 @@ import 'package:go_router/go_router.dart';
 
 part './widgets/delete_elevated_button.dart';
 
-class _NodeView extends StatefulWidget {
-  const _NodeView({required this.nodeUUID, super.key});
+class _NodeDetailsView extends StatefulWidget {
+  const _NodeDetailsView({required this.nodeUUID, super.key});
 
   final NodeUUID nodeUUID;
 
   @override
-  State<_NodeView> createState() => _NodeViewState();
+  State<_NodeDetailsView> createState() => _NodeDetailsViewState();
 }
 
-class _NodeViewState extends State<_NodeView> {
+class _NodeDetailsViewState extends State<_NodeDetailsView> {
   final _formKey = GlobalKey<FormState>();
 
   late final NodeBloc _nodeBloc;
@@ -293,8 +293,8 @@ class _NodeViewState extends State<_NodeView> {
 //   "default_network": {}
 // }
 
-class NodePage extends StatelessWidget {
-  const NodePage({required this.nodeUUID, super.key});
+class NodeDetailsPage extends StatelessWidget {
+  const NodeDetailsPage({required this.nodeUUID, super.key});
 
   final NodeUUID nodeUUID;
 
@@ -302,7 +302,7 @@ class NodePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NodeBloc(context.read<INodesRepository>())..add(NodeEvent.getNode(nodeUUID)),
-      child: _NodeView(nodeUUID: nodeUUID),
+      child: _NodeDetailsView(nodeUUID: nodeUUID),
     );
   }
 }

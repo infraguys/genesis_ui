@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/nodes_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_label.dart';

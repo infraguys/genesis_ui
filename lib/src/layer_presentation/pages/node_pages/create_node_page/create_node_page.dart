@@ -14,7 +14,6 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-
 class _CreateNodeView extends StatefulWidget {
   const _CreateNodeView({super.key});
 
@@ -209,17 +208,6 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
     }
   }
 }
-
-//{
-//   "name": "",
-//   "description": "",
-//   "cores": 4096,
-//   "ram": 9223372036854776000,
-//   "root_disk_size": 15,
-//   "image": "string",
-//   "node_type": "VM",
-//   "default_network": {}
-// }
 
 class CreateNodePage extends StatelessWidget {
   const CreateNodePage({super.key});
