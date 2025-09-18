@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/delete_roles_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_create_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/widgets/roles_table.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/create_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
 
-class _RolesView extends StatelessWidget {
-  const _RolesView();
+part './widgets/create_icon_button.dart';
+part './widgets/delete_elevated_button.dart';
+
+class _RoleListView extends StatelessWidget {
+  const _RoleListView();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +35,8 @@ class _RolesView extends StatelessWidget {
           children: [
             // SearchInput(),
             Spacer(),
-            DeleteRolesElevatedButton(),
-            RolesCreateIconButton(),
+            _DeleteElevatedButton(),
+            _CreateIconButton(),
           ],
         ),
         Expanded(
@@ -49,14 +56,14 @@ class _RolesView extends StatelessWidget {
   }
 }
 
-class RolesPage extends StatelessWidget {
-  const RolesPage({super.key});
+class RoleListPage extends StatelessWidget {
+  const RoleListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => RolesSelectionBloc(),
-      child: _RolesView(),
+      child: _RoleListView(),
     );
   }
 }

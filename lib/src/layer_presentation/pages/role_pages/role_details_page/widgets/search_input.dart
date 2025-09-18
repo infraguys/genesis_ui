@@ -1,4 +1,4 @@
-part of '../role_page.dart';
+part of '../role_details_page.dart';
 
 class _SearchInput extends StatefulWidget {
   const _SearchInput({super.key}); // ignore: unused_element_parameter

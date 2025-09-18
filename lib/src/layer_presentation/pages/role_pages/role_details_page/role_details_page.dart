@@ -13,29 +13,31 @@ import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permission
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/widgets/delete_role_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/search_input.dart';
+part 'widgets/search_input.dart';
+part 'widgets/delete_role_elevated_button.dart';
 
-class _RoleView extends StatefulWidget {
-  const _RoleView({required this.uuid});
+class _RoleDetailsView extends StatefulWidget {
+  const _RoleDetailsView({required this.uuid});
 
   final RoleUUID uuid;
 
   @override
-  State<_RoleView> createState() => _RoleViewState();
+  State<_RoleDetailsView> createState() => _RoleDetailsViewState();
 }
 
-class _RoleViewState extends State<_RoleView> {
+class _RoleDetailsViewState extends State<_RoleDetailsView> {
   final _formKey = GlobalKey<FormState>();
   late RoleBloc _roleBloc;
 
@@ -97,7 +99,7 @@ class _RoleViewState extends State<_RoleView> {
                 children: [
                   _SearchInput(),
                   Spacer(),
-                  DeleteRoleElevatedButton(role: role),
+                  _DeleteElevatedButton(role: role),
                   SaveIconButton(onPressed: save),
                 ],
               ),
@@ -186,8 +188,8 @@ class _ControllersManager extends FormControllersManager {
   List<TextEditingController> get all => [nameController, descriptionController];
 }
 
-class RolePage extends StatelessWidget {
-  const RolePage({required this.uuid, super.key});
+class RoleDetailsPage extends StatelessWidget {
+  const RoleDetailsPage({required this.uuid, super.key});
 
   final RoleUUID uuid;
 
@@ -215,7 +217,7 @@ class RolePage extends StatelessWidget {
           )..add(RoleEvent.get(uuid)),
         ),
       ],
-      child: _RoleView(uuid: uuid),
+      child: _RoleDetailsView(uuid: uuid),
     );
   }
 }
