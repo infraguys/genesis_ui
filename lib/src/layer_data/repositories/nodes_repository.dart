@@ -1,6 +1,8 @@
 import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/delete_node_req.dart';
+import 'package:genesis/src/layer_data/requests/node_requests/get_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/get_nodes_req.dart';
+import 'package:genesis/src/layer_data/requests/node_requests/update_node_req.dart';
 import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
@@ -22,9 +24,9 @@ final class NodesRepository implements INodesRepository {
   }
 
   @override
-  Future<Node> getNode(uuid) {
-    // TODO: implement getNode
-    throw UnimplementedError();
+  Future<Node> getNode(uuid) async {
+    final dto = await _client.getNode(GetNodeReq(uuid));
+    return dto.toEntity();
   }
 
   @override
@@ -34,8 +36,8 @@ final class NodesRepository implements INodesRepository {
   }
 
   @override
-  Future<Node> updateNode(uuid) {
-    // TODO: implement updateNode
-    throw UnimplementedError();
+  Future<Node> updateNode(params) async {
+    final dto = await _client.updateNode(UpdateNodeReq(params));
+    return dto.toEntity();
   }
 }
