@@ -13,7 +13,6 @@ import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
 import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/extensions_page/extensions_page.dart';
@@ -21,6 +20,7 @@ import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';

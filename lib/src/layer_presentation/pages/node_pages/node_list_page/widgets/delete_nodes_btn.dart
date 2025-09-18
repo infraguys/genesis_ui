@@ -5,11 +5,9 @@ class _DeleteNodesButton extends StatelessWidget {
 
   String createMessage(BuildContext context, List<Node> nodes) {
     if (nodes.length == 1) {
-      // todo: перептсать на "confirmation"
-      return context.$.deleteNode(nodes.single.name);
-    } else {
-      return context.$.deleteNodes(nodes.length);
+      return context.$.deleteNodeConfirmation(nodes.single.name);
     }
+    return context.$.deleteNodesConfirmation(nodes.length);
   }
 
   @override

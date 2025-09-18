@@ -1,7 +1,7 @@
 part of '../node_details_page.dart';
 
-class _DeleteNodeElevatedButton extends StatelessWidget {
-  const _DeleteNodeElevatedButton({required this.node, super.key});
+class _DeleteNodeButton extends StatelessWidget {
+  const _DeleteNodeButton({required this.node, super.key});
 
   final Node node;
 
@@ -14,7 +14,7 @@ class _DeleteNodeElevatedButton extends StatelessWidget {
           context: context,
           builder: (context) {
             return ConfirmationDialog(
-              message: context.$.deleteNode(node.name),
+              message: context.$.deleteNodeConfirmation(node.name),
               onDelete: () {
                 nodeBloc.add(NodeEvent.delete(node));
               },

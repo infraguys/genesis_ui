@@ -18,7 +18,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_label.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/delete_elevated_button.dart';
+part './widgets/delete_node_btn.dart';
 
 class _NodeDetailsView extends StatefulWidget {
   const _NodeDetailsView({required this.nodeUUID, super.key});
@@ -103,7 +103,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
               ),
               ButtonsBar(
                 children: [
-                  _DeleteNodeElevatedButton(node: node),
+                  _DeleteNodeButton(node: node),
                   SaveIconButton(onPressed: save),
                 ],
               ),

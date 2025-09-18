@@ -8,8 +8,19 @@ class _DeleteOrganizationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DeleteElevatedButton(
-      onPressed: () {
-        context.read<OrganizationBloc>().add(OrganizationEvent.delete(organization));
+      onPressed: () async {
+        final organizationBloc = context.read<OrganizationBloc>();
+        await showDialog<void>(
+          context: context,
+          builder: (context) {
+            return ConfirmationDialog(
+              message: context.$.deleteOrganizationConfirmation(organization.name),
+              onDelete: () {
+                organizationBloc.add(OrganizationEvent.delete(organization));
+              },
+            );
+          },
+        );
       },
     );
   }
