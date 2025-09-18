@@ -1,0 +1,308 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/layer_domain/entities/node.dart';
+import 'package:genesis/src/layer_domain/params/nodes_params/update_node_params.dart';
+import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_label.dart';
+import 'package:go_router/go_router.dart';
+
+part './widgets/delete_elevated_button.dart';
+
+class _NodeView extends StatefulWidget {
+  const _NodeView({required this.nodeUUID, super.key});
+
+  final NodeUUID nodeUUID;
+
+  @override
+  State<_NodeView> createState() => _NodeViewState();
+}
+
+class _NodeViewState extends State<_NodeView> {
+  final _formKey = GlobalKey<FormState>();
+
+  late final NodeBloc _nodeBloc;
+
+  late String _name;
+  late String _description;
+  late int _cores;
+  late int _ram;
+  late int _rootDiskSize;
+  late String _image;
+  late NodeType _nodeType;
+
+  @override
+  void initState() {
+    _nodeBloc = context.read<NodeBloc>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<NodeBloc, NodeState>(
+      listener: (context, state) {
+        final navigator = GoRouter.of(context);
+        final messenger = ScaffoldMessenger.of(context);
+
+        switch (state) {
+          case NodeLoadedState(:final node):
+            _name = node.name;
+            _description = node.description;
+            _cores = node.cores;
+            _ram = node.ram;
+            _rootDiskSize = node.rootDiskSize;
+            _image = node.image;
+            _nodeType = node.nodeType;
+
+          case NodeUpdatedState(:final node):
+            _nodeBloc.add(NodeEvent.getNode(widget.nodeUUID));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgNodeUpdated(node.name)));
+            context.read<NodesBloc>().add(NodesEvent.getNodes());
+
+          case NodeDeletedState(:final node):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgNodeDeleted(node.name)));
+            context.read<NodesBloc>().add(NodesEvent.getNodes());
+            navigator.pop();
+
+          case NodeFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(message));
+          default:
+        }
+      },
+      builder: (context, state) {
+        if (state is! NodeLoadedState) {
+          return AppProgressIndicator();
+        }
+        final node = state.node;
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              Breadcrumbs(
+                items: [
+                  BreadcrumbItem(text: context.$.nodes),
+                  BreadcrumbItem(text: state.node.name),
+                ],
+              ),
+              ButtonsBar(
+                children: [
+                  _DeleteNodeElevatedButton(node: node),
+                  SaveIconButton(onPressed: save),
+                ],
+              ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 128,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 24,
+                            children: [
+                              TextFormField(
+                                initialValue: _name,
+                                decoration: InputDecoration(
+                                  hintText: context.$.name,
+                                  helperText: context.$.name,
+                                ),
+                                onSaved: (newValue) => _name = newValue!,
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              DropdownMenuFormField<NodeType>(
+                                menuStyle: MenuStyle(
+                                  fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+                                ),
+                                width: double.infinity,
+                                initialSelection: _nodeType,
+                                requestFocusOnTap: false,
+                                helperText: context.$.nodeType,
+                                onSaved: (newValue) => _nodeType = newValue!,
+                                dropdownMenuEntries: [
+                                  DropdownMenuEntry(
+                                    value: NodeType.vm,
+                                    label: context.$.virtualMachine,
+                                  ),
+                                  DropdownMenuEntry(
+                                    value: NodeType.hw,
+                                    label: 'Hardware',
+                                  ),
+                                ],
+                              ),
+                              TextFormField(
+                                initialValue: _image,
+                                decoration: InputDecoration(
+                                  hintText: context.$.image,
+                                  helperText: context.$.image,
+                                ),
+                                onSaved: (newValue) => _image = newValue!,
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              TextFormField(
+                                initialValue: _cores.toString(),
+                                decoration: InputDecoration(
+                                  hintText: 'cores'.hardcoded,
+                                  helperText: 'cores'.hardcoded,
+                                ),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                onSaved: (newValue) => _cores = int.parse(newValue!),
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              TextFormField(
+                                initialValue: _rootDiskSize.toString(),
+                                decoration: InputDecoration(
+                                  hintText: context.$.rootDiskSize,
+                                  helperText: context.$.rootDiskSize,
+                                ),
+                                onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              TextFormField(
+                                initialValue: _ram.toString(),
+                                decoration: InputDecoration(
+                                  hintText: 'ram'.hardcoded,
+                                  helperText: 'ram'.hardcoded,
+                                ),
+                                onSaved: (newValue) => _ram = int.parse(newValue!),
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              TextFormField(
+                                initialValue: _description,
+                                decoration: InputDecoration(
+                                  hintText: context.$.description,
+                                  helperText: context.$.description,
+                                ),
+                                onSaved: (newValue) => _description = newValue!,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 32,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8.0,
+                              children: [
+                                Text(context.$.status),
+                                NodeStatusLabel(status: node.status),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8.0,
+                              children: [
+                                Text(context.$.createdAt),
+                                Text(node.createdAt.toString()),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8.0,
+                              children: [
+                                Text(context.$.updatedAt),
+                                Text(node.updatedAt.toString()),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void save() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      _nodeBloc.add(
+        NodeEvent.update(
+          UpdateNodeParams(
+            uuid: widget.nodeUUID,
+            name: _name,
+            image: _image,
+            cores: _cores,
+            rootDiskSize: _rootDiskSize,
+            ram: _ram,
+            nodeType: _nodeType,
+            description: _description,
+          ),
+        ),
+      );
+    }
+  }
+}
+
+//{
+//   "name": "",
+//   "description": "",
+//   "cores": 4096,
+//   "ram": 9223372036854776000,
+//   "root_disk_size": 15,
+//   "image": "string",
+//   "node_type": "VM",
+//   "default_network": {}
+// }
+
+class NodePage extends StatelessWidget {
+  const NodePage({required this.nodeUUID, super.key});
+
+  final NodeUUID nodeUUID;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => NodeBloc(context.read<INodesRepository>())..add(NodeEvent.getNode(nodeUUID)),
+      child: _NodeView(nodeUUID: nodeUUID),
+    );
+  }
+}
