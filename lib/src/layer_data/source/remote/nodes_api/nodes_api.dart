@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/node_dto.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
-import 'package:genesis/src/layer_data/requests/node_requests/get_node_req.dart';
-import 'package:genesis/src/layer_data/requests/node_requests/update_node_req.dart';
 import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
 
 final class NodesApi implements INodesApi {
@@ -37,9 +36,19 @@ final class NodesApi implements INodesApi {
   }
 
   @override
-  Future<NodeDto> getNode(GetNodeReq req) {
-    // TODO: implement getNode
-    throw UnimplementedError();
+  Future<NodeDto> getNode(req) async {
+    try {
+      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+        req.toPath(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(requestOptions.uri.path);
+      }
+
+      return NodeDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 
   @override
@@ -60,8 +69,18 @@ final class NodesApi implements INodesApi {
   }
 
   @override
-  Future<NodeDto> updateNode(UpdateNodeReq req) {
-    // TODO: implement updateNode
-    throw UnimplementedError();
+  Future<NodeDto> updateNode(req) async {
+    try {
+      final Response(:data) = await _client.put<Map<String, dynamic>>(
+        req.toPath(),
+        data: req.toJson(),
+      );
+      if (data == null) {
+        throw DataNotFoundException(req.toPath());
+      }
+      return NodeDto.fromJson(data);
+    } on DioException catch (e) {
+      throw NetworkException(e);
+    }
   }
 }
