@@ -32,9 +32,9 @@ import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_bloc
 import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/users/create_user_page/create_user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/users_page.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/create_user_page/create_user_page.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/user_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/user_list_page.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/page_not_found.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -143,7 +143,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.users.name,
                 path: '/users',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: UsersPage(),
+                  child: UserListPage(),
                 ),
                 routes: [
                   GoRoute(
@@ -157,7 +157,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: UserPage(userUUID: UserUUID(state.pathParameters['uuid']!)),
+                      child: UserDetailsPage(userUUID: UserUUID(state.pathParameters['uuid']!)),
                     ),
                     routes: [
                       GoRoute(

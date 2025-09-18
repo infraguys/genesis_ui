@@ -12,8 +12,8 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/confirm_user_email_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/widgets/list_of_projects.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/confirm_user_email_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
@@ -28,16 +28,16 @@ import 'package:go_router/go_router.dart';
 
 part './widgets/delete_user_elevated_button.dart';
 
-class _UserView extends StatefulWidget {
-  const _UserView({required this.userUUID});
+class _UserDetailsView extends StatefulWidget {
+  const _UserDetailsView({required this.userUUID});
 
   final UserUUID userUUID;
 
   @override
-  State<_UserView> createState() => _UserViewState();
+  State<_UserDetailsView> createState() => _UserDetailsViewState();
 }
 
-class _UserViewState extends State<_UserView> {
+class _UserDetailsViewState extends State<_UserDetailsView> {
   final _formKey = GlobalKey<FormState>();
   late _ControllersManager _controllersManager;
   late final UserBloc _userBloc;
@@ -288,8 +288,8 @@ class _ControllersManager extends FormControllersManager {
   ];
 }
 
-class UserPage extends StatelessWidget {
-  const UserPage({required this.userUUID, super.key});
+class UserDetailsPage extends StatelessWidget {
+  const UserDetailsPage({required this.userUUID, super.key});
 
   final UserUUID userUUID;
 
@@ -312,7 +312,7 @@ class UserPage extends StatelessWidget {
           },
         ),
       ],
-      child: _UserView(userUUID: userUUID),
+      child: _UserDetailsView(userUUID: userUUID),
     );
   }
 }

@@ -14,7 +14,7 @@ import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart'
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_table.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_table.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';

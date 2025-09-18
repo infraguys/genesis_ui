@@ -1,7 +1,16 @@
 part of '../node_list_page.dart';
 
-class _DeleteNodesElevatedButton extends StatelessWidget {
-  const _DeleteNodesElevatedButton({super.key});
+class _DeleteNodesButton extends StatelessWidget {
+  const _DeleteNodesButton({super.key});
+
+  String createMessage(BuildContext context, List<Node> nodes) {
+    if (nodes.length == 1) {
+      // todo: перептсать на "confirmation"
+      return context.$.deleteNode(nodes.single.name);
+    } else {
+      return context.$.deleteNodes(nodes.length);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,7 @@ class _DeleteNodesElevatedButton extends StatelessWidget {
               context: context,
               builder: (context) {
                 return ConfirmationDialog(
-                  message: context.$.deleteNodes(state.length),
+                  message: createMessage(context, state),
                   onDelete: () {
                     context.read<NodesBloc>().add(NodesEvent.deleteNodes(state));
                   },

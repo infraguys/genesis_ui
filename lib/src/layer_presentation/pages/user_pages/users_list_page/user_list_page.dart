@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/delete_users_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_confirm_email_icon_button.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/widgets/users_table.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/create_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_users_dialog.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
-class _UsersView extends StatelessWidget {
-  const _UsersView();
+part './widgets/confirm_email_btn.dart';
+part './widgets/delete_user_btn.dart';
+
+class _UserListView extends StatelessWidget {
+  const _UserListView();
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +50,8 @@ class _UsersView extends StatelessWidget {
             children: [
               // SearchInput(),
               Spacer(),
-              DeleteUsersElevatedButton(),
-              UsersConfirmEmailElevatedButton(),
+              _DeleteUserButton(),
+              _ConfirmEmailButton(),
               CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createUser.name)),
             ],
           ),
@@ -68,14 +73,14 @@ class _UsersView extends StatelessWidget {
   }
 }
 
-class UsersPage extends StatelessWidget {
-  const UsersPage({super.key});
+class UserListPage extends StatelessWidget {
+  const UserListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => UsersSelectionBloc(),
-      child: _UsersView(),
+      child: _UserListView(),
     );
   }
 }
