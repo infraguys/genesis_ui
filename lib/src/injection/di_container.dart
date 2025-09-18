@@ -74,7 +74,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final tokenDao = TokenDao(context.read<ISecureStorageClient>());
               final iamApi = RemoteIamClientApi(context.read<RestClient>());
-              return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
+              final projectsApi = ProjectsApi(context.read<RestClient>());
+              return AuthRepository(
+                iamApi: iamApi,
+                tokenDao: tokenDao,
+                projectApi: projectsApi,
+              );
             },
           ),
           RepositoryProvider<IUsersRepository>(
@@ -189,7 +194,7 @@ class DiContainer extends StatelessWidget {
             BlocProvider(
               create: (context) {
                 final repository = context.read<INodesRepository>();
-                return NodesBloc(repository)..add(NodesEvent.getNodes());
+                return NodesBloc(repository);
               },
             ),
             Provider(
