@@ -14,7 +14,6 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/name_input.dart';
 
 class _CreateNodeView extends StatefulWidget {
   const _CreateNodeView({super.key});
