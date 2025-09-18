@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/delete_organizations_dialog.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/delete_organizations_dialog.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class OrganizationsActionPopupMenuButton extends StatelessWidget {

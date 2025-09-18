@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/organizations_page/widgets/organizations_action_popup_menu_button.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/routing/app_router.dart';

@@ -7,25 +7,27 @@ import 'package:genesis/src/layer_domain/params/organizations/update_organizatio
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/organization_page/widgets/delete_organization_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _OrganizationView extends StatefulWidget {
-  const _OrganizationView({required this.uuid});
+part './widgets/delete_organization_btn.dart';
+
+class _OrganizationDetailsView extends StatefulWidget {
+  const _OrganizationDetailsView({required this.uuid});
 
   final OrganizationUUID uuid;
 
   @override
-  State<_OrganizationView> createState() => _OrganizationViewState();
+  State<_OrganizationDetailsView> createState() => _OrganizationDetailsViewState();
 }
 
-class _OrganizationViewState extends State<_OrganizationView> {
+class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -100,7 +102,7 @@ class _OrganizationViewState extends State<_OrganizationView> {
               ),
               ButtonsBar(
                 children: [
-                  DeleteOrganizationElevatedButton(organization: organization),
+                  _DeleteOrganizationButton(organization: organization),
                   SaveIconButton(onPressed: save),
                 ],
               ),
@@ -170,8 +172,8 @@ class _ControllersManager extends FormControllersManager {
   List<TextEditingController> get all => [nameController, descriptionController];
 }
 
-class OrganizationPage extends StatelessWidget {
-  const OrganizationPage({required this.uuid, super.key});
+class OrganizationDetailsPage extends StatelessWidget {
+  const OrganizationDetailsPage({required this.uuid, super.key});
 
   final OrganizationUUID uuid;
 
@@ -181,7 +183,7 @@ class OrganizationPage extends StatelessWidget {
       create: (context) => OrganizationBloc(
         context.read<IOrganizationsRepository>(),
       )..add(OrganizationEvent.get(uuid)),
-      child: _OrganizationView(uuid: uuid),
+      child: _OrganizationDetailsView(uuid: uuid),
     );
   }
 }
