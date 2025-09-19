@@ -28,6 +28,7 @@ class AuthRepository implements IAuthRepository {
 
     final tokenDto = await _iamApi.createTokenByPassword(SignInReq(params));
     await _tokenDao.writeToken(tokenDto.accessToken);
+    await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
     userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
 
     if (userDto.username.toLowerCase() != 'admin') {
@@ -37,6 +38,7 @@ class AuthRepository implements IAuthRepository {
       final paramsWithNewScope = params.copyWith(scope: 'project:$projectUuid');
       final tokenDto = await _iamApi.createTokenByPassword(SignInReq(paramsWithNewScope));
       await _tokenDao.writeToken(tokenDto.accessToken);
+      await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
       userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     }
 
@@ -56,5 +58,6 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<void> signOut() async {
     await _tokenDao.deleteToken();
+    await _tokenDao.deleteRefreshToken();
   }
 }
