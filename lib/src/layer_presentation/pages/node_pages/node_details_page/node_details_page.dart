@@ -21,7 +21,7 @@ import 'package:go_router/go_router.dart';
 part './widgets/delete_node_btn.dart';
 
 class _NodeDetailsView extends StatefulWidget {
-  const _NodeDetailsView({required this.nodeUUID, super.key});
+  const _NodeDetailsView({required this.nodeUUID, super.key}); //ignore: unused_element_parameter
 
   final NodeUUID nodeUUID;
 
@@ -281,17 +281,6 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
     }
   }
 }
-
-//{
-//   "name": "",
-//   "description": "",
-//   "cores": 4096,
-//   "ram": 9223372036854776000,
-//   "root_disk_size": 15,
-//   "image": "string",
-//   "node_type": "VM",
-//   "default_network": {}
-// }
 
 class NodeDetailsPage extends StatelessWidget {
   const NodeDetailsPage({required this.nodeUUID, super.key});
