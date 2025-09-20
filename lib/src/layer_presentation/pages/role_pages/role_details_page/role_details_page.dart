@@ -18,15 +18,15 @@ import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart'
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
 
+part 'widgets/delete_role_btn.dart';
 part 'widgets/search_input.dart';
-part 'widgets/delete_role_elevated_button.dart';
 
 class _RoleDetailsView extends StatefulWidget {
   const _RoleDetailsView({required this.uuid});
@@ -99,7 +99,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                 children: [
                   _SearchInput(),
                   Spacer(),
-                  _DeleteElevatedButton(role: role),
+                  _DeleteRoleButton(role: role),
                   SaveIconButton(onPressed: save),
                 ],
               ),

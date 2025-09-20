@@ -8,14 +8,14 @@ import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/w
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/create_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/create_icon_button.dart';
-part './widgets/delete_elevated_button.dart';
+part './widgets/create_role_btn.dart';
+part './widgets/delete_roles_btn.dart';
 
 class _RoleListView extends StatelessWidget {
   const _RoleListView();
@@ -35,8 +35,8 @@ class _RoleListView extends StatelessWidget {
           children: [
             // SearchInput(),
             Spacer(),
-            _DeleteElevatedButton(),
-            _CreateIconButton(),
+            _DeleteRolesButton(),
+            _CreateRoleButton(),
           ],
         ),
         Expanded(
