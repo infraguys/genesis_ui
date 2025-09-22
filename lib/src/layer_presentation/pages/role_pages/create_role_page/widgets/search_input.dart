@@ -1,7 +1,7 @@
 part of '../create_role_page.dart';
 
 class _SearchInput extends StatefulWidget {
-  const _SearchInput({super.key});
+  const _SearchInput({super.key}); // ignore: unused_element_parameter
 
   @override
   State<_SearchInput> createState() => _SearchInputState();
