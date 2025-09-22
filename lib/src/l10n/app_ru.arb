@@ -38,7 +38,6 @@
   "nodeType": "Тип ноды",
   "username": "Имя пользователя",
   "save": "Сохранить",
-  "deleteProject": "Удалить проект?",
   "active": "Активный",
   "inactive": "Неактивный",
   "status": "Статус",
@@ -72,6 +71,22 @@
   },
   "deleteRoles": "Удалить выбранные({count}) роли?",
   "@deleteRoles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteProjectConfirmation": "Удалить проект {name}?",
+  "@deleteProjectConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProjectsConfirmation": "Удалить выбранные ({count}) проекты?",
+  "@deleteProjectsConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -208,6 +223,22 @@
   },
   "msgNodeDeleted": "Нода {name} удалена",
   "@msgNodeDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectCreated": "Проект {name} создан",
+  "@msgProjectCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectUpdated": "Проект {name} обновлен",
+  "@msgProjectUpdated": {
     "placeholders": {
       "name": {
         "type": "String"

@@ -338,12 +338,6 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
-  /// No description provided for @deleteProject.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete the project?'**
-  String get deleteProject;
-
   /// No description provided for @active.
   ///
   /// In en, this message translates to:
@@ -494,6 +488,18 @@ abstract class AppLocalizations {
   /// **'Delete selected ({count}) roles?'**
   String deleteRoles(int count);
 
+  /// No description provided for @deleteProjectConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete project {name}?'**
+  String deleteProjectConfirmation(String name);
+
+  /// No description provided for @deleteProjectsConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) projects?'**
+  String deleteProjectsConfirmation(int count);
+
   /// No description provided for @deleteNodeConfirmation.
   ///
   /// In en, this message translates to:
@@ -595,6 +601,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Node {name} has been deleted'**
   String msgNodeDeleted(String name);
+
+  /// No description provided for @msgProjectCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Project {name} has been created'**
+  String msgProjectCreated(String name);
+
+  /// No description provided for @msgProjectUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Project {name} has been updated'**
+  String msgProjectUpdated(String name);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

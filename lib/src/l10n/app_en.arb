@@ -41,7 +41,6 @@
   "nodeType": "Node type",
   "username": "Username",
   "save": "Save",
-  "deleteProject": "Delete the project?",
   "active": "Active",
   "inactive": "Inactive",
   "status": "Status",
@@ -75,6 +74,22 @@
   },
   "deleteRoles": "Delete selected ({count}) roles?",
   "@deleteRoles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteProjectConfirmation": "Delete project {name}?",
+  "@deleteProjectConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProjectsConfirmation": "Delete selected ({count}) projects?",
+  "@deleteProjectsConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -211,6 +226,22 @@
   },
   "msgNodeDeleted": "Node {name} has been deleted",
   "@msgNodeDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectCreated": "Project {name} has been created",
+  "@msgProjectCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectUpdated": "Project {name} has been updated",
+  "@msgProjectUpdated": {
     "placeholders": {
       "name": {
         "type": "String"
