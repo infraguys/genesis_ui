@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_action_popup_menu_button.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_list_page/widgets/projects_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';

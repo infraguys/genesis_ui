@@ -11,11 +11,9 @@ import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
-import 'package:genesis/src/layer_presentation/pages/extensions_page/extensions_page.dart';
+import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/extension_pages/extension_list_page/extension_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
@@ -23,14 +21,16 @@ import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/n
 import 'package:genesis/src/layer_presentation/pages/organization_pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
-import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/create_project_page/create_project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_details_page/project_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_list_page/project_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/attach_roles_page/attach_roles_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/create_role_page/create_role_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_details_page/role_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/role_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/domain_setup_page.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
-import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/create_user_page/create_user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/user_details_page.dart';
@@ -187,7 +187,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.projects.name,
                 path: '/projects',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: ProjectsPage(),
+                  child: ProjectListPage(),
                 ),
                 routes: [
                   GoRoute(
@@ -201,7 +201,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.project.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: ProjectPage(uuid: ProjectUUID(state.pathParameters['uuid']!)),
+                      child: ProjectDetailsPage(uuid: ProjectUUID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],
@@ -299,7 +299,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.allExtensions.name,
                 path: '/extensions',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: ExtensionsPage(),
+                  child: ExtensionListPage(),
                 ),
                 routes: [
                   GoRoute(

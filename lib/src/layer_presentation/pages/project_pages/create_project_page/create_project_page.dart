@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
@@ -17,7 +16,6 @@ import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/w
 import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
@@ -32,14 +30,17 @@ class _CreateProjectView extends StatefulWidget {
 
 class _CreateProjectViewState extends State<_CreateProjectView> {
   final _formKey = GlobalKey<FormState>();
+  late ProjectBloc projectBloc;
 
-  late _ControllersManager _controllersManager;
+  var _name = '';
+  var _description = '';
 
   @override
   void initState() {
+    projectBloc = context.read<ProjectBloc>();
+
     context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
     context.read<UsersBloc>().add(UsersEvent.getUsers());
-    _controllersManager = _ControllersManager();
     super.initState();
   }
 
@@ -47,7 +48,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
   Widget build(BuildContext context) {
     return BlocListener<ProjectBloc, ProjectState>(
       listenWhen: (_, current) => switch (current) {
-        ProjectCreatedState() => true,
+        ProjectCreatedState() || ProjectFailureState() => true,
         _ => false,
       },
       listener: (context, state) {
@@ -55,9 +56,9 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case ProjectCreatedState():
+          case ProjectCreatedState(:final project):
             context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgProjectCreated(project.name)));
             navigator.pop();
           case ProjectFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
@@ -78,7 +79,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
               ),
               ButtonsBar(
                 children: [
-                  SaveIconButton(onPressed: () => save(context)),
+                  SaveIconButton(onPressed: save),
                 ],
               ),
               LayoutBuilder(
@@ -91,9 +92,12 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
                       children: [
                         SizedBox(
                           width: constraints.maxWidth * 0.4,
-                          child: AppTextInput(
-                            controller: _controllersManager.nameController,
-                            hintText: context.$.name,
+                          child: TextFormField(
+                            initialValue: _name,
+                            decoration: InputDecoration(
+                              hintText: context.$.name,
+                            ),
+                            onSaved: (newValue) => _name = newValue!,
                             validator: (value) => switch (value) {
                               _ when value!.isEmpty => context.$.requiredField,
                               _ => null,
@@ -102,9 +106,11 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
                         ),
                         SizedBox(
                           width: constraints.maxWidth * 0.4,
-                          child: AppTextInput(
-                            controller: _controllersManager.descriptionController,
-                            hintText: context.$.description,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: context.$.description,
+                            ),
+                            onSaved: (newValue) => _description = newValue!,
                           ),
                         ),
                       ],
@@ -116,7 +122,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
               SizedBox(
                 height: 405,
                 child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
-                  builder: (context, state) {
+                  builder: (_, state) {
                     if (state is! OrganizationsLoadedState) {
                       return AppProgressIndicator();
                     }
@@ -128,7 +134,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
               SizedBox(
                 height: 405,
                 child: BlocBuilder<UsersBloc, UsersState>(
-                  builder: (context, state) {
+                  builder: (_, state) {
                     if (state is! UsersLoadedState) {
                       return AppProgressIndicator();
                     }
@@ -155,12 +161,13 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<ProjectBloc>().add(
+      _formKey.currentState!.save();
+      projectBloc.add(
         ProjectEvent.create(
-          name: _controllersManager.nameController.text,
-          description: _controllersManager.descriptionController.text,
+          name: _name,
+          description: _description,
           organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
           userUUID: context.read<UsersSelectionBloc>().state.firstOrNull?.uuid,
           roles: context.read<RolesSelectionBloc>().state,
@@ -168,14 +175,6 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
       );
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [nameController, descriptionController];
 }
 
 class CreateProjectPage extends StatelessWidget {

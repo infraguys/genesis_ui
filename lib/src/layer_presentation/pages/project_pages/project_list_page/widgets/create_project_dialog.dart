@@ -220,17 +220,3 @@
 //     );
 //   }
 // }
-//
-// final class _ControllersManager extends FormControllersManager {
-//   final userController = TextEditingController();
-//   final projectNameController = TextEditingController();
-//   final projectDescriptionController = TextEditingController();
-//   final organizationSourceController = TextEditingController();
-//
-//   @override
-//   List<TextEditingController> get all => [
-//     projectNameController,
-//     projectDescriptionController,
-//     organizationSourceController,
-//   ];
-// }

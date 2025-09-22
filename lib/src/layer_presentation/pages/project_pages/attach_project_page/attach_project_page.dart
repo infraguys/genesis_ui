@@ -8,7 +8,7 @@ import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/pro
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/widgets/projects_table.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_list_page/widgets/projects_table.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';

@@ -19,16 +19,16 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _ProjectView extends StatefulWidget {
-  const _ProjectView({required this.uuid});
+class _ProjectDetailsView extends StatefulWidget {
+  const _ProjectDetailsView({required this.uuid});
 
   final ProjectUUID uuid;
 
   @override
-  State<_ProjectView> createState() => _ProjectViewState();
+  State<_ProjectDetailsView> createState() => _ProjectDetailsViewState();
 }
 
-class _ProjectViewState extends State<_ProjectView> {
+class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
 
   late _ControllersManager _controllersManager;
@@ -168,8 +168,8 @@ class _ControllersManager extends FormControllersManager {
   List<TextEditingController> get all => [nameController, descriptionController];
 }
 
-class ProjectPage extends StatelessWidget {
-  const ProjectPage({required this.uuid, super.key});
+class ProjectDetailsPage extends StatelessWidget {
+  const ProjectDetailsPage({required this.uuid, super.key});
 
   final ProjectUUID uuid;
 
@@ -187,7 +187,7 @@ class ProjectPage extends StatelessWidget {
           create: (_) => OrganizationsSelectionBloc(),
         ),
       ],
-      child: _ProjectView(uuid: uuid),
+      child: _ProjectDetailsView(uuid: uuid),
     );
   }
 }

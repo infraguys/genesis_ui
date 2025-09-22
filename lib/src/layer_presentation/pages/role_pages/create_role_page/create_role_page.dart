@@ -21,7 +21,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:genesis/src/layer_presentation/shared_widgets/search_input.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/search_input.dart';
+part 'widgets/search_input.dart';
 
 class _CreateRoleView extends StatefulWidget {
   const _CreateRoleView();
