@@ -6,6 +6,6 @@ class BlockUserUseCase {
   final IUsersRepository _repository;
 
   Future<void> call() async {
-    // _repository.
+    throw UnimplementedError();
   }
 }
