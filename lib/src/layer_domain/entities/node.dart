@@ -51,6 +51,10 @@ class Node extends Equatable {
   ];
 }
 
+extension type NodeUUID(String value) {
+  bool isEqualTo(NodeUUID other) => value == other.value;
+}
+
 enum NodeType {
   hw,
   vm,
@@ -74,8 +78,4 @@ enum NodeStatus implements BaseStatusEnum {
     NodeStatus.scheduled => 'Scheduled'.hardcoded,
     NodeStatus.started => 'Started'.hardcoded,
   };
-}
-
-extension type NodeUUID(String value) {
-  bool isEqualTo(NodeUUID other) => value == other.value;
 }
