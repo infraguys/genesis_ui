@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/exceptions/no_token_exception.dart';
-import 'package:genesis/src/layer_data/dtos/auth_user_dto.dart';
+import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_current_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
@@ -24,7 +24,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<User> signIn(params) async {
-    late AuthUserDto userDto;
+    late UserDto userDto;
 
     final tokenDto = await _iamApi.createTokenByPassword(SignInReq(params));
     await _tokenDao.writeToken(tokenDto.accessToken);
