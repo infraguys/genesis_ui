@@ -6,4 +6,6 @@ abstract class ClientsEndpoints {
   static String getToken() => '$_clients/${Env.iamClientUuid}/actions/get_token/invoke';
 
   static String getMe() => '$_clients/${Env.iamClientUuid}/actions/me';
+
+  static String introspectIamClient() => '$_clients/${Env.iamClientUuid}/actions/introspect';
 }
