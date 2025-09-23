@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
-import 'package:genesis/src/layer_data/dtos/auth_user_dto.dart';
 import 'package:genesis/src/layer_data/dtos/token_dto.dart';
+import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
 import 'package:genesis/src/layer_data/source/remote/i_remote_iam_client_api.dart';
 
@@ -31,19 +31,14 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   }
 
   @override
-  Future<AuthUserDto> getCurrentUser(req) async {
+  Future<UserDto> getCurrentUser(req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
       if (data != null) {
-        if (data case {
-          'user': Map<String, dynamic> userJson,
-          'organization': List<dynamic> orgJson,
-          'project_id': _,
-        }) {
-          userJson.putIfAbsent('organization', () => orgJson);
-          return AuthUserDto.fromJson(userJson);
+        if (data case {'user': Map<String, dynamic> userJson}) {
+          return UserDto.fromJson(userJson);
         }
       }
       throw DataNotFoundException(requestOptions.uri.path);
