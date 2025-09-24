@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'token_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class TokenDto {
   TokenDto._({
     required this.accessToken,

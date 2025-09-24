@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'role_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class RoleDto implements IDto<Role> {
   factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
 

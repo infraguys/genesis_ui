@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'role_binding_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class RoleBindingDto implements IDto<RoleBinding> {
   RoleBindingDto._({
     required this.uuid,

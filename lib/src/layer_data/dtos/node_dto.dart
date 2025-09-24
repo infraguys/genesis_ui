@@ -8,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'node_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 final class NodeDto implements IDto<Node> {
   NodeDto._({
     required this.uuid,
@@ -86,18 +86,5 @@ enum _StatusDto {
     started => NodeStatus.started,
   };
 }
-
-// @JsonEnum()
-// enum _NodeTypeDto {
-//   @JsonValue('HW')
-//   hw,
-//   @JsonValue('VM')
-//   vm;
-//
-//   NodeType toNodeType() => switch (this) {
-//     hw => NodeType.hw,
-//     vm => NodeType.vm,
-//   };
-// }
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED

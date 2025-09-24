@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class UserDto implements IDto<User> {
   UserDto._({
     required this.uuid,

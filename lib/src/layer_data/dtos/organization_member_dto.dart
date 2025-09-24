@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_member_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class OrganizationMemberDto implements IDto<dynamic> {
   OrganizationMemberDto._({
     required this.uuid,

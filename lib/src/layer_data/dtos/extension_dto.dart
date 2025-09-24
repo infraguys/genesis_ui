@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'extension_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 final class ExtensionDto implements IDto<Extension> {
   ExtensionDto._({
     required this.uuid,

@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'project_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 class ProjectDto implements IDto<Project> {
   ProjectDto._({
     required this.uuid,

@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'permission_dto.g.dart';
 
-@JsonSerializable(createToJson: false, constructor: '_')
+@JsonSerializable(constructor: '_')
 final class PermissionDto implements IDto<Permission> {
   PermissionDto._({
     required this.uuid,
