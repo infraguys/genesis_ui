@@ -16,7 +16,7 @@ class _DeleteOrganizationButton extends StatelessWidget {
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
-          visible: state.isNotEmpty,
+          visible: state.isNotEmpty && context.permissionNames.organizations.canDeleteAny,
           child: DeleteElevatedButton(
             onPressed: () async {
               final organizationsBloc = context.read<OrganizationsBloc>();
