@@ -15,6 +15,7 @@ class _SplashScreenView extends StatelessWidget {
       listener: (context, state) {
         if (state is DomainSetupReadState) {
           context.read<RestClient>().setBaseUrl(state.apiUrl);
+          // context.read<RestClient>().setBaseUrl('http://localhost:20000');
           context.read<AuthBloc>().add(AuthEvent.restoreSession());
         }
       },

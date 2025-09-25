@@ -79,6 +79,8 @@ GoRouter createRouter(BuildContext context) {
       }
 
       switch (authState) {
+        case AuthStateLoading():
+          return '/splash';
         case AuthenticatedAuthState() when matchedLocation == '/sign_in':
         case AuthenticatedAuthState() when matchedLocation == '/sign_up':
         case AuthenticatedAuthState() when matchedLocation == '/splash':
@@ -117,7 +119,10 @@ GoRouter createRouter(BuildContext context) {
         },
       ),
       StatefulShellRoute.indexedStack(
-        pageBuilder: (_, _, navigationShell) {
+        pageBuilder: (context, _, navigationShell) {
+          context.read<UsersBloc>().add(UsersEvent.getUsers());
+          context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
+          context.read<NodesBloc>().add(NodesEvent.getNodes());
           return NoTransitionPage(child: ScaffoldWithNavigation(navigationShell: navigationShell));
         },
         branches: [
@@ -128,9 +133,6 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.main.name,
                 path: '/',
                 pageBuilder: (context, _) {
-                  context.read<UsersBloc>().add(UsersEvent.getUsers());
-                  context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-                  context.read<NodesBloc>().add(NodesEvent.getNodes());
                   return NoTransitionPage(child: MainPage());
                 },
               ),

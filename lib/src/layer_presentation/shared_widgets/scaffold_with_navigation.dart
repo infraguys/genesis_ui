@@ -69,13 +69,15 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       title: Text(context.$.main),
                       onTap: () => context.goNamed(AppRoutes.main.name),
                     ),
-                    if (context.permissionNames.users.canListAll)
-                      ListTile(
+                    Visibility(
+                      visible: context.permissionNames.users.canListAll,
+                      child: ListTile(
                         leading: Icon(CupertinoIcons.person_2_fill),
                         selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
                         title: Text(context.$.users),
                         onTap: () => context.goNamed(AppRoutes.users.name),
                       ),
+                    ),
                     ListTile(
                       leading: Icon(Icons.folder_copy_rounded),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/projects'),
@@ -88,13 +90,15 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       title: Text(context.$.roles),
                       onTap: () => context.goNamed(AppRoutes.roles.name),
                     ),
-                    if (context.permissionNames.organizations.canReadAll)
-                      ListTile(
+                    Visibility(
+                      visible: context.permissionNames.organizations.canReadAll,
+                      child: ListTile(
                         leading: Icon(Icons.business_sharp),
                         selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
                         title: Text(context.$.organizations),
                         onTap: () => context.goNamed(AppRoutes.organizations.name),
                       ),
+                    ),
                     ListTile(
                       leading: Icon(Icons.hub_rounded),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
