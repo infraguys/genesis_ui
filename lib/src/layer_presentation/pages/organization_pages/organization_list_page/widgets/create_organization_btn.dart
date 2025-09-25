@@ -5,10 +5,13 @@ class _CreateOrganizationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CreateIconButton(
-      onPressed: () {
-        context.goNamed(AppRoutes.createOrganization.name);
-      },
+    return Visibility(
+      visible: context.permissionNames.organizations.canCreate,
+      child: CreateIconButton(
+        onPressed: () {
+          context.goNamed(AppRoutes.createOrganization.name);
+        },
+      ),
     );
   }
 }
