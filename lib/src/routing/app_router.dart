@@ -8,9 +8,6 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/extension_pages/extension_list_page/extension_list_page.dart';
@@ -120,9 +117,6 @@ GoRouter createRouter(BuildContext context) {
       ),
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, _, navigationShell) {
-          context.read<UsersBloc>().add(UsersEvent.getUsers());
-          context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
-          context.read<NodesBloc>().add(NodesEvent.getNodes());
           return NoTransitionPage(child: ScaffoldWithNavigation(navigationShell: navigationShell));
         },
         branches: [

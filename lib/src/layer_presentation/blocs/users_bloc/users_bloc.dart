@@ -14,6 +14,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     on(_getUsers);
     on(_onDeleteUsers);
     on(_onForceConfirmEmails);
+    add(UsersEvent.getUsers());
   }
 
   final IUsersRepository _usersRepository;

@@ -12,6 +12,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   ProjectsBloc(this._projectsRepository) : super(ProjectsState.initial()) {
     on(_onGetProjects);
     on(_onDeleteProjects);
+    add(ProjectsEvent.getProjects());
   }
 
   final IProjectsRepository _projectsRepository;

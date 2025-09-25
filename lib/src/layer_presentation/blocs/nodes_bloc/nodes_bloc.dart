@@ -12,6 +12,7 @@ class NodesBloc extends Bloc<NodesEvent, NodesState> {
   NodesBloc(this._repository) : super(NodesState.initial()) {
     on(_onGetNodes);
     on(_onDeleteNodes);
+    add(NodesEvent.getNodes());
   }
 
   final INodesRepository _repository;
