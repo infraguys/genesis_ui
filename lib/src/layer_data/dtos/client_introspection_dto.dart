@@ -1,4 +1,3 @@
-import 'package:genesis/src/layer_data/dtos/permission_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'client_introspection_dto.g.dart';
@@ -13,6 +12,6 @@ final class ClientIntrospectionDto {
   factory ClientIntrospectionDto.fromJson(Map<String, dynamic> json) => _$ClientIntrospectionDtoFromJson(json);
 
   @JsonKey(name: 'project_id')
-  final String projectId;
-  final List<PermissionDto> permissions;
+  final String? projectId;
+  final Set<String> permissions;
 }
