@@ -14,7 +14,7 @@ final class UpdateNodeReq implements JsonEncodable, PathEncodable {
     return {
       'name': _params.name,
       'cores': _params.cores,
-      'ram': _params.cores,
+      'ram': _params.ram,
       'root_disk_size': _params.rootDiskSize,
       'image': _params.image,
       'node_type': NodeTypeDto.of(_params.nodeType).toJson(),
