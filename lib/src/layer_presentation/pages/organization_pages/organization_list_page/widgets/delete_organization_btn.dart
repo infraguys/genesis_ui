@@ -1,37 +1,34 @@
 part of '../organization_list_page.dart';
 
 class _DeleteOrganizationButton extends StatelessWidget {
-  const _DeleteOrganizationButton({super.key});
-
-  String createMessage(BuildContext context, List<Organization> organizations) {
-    if (organizations.length == 1) {
-      return context.$.deleteOrganizationConfirmation(organizations.single.name);
-    }
-    return context.$.deleteOrganizationsConfirmation(organizations.length);
-  }
+  const _DeleteOrganizationButton({super.key}); // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
       builder: (_, state) {
-        if (state.isEmpty) {
-          return SizedBox.shrink();
-        }
-        return DeleteElevatedButton(
-          onPressed: () async {
-            final organizationsBloc = context.read<OrganizationsBloc>();
-            await showDialog<void>(
-              context: context,
-              builder: (context) {
-                return ConfirmationDialog(
-                  message: createMessage(context, state),
-                  onDelete: () {
-                    organizationsBloc.add(OrganizationsEvent.deleteOrganizations(state));
-                  },
-                );
-              },
-            );
-          },
+        final message = switch (state.length) {
+          1 => context.$.deleteOrganizationConfirmation(state.single.name),
+          final len => context.$.deleteOrganizationsConfirmation(len),
+        };
+
+        return Visibility(
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          visible: state.isNotEmpty,
+          child: DeleteElevatedButton(
+            onPressed: () async {
+              final organizationsBloc = context.read<OrganizationsBloc>();
+              await showDialog<void>(
+                context: context,
+                builder: (_) => ConfirmationDialog(
+                  message: message,
+                  onDelete: () => organizationsBloc.add(OrganizationsEvent.deleteOrganizations(state)),
+                ),
+              );
+            },
+          ),
         );
       },
     );
