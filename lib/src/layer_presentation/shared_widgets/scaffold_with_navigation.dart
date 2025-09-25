@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
@@ -68,12 +69,13 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       title: Text(context.$.main),
                       onTap: () => context.goNamed(AppRoutes.main.name),
                     ),
-                    ListTile(
-                      leading: Icon(CupertinoIcons.person_2_fill),
-                      selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
-                      title: Text(context.$.users),
-                      onTap: () => context.goNamed(AppRoutes.users.name),
-                    ),
+                    if (context.permissionNames.users.canListAll)
+                      ListTile(
+                        leading: Icon(CupertinoIcons.person_2_fill),
+                        selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
+                        title: Text(context.$.users),
+                        onTap: () => context.goNamed(AppRoutes.users.name),
+                      ),
                     ListTile(
                       leading: Icon(Icons.folder_copy_rounded),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/projects'),
@@ -86,12 +88,13 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       title: Text(context.$.roles),
                       onTap: () => context.goNamed(AppRoutes.roles.name),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.business_sharp),
-                      selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
-                      title: Text(context.$.organizations),
-                      onTap: () => context.goNamed(AppRoutes.organizations.name),
-                    ),
+                    if (context.permissionNames.organizations.canReadAll)
+                      ListTile(
+                        leading: Icon(Icons.business_sharp),
+                        selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
+                        title: Text(context.$.organizations),
+                        onTap: () => context.goNamed(AppRoutes.organizations.name),
+                      ),
                     ListTile(
                       leading: Icon(Icons.hub_rounded),
                       selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
