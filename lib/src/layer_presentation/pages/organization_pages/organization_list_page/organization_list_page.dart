@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -58,6 +59,9 @@ class _OrganizationListViewState extends State<_OrganizationListView> {
               context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
             },
             builder: (_, state) => switch (state) {
+              OrganizationsLoadedState() when state.organizations.isEmpty => Center(
+                child: Text('Is empty'),
+              ),
               OrganizationsLoadedState(:final organizations) => OrganizationsTable(organizations: organizations),
               _ => AppProgressIndicator(),
             },
