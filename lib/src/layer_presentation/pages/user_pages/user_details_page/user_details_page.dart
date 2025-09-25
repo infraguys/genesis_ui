@@ -12,6 +12,7 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/confirm_user_email_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -26,7 +27,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart'
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/delete_user_elevated_button.dart';
+part './widgets/delete_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
   const _UserDetailsView({required this.userUUID});
@@ -105,7 +106,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                 ),
                 ButtonsBar(
                   children: [
-                    _DeleteUserElevatedButton(user: user),
+                    if (context.permissionNames.users.canDeleteAll) _DeleteUserButton(user: user),
                     ConfirmUserEmailElevatedButton(user: user),
                     SaveIconButton(onPressed: () => save(user.uuid)),
                   ],
