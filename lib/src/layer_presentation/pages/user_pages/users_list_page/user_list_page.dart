@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -50,7 +51,7 @@ class _UserListView extends StatelessWidget {
             children: [
               // SearchInput(),
               Spacer(),
-              _DeleteUserButton(),
+              if (context.permissionNames.users.canDeleteAll) _DeleteUserButton(),
               _ConfirmEmailButton(),
               CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createUser.name)),
             ],
