@@ -131,7 +131,7 @@ GoRouter createRouter(BuildContext context) {
                   context.read<UsersBloc>().add(UsersEvent.getUsers());
                   context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
                   context.read<NodesBloc>().add(NodesEvent.getNodes());
-                  return NoTransitionPage(child: DashboardPage());
+                  return NoTransitionPage(child: MainPage());
                 },
               ),
             ],
