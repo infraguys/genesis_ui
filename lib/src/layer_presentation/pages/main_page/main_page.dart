@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/projects_summary_card.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
 
-class _DashboardView extends StatelessWidget {
-  const _DashboardView({super.key});
+class _MainView extends StatelessWidget {
+  const _MainView({super.key});
 
   @override
   Widget build(context) {
@@ -17,16 +18,18 @@ class _DashboardView extends StatelessWidget {
           Row(
             spacing: 10,
             children: [
-              Expanded(
-                // width: 200,
-                // height: 100,
-                child: ActiveUsersCard(),
-              ),
-              Expanded(
-                // width: 200,
-                // height: 100,
-                child: VerifiedUsersCountCard(),
-              ),
+              if (context.permissionNames.users.canListAll)
+                Expanded(
+                  // width: 200,
+                  // height: 100,
+                  child: ActiveUsersCard(),
+                ),
+              if (context.permissionNames.users.canListAll)
+                Expanded(
+                  // width: 200,
+                  // height: 100,
+                  child: VerifiedUsersCountCard(),
+                ),
               Expanded(
                 // width: 200,
                 // height: 100,
@@ -54,11 +57,11 @@ class _DashboardView extends StatelessWidget {
   }
 }
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const _DashboardView();
+    return const _MainView();
   }
 }
