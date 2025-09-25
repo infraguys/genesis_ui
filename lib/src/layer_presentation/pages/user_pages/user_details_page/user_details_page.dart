@@ -13,13 +13,12 @@ import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
-import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/confirm_user_email_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
@@ -27,7 +26,9 @@ import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart'
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 
+part './widgets/confirm_email_btn.dart';
 part './widgets/delete_user_btn.dart';
+part './widgets/save_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
   const _UserDetailsView({required this.userUUID});
@@ -106,9 +107,9 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                 ),
                 ButtonsBar(
                   children: [
-                    if (context.permissionNames.users.canDeleteAll) _DeleteUserButton(user: user),
-                    ConfirmUserEmailElevatedButton(user: user),
-                    SaveIconButton(onPressed: () => save(user.uuid)),
+                    _DeleteUserButton(user: user),
+                    _ConfirmEmailButton(user: user),
+                    _SaveUserButton(onPressed: () => save(user.uuid)),
                   ],
                 ),
                 LayoutBuilder(
@@ -129,44 +130,62 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                 children: [
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.usernameController,
-                                      hintText: context.$.username,
+                                      decoration: InputDecoration(
+                                        hintText: context.$.username,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.firstNameController,
-                                      hintText: context.$.firstName,
+                                      decoration: InputDecoration(
+                                        hintText: context.$.firstName,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.lastNameController,
-                                      hintText: context.$.lastName,
+                                      decoration: InputDecoration(
+                                        hintText: context.$.lastName,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.surnameController,
-                                      hintText: context.$.surName,
+                                      decoration: InputDecoration(
+                                        hintText: context.$.surName,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.phoneController,
-                                      hintText: 'Phone'.hardcoded,
+                                      decoration: InputDecoration(
+                                        hintText: 'Phone'.hardcoded,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
-                                    child: AppTextInput(
+                                    child: TextFormField(
+                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       controller: _controllersManager.emailController,
-                                      hintText: context.$.email,
+                                      decoration: InputDecoration(
+                                        hintText: context.$.email,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -214,9 +233,12 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                 ),
                                 SizedBox(
                                   width: constraints.maxWidth * 0.4,
-                                  child: AppTextInput.multiLine(
+                                  child: TextFormField(
+                                    readOnly: !context.permissionNames.users.canWriteAll,
                                     controller: _controllersManager.descriptionController,
-                                    hintText: context.$.description,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.description,
+                                    ),
                                     maxLines: 4,
                                     minLines: 4,
                                   ),
