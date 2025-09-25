@@ -7,6 +7,7 @@ import 'package:genesis/src/layer_domain/params/organizations/update_organizatio
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
@@ -18,6 +19,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:go_router/go_router.dart';
 
 part './widgets/delete_organization_btn.dart';
+part './widgets/save_organization_btn.dart';
 
 class _OrganizationDetailsView extends StatefulWidget {
   const _OrganizationDetailsView({required this.uuid});
@@ -104,7 +106,7 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
               ButtonsBar(
                 children: [
                   _DeleteOrganizationButton(organization: organization),
-                  SaveIconButton(onPressed: save),
+                  _SaveOrganizationButton(onPressed: save),
                 ],
               ),
               LayoutBuilder(
