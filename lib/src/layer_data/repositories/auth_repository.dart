@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/exceptions/no_token_exception.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
+import 'package:genesis/src/layer_data/requests/iam_client_requests/get_introspection_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
 import 'package:genesis/src/layer_data/requests/users/get_current_user_req.dart';
 import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
@@ -7,6 +8,7 @@ import 'package:genesis/src/layer_data/source/local/token_dao.dart';
 import 'package:genesis/src/layer_data/source/remote/i_remote_iam_client_api.dart';
 import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/layer_domain/iam/permission_names.dart';
 import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
 
 class AuthRepository implements IAuthRepository {
@@ -23,7 +25,7 @@ class AuthRepository implements IAuthRepository {
   final IProjectsApi _projectsApi;
 
   @override
-  Future<User> signIn(params) async {
+  Future<({User user, PermissionNames permissionNames})> signIn(params) async {
     late UserDto userDto;
 
     final tokenDto = await _iamApi.createTokenByPassword(SignInReq(params));
@@ -41,18 +43,26 @@ class AuthRepository implements IAuthRepository {
       await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
       userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     }
+    final clientIntrospectionDto = await _iamApi.introspectClient(GetIntrospectionReq());
 
-    return userDto.toEntity();
+    return (
+      user: userDto.toEntity(),
+      permissionNames: PermissionNames(clientIntrospectionDto.permissions),
+    );
   }
 
   @override
-  Future<User> restoreSession() async {
+  Future<({User user, PermissionNames permissionNames})> restoreSession() async {
     final token = await _tokenDao.readToken();
     if (token == null || token.isEmpty) {
       throw NoTokenException();
     }
     final userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
-    return userDto.toEntity();
+    final clientIntrospectionDto = await _iamApi.introspectClient(GetIntrospectionReq());
+    return (
+      user: userDto.toEntity(),
+      permissionNames: PermissionNames(clientIntrospectionDto.permissions),
+    );
   }
 
   @override
