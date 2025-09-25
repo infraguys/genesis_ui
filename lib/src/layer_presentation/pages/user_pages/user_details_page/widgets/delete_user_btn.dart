@@ -1,7 +1,7 @@
 part of '../user_details_page.dart';
 
-class _DeleteUserElevatedButton extends StatelessWidget {
-  const _DeleteUserElevatedButton({required this.user, super.key});
+class _DeleteUserButton extends StatelessWidget {
+  const _DeleteUserButton({required this.user, super.key}); // ignore: unused_element_parameter
 
   final User user;
 
