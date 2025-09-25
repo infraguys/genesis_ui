@@ -1,7 +1,7 @@
 part of 'auth_bloc.dart';
 
 sealed class AuthState {
-  factory AuthState.authenticated(User user) = AuthenticatedAuthState;
+  factory AuthState.authenticated(({User user, PermissionNames permissionNames}) session) = AuthenticatedAuthState;
 
   factory AuthState.unauthenticated() = UnauthenticatedAuthState;
 
@@ -19,9 +19,12 @@ final class AuthStateFailure implements AuthState {
 }
 
 final class AuthenticatedAuthState implements AuthState {
-  AuthenticatedAuthState(this.user);
+  AuthenticatedAuthState(({User user, PermissionNames permissionNames}) session)
+    : user = session.user,
+      permissionNames = session.permissionNames;
 
   final User user;
+  final PermissionNames permissionNames;
 }
 
 final class UnauthenticatedAuthState implements AuthState {}
