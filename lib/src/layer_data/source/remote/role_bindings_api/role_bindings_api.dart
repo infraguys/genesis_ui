@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_binding_dto.dart';
 import 'package:genesis/src/layer_data/requests/role_bindings/get_role_bindings_req.dart';
@@ -18,7 +18,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
         data: req.toJson(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -35,7 +35,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
       final dtos = List.castFrom<dynamic, Map<String, dynamic>>(data).map(RoleBindingDto.fromJson);
       return dtos.toList();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -46,7 +46,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
         req.toPath(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }

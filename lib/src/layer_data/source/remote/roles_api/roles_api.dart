@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
@@ -27,7 +27,7 @@ final class RolesApi implements IRolesApi {
       }
       return List.empty();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -43,7 +43,7 @@ final class RolesApi implements IRolesApi {
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -60,7 +60,7 @@ final class RolesApi implements IRolesApi {
       }
       return [];
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -71,7 +71,7 @@ final class RolesApi implements IRolesApi {
         req.toPath(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -86,7 +86,7 @@ final class RolesApi implements IRolesApi {
       }
       return RoleDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -102,7 +102,7 @@ final class RolesApi implements IRolesApi {
       }
       return RoleDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }

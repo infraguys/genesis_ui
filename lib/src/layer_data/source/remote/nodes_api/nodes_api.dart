@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/node_dto.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/create_node_req.dart';
@@ -20,7 +20,7 @@ final class NodesApi implements INodesApi {
       );
       return NodeDto.fromJson(data!);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -31,7 +31,7 @@ final class NodesApi implements INodesApi {
         req.toPath(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -47,7 +47,7 @@ final class NodesApi implements INodesApi {
 
       return NodeDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -64,7 +64,7 @@ final class NodesApi implements INodesApi {
       final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
       return castedData.map((it) => NodeDto.fromJson(it)).toList();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -80,7 +80,7 @@ final class NodesApi implements INodesApi {
       }
       return NodeDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }

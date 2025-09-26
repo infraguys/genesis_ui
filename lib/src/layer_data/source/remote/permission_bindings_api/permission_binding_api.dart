@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_binding_dto.dart';
 import 'package:genesis/src/layer_data/requests/permission_binding_requests/get_permission_bindings_req.dart';
@@ -25,7 +25,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
       }
       return List.empty();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -41,7 +41,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
       }
       return PermissionBindingDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -52,7 +52,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
         req.toPath(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }

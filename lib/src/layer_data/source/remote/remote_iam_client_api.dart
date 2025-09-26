@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/client_introspection_dto.dart';
 import 'package:genesis/src/layer_data/dtos/token_dto.dart';
@@ -27,7 +27,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       );
       return TokenDto.fromJson(data!);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -44,7 +44,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -59,7 +59,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       }
       return ClientIntrospectionDto.fromJson(data);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }
