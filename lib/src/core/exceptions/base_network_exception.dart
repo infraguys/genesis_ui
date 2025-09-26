@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 
-base class BaseNetworkException implements Exception {
-  BaseNetworkException(this.message);
+abstract interface class BaseNetworkException implements Exception {
+  BaseNetworkException();
 
   factory BaseNetworkException.from(DioException exception) {
     return switch (exception.type) {
@@ -11,6 +11,4 @@ base class BaseNetworkException implements Exception {
       _ => NetworkException.from(exception),
     };
   }
-
-  final String message;
 }

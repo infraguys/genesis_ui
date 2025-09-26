@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/users_api/i_users_api.dart';
@@ -18,7 +17,7 @@ final class UsersApi implements IUsersApi {
         queryParameters: req.toQuery(),
       );
       if (data == null) {
-        return [];
+        return List.empty();
       }
       final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
       return castedData.map((it) => UserDto.fromJson(it)).toList();
@@ -30,14 +29,11 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> changeUserPassword(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return UserDto.fromJson(data);
+      return UserDto.fromJson(data!);
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {}
       throw BaseNetworkException.from(e);
@@ -47,13 +43,10 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> confirmEmail(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return UserDto.fromJson(data);
+      return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -62,13 +55,10 @@ final class UsersApi implements IUsersApi {
   @override
   Future<UserDto> forceConfirmEmail(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return UserDto.fromJson(data);
+      return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -104,10 +94,7 @@ final class UsersApi implements IUsersApi {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(req.toPath());
-      }
-      return UserDto.fromJson(data);
+      return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -126,10 +113,7 @@ final class UsersApi implements IUsersApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(req.toPath());
-      }
-      return UserDto.fromJson(data);
+      return UserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

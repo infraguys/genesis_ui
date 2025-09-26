@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_binding_dto.dart';
 import 'package:genesis/src/layer_data/requests/permission_binding_requests/get_permission_bindings_req.dart';
@@ -19,11 +18,11 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
         queryParameters: req.toQuery(),
       );
 
-      if (data != null) {
-        final dtos = List.castFrom<dynamic, Map<String, dynamic>>(data).map(PermissionBindingDto.fromJson);
-        return dtos.toList();
+      if (data == null) {
+        return List.empty();
       }
-      return List.empty();
+      final dtos = List.castFrom<dynamic, Map<String, dynamic>>(data).map(PermissionBindingDto.fromJson);
+      return dtos.toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -36,10 +35,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return PermissionBindingDto.fromJson(data);
+      return PermissionBindingDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -48,9 +44,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
   @override
   Future<void> deletePermissionBinding(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.delete<Map<String, dynamic>>(
-        req.toPath(),
-      );
+      await _client.delete<Map<String, dynamic>>(req.toPath());
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

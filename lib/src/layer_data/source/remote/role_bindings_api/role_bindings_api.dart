@@ -42,7 +42,7 @@ final class RoleBindingsApi implements IRoleBindingsApi {
   @override
   Future<void> deleteRoleBinding(req) async {
     try {
-      final Response(:data) = await _client.delete<Map<String, dynamic>>(
+      await _client.delete<Map<String, dynamic>>(
         req.toPath(),
       );
     } on DioException catch (e) {

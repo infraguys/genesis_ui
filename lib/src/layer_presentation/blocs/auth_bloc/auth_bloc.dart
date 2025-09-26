@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/exceptions/no_token_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final authSession = await useCase(SignInParams(username: event.username, password: event.password));
       emit(AuthState.authenticated(authSession));
-    } on DataNotFoundException catch (e) {
+    } on ApiException catch (e) {
       emit(AuthState.failure(e.message));
     } on NetworkException catch (e) {
       emit(AuthState.failure(e.message));
@@ -51,6 +51,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthState.authenticated(authSession));
     } on NoTokenException catch (_) {
       emit(AuthState.unauthenticated());
+    } on ApiException catch (e) {
+      emit(AuthState.failure(e.message));
     } on NetworkException catch (e) {
       emit(AuthState.failure(e.message));
     } on Exception catch (_) {

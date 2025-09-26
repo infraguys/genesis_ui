@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/client_introspection_dto.dart';
 import 'package:genesis/src/layer_data/dtos/token_dto.dart';
@@ -37,12 +36,8 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data != null) {
-        if (data case {'user': Map<String, dynamic> userJson}) {
-          return UserDto.fromJson(userJson);
-        }
-      }
-      throw DataNotFoundException(requestOptions.uri.path);
+      final userJson = data!['user'] as Map<String, dynamic>;
+      return UserDto.fromJson(userJson);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -51,13 +46,10 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
   @override
   Future<ClientIntrospectionDto> introspectClient(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+      final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return ClientIntrospectionDto.fromJson(data);
+      return ClientIntrospectionDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

@@ -1,45 +1,39 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 
-final class NetworkException extends BaseNetworkException {
-  NetworkException(super.message);
+base class NetworkException implements BaseNetworkException {
+  NetworkException._(this.message);
 
   factory NetworkException.from(DioException exception) {
-    final data = exception.response?.data;
-
-    late final String? message;
-
-    if (data case {'type': String _, 'code': int _, 'message': String msg}) {
-      message = msg;
-    }
+    final message = switch (exception.response?.data) {
+      {'message': String msg} => msg,
+      _ => null,
+    };
 
     return switch (exception.type) {
-      DioExceptionType.connectionError => ConnectionError(message ?? 'Connection error'),
-      DioExceptionType.connectionTimeout => TimeoutError(message ?? 'Connection timeout'),
-      DioExceptionType.sendTimeout || DioExceptionType.receiveTimeout => TimeoutError(message ?? 'Timeout error'),
-      DioExceptionType.cancel => RequestCancelled(message ?? 'Request was cancelled'),
-      DioExceptionType.unknown => ConnectionError(message ?? 'Unknown connection error'),
-      _ => NetworkException(message ?? 'Unknown network error'),
+      DioExceptionType.connectionError => ConnectionException(message ?? 'Connection error'),
+      DioExceptionType.connectionTimeout => TimeoutException(message ?? 'Connection timeout'),
+      DioExceptionType.sendTimeout || DioExceptionType.receiveTimeout => TimeoutException(message ?? 'Timeout error'),
+      DioExceptionType.cancel => RequestCancelledException(message ?? 'Request was cancelled'),
+      _ => NetworkException._(message ?? 'Unknown network error'),
     };
   }
+
+  final String message;
 }
 
-final class ConnectionError extends NetworkException {
-  ConnectionError(super.message);
+final class ConnectionException extends NetworkException {
+  ConnectionException(super.message) : super._();
 }
 
-final class TimeoutError extends NetworkException {
-  TimeoutError(super.message);
+final class TimeoutException extends NetworkException {
+  TimeoutException(super.message) : super._();
 }
 
-final class RequestCancelled extends NetworkException {
-  RequestCancelled(super.message);
+final class RequestCancelledException extends NetworkException {
+  RequestCancelledException(super.message) : super._();
 }
 
-final class SendTimeoutError extends NetworkException {
-  SendTimeoutError(super.message);
-}
-
-final class ReceiveTimeoutError extends NetworkException {
-  ReceiveTimeoutError(super.message);
+final class UnknownNetworkException extends NetworkException {
+  UnknownNetworkException(super.message) : super._();
 }

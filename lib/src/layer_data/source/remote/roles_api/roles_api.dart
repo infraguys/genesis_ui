@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
@@ -20,7 +19,7 @@ final class RolesApi implements IRolesApi {
     final url = '$_userUrl/$userUuid/actions/get_my_roles';
 
     try {
-      final Response(:data, :requestOptions) = await _client.get<List<dynamic>>(url);
+      final Response(:data) = await _client.get<List<dynamic>>(url);
       if (data != null) {
         final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
         return castedData.map((it) => RoleDto.fromJson(it)).toList();
@@ -34,14 +33,11 @@ final class RolesApi implements IRolesApi {
   @override
   Future<RoleDto> createRole(CreateRoleReq req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      if (data != null) {
-        return RoleDto.fromJson(data);
-      }
-      throw DataNotFoundException(requestOptions.uri.path);
+      return RoleDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -50,15 +46,15 @@ final class RolesApi implements IRolesApi {
   @override
   Future<List<RoleDto>> getRoles(GetRolesReq req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.get<List<dynamic>>(
+      final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),
         queryParameters: req.toQuery(),
       );
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => RoleDto.fromJson(it)).toList();
+      if (data == null) {
+        return List.empty();
       }
-      return [];
+      final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+      return castedData.map((it) => RoleDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -67,7 +63,7 @@ final class RolesApi implements IRolesApi {
   @override
   Future<void> deleteRole(DeleteRoleReq req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.delete<void>(
+      await _client.delete<void>(
         req.toPath(),
       );
     } on DioException catch (e) {
@@ -78,13 +74,11 @@ final class RolesApi implements IRolesApi {
   @override
   Future<RoleDto> getRole(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
+      final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return RoleDto.fromJson(data);
+
+      return RoleDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -93,14 +87,11 @@ final class RolesApi implements IRolesApi {
   @override
   Future<RoleDto> updateRole(req) async {
     try {
-      final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
+      final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return RoleDto.fromJson(data);
+      return RoleDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

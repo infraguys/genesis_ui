@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
-import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
 import 'package:genesis/src/layer_data/requests/organization_requests/get_organizations_req.dart';
@@ -18,10 +17,7 @@ final class OrganizationsApi implements IOrganizationsApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return OrganizationDto.fromJson(data);
+      return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -62,10 +58,7 @@ final class OrganizationsApi implements IOrganizationsApi {
         req.toPath(),
         data: req.toJson(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return OrganizationDto.fromJson(data);
+      return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -77,10 +70,7 @@ final class OrganizationsApi implements IOrganizationsApi {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      if (data == null) {
-        throw DataNotFoundException(requestOptions.uri.path);
-      }
-      return OrganizationDto.fromJson(data);
+      return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

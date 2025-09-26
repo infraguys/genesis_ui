@@ -30,12 +30,12 @@ final class PermissionsApi implements IPermissionsApi {
         queryParameters: req.toQuery(),
       );
 
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => PermissionDto.fromJson(it)).toList();
+      if (data == null) {
+        return List.empty();
       }
 
-      return [];
+      final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+      return castedData.map((it) => PermissionDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
