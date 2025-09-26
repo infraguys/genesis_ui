@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/extension_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/extensions_api/i_extensions_api.dart';
@@ -28,7 +28,7 @@ final class ExtensionsApi implements IExtensionsApi {
       final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
       return castedData.map((it) => ExtensionDto.fromJson(it)).toList();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }

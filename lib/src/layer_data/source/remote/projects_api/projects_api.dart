@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/exceptions/data_not_found_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
 import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
@@ -22,7 +22,7 @@ final class ProjectsApi implements IProjectsApi {
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -33,7 +33,7 @@ final class ProjectsApi implements IProjectsApi {
         req.toPath(),
       );
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -49,7 +49,7 @@ final class ProjectsApi implements IProjectsApi {
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -64,7 +64,7 @@ final class ProjectsApi implements IProjectsApi {
       }
       throw DataNotFoundException(requestOptions.uri.path);
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 
@@ -81,7 +81,7 @@ final class ProjectsApi implements IProjectsApi {
       }
       return List.empty();
     } on DioException catch (e) {
-      throw NetworkException(e);
+      throw BaseNetworkException.from(e);
     }
   }
 }
