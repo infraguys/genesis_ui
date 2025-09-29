@@ -23,6 +23,8 @@ final class AuthenticatedAuthState implements AuthState {
     : user = session.user,
       permissionNames = session.permissionNames;
 
+  bool isEqualUuid(UserUUID other) => user.uuid == other;
+
   final User user;
   final PermissionNames permissionNames;
 }
