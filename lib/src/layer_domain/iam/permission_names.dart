@@ -14,6 +14,9 @@ extension type PermissionNames(Set<String> _set) {
   /// Namespace: iam.projects
   ProjectPermissions get projects => ProjectPermissions(_set);
 
+  /// Namespace: iam.role_bindings
+  RoleBindingPermissions get roleBindings => RoleBindingPermissions(_set);
+
   bool get isAdmin => _set.contains('*.*.*');
 }
 
@@ -35,12 +38,23 @@ extension type UserPermissions(Set<String> _set) implements PermissionNames {
 
   bool get canReadAll => _set.contains('iam.user.read_all') || isAdmin;
 
-  bool get canDeleteAll => _set.contains('iam.user.delete_all') || isAdmin;
-
-  bool get canDelete => _set.contains('iam.user.delete') || isAdmin;
-
   bool get canListAll => _set.contains('iam.user.list') || isAdmin;
+
+  bool get canDeleteOwn => _set.contains('iam.user.delete');
+
+  bool get canDeleteAll => _set.contains('iam.user.delete_all') || isAdmin;
 }
+
+extension type RoleBindingPermissions(Set<String> _set) implements PermissionNames {
+  bool get canCreate => _set.contains('iam.role_binding.create') || isAdmin;
+
+  bool get canUpdate => _set.contains('iam.role_binding.update') || isAdmin;
+
+  bool get canRead => _set.contains('iam.role_binding.read') || isAdmin;
+
+  bool get canDelete => _set.contains('iam.role_binding.delete') || isAdmin;
+}
+
 extension type NodePermissions(Set<String> _set) {}
 extension type RolePermissions(Set<String> _set) {}
 
