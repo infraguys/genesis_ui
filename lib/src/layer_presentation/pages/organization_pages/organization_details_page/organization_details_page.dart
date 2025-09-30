@@ -48,16 +48,9 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<OrganizationBloc, OrganizationState>(
-        listenWhen: (_, current) {
-          switch (current) {
-            case OrganizationUpdatedState():
-            case OrganizationDeletedState():
-            case OrganizationLoadedState():
-            case OrganizationFailureState():
-              return true;
-            default:
-              return false;
-          }
+        listenWhen: (_, current) => switch (current) {
+          _ when current is! OrganizationLoadingState => true,
+          _ => false,
         },
         listener: (context, state) {
           final navigator = GoRouter.of(context);
@@ -84,6 +77,7 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
             default:
           }
         },
+        buildWhen: (previous, current) => current is OrganizationLoadingState || current is OrganizationLoadedState,
         builder: (context, state) {
           if (state is! OrganizationLoadedState) {
             return AppProgressIndicator();
