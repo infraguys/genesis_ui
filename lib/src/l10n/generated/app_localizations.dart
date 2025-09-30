@@ -485,7 +485,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteRoles.
   ///
   /// In en, this message translates to:
-  /// **'Delete selected ({count}) roles?'**
+  /// **'Delete selected({count}) roles?'**
   String deleteRoles(int count);
 
   /// No description provided for @deleteProjectConfirmation.
@@ -497,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteProjectsConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'Delete selected ({count}) projects?'**
+  /// **'Delete selected({count}) projects?'**
   String deleteProjectsConfirmation(int count);
 
   /// No description provided for @deleteNodeConfirmation.
@@ -509,7 +509,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteNodesConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'Delete selected ({count}) nodes?'**
+  /// **'Delete selected({count}) nodes?'**
   String deleteNodesConfirmation(int count);
 
   /// No description provided for @deleteOrganizationConfirmation.
@@ -521,7 +521,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteOrganizationsConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'Delete selected ({count}) organizations?'**
+  /// **'Delete selected({count}) organizations?'**
   String deleteOrganizationsConfirmation(int count);
 
   /// No description provided for @deleteUser.
@@ -535,6 +535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete selected ({count}) users?'**
   String deleteUsers(int count);
+
+  /// No description provided for @msgPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You don’t have permission \"{permission}\". Please contact your administrator.'**
+  String msgPermissionDenied(String permission);
 
   /// No description provided for @msgUserCreated.
   ///
@@ -571,6 +577,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Organization {name} has been deleted'**
   String msgOrganizationDeleted(String name);
+
+  /// No description provided for @msgOrganizationsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizations({count}) have been deleted'**
+  String msgOrganizationsDeleted(int count);
 
   /// No description provided for @msgRoleUpdated.
   ///

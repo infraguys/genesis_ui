@@ -85,7 +85,7 @@
       }
     }
   },
-  "deleteProjectsConfirmation": "Удалить выбранные ({count}) проекты?",
+  "deleteProjectsConfirmation": "Удалить выбранные({count}) проекты?",
   "@deleteProjectsConfirmation": {
     "placeholders": {
       "count": {
@@ -101,7 +101,7 @@
       }
     }
   },
-  "deleteNodesConfirmation": "Удалить выбранные ({count}) ноды?",
+  "deleteNodesConfirmation": "Удалить выбранные({count}) ноды?",
   "@deleteNodesConfirmation": {
     "placeholders": {
       "count": {
@@ -117,7 +117,7 @@
       }
     }
   },
-  "deleteOrganizationsConfirmation": "Удалить выбранные ({count}) организации?",
+  "deleteOrganizationsConfirmation": "Удалить выбранные({count}) организации?",
   "@deleteOrganizationsConfirmation": {
     "placeholders": {
       "count": {
@@ -138,6 +138,14 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "msgPermissionDenied": "У вас нет разрешения \"{permission}\". Пожалуйста, свяжитесь с вашим администратором.",
+  "@msgPermissionDenied": {
+    "placeholders": {
+      "permission": {
+        "type": "String"
       }
     }
   },
@@ -189,7 +197,15 @@
       }
     }
   },
-  "msgRoleUpdated": "Рол {name} обновлена",
+  "msgOrganizationsDeleted": "Организации({count}) удалены",
+  "@msgOrganizationsDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgRoleUpdated": "Роль {name} обновлена",
   "@msgRoleUpdated": {
     "placeholders": {
       "name": {
