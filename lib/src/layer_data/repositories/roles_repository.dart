@@ -33,8 +33,7 @@ final class RolesRepository implements IRolesRepository {
 
   @override
   Future<List<Role>> getRoles(params) async {
-    final req = GetRolesReq(params);
-    final rolesDtos = await _rolesApi.getRoles(req);
+    final rolesDtos = await _rolesApi.getRoles(GetRolesReq(params));
     return rolesDtos.map((dto) => dto.toEntity()).toList();
   }
 
