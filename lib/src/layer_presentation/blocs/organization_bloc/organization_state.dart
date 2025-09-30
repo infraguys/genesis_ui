@@ -3,6 +3,8 @@ part of 'organization_bloc.dart';
 sealed class OrganizationState {
   factory OrganizationState.loading() = OrganizationLoadingState;
 
+  factory OrganizationState.initial() = OrganizationLoadingState;
+
   factory OrganizationState.created() = OrganizationCreatedState;
 
   factory OrganizationState.updated(Organization organization) = OrganizationUpdatedState;
@@ -15,6 +17,8 @@ sealed class OrganizationState {
 
   factory OrganizationState.loaded(Organization organization) = OrganizationLoadedState;
 }
+
+final class OrganizationInitialState implements OrganizationState {}
 
 final class OrganizationLoadingState implements OrganizationState {}
 
