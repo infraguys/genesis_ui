@@ -5,14 +5,11 @@ class _DeleteUserButton extends StatelessWidget {
 
   final User user;
 
-  bool _canDeleteOwn(BuildContext context) {
-    return (context.permissionNames.users.canDeleteOwn && context.isMe(user.uuid)) || context.permissionNames.isAdmin;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final permUserNames = context.permissionNames.users;
     return Visibility(
-      visible: context.permissionNames.users.canDeleteAll || _canDeleteOwn(context),
+      visible: permUserNames.canDeleteAll || (permUserNames.canDeleteOwn && context.isMe(user.uuid)),
       child: DeleteElevatedButton(
         onPressed: () async {
           final userBloc = context.read<UserBloc>();
