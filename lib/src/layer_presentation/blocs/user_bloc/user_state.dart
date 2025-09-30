@@ -16,6 +16,8 @@ sealed class UserState {
   factory UserState.confirmed() = UserConfirmedState;
 
   factory UserState.failure(String message) = UserFailureState;
+
+  factory UserState.permissionFailure(String message) = UserFailureState;
 }
 
 final class UserInitialState implements UserState {}
@@ -30,6 +32,12 @@ final class UserLoadedState implements UserState {
 
 final class UserFailureState implements UserState {
   UserFailureState(this.message);
+
+  final String message;
+}
+
+final class UserPermissionFailureState implements UserState {
+  UserPermissionFailureState(this.message);
 
   final String message;
 }
