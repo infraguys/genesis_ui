@@ -7,6 +7,8 @@ class _DeleteOrganizationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
       builder: (_, state) {
+        final permOrgNames = context.permissionNames.organizations;
+
         final message = switch (state.length) {
           1 => context.$.deleteOrganizationConfirmation(state.single.name),
           final len => context.$.deleteOrganizationsConfirmation(len),
@@ -16,7 +18,7 @@ class _DeleteOrganizationButton extends StatelessWidget {
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
-          visible: state.isNotEmpty && context.permissionNames.organizations.canDeleteAny,
+          visible: state.isNotEmpty && permOrgNames.canDeleteAll,
           child: DeleteElevatedButton(
             onPressed: () async {
               final organizationsBloc = context.read<OrganizationsBloc>();
