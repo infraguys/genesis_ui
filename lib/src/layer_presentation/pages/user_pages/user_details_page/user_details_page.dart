@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
@@ -12,6 +11,7 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/extensions/is_me_extension.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -31,9 +31,7 @@ part './widgets/delete_user_btn.dart';
 part './widgets/save_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
-  const _UserDetailsView({required this.userUUID});
-
-  final UserUUID userUUID;
+  const _UserDetailsView();
 
   @override
   State<_UserDetailsView> createState() => _UserDetailsViewState();
@@ -41,8 +39,15 @@ class _UserDetailsView extends StatefulWidget {
 
 class _UserDetailsViewState extends State<_UserDetailsView> {
   final _formKey = GlobalKey<FormState>();
-  late _ControllersManager _controllersManager;
   late final UserBloc _userBloc;
+
+  late String _username;
+  late String _description;
+  late String _firstName;
+  late String _lastName;
+  late String? _surname;
+  late String? _phone;
+  late String _email;
 
   @override
   void initState() {
@@ -52,263 +57,244 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
 
   @override
   void dispose() {
-    _controllersManager.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
+    return BlocListener<UserBloc, UserState>(
+      listenWhen: (_, current) => switch (current) {
+        UserUpdatedState() || UserDeletedState() || UserFailureState() || UserLoadedState() => true,
+        _ => false,
+      },
+      listener: (context, state) {
+        final navigator = GoRouter.of(context);
+        final messenger = ScaffoldMessenger.of(context);
 
-    return Scaffold(
-      body: BlocConsumer<UserBloc, UserState>(
-        listenWhen: (_, current) => switch (current) {
-          UserUpdatedState() || UserDeletedState() || UserFailureState() || UserLoadedState() => true,
-          _ => false,
-        },
-        listener: (context, state) {
-          final navigator = GoRouter.of(context);
-          final messenger = ScaffoldMessenger.of(context);
+        switch (state) {
+          case UserLoadedState(:final user):
+            _username = user.username;
+            _description = user.description;
+            _firstName = user.firstName;
+            _lastName = user.lastName;
+            _surname = user.surname;
+            _phone = user.phone;
+            _email = user.email;
+          case UserUpdatedState():
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
+            context.read<UsersBloc>().add(UsersEvent.getUsers());
 
-          switch (state) {
-            case UserLoadedState(:final user):
-              _controllersManager = _ControllersManager(user);
+          case UserDeletedState(:final user):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(user.username)));
+            context.read<UsersBloc>().add(UsersEvent.getUsers());
+            navigator.pop();
 
-            case UserUpdatedState():
-              _userBloc.add(UserEvent.getUser(widget.userUUID));
-              messenger.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
-              context.read<UsersBloc>().add(UsersEvent.getUsers());
-
-            case UserDeletedState(:final user):
-              messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(user.username)));
-              context.read<UsersBloc>().add(UsersEvent.getUsers());
-              navigator.pop();
-
-            case UserFailureState(:final message):
-              messenger.showSnackBar(AppSnackBar.failure(message));
-            default:
-          }
-        },
-        builder: (context, state) {
-          if (state is! UserLoadedState) {
-            return AppProgressIndicator();
-          }
-          final user = state.user;
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 24.0,
-              children: [
-                Breadcrumbs(
-                  items: [
-                    BreadcrumbItem(text: context.$.users),
-                    BreadcrumbItem(text: user.username),
-                  ],
-                ),
-                ButtonsBar(
-                  children: [
-                    _DeleteUserButton(user: user),
-                    _ConfirmEmailButton(user: user),
-                    _SaveUserButton(onPressed: () => save(user.uuid)),
-                  ],
-                ),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      height: 410,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: constraints.maxWidth * 0.5,
-                            child: Form(
-                              key: _formKey,
+          case UserFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(message));
+          default:
+        }
+      },
+      child: Scaffold(
+        body: BlocBuilder<UserBloc, UserState>(
+          buildWhen: (previous, current) => current is UserLoadedState || current is UserLoadingState,
+          builder: (context, state) {
+            if (state is! UserLoadedState) {
+              return AppProgressIndicator();
+            }
+            final UserLoadedState(:user) = state;
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 24.0,
+                children: [
+                  Breadcrumbs(
+                    items: [
+                      BreadcrumbItem(text: context.$.users),
+                      BreadcrumbItem(text: user.username),
+                    ],
+                  ),
+                  ButtonsBar(
+                    children: [
+                      _DeleteUserButton(user: user),
+                      _ConfirmEmailButton(user: user),
+                      _SaveUserButton(onPressed: () => save(user.uuid)),
+                    ],
+                  ),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SizedBox(
+                        height: 410,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: constraints.maxWidth * 0.5,
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  spacing: 24,
+                                  children: [
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _username,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: context.$.username,
+                                        ),
+                                        onSaved: (newValue) => _username = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _firstName,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: context.$.firstName,
+                                        ),
+                                        onSaved: (newValue) => _firstName = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _lastName,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: context.$.lastName,
+                                        ),
+                                        onSaved: (newValue) => _lastName = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _surname,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: context.$.surName,
+                                        ),
+                                        onSaved: (newValue) => _surname = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _phone,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: 'Phone'.hardcoded,
+                                        ),
+                                        onSaved: (newValue) => _phone = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.4,
+                                      child: TextFormField(
+                                        initialValue: _email,
+                                        readOnly: !context.permissionNames.users.canWriteAll,
+                                        decoration: InputDecoration(
+                                          hintText: context.$.email,
+                                        ),
+                                        onSaved: (newValue) => _email = newValue!,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: constraints.maxWidth * 0.5,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                spacing: 24,
+                                // spacing: 48,
                                 children: [
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.usernameController,
-                                      decoration: InputDecoration(
-                                        hintText: context.$.username,
-                                      ),
-                                    ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    spacing: 8.0,
+                                    children: [
+                                      Text(context.$.status),
+                                      StatusLabel(status: user.status),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    spacing: 8.0,
+                                    children: [
+                                      Text(context.$.verification),
+                                      VerifiedLabel(isVerified: user.emailVerified),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    spacing: 8.0,
+                                    children: [
+                                      Text(context.$.createdAt),
+                                      Text(user.createdAt.toString()),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    spacing: 8.0,
+                                    children: [
+                                      Text(context.$.updatedAt),
+                                      Text(user.updatedAt.toString()),
+                                    ],
                                   ),
                                   SizedBox(
                                     width: constraints.maxWidth * 0.4,
                                     child: TextFormField(
+                                      initialValue: _description,
                                       readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.firstNameController,
                                       decoration: InputDecoration(
-                                        hintText: context.$.firstName,
+                                        hintText: context.$.description,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.lastNameController,
-                                      decoration: InputDecoration(
-                                        hintText: context.$.lastName,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.surnameController,
-                                      decoration: InputDecoration(
-                                        hintText: context.$.surName,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.phoneController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Phone'.hardcoded,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      readOnly: !context.permissionNames.users.canWriteAll,
-                                      controller: _controllersManager.emailController,
-                                      decoration: InputDecoration(
-                                        hintText: context.$.email,
-                                      ),
+                                      onSaved: (newValue) => _description = newValue!,
+                                      maxLines: 4,
+                                      minLines: 4,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              // spacing: 48,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 8.0,
-                                  children: [
-                                    Text(context.$.status),
-                                    StatusLabel(status: user.status),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 8.0,
-                                  children: [
-                                    Text(context.$.verification),
-                                    VerifiedLabel(isVerified: user.emailVerified),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 8.0,
-                                  children: [
-                                    Text(context.$.createdAt),
-                                    Text(user.createdAt.toString()),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 8.0,
-                                  children: [
-                                    Text(context.$.updatedAt),
-                                    Text(user.updatedAt.toString()),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: constraints.maxWidth * 0.4,
-                                  child: TextFormField(
-                                    readOnly: !context.permissionNames.users.canWriteAll,
-                                    controller: _controllersManager.descriptionController,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.description,
-                                    ),
-                                    maxLines: 4,
-                                    minLines: 4,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                Text(context.$.projects, style: textTheme.headlineLarge),
-                ListOfProjects(userUuid: user.uuid),
-              ],
-            ),
-          );
-        },
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  ListOfProjects(userUuid: user.uuid),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
   void save(UserUUID userUUID) {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _userBloc.add(
         UserEvent.updateUser(
           UpdateUserParams(
             uuid: userUUID,
-            username: _controllersManager.usernameController.text,
-            description: _controllersManager.descriptionController.text,
-            firstName: _controllersManager.firstNameController.text,
-            lastName: _controllersManager.lastNameController.text,
-            surname: _controllersManager.surnameController.text,
-            phone: _controllersManager.phoneController.text,
-            email: _controllersManager.emailController.text,
+            username: _username,
+            description: _description,
+            firstName: _firstName,
+            lastName: _lastName,
+            surname: _surname,
+            phone: _phone,
+            email: _email,
           ),
         ),
       );
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  _ControllersManager(User user)
-    : usernameController = TextEditingController(text: user.username),
-      descriptionController = TextEditingController(text: user.description),
-      firstNameController = TextEditingController(text: user.firstName),
-      lastNameController = TextEditingController(text: user.lastName),
-      surnameController = TextEditingController(text: user.surname),
-      phoneController = TextEditingController(text: user.phone),
-      emailController = TextEditingController(text: user.email);
-
-  final TextEditingController usernameController;
-  final TextEditingController descriptionController;
-  final TextEditingController firstNameController;
-  final TextEditingController lastNameController;
-  final TextEditingController surnameController;
-  final TextEditingController phoneController;
-  final TextEditingController emailController;
-
-  @override
-  List<TextEditingController> get all => [
-    usernameController,
-    descriptionController,
-    firstNameController,
-    lastNameController,
-    surnameController,
-    phoneController,
-    emailController,
-  ];
 }
 
 class UserDetailsPage extends StatelessWidget {
@@ -335,7 +321,7 @@ class UserDetailsPage extends StatelessWidget {
           },
         ),
       ],
-      child: _UserDetailsView(userUUID: userUUID),
+      child: _UserDetailsView(),
     );
   }
 }
