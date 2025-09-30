@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/extension_dto.dart';
+import 'package:genesis/src/layer_data/requests/extension_requests/get_extensions_req.dart';
 import 'package:genesis/src/layer_data/source/remote/extensions_api/i_extensions_api.dart';
+import 'package:genesis/src/layer_domain/entities/extension.dart';
 
 final class ExtensionsApi implements IExtensionsApi {
   ExtensionsApi(this._client);
@@ -10,13 +12,13 @@ final class ExtensionsApi implements IExtensionsApi {
   final RestClient _client;
 
   @override
-  Future<ExtensionDto> getExtension(uuid) {
+  Future<ExtensionDto> getExtension(ExtensionUUID uuid) {
     // TODO: implement getExtension
     throw UnimplementedError();
   }
 
   @override
-  Future<List<ExtensionDto>> getExtensions(req) async {
+  Future<List<ExtensionDto>> getExtensions(GetExtensionsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),
