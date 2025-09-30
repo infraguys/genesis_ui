@@ -13,7 +13,7 @@ part 'organization_event.dart';
 part 'organization_state.dart';
 
 class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
-  OrganizationBloc(this._repository) : super(OrganizationState.loading()) {
+  OrganizationBloc(this._repository) : super(OrganizationState.initial()) {
     on(_onGetOrganization);
     on(_onCreateOrganization);
     on(_onUpdateOrganization);
@@ -32,8 +32,13 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   Future<void> _onCreateOrganization(_Create event, Emitter<OrganizationState> emit) async {
     final useCase = CreateOrganizationUseCase(_repository);
     emit(OrganizationState.loading());
-    await useCase(event.params);
-    emit(OrganizationState.created());
+    try {
+      await useCase(event.params);
+      emit(OrganizationState.created());
+    } on PermissionException catch (e) {
+      emit(OrganizationState.permissionFailure(e.message));
+      emit(OrganizationState.initial());
+    }
   }
 
   Future<void> _onUpdateOrganization(_Update event, Emitter<OrganizationState> emit) async {
