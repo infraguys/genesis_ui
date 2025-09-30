@@ -4,9 +4,9 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
@@ -34,40 +34,60 @@ class _OrganizationListViewState extends State<_OrganizationListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Breadcrumbs(
-          items: [
-            BreadcrumbItem(text: context.$.organizations),
-          ],
-        ),
-        const SizedBox(height: 24),
-        ButtonsBar.withoutLeftSpacer(
-          children: [
-            // SearchInput(),
-            Spacer(),
-            _DeleteOrganizationButton(),
-            _CreateOrganizationButton(),
-          ],
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: BlocConsumer<OrganizationsBloc, OrganizationsState>(
-            listenWhen: (_, current) => current is OrganizationsLoadedState,
-            listener: (context, _) {
-              context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
-            },
-            builder: (_, state) => switch (state) {
-              OrganizationsLoadedState() when state.organizations.isEmpty => Center(
-                child: Text('Is empty'),
-              ),
-              OrganizationsLoadedState(:final organizations) => OrganizationsTable(organizations: organizations),
-              _ => AppProgressIndicator(),
-            },
-          ),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<OrganizationsBloc, OrganizationsState>(
+          listener: (context, state) {
+            final messenger = ScaffoldMessenger.of(context);
+            switch (state) {
+              case OrganizationsLoadedState():
+                context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
+
+              case OrganizationsDeletedState(:final organizations) when organizations.length == 1:
+                messenger.showSnackBar(
+                  AppSnackBar.success(context.$.msgOrganizationDeleted(organizations.single.name)),
+                );
+              case OrganizationsDeletedState(:final organizations) when organizations.length > 1:
+                messenger.showSnackBar(
+                  AppSnackBar.success(context.$.msgOrganizationsDeleted(organizations.length)),
+                );
+
+              case OrganizationsPermissionFailureState(:final message):
+                messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
+              default:
+            }
+          },
         ),
       ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Breadcrumbs(
+            items: [
+              BreadcrumbItem(text: context.$.organizations),
+            ],
+          ),
+          const SizedBox(height: 24),
+          ButtonsBar.withoutLeftSpacer(
+            children: [
+              // SearchInput(),
+              Spacer(),
+              _DeleteOrganizationButton(),
+              _CreateOrganizationButton(),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Expanded(
+            child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
+              buildWhen: (_, current) => current.shouldRebuildList,
+              builder: (_, state) => switch (state) {
+                OrganizationsLoadedState(:final organizations) => OrganizationsTable(organizations: organizations),
+                _ => AppProgressIndicator(),
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
