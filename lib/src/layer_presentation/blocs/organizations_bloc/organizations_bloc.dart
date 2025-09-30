@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/organizations/get_organizations_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
@@ -6,11 +7,10 @@ import 'package:genesis/src/layer_domain/use_cases/organizations/delete_organiza
 import 'package:genesis/src/layer_domain/use_cases/organizations/get_orgaizations_usecase.dart';
 
 part 'organizations_event.dart';
-
 part 'organizations_state.dart';
 
 class OrganizationsBloc extends Bloc<OrganizationsEvent, OrganizationsState> {
-  OrganizationsBloc(this._repository) : super(OrganizationsInitState()) {
+  OrganizationsBloc(this._repository) : super(OrganizationsInitialState()) {
     on(_getOrganizations);
     on(_onDeleteOrganizations);
   }
@@ -26,8 +26,15 @@ class OrganizationsBloc extends Bloc<OrganizationsEvent, OrganizationsState> {
 
   Future<void> _onDeleteOrganizations(_DeleteOrganizations event, Emitter<OrganizationsState> emit) async {
     final useCase = DeleteOrganizationsUseCase(_repository);
+
+    final prevState = state;
     emit(OrganizationsLoadingState());
-    await useCase(event.organizations);
-    add(OrganizationsEvent.getOrganizations());
+    try {
+      await useCase(event.organizations);
+      add(OrganizationsEvent.getOrganizations());
+    } on PermissionException catch (e) {
+      emit(OrganizationsPermissionFailureState(e.message));
+      emit(prevState);
+    }
   }
 }
