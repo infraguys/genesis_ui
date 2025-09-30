@@ -11,6 +11,7 @@ final class GetProjectsReq implements PathEncodable, QueryEncodable {
   @override
   Map<String, dynamic> toQuery() {
     return {
+      'uuid': ?_params.uuids,
       'name': ?_params.name,
     };
   }
