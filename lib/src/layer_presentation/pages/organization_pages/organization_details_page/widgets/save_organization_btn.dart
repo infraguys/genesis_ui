@@ -7,9 +7,6 @@ class _SaveOrganizationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: context.permissionNames.organizations.canWriteAll,
-      child: SaveIconButton(onPressed: onPressed),
-    );
+    return SaveIconButton(onPressed: onPressed);
   }
 }
