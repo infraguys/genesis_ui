@@ -6,7 +6,6 @@ import 'package:genesis/src/layer_domain/params/organizations/update_organizatio
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
@@ -71,7 +70,6 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
               navigator.pop();
 
             case OrganizationPermissionFailureState(:final message):
-              messenger.showSnackBar(AppSnackBar.failure(message));
             case OrganizationFailureState(:final message):
               messenger.showSnackBar(AppSnackBar.failure(message));
             default:
