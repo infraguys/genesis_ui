@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/add_project_card.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -16,46 +18,63 @@ class ListOfProjects extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = TextTheme.of(context);
+
     return BlocListener<RoleBindingsBloc, RoleBindingsState>(
       listenWhen: (_, current) => current is RoleBindingsDeletedState,
-      listener: (context, state) {
-        context.read<UserProjectsBloc>().add(
-          UserProjectsEvent.getProjects(userUuid),
-        );
+      listener: (context, _) {
+        context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(userUuid));
       },
-      child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
-        builder: (context, state) {
-          if (state is! UserProjectsLoadedState) {
-            return AppProgressIndicator();
+      child: BlocConsumer<UserProjectsBloc, UserProjectsState>(
+        listener: (context, state) {
+          final messenger = ScaffoldMessenger.of(context);
+
+          switch (state) {
+            case UserProjectsPermissionFailureState(:final message):
+              messenger.showSnackBar(AppSnackBar.failure(message));
+            default:
           }
-          return Wrap(
-            spacing: 24,
-            runSpacing: 24,
-            children: [
-              SizedBox(
-                width: 500,
-                height: 250,
-                child: AddProjectCard(
-                  onTap: () async {
-                    final bloc = context.read<UserProjectsBloc>();
-                    final isCreated = await context.pushNamed<bool>(
-                      AppRoutes.attachProject.name,
-                      pathParameters: GoRouterState.of(context).pathParameters,
-                    );
-                    if (isCreated == true) {
-                      bloc.add(UserProjectsEvent.getProjects(userUuid));
-                    }
-                  },
+        },
+        builder: (context, state) {
+          return switch (state) {
+            UserProjectsPermissionFailureState() => SizedBox.shrink(),
+            _ when state is! UserProjectsLoadedState => AppProgressIndicator(),
+            _ => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 24.0,
+              children: [
+                Text(context.$.projects, style: textTheme.headlineLarge),
+                Wrap(
+                  spacing: 24,
+                  runSpacing: 24,
+                  children: [
+                    SizedBox(
+                      width: 500,
+                      height: 250,
+                      child: AddProjectCard(
+                        onTap: () async {
+                          final bloc = context.read<UserProjectsBloc>();
+                          final isCreated = await context.pushNamed<bool>(
+                            AppRoutes.attachProject.name,
+                            pathParameters: GoRouterState.of(context).pathParameters,
+                          );
+                          if (isCreated == true) {
+                            bloc.add(UserProjectsEvent.getProjects(userUuid));
+                          }
+                        },
+                      ),
+                    ),
+                    for (final it in state.projectsWithRoles)
+                      SizedBox(
+                        width: 500,
+                        height: 250,
+                        child: ProjectCard(project: it.project, roles: it.roles, userUUID: userUuid),
+                      ),
+                  ],
                 ),
-              ),
-              for (final it in state.projectsWithRoles)
-                SizedBox(
-                  width: 500,
-                  height: 250,
-                  child: ProjectCard(project: it.project, roles: it.roles, userUUID: userUuid),
-                ),
-            ],
-          );
+              ],
+            ),
+          };
         },
       ),
     );
