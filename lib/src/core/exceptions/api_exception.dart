@@ -32,7 +32,16 @@ final class UnauthorizedException extends ApiException {
 }
 
 final class PermissionException extends ApiException {
-  PermissionException(super.message) : super._();
+  PermissionException(String raw) : super._(_extractPermissionName(raw));
+
+  static String _extractPermissionName(String raw) {
+    final regex = RegExp(r'Policy rule (\S+) is disallowed');
+    final match = regex.firstMatch(raw);
+    if (match == null) {
+      return raw;
+    }
+    return match.group(1)!;
+  }
 }
 
 final class NotFoundException extends ApiException {
