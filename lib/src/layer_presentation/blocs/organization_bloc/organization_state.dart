@@ -1,8 +1,6 @@
 part of 'organization_bloc.dart';
 
 sealed class OrganizationState {
-  factory OrganizationState.initial() = OrganizationInitialState;
-
   factory OrganizationState.loading() = OrganizationLoadingState;
 
   factory OrganizationState.created() = OrganizationCreatedState;
@@ -13,10 +11,10 @@ sealed class OrganizationState {
 
   factory OrganizationState.failure(String message) = OrganizationFailureState;
 
+  factory OrganizationState.permissionFailure(String message) = OrganizationPermissionFailureState;
+
   factory OrganizationState.loaded(Organization organization) = OrganizationLoadedState;
 }
-
-final class OrganizationInitialState implements OrganizationState {}
 
 final class OrganizationLoadingState implements OrganizationState {}
 
@@ -42,6 +40,12 @@ final class OrganizationDeletedState implements OrganizationState {
 
 final class OrganizationFailureState implements OrganizationState {
   OrganizationFailureState(this.message);
+
+  final String message;
+}
+
+final class OrganizationPermissionFailureState implements OrganizationState {
+  OrganizationPermissionFailureState(this.message);
 
   final String message;
 }
