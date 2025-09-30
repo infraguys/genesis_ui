@@ -10,7 +10,9 @@ final class GetRolesReq implements QueryEncodable, PathEncodable {
 
   @override
   Map<String, dynamic> toQuery() {
-    return {};
+    return {
+      'uuid': ?_params.uuids,
+    };
   }
 
   @override
