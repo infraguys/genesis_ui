@@ -29,9 +29,7 @@ extension type OrganizationPermissions(Set<String> _set) implements PermissionNa
 
   bool get canCreate => _set.contains('iam.organization.create') || isAdmin;
 
-  bool get canDelete => _set.contains('iam.organization.delete') || isAdmin;
-
-  bool get canDeleteAny => canDelete || canDeleteAll;
+  bool get canDeleteOwn => _set.contains('iam.organization.delete') || isAdmin;
 }
 extension type UserPermissions(Set<String> _set) implements PermissionNames {
   bool get canWriteAll => _set.contains('iam.user.write_all') || isAdmin;
