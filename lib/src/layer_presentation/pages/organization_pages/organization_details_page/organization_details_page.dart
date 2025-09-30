@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/params/organizations/update_organization_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
@@ -10,7 +9,6 @@ import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organiza
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
@@ -33,21 +31,17 @@ class _OrganizationDetailsView extends StatefulWidget {
 class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
   final _formKey = GlobalKey<FormState>();
 
-  late _ControllersManager _controllersManager;
   late final OrganizationBloc _organizationBloc;
   late final OrganizationsBloc _organizationsBloc;
+
+  late String _name;
+  late String? _description;
 
   @override
   void initState() {
     _organizationBloc = context.read<OrganizationBloc>();
     _organizationsBloc = context.read<OrganizationsBloc>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controllersManager.dispose();
-    super.dispose();
   }
 
   @override
@@ -71,10 +65,10 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
 
           switch (state) {
             case OrganizationLoadedState(:final organization):
-              _controllersManager = _ControllersManager(organization);
+              _name = organization.name;
+              _description = organization.description;
 
             case OrganizationUpdatedState(:final organization):
-              _organizationBloc.add(OrganizationEvent.get(widget.uuid));
               messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
               _organizationsBloc.add(OrganizationsEvent.getOrganizations());
 
@@ -83,6 +77,8 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
               _organizationsBloc.add(OrganizationsEvent.getOrganizations());
               navigator.pop();
 
+            case OrganizationPermissionFailureState(:final message):
+              messenger.showSnackBar(AppSnackBar.failure(message));
             case OrganizationFailureState(:final message):
               messenger.showSnackBar(AppSnackBar.failure(message));
             default:
@@ -119,9 +115,12 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
                       children: [
                         SizedBox(
                           width: constraints.maxWidth * 0.4,
-                          child: AppTextInput(
-                            controller: _controllersManager.nameController,
-                            hintText: context.$.name,
+                          child: TextFormField(
+                            initialValue: _name,
+                            decoration: InputDecoration(
+                              hintText: context.$.name,
+                            ),
+                            onSaved: (newValue) => _name = newValue!,
                             validator: (value) => switch (value) {
                               _ when value!.isEmpty => context.$.requiredField,
                               _ => null,
@@ -130,10 +129,14 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
                         ),
                         SizedBox(
                           width: constraints.maxWidth * 0.4,
-                          child: AppTextInput.multiLine(
-                            controller: _controllersManager.descriptionController,
-                            hintText: context.$.description,
+                          child: TextFormField(
+                            initialValue: _description,
+                            decoration: InputDecoration(
+                              hintText: context.$.description,
+                            ),
+                            onSaved: (newValue) => _description = newValue!,
                             minLines: 3,
+                            maxLines: null,
                           ),
                         ),
                       ],
@@ -150,29 +153,14 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _organizationBloc.add(
         OrganizationEvent.update(
-          UpdateOrganizationParams(
-            uuid: widget.uuid,
-            name: _controllersManager.nameController.text,
-            description: _controllersManager.descriptionController.text,
-          ),
+          UpdateOrganizationParams(uuid: widget.uuid, name: _name, description: _description),
         ),
       );
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  _ControllersManager(Organization organization)
-    : nameController = TextEditingController(text: organization.name),
-      descriptionController = TextEditingController(text: organization.description);
-
-  final TextEditingController nameController;
-  final TextEditingController descriptionController;
-
-  @override
-  List<TextEditingController> get all => [nameController, descriptionController];
 }
 
 class OrganizationDetailsPage extends StatelessWidget {
