@@ -38,4 +38,6 @@ enum ProjectStatus {
   inProgress,
 }
 
-extension type ProjectUUID(String value) {}
+extension type ProjectUUID(String value) {
+  bool isEqual(ProjectUUID other) => value == other.value;
+}
