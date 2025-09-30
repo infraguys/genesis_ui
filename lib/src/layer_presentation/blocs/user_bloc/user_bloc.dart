@@ -14,11 +14,10 @@ import 'package:genesis/src/layer_domain/use_cases/users/get_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
 part 'user_event.dart';
-
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc(this._repository) : super(UserState.init()) {
+  UserBloc(this._repository) : super(UserState.loading()) {
     on(_onGetUser);
     on(_onCreateUser);
     on(_onDeleteUser);
@@ -67,9 +66,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onUpdateUser(_UpdateUser event, Emitter<UserState> emit) async {
     final useCase = UpdateUserUseCase(_repository);
-    emit(UserState.loading());
     final user = await useCase(event.params);
     emit(UserState.updated(user));
+    emit(UserState.loaded(user));
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
