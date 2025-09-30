@@ -45,100 +45,101 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<OrganizationBloc, OrganizationState>(
-        listenWhen: (_, current) => switch (current) {
-          _ when current is! OrganizationLoadingState => true,
-          _ => false,
-        },
-        listener: (context, state) {
-          final navigator = GoRouter.of(context);
-          final messenger = ScaffoldMessenger.of(context);
+    return BlocListener<OrganizationBloc, OrganizationState>(
+      listenWhen: (_, current) => switch (current) {
+        _ when current is! OrganizationLoadingState => true,
+        _ => false,
+      },
+      listener: (context, state) {
+        final navigator = GoRouter.of(context);
+        final messenger = ScaffoldMessenger.of(context);
 
-          switch (state) {
-            case OrganizationLoadedState(:final organization):
-              _name = organization.name;
-              _description = organization.description;
+        switch (state) {
+          case OrganizationLoadedState(:final organization):
+            _name = organization.name;
+            _description = organization.description;
 
-            case OrganizationUpdatedState(:final organization):
-              messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
-              _organizationsBloc.add(OrganizationsEvent.getOrganizations());
+          case OrganizationUpdatedState(:final organization):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationUpdated(organization.name)));
+            _organizationsBloc.add(OrganizationsEvent.getOrganizations());
 
-            case OrganizationDeletedState(:final organization):
-              messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationDeleted(organization.name)));
-              _organizationsBloc.add(OrganizationsEvent.getOrganizations());
-              navigator.pop();
+          case OrganizationDeletedState(:final organization):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationDeleted(organization.name)));
+            _organizationsBloc.add(OrganizationsEvent.getOrganizations());
+            navigator.pop();
 
-            case OrganizationPermissionFailureState(:final message):
-            case OrganizationFailureState(:final message):
-              messenger.showSnackBar(AppSnackBar.failure(message));
-            default:
-          }
-        },
-        buildWhen: (previous, current) => current is OrganizationLoadingState || current is OrganizationLoadedState,
-        builder: (context, state) {
-          if (state is! OrganizationLoadedState) {
-            return AppProgressIndicator();
-          }
-          final organization = state.organization;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 24,
-            children: [
-              Breadcrumbs(
-                items: [
-                  BreadcrumbItem(text: context.$.organizations),
-                  BreadcrumbItem(text: organization.name),
-                ],
-              ),
-              ButtonsBar(
-                children: [
-                  _DeleteOrganizationButton(organization: organization),
-                  _SaveOrganizationButton(onPressed: save),
-                ],
-              ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24,
-                      children: [
-                        SizedBox(
-                          width: constraints.maxWidth * 0.4,
-                          child: TextFormField(
-                            initialValue: _name,
-                            decoration: InputDecoration(
-                              hintText: context.$.name,
+          case OrganizationPermissionFailureState(:final message):
+          case OrganizationFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
+          default:
+        }
+      },
+      child: Scaffold(
+        body: BlocBuilder<OrganizationBloc, OrganizationState>(
+          buildWhen: (previous, current) => current is OrganizationLoadingState || current is OrganizationLoadedState,
+          builder: (context, state) {
+            if (state is! OrganizationLoadedState) {
+              return AppProgressIndicator();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 24,
+              children: [
+                Breadcrumbs(
+                  items: [
+                    BreadcrumbItem(text: context.$.organizations),
+                    BreadcrumbItem(text: state.organization.name),
+                  ],
+                ),
+                ButtonsBar(
+                  children: [
+                    _DeleteOrganizationButton(organization: state.organization),
+                    _SaveOrganizationButton(onPressed: save),
+                  ],
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 24,
+                        children: [
+                          SizedBox(
+                            width: constraints.maxWidth * 0.4,
+                            child: TextFormField(
+                              initialValue: _name,
+                              decoration: InputDecoration(
+                                hintText: context.$.name,
+                              ),
+                              onSaved: (newValue) => _name = newValue!,
+                              validator: (value) => switch (value) {
+                                _ when value!.isEmpty => context.$.requiredField,
+                                _ => null,
+                              },
                             ),
-                            onSaved: (newValue) => _name = newValue!,
-                            validator: (value) => switch (value) {
-                              _ when value!.isEmpty => context.$.requiredField,
-                              _ => null,
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          width: constraints.maxWidth * 0.4,
-                          child: TextFormField(
-                            initialValue: _description,
-                            decoration: InputDecoration(
-                              hintText: context.$.description,
+                          SizedBox(
+                            width: constraints.maxWidth * 0.4,
+                            child: TextFormField(
+                              initialValue: _description,
+                              decoration: InputDecoration(
+                                hintText: context.$.description,
+                              ),
+                              onSaved: (newValue) => _description = newValue!,
+                              minLines: 3,
+                              maxLines: null,
                             ),
-                            onSaved: (newValue) => _description = newValue!,
-                            minLines: 3,
-                            maxLines: null,
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        },
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
