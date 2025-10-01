@@ -55,7 +55,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NodeBloc, NodeState>(
+    return BlocListener<NodeBloc, NodeState>(
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final messenger = ScaffoldMessenger.of(context);
@@ -80,184 +80,188 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
             context.read<NodesBloc>().add(NodesEvent.getNodes());
             navigator.pop();
 
+          case NodePermissionFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
           case NodeFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
-      builder: (context, state) {
-        if (state is! NodeLoadedState) {
-          return AppProgressIndicator();
-        }
-        final node = state.node;
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 24,
-            children: [
-              Breadcrumbs(
-                items: [
-                  BreadcrumbItem(text: context.$.nodes),
-                  BreadcrumbItem(text: state.node.name),
-                ],
-              ),
-              ButtonsBar(
-                children: [
-                  _DeleteNodeButton(node: node),
-                  SaveIconButton(onPressed: save),
-                ],
-              ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 128,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: Form(
-                          key: _formKey,
+      child: BlocBuilder<NodeBloc, NodeState>(
+        buildWhen: (_, current) => current is NodeLoadingState || current is NodeLoadedState,
+        builder: (context, state) {
+          if (state is! NodeLoadedState) {
+            return AppProgressIndicator();
+          }
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 24,
+              children: [
+                Breadcrumbs(
+                  items: [
+                    BreadcrumbItem(text: context.$.nodes),
+                    BreadcrumbItem(text: state.node.name),
+                  ],
+                ),
+                ButtonsBar(
+                  children: [
+                    _DeleteNodeButton(node: state.node),
+                    SaveIconButton(onPressed: save),
+                  ],
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 128,
+                      children: [
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 24,
+                              children: [
+                                TextFormField(
+                                  initialValue: _name,
+                                  decoration: InputDecoration(
+                                    hintText: context.$.name,
+                                    helperText: context.$.name,
+                                  ),
+                                  onSaved: (newValue) => _name = newValue!,
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                DropdownMenuFormField<NodeType>(
+                                  menuStyle: MenuStyle(
+                                    fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+                                  ),
+                                  width: double.infinity,
+                                  initialSelection: _nodeType,
+                                  requestFocusOnTap: false,
+                                  helperText: context.$.nodeType,
+                                  onSaved: (newValue) => _nodeType = newValue!,
+                                  dropdownMenuEntries: [
+                                    DropdownMenuEntry(
+                                      value: NodeType.vm,
+                                      label: context.$.virtualMachine,
+                                    ),
+                                    DropdownMenuEntry(
+                                      value: NodeType.hw,
+                                      label: 'Hardware',
+                                    ),
+                                  ],
+                                ),
+                                TextFormField(
+                                  initialValue: _image,
+                                  decoration: InputDecoration(
+                                    hintText: context.$.image,
+                                    helperText: context.$.image,
+                                  ),
+                                  onSaved: (newValue) => _image = newValue!,
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  initialValue: _cores.toString(),
+                                  decoration: InputDecoration(
+                                    hintText: 'cores'.hardcoded,
+                                    helperText: 'cores'.hardcoded,
+                                  ),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                  onSaved: (newValue) => _cores = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  initialValue: _rootDiskSize.toString(),
+                                  decoration: InputDecoration(
+                                    hintText: context.$.rootDiskSize,
+                                    helperText: context.$.rootDiskSize,
+                                  ),
+                                  onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  initialValue: _ram.toString(),
+                                  decoration: InputDecoration(
+                                    hintText: 'ram'.hardcoded,
+                                    helperText: 'ram'.hardcoded,
+                                  ),
+                                  onSaved: (newValue) => _ram = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  initialValue: _description,
+                                  decoration: InputDecoration(
+                                    hintText: context.$.description,
+                                    helperText: context.$.description,
+                                  ),
+                                  onSaved: (newValue) => _description = newValue!,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 24,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: 32,
                             children: [
-                              TextFormField(
-                                initialValue: _name,
-                                decoration: InputDecoration(
-                                  hintText: context.$.name,
-                                  helperText: context.$.name,
-                                ),
-                                onSaved: (newValue) => _name = newValue!,
-                                validator: (value) => switch (value) {
-                                  _ when value!.isEmpty => context.$.requiredField,
-                                  _ => null,
-                                },
-                              ),
-                              DropdownMenuFormField<NodeType>(
-                                menuStyle: MenuStyle(
-                                  fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
-                                ),
-                                width: double.infinity,
-                                initialSelection: _nodeType,
-                                requestFocusOnTap: false,
-                                helperText: context.$.nodeType,
-                                onSaved: (newValue) => _nodeType = newValue!,
-                                dropdownMenuEntries: [
-                                  DropdownMenuEntry(
-                                    value: NodeType.vm,
-                                    label: context.$.virtualMachine,
-                                  ),
-                                  DropdownMenuEntry(
-                                    value: NodeType.hw,
-                                    label: 'Hardware',
-                                  ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.status),
+                                  NodeStatusLabel(status: state.node.status),
                                 ],
                               ),
-                              TextFormField(
-                                initialValue: _image,
-                                decoration: InputDecoration(
-                                  hintText: context.$.image,
-                                  helperText: context.$.image,
-                                ),
-                                onSaved: (newValue) => _image = newValue!,
-                                validator: (value) => switch (value) {
-                                  _ when value!.isEmpty => context.$.requiredField,
-                                  _ => null,
-                                },
-                              ),
-                              TextFormField(
-                                initialValue: _cores.toString(),
-                                decoration: InputDecoration(
-                                  hintText: 'cores'.hardcoded,
-                                  helperText: 'cores'.hardcoded,
-                                ),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.createdAt),
+                                  Text(state.node.createdAt.toString()),
                                 ],
-                                onSaved: (newValue) => _cores = int.parse(newValue!),
-                                validator: (value) => switch (value) {
-                                  _ when value!.isEmpty => context.$.requiredField,
-                                  _ => null,
-                                },
                               ),
-                              TextFormField(
-                                initialValue: _rootDiskSize.toString(),
-                                decoration: InputDecoration(
-                                  hintText: context.$.rootDiskSize,
-                                  helperText: context.$.rootDiskSize,
-                                ),
-                                onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
-                                validator: (value) => switch (value) {
-                                  _ when value!.isEmpty => context.$.requiredField,
-                                  _ => null,
-                                },
-                              ),
-                              TextFormField(
-                                initialValue: _ram.toString(),
-                                decoration: InputDecoration(
-                                  hintText: 'ram'.hardcoded,
-                                  helperText: 'ram'.hardcoded,
-                                ),
-                                onSaved: (newValue) => _ram = int.parse(newValue!),
-                                validator: (value) => switch (value) {
-                                  _ when value!.isEmpty => context.$.requiredField,
-                                  _ => null,
-                                },
-                              ),
-                              TextFormField(
-                                initialValue: _description,
-                                decoration: InputDecoration(
-                                  hintText: context.$.description,
-                                  helperText: context.$.description,
-                                ),
-                                onSaved: (newValue) => _description = newValue!,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.updatedAt),
+                                  Text(state.node.updatedAt.toString()),
+                                ],
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          spacing: 32,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8.0,
-                              children: [
-                                Text(context.$.status),
-                                NodeStatusLabel(status: node.status),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8.0,
-                              children: [
-                                Text(context.$.createdAt),
-                                Text(node.createdAt.toString()),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8.0,
-                              children: [
-                                Text(context.$.updatedAt),
-                                Text(node.updatedAt.toString()),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
