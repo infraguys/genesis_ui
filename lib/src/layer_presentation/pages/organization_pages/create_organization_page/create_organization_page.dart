@@ -11,6 +11,8 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
+part './widgets/create_organization_btn.dart';
+
 class _CreateOrganizationView extends StatefulWidget {
   const _CreateOrganizationView();
 
@@ -44,12 +46,13 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case OrganizationCreatedState():
+          case OrganizationCreatedState(:final organization):
             context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgOrganizationCreated(organization.name)));
             navigator.pop();
 
           case OrganizationPermissionFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
           case OrganizationFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
           default:
@@ -68,7 +71,7 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
             ),
             ButtonsBar(
               children: [
-                SaveIconButton(onPressed: save),
+                _CreateOrganizationButton(onPressed: save),
               ],
             ),
             LayoutBuilder(
@@ -117,7 +120,9 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _organizationBloc.add(
-        OrganizationEvent.create(CreateOrganizationParams(name: _name, description: _description,)),
+        OrganizationEvent.create(
+          CreateOrganizationParams(name: _name, description: _description),
+        ),
       );
     }
   }
