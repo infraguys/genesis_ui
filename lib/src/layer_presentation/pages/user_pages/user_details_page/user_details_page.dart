@@ -11,7 +11,6 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -139,7 +138,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _username,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: context.$.username,
                                         ),
@@ -150,7 +148,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _firstName,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: context.$.firstName,
                                         ),
@@ -161,7 +158,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _lastName,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: context.$.lastName,
                                         ),
@@ -172,7 +168,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _surname,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: context.$.surName,
                                         ),
@@ -183,7 +178,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _phone,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: 'Phone'.hardcoded,
                                         ),
@@ -194,7 +188,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                       width: constraints.maxWidth * 0.4,
                                       child: TextFormField(
                                         initialValue: _email,
-                                        readOnly: !context.permissionNames.users.canWriteAll,
                                         decoration: InputDecoration(
                                           hintText: context.$.email,
                                         ),
@@ -248,7 +241,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                     width: constraints.maxWidth * 0.4,
                                     child: TextFormField(
                                       initialValue: _description,
-                                      readOnly: !context.permissionNames.users.canWriteAll,
                                       decoration: InputDecoration(
                                         hintText: context.$.description,
                                       ),
