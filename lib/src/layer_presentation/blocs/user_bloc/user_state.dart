@@ -17,7 +17,7 @@ sealed class UserState {
 
   factory UserState.failure(String message) = UserFailureState;
 
-  factory UserState.permissionFailure(String message) = UserFailureState;
+  factory UserState.permissionFailure(String message) = UserPermissionFailureState;
 }
 
 final class UserInitialState implements UserState {}
