@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -82,12 +84,13 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       title: Text(context.$.projects),
                       onTap: () => context.goNamed(AppRoutes.projects.name),
                     ),
-                    ListTile(
-                      leading: Icon(Icons.admin_panel_settings),
-                      selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
-                      title: Text(context.$.roles),
-                      onTap: () => context.goNamed(AppRoutes.roles.name),
-                    ),
+                    if (context.permissionNames.roles.canRead)
+                      ListTile(
+                        leading: Icon(Icons.admin_panel_settings),
+                        selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
+                        title: Text(context.$.roles),
+                        onTap: () => context.goNamed(AppRoutes.roles.name),
+                      ),
                     if (context.permissionNames.organizations.canReadAll)
                       ListTile(
                         leading: Icon(Icons.business_sharp),
@@ -130,6 +133,12 @@ class ScaffoldWithNavigation extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    Spacer(),
+                    ListTile(
+                      leading: Icon(CupertinoIcons.restart),
+                      title: Text('Restart'.hardcoded),
+                      onTap: () => App.restartApplication(context),
                     ),
                   ],
                 ),
