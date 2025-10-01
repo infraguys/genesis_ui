@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
@@ -53,9 +54,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final useCase = DeleteUserUseCase(_repository);
-    emit(UserLoadingState());
-    await useCase(event.user);
-    emit(UserState.deleted(event.user));
+    try {
+      await useCase(event.user);
+      emit(UserState.deleted(event.user));
+    } on PermissionException catch (e) {
+      emit(UserState.permissionFailure(e.message));
+    }
   }
 
   Future<void> _onChangeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {
@@ -66,9 +70,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onUpdateUser(_UpdateUser event, Emitter<UserState> emit) async {
     final useCase = UpdateUserUseCase(_repository);
-    final user = await useCase(event.params);
-    emit(UserState.updated(user));
-    emit(UserState.loaded(user));
+    try {
+      final user = await useCase(event.params);
+      emit(UserState.updated(user));
+    } on PermissionException catch (e) {
+      emit(UserState.permissionFailure(e.message));
+    }
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
