@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
@@ -28,10 +29,19 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   Future<void> _onDeleteUsers(_DeleteUsers event, Emitter<UsersState> emit) async {
     final useCase = DeleteUsersUseCase(_usersRepository);
+
+    final previousState = state;
+
+    // todo: Подумать что сделать с запросом
     emit(UsersState.loading());
-    await useCase(event.users);
-    emit(UsersState.deleted(event.users));
-    add(UsersEvent.getUsers());
+    try {
+      await useCase(event.users);
+      emit(UsersState.deleted(event.users));
+      add(UsersEvent.getUsers());
+    } on PermissionException catch (e) {
+      emit(UsersState.permissionFailure(e.message));
+      emit(previousState);
+    }
   }
 
   Future<void> _onForceConfirmEmails(_ForceConfirmEmails event, Emitter<UsersState> emit) async {
