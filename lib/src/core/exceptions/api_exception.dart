@@ -37,10 +37,17 @@ final class PermissionException extends ApiException {
   static String _extractPermissionName(String raw) {
     final regex = RegExp(r'Policy rule (\S+) is disallowed');
     final match = regex.firstMatch(raw);
-    if (match == null) {
-      return raw;
+    if (match != null) {
+      return '• ${match.group(1)!}';
     }
-    return match.group(1)!;
+
+    final regExpBackticks = RegExp(r'`([A-Za-z][A-Za-z0-9_-]*(?:\.[A-Za-z0-9_-]+)+)`');
+    final matchesInBackticks = regExpBackticks.allMatches(raw).map((m) => m.group(1)!).toSet();
+    if (matchesInBackticks.isNotEmpty) {
+      return matchesInBackticks.map((p) => '• $p').join('\n');
+    }
+
+    return raw;
   }
 }
 
