@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
@@ -12,7 +13,6 @@ import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindin
 import 'package:genesis/src/layer_domain/use_cases/roles/get_role_usecase.dart';
 
 part 'user_projects_event.dart';
-
 part 'user_projects_state.dart';
 
 class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
@@ -35,27 +35,32 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
     final getRoleBindingsUseCase = GetRoleBindingsUseCase(_roleBindingsRepository);
     final getProjectUseCase = GetProjectUseCase(_projectsRepository);
     final getRoleUseCase = GetRoleUseCase(_rolesRepository);
+
     emit(UserProjectsState.loading());
 
     final Set<({Project project, List<Role> roles})> result = {};
-    var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUUID: event.userUuid));
-    bindings = bindings.where((it) => it.projectUUID != null).toList();
 
-    final projectUUIDs = bindings.map((b) => b.projectUUID!).toSet().toList();
+    try {
+      var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUUID: event.userUuid));
+      bindings = bindings.where((it) => it.projectUUID != null).toList();
 
-    final projects = await Future.wait(
-      projectUUIDs.map((uuid) => getProjectUseCase(uuid)),
-    );
+      final projectUUIDs = bindings.map((b) => b.projectUUID!).toSet().toList();
 
-    // todo: ипсравить projectUUID
-    for (final project in projects) {
-      final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
-      final roles = await Future.wait(
-        projectsBindings.map((binding) => getRoleUseCase(binding.roleUUID)),
+      final projects = await Future.wait(
+        projectUUIDs.map((uuid) => getProjectUseCase(uuid)),
       );
-      result.add((project: project, roles: roles));
-    }
 
-    emit(UserProjectsState.loaded(result.toList()));
+      // todo: ипсравить projectUUID
+      for (final project in projects) {
+        final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
+        final roles = await Future.wait(
+          projectsBindings.map((binding) => getRoleUseCase(binding.roleUUID)),
+        );
+        result.add((project: project, roles: roles));
+      }
+      emit(UserProjectsState.loaded(result.toList()));
+    } on PermissionException catch (e) {
+      emit(UserProjectsState.permissionFailure(e.message));
+    }
   }
 }
