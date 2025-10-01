@@ -144,7 +144,7 @@
       }
     }
   },
-  "msgPermissionDenied": "You don’t have permission \"{permission}\". Please contact your administrator.",
+  "msgPermissionDenied": "You do not have the required permissions. Please contact your administrator. Missing:\n{permission}",
   "@msgPermissionDenied": {
     "placeholders": {
       "permission": {

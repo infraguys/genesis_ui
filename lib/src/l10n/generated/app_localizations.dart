@@ -539,7 +539,7 @@ abstract class AppLocalizations {
   /// No description provided for @msgPermissionDenied.
   ///
   /// In en, this message translates to:
-  /// **'You don’t have permission \"{permission}\". Please contact your administrator.'**
+  /// **'You do not have the required permissions. Please contact your administrator. Missing:\n{permission}'**
   String msgPermissionDenied(String permission);
 
   /// No description provided for @msgUserCreated.

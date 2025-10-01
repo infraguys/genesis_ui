@@ -141,7 +141,7 @@
       }
     }
   },
-  "msgPermissionDenied": "У вас нет разрешения \"{permission}\". Пожалуйста, свяжитесь с вашим администратором.",
+  "msgPermissionDenied": "У вас нет необходимых разрешений. Пожалуйста, свяжитесь с администратором. Отсутствуют:\n{permission}",
   "@msgPermissionDenied": {
     "placeholders": {
       "permission": {
