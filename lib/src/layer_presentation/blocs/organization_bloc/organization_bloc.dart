@@ -31,33 +31,31 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
 
   Future<void> _onCreateOrganization(_Create event, Emitter<OrganizationState> emit) async {
     final useCase = CreateOrganizationUseCase(_repository);
-    emit(OrganizationState.loading());
     try {
-      await useCase(event.params);
-      emit(OrganizationState.created());
+      final organization = await useCase(event.params);
+      emit(OrganizationState.created(organization));
     } on PermissionException catch (e) {
       emit(OrganizationState.permissionFailure(e.message));
-      emit(OrganizationState.initial());
     }
   }
 
   Future<void> _onUpdateOrganization(_Update event, Emitter<OrganizationState> emit) async {
     final useCase = UpdateOrganizationUseCase(_repository);
-    final organization = await useCase(event.params);
-    emit(OrganizationState.updated(organization));
-    emit(OrganizationLoadedState(organization));
+    try {
+      final organization = await useCase(event.params);
+      emit(OrganizationState.updated(organization));
+    } on PermissionException catch (e) {
+      emit(OrganizationState.permissionFailure(e.message));
+    }
   }
 
   Future<void> _onDeleteOrganization(_Delete event, Emitter<OrganizationState> emit) async {
     final useCase = DeleteOrganizationUseCase(_repository);
-    emit(OrganizationState.loading());
     try {
       await useCase(event.organization.uuid);
       emit(OrganizationState.deleted(event.organization));
     } on PermissionException catch (e) {
-      // todo: посмотреть как сделать лучше
       emit(OrganizationState.permissionFailure(e.message));
-      emit(OrganizationState.loaded(event.organization));
     }
   }
 }
