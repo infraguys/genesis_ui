@@ -11,7 +11,6 @@ import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/extensions/is_me_extension.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
@@ -63,10 +62,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
-      listenWhen: (_, current) => switch (current) {
-        UserUpdatedState() || UserDeletedState() || UserFailureState() || UserLoadedState() => true,
-        _ => false,
-      },
+      listenWhen: (_, current) => current is! UserLoadingState,
       listener: (context, state) {
         final navigator = GoRouter.of(context);
         final messenger = ScaffoldMessenger.of(context);
@@ -88,6 +84,9 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
             messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(user.username)));
             context.read<UsersBloc>().add(UsersEvent.getUsers());
             navigator.pop();
+
+          case UserPermissionFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
 
           case UserFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
