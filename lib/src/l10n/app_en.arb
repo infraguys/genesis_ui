@@ -184,6 +184,14 @@
       }
     }
   },
+  "msgOrganizationCreated": "Organization {name} has been created",
+  "@msgOrganizationCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msgOrganizationUpdated": "Organization {name} has been updated",
   "@msgOrganizationUpdated": {
     "placeholders": {

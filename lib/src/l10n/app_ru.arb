@@ -189,6 +189,14 @@
       }
     }
   },
+  "msgOrganizationCreated": "Организации {name} создана",
+  "@msgOrganizationCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "msgOrganizationDeleted": "Организация {name} удалена",
   "@msgOrganizationDeleted": {
     "placeholders": {

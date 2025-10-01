@@ -566,6 +566,12 @@ abstract class AppLocalizations {
   /// **'Users({count}) have been deleted'**
   String msgUsersDeleted(int count);
 
+  /// No description provided for @msgOrganizationCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization {name} has been created'**
+  String msgOrganizationCreated(String name);
+
   /// No description provided for @msgOrganizationUpdated.
   ///
   /// In en, this message translates to:
