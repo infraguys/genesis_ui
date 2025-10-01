@@ -14,38 +14,48 @@ sealed class NodeState {
   factory NodeState.deleted(Node node) = NodeDeletedState;
 
   factory NodeState.failure(String message) = NodeFailureState;
+
+  factory NodeState.permissionFailure(String message) = NodePermissionFailureState;
 }
 
 final class NodeInitialState implements NodeState {}
 
 final class NodeLoadingState implements NodeState {}
 
-final class NodeLoadedState implements NodeState {
-  NodeLoadedState(this.node);
+final class NodeLoadedState extends _NodeDataState {
+  NodeLoadedState(super.node);
+}
+
+final class NodeFailureState extends _FailureState {
+  NodeFailureState(super.message);
+}
+
+final class NodePermissionFailureState extends _FailureState {
+  NodePermissionFailureState(super.message);
+}
+
+final class NodeUpdatedState extends _NodeDataState {
+  NodeUpdatedState(super.node);
+}
+
+final class NodeCreatedState extends _NodeDataState {
+  NodeCreatedState(super.node);
+}
+
+final class NodeDeletedState extends _NodeDataState {
+  NodeDeletedState(super.node);
+}
+
+// Base classes to reduce code duplication
+
+base class _NodeDataState implements NodeState {
+  _NodeDataState(this.node);
 
   final Node node;
 }
 
-final class NodeFailureState implements NodeState {
-  NodeFailureState(this.message);
+base class _FailureState implements NodeState {
+  _FailureState(this.message);
 
   final String message;
-}
-
-final class NodeUpdatedState implements NodeState {
-  NodeUpdatedState(this.node);
-
-  final Node node;
-}
-
-final class NodeCreatedState implements NodeState {
-  NodeCreatedState(this.node);
-
-  final Node node;
-}
-
-final class NodeDeletedState implements NodeState {
-  NodeDeletedState(this.node);
-
-  final Node node;
 }
