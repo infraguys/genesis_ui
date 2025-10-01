@@ -4,7 +4,7 @@ import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class SaveIconButton extends StatelessWidget {
-  const SaveIconButton({required this.onPressed, super.key});
+  const SaveIconButton({this.onPressed, super.key});
 
   final VoidCallback? onPressed;
 
