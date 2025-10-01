@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
@@ -36,7 +35,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final user = await useCase(event.uuid);
       emit(UserState.loaded(user));
-    } on NetworkException catch (e) {
+    } on PermissionException catch (e) {
+      emit(UserState.permissionFailure(e.message));
+    } on ApiException catch (e) {
       emit(UserState.failure(e.message));
     }
   }
@@ -47,7 +48,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final createdUser = await useCase(event.params);
       emit(UserState.created(createdUser));
-    } on NetworkException catch (e) {
+    } on PermissionException catch (e) {
+      emit(UserState.permissionFailure(e.message));
+    } on ApiException catch (e) {
       emit(UserState.failure(e.message));
     }
   }
@@ -59,6 +62,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserState.deleted(event.user));
     } on PermissionException catch (e) {
       emit(UserState.permissionFailure(e.message));
+    } on ApiException catch (e) {
+      emit(UserState.failure(e.message));
     }
   }
 
@@ -75,6 +80,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserState.updated(user));
     } on PermissionException catch (e) {
       emit(UserState.permissionFailure(e.message));
+    } on ApiException catch (e) {
+      emit(UserState.failure(e.message));
     }
   }
 
@@ -87,8 +94,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onForceConfirmEmail(_ForceConfirmEmail event, Emitter<UserState> emit) async {
     final useCase = ForceConfirmEmailUseCase(_repository);
-    emit(UserState.loading());
-    await useCase(event.user.uuid);
-    add(UserEvent.getUser(event.user.uuid));
+    try {
+      final user = await useCase(event.user.uuid);
+      emit(UserState.loaded(user));
+    } on PermissionException catch (e) {
+      emit(UserState.permissionFailure(e.message));
+    } on ApiException catch (e) {
+      emit(UserState.failure(e.message));
+    }
   }
 }
