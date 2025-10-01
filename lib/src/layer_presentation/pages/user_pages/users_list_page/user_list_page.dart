@@ -4,7 +4,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -26,7 +25,7 @@ class _UserListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UsersBloc, UsersState>(
-      listenWhen: (_, current) => current is UsersDeletedState,
+      listenWhen: (_, current) => current is! UsersLoadingState,
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
@@ -35,6 +34,9 @@ class _UserListView extends StatelessWidget {
             messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(users.single.username)));
           case UsersDeletedState(:final users) when users.length > 1:
             messenger.showSnackBar(AppSnackBar.success(context.$.msgUsersDeleted(users.length)));
+
+          case UsersPermissionFailureState(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
           default:
         }
       },
@@ -47,11 +49,9 @@ class _UserListView extends StatelessWidget {
               BreadcrumbItem(text: context.$.users),
             ],
           ),
-          ButtonsBar.withoutLeftSpacer(
+          ButtonsBar(
             children: [
-              // SearchInput(),
-              Spacer(),
-              if (context.permissionNames.users.canDeleteAll) _DeleteUserButton(),
+              _DeleteUserButton(),
               _ConfirmEmailButton(),
               CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createUser.name)),
             ],
@@ -59,9 +59,8 @@ class _UserListView extends StatelessWidget {
           Expanded(
             child: BlocConsumer<UsersBloc, UsersState>(
               listenWhen: (_, current) => current is UsersLoadedState,
-              listener: (context, _) {
-                context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
-              },
+              listener: (context, _) {},
+              buildWhen: (_, current) => current is UsersLoadingState || current is UsersLoadedState,
               builder: (_, state) => switch (state) {
                 UsersLoadedState(:final users) => UsersTable(users: users),
                 _ => AppProgressIndicator(),
