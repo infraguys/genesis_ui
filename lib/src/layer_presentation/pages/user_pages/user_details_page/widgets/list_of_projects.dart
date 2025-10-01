@@ -6,7 +6,6 @@ import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bin
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/add_project_card.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
@@ -20,21 +19,27 @@ class ListOfProjects extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
 
-    return BlocListener<RoleBindingsBloc, RoleBindingsState>(
-      listenWhen: (_, current) => current is RoleBindingsDeletedState,
-      listener: (context, _) {
-        context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(userUuid));
-      },
-      child: BlocConsumer<UserProjectsBloc, UserProjectsState>(
-        listener: (context, state) {
-          final messenger = ScaffoldMessenger.of(context);
-
-          switch (state) {
-            case UserProjectsPermissionFailureState(:final message):
-              messenger.showSnackBar(AppSnackBar.failure(message));
-            default:
-          }
-        },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<RoleBindingsBloc, RoleBindingsState>(
+          listenWhen: (_, current) => current is RoleBindingsDeletedState,
+          listener: (context, _) {
+            context.read<UserProjectsBloc>().add(UserProjectsEvent.getProjects(userUuid));
+          },
+        ),
+        // BlocListener<UserProjectsBloc, UserProjectsState>(
+        //   listener: (context, state) {
+        //     final messenger = ScaffoldMessenger.of(context);
+        //
+        //     switch (state) {
+        //       case UserProjectsPermissionFailureState(:final message):
+        //         messenger.showSnackBar(AppSnackBar.failure(message));
+        //       default:
+        //     }
+        //   },
+        // ),
+      ],
+      child: BlocBuilder<UserProjectsBloc, UserProjectsState>(
         builder: (context, state) {
           return switch (state) {
             UserProjectsPermissionFailureState() => SizedBox.shrink(),
