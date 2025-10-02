@@ -206,23 +206,23 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get description;
 
-  /// No description provided for @extensions.
+  /// No description provided for @elements.
   ///
   /// In en, this message translates to:
-  /// **'Extensions'**
-  String get extensions;
+  /// **'Elements'**
+  String get elements;
 
-  /// No description provided for @extension.
+  /// No description provided for @element.
   ///
   /// In en, this message translates to:
-  /// **'Extension'**
-  String get extension;
+  /// **'Element'**
+  String get element;
 
-  /// No description provided for @allExtensions.
+  /// No description provided for @allElements.
   ///
   /// In en, this message translates to:
-  /// **'All extensions'**
-  String get allExtensions;
+  /// **'All elements'**
+  String get allElements;
 
   /// No description provided for @installed.
   ///
