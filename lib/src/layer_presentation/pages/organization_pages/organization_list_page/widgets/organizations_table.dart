@@ -41,7 +41,7 @@ class OrganizationsTable extends StatelessWidget {
               tristate: true,
               onChanged: (_) {
                 if (allowMultiSelect) {
-                  context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.toggleAll(organizations));
+                  context.read<OrganizationsSelectionBloc>().onToggleAll(organizations);
                 }
               },
               value: switch (state.length) {
@@ -67,9 +67,9 @@ class OrganizationsTable extends StatelessWidget {
                 value: state.contains(organization),
                 onChanged: (_) {
                   if (!allowMultiSelect) {
-                    context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
+                    context.read<OrganizationsSelectionBloc>().onClear();
                   }
-                  context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.toggle(organization));
+                  context.read<OrganizationsSelectionBloc>().onToggle(organization);
                 },
               );
             },

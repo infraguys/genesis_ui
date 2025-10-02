@@ -122,11 +122,9 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                   child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
                     builder: (context, state) {
                       if (state is OrganizationsLoadedState) {
-                        context.read<OrganizationsSelectionBloc>().add(
-                          OrganizationsSelectionEvent.setCheckedFromResponse(
-                            project,
+                        context.read<OrganizationsSelectionBloc>().onSetCheckedFromResponse(
+                            project: project,
                             organizations: state.organizations,
-                          ),
                         );
                         return OrganizationsTable(organizations: state.organizations, allowMultiSelect: false);
                       }

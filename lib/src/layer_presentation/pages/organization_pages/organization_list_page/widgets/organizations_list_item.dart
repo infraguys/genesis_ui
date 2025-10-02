@@ -47,11 +47,7 @@ class OrganizationsListItem extends StatelessWidget {
         builder: (context, state) {
           return Checkbox(
             value: state.contains(organization),
-            onChanged: (_) {
-              context.read<OrganizationsSelectionBloc>().add(
-                OrganizationsSelectionEvent.toggle(organization),
-              );
-            },
+            onChanged: (_) => context.read<OrganizationsSelectionBloc>().onToggle(organization),
           );
         },
       ),

@@ -41,7 +41,7 @@ class _OrganizationListViewState extends State<_OrganizationListView> {
             final messenger = ScaffoldMessenger.of(context);
             switch (state) {
               case OrganizationsLoadedState():
-                context.read<OrganizationsSelectionBloc>().add(OrganizationsSelectionEvent.clear());
+                context.read<OrganizationsSelectionBloc>().onClear();
 
               case OrganizationsDeletedState(:final organizations) when organizations.length == 1:
                 messenger.showSnackBar(
