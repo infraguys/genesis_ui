@@ -57,9 +57,7 @@ class _UserListView extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: BlocConsumer<UsersBloc, UsersState>(
-              listenWhen: (_, current) => current is UsersLoadedState,
-              listener: (context, _) {},
+            child: BlocBuilder<UsersBloc, UsersState>(
               buildWhen: (_, current) => current is UsersLoadingState || current is UsersLoadedState,
               builder: (_, state) => switch (state) {
                 UsersLoadedState(:final users) => UsersTable(users: users),
