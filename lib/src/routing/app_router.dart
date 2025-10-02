@@ -292,14 +292,14 @@ GoRouter createRouter(BuildContext context) {
             navigatorKey: extensionsNavKey,
             routes: [
               GoRoute(
-                name: AppRoutes.allExtensions.name,
-                path: '/extensions',
+                name: AppRoutes.allElements.name,
+                path: '/elements',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: ExtensionListPage(),
                 ),
                 routes: [
                   GoRoute(
-                    name: AppRoutes.installedExtensions.name,
+                    name: AppRoutes.installedElements.name,
                     path: 'installed',
                     pageBuilder: (_, state) => NoTransitionPage(
                       child: Placeholder(),
