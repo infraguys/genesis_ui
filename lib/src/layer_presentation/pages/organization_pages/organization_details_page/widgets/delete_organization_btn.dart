@@ -1,7 +1,10 @@
 part of '../organization_details_page.dart';
 
 class _DeleteOrganizationButton extends StatelessWidget {
-  const _DeleteOrganizationButton({required this.organization, super.key});
+  const _DeleteOrganizationButton({
+    required this.organization,
+    super.key,  // ignore: unused_element_parameter
+  });
 
   final Organization organization;
 

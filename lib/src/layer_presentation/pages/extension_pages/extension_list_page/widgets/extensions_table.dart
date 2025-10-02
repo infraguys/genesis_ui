@@ -45,7 +45,7 @@ class ExtensionsTable extends StatelessWidget {
             _ => null,
           },
         ),
-        Text(context.$.extension, style: TextStyle(color: Colors.white)),
+        Text(context.$.element, style: TextStyle(color: Colors.white)),
         Text(context.$.status, style: TextStyle(color: Colors.white)),
         Text(context.$.uuid, style: TextStyle(color: Colors.white)),
         Text(context.$.createdAt, style: TextStyle(color: Colors.white)),

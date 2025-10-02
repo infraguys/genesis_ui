@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 
 class _SplashScreenView extends StatelessWidget {
-  const _SplashScreenView({super.key});
+  const _SplashScreenView({super.key});  // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_bloc
 import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 
 class _DomainSetupPage extends StatefulWidget {
-  const _DomainSetupPage({super.key});
+  const _DomainSetupPage({super.key});  // ignore: unused_element_parameter
 
   @override
   State<_DomainSetupPage> createState() => _DomainSetupPageState();

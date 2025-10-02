@@ -1,7 +1,7 @@
 part of '../user_list_page.dart';
 
 class _DeleteUserButton extends StatelessWidget {
-  const _DeleteUserButton({super.key});
+  const _DeleteUserButton({super.key});  // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {

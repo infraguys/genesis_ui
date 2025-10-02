@@ -112,14 +112,14 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       child: ExpansionTile(
                         tilePadding: EdgeInsets.only(right: 8, left: 16.0),
                         leading: Icon(Icons.extension),
-                        title: Text(context.$.extensions),
+                        title: Text(context.$.elements),
                         children: [
                           const SizedBox(height: 4.0),
                           ListTile(
                             leading: Icon(CupertinoIcons.square_grid_2x2),
-                            title: Text(context.$.allExtensions),
+                            title: Text(context.$.allElements),
                             onTap: () {
-                              context.goNamed(AppRoutes.allExtensions.name);
+                              context.goNamed(AppRoutes.allElements.name);
                             },
                           ),
                           const SizedBox(height: 4.0),
@@ -128,7 +128,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                             title: Text(context.$.installed),
                             onTap: () {
                               // todo: посмотреть что будет с кнопкой назад
-                              context.replaceNamed(AppRoutes.installedExtensions.name);
+                              context.replaceNamed(AppRoutes.installedElements.name);
                             },
                           ),
                         ],
