@@ -119,7 +119,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                             leading: Icon(CupertinoIcons.square_grid_2x2),
                             title: Text(context.$.allElements),
                             onTap: () {
-                              context.goNamed(AppRoutes.allElements.name);
+                              context.goNamed(AppRoutes.allExtensions.name);
                             },
                           ),
                           const SizedBox(height: 4.0),
@@ -128,7 +128,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                             title: Text(context.$.installed),
                             onTap: () {
                               // todo: посмотреть что будет с кнопкой назад
-                              context.replaceNamed(AppRoutes.installedElements.name);
+                              context.replaceNamed(AppRoutes.installedExtensions.name);
                             },
                           ),
                         ],

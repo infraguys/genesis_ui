@@ -40,6 +40,6 @@ enum AppRoutes {
   createNode,
 
   /// elements
-  installedElements,
-  allElements,
+  installedExtensions,
+  allExtensions,
 }

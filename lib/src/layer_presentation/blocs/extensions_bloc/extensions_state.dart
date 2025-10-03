@@ -1,12 +1,6 @@
 part of 'extensions_bloc.dart';
 
-sealed class ExtensionsState {
-  factory ExtensionsState.initial() = ExtensionsInitialState;
-
-  factory ExtensionsState.loading() = ExtensionsLoadingState;
-
-  factory ExtensionsState.loaded(List<Extension> extensions) = ExtensionsLoadedState;
-}
+sealed class ExtensionsState {}
 
 final class ExtensionsInitialState implements ExtensionsState {}
 

@@ -10,7 +10,7 @@ import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/elements_pages/element_list_page/element_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_list_page/extension_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
@@ -292,14 +292,14 @@ GoRouter createRouter(BuildContext context) {
             navigatorKey: extensionsNavKey,
             routes: [
               GoRoute(
-                name: AppRoutes.allElements.name,
-                path: '/elements',
+                name: AppRoutes.allExtensions.name,
+                path: '/extensions',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: ElementListPage(),
+                  child: ExtensionListPage(),
                 ),
                 routes: [
                   GoRoute(
-                    name: AppRoutes.installedElements.name,
+                    name: AppRoutes.installedExtensions.name,
                     path: 'installed',
                     pageBuilder: (_, state) => NoTransitionPage(
                       child: Placeholder(),

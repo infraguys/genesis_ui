@@ -8,7 +8,7 @@ part 'extensions_event.dart';
 part 'extensions_state.dart';
 
 class ExtensionsBloc extends Bloc<ExtensionsEvent, ExtensionsState> {
-  ExtensionsBloc(this._repository) : super(ExtensionsState.initial()) {
+  ExtensionsBloc(this._repository) : super(ExtensionsInitialState()) {
     on(_onGetExtensions);
   }
 
@@ -16,9 +16,9 @@ class ExtensionsBloc extends Bloc<ExtensionsEvent, ExtensionsState> {
 
   Future<void> _onGetExtensions(_GetExtensions event, Emitter<ExtensionsState> emit) async {
     final useCase = GetExtensionsUseCase(_repository);
-    emit(ExtensionsState.loading());
+    emit(ExtensionsLoadingState());
 
     final extensions = await useCase(event.params);
-    emit(ExtensionsState.loaded(extensions));
+    emit(ExtensionsLoadedState(extensions));
   }
 }
