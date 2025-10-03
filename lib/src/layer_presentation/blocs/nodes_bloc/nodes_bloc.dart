@@ -9,7 +9,7 @@ part 'nodes_event.dart';
 part 'nodes_state.dart';
 
 class NodesBloc extends Bloc<NodesEvent, NodesState> {
-  NodesBloc(this._repository) : super(NodesState.initial()) {
+  NodesBloc(this._repository) : super(NodesInitialState()) {
     on(_onGetNodes);
     on(_onDeleteNodes);
     add(NodesEvent.getNodes());
@@ -19,16 +19,16 @@ class NodesBloc extends Bloc<NodesEvent, NodesState> {
 
   Future<void> _onGetNodes(_GetNodes event, Emitter<NodesState> emit) async {
     final useCase = GetNodesUseCase(_repository);
-    emit(NodesState.loading());
+    emit(NodesLoadingState());
     final nodes = await useCase(event._params);
-    emit(NodesState.loaded(nodes));
+    emit(NodesLoadedState(nodes));
   }
 
   Future<void> _onDeleteNodes(_DeleteNodes event, Emitter<NodesState> emit) async {
     final useCase = DeleteNodesUseCase(_repository);
-    emit(NodesState.loading());
+    emit(NodesLoadingState());
     await useCase(event.nodes);
-    emit(NodesState.deleted());
+    emit(NodesDeletedState());
     add(NodesEvent.getNodes());
   }
 }
