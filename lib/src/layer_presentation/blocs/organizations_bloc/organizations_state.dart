@@ -1,27 +1,36 @@
 part of 'organizations_bloc.dart';
 
-sealed class OrganizationsState {
-  bool get shouldRebuildList => this is OrganizationsLoadedState || this is OrganizationsLoadingState;
+sealed class OrganizationsState {}
+
+final class OrganizationsInitialState implements OrganizationsState {}
+
+final class OrganizationsLoadingState implements OrganizationsState {}
+
+final class OrganizationsLoadedState extends _OrganizationsDataState {
+  OrganizationsLoadedState(super.organizations);
 }
 
-final class OrganizationsInitialState extends OrganizationsState {}
+final class OrganizationsDeletedState extends _OrganizationsDataState {
+  OrganizationsDeletedState(super.organizations);
+}
 
-final class OrganizationsLoadingState extends OrganizationsState {}
+final class OrganizationsFailureState extends _FailureState {
+  OrganizationsFailureState(super.message);
+}
 
-final class OrganizationsLoadedState extends OrganizationsState {
-  OrganizationsLoadedState(this.organizations);
+final class OrganizationsPermissionFailureState extends _FailureState {
+  OrganizationsPermissionFailureState(super.message);
+}
+
+// Base classes to reduce code duplication
+base class _OrganizationsDataState implements OrganizationsState {
+  _OrganizationsDataState(this.organizations);
 
   final List<Organization> organizations;
 }
 
-final class OrganizationsDeletedState extends OrganizationsState {
-  OrganizationsDeletedState(this.organizations);
-
-  final List<Organization> organizations;
-}
-
-final class OrganizationsPermissionFailureState extends OrganizationsState {
-  OrganizationsPermissionFailureState(this.message);
+base class _FailureState implements OrganizationsState {
+  _FailureState(this.message);
 
   final String message;
 }

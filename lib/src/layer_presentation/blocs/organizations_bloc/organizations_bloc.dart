@@ -17,14 +17,14 @@ class OrganizationsBloc extends Bloc<OrganizationsEvent, OrganizationsState> {
 
   final IOrganizationsRepository _repository;
 
-  Future<void> _getOrganizations(_GetOrganizations event, Emitter<OrganizationsState> emit) async {
+  Future<void> _getOrganizations(_Get event, Emitter<OrganizationsState> emit) async {
     final useCase = GetOrganizationsUseCase(_repository);
     emit(OrganizationsLoadingState());
-    final organizations = await useCase(GetOrganizationsParams());
+    final organizations = await useCase(event.params);
     emit(OrganizationsLoadedState(organizations));
   }
 
-  Future<void> _onDeleteOrganizations(_DeleteOrganizations event, Emitter<OrganizationsState> emit) async {
+  Future<void> _onDeleteOrganizations(_Delete event, Emitter<OrganizationsState> emit) async {
     final useCase = DeleteOrganizationsUseCase(_repository);
 
     final prevState = state;
