@@ -79,7 +79,7 @@ class _OrganizationListViewState extends State<_OrganizationListView> {
           const SizedBox(height: 24),
           Expanded(
             child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
-              buildWhen: (_, current) => current.shouldRebuildList,
+              buildWhen: (_, current) => current is OrganizationsLoadedState || current is OrganizationsLoadingState,
               builder: (_, state) => switch (state) {
                 OrganizationsLoadedState(:final organizations) => OrganizationsTable(organizations: organizations),
                 _ => AppProgressIndicator(),
