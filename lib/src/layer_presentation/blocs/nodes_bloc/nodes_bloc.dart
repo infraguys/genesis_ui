@@ -20,7 +20,7 @@ class NodesBloc extends Bloc<NodesEvent, NodesState> {
   Future<void> _onGetNodes(_GetNodes event, Emitter<NodesState> emit) async {
     final useCase = GetNodesUseCase(_repository);
     emit(NodesLoadingState());
-    final nodes = await useCase(event._params);
+    final nodes = await useCase(event.params);
     emit(NodesLoadedState(nodes));
   }
 

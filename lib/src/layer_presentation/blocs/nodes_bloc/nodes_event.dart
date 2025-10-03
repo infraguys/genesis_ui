@@ -7,9 +7,9 @@ sealed class NodesEvent {
 }
 
 final class _GetNodes implements NodesEvent {
-  _GetNodes([this._params = const GetNodesParams()]);
+  _GetNodes([this.params = const GetNodesParams()]);
 
-  final GetNodesParams _params;
+  final GetNodesParams params;
 }
 
 final class _DeleteNodes implements NodesEvent {
