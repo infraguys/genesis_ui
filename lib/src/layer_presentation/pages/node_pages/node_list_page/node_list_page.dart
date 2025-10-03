@@ -17,7 +17,7 @@ import 'package:go_router/go_router.dart';
 part './widgets/delete_nodes_btn.dart';
 
 class _NodeListView extends StatelessWidget {
-  const _NodeListView({super.key});  // ignore: unused_element_parameter
+  const _NodeListView({super.key}); // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,6 @@ class _NodeListView extends StatelessWidget {
         ),
         ButtonsBar(
           children: [
-            // SearchInput(),
             _DeleteNodesButton(),
             CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createNode.name)),
           ],

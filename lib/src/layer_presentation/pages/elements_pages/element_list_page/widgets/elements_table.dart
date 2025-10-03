@@ -10,8 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-class ExtensionsTable extends StatelessWidget {
-  const ExtensionsTable({
+class ElementsTable extends StatelessWidget {
+  const ElementsTable({
     required this.extensions,
     super.key,
     this.allowMultiSelect = true,
