@@ -1,26 +1,6 @@
 part of 'organization_bloc.dart';
 
-sealed class OrganizationState {
-  factory OrganizationState.loading() = OrganizationLoadingState;
-
-  factory OrganizationState.initial() = OrganizationLoadingState;
-
-  factory OrganizationState.created(Organization organization) = OrganizationCreatedState;
-
-  factory OrganizationState.creating() = OrganizationCreatingState;
-
-  factory OrganizationState.updated(Organization organization) = OrganizationUpdatedState;
-
-  factory OrganizationState.deleted(Organization organization) = OrganizationDeletedState;
-
-  factory OrganizationState.deleting() = OrganizationDeletingState;
-
-  factory OrganizationState.failure(String message) = OrganizationFailureState;
-
-  factory OrganizationState.permissionFailure(String message) = OrganizationPermissionFailureState;
-
-  factory OrganizationState.loaded(Organization organization) = OrganizationLoadedState;
-}
+sealed class OrganizationState {}
 
 final class OrganizationInitialState implements OrganizationState {}
 

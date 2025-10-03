@@ -13,7 +13,7 @@ part 'organization_event.dart';
 part 'organization_state.dart';
 
 class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
-  OrganizationBloc(this._repository) : super(OrganizationState.initial()) {
+  OrganizationBloc(this._repository) : super(OrganizationInitialState()) {
     on(_onGetOrganization);
     on(_onCreateOrganization);
     on(_onUpdateOrganization);
@@ -24,18 +24,18 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
 
   Future<void> _onGetOrganization(_Get event, Emitter<OrganizationState> emit) async {
     final useCase = GetOrganizationUseCase(_repository);
-    emit(OrganizationState.loading());
+    emit(OrganizationLoadingState());
     final organization = await useCase(event.uuid);
-    emit(OrganizationState.loaded(organization));
+    emit(OrganizationLoadedState(organization));
   }
 
   Future<void> _onCreateOrganization(_Create event, Emitter<OrganizationState> emit) async {
     final useCase = CreateOrganizationUseCase(_repository);
     try {
       final organization = await useCase(event.params);
-      emit(OrganizationState.created(organization));
+      emit(OrganizationCreatedState(organization));
     } on PermissionException catch (e) {
-      emit(OrganizationState.permissionFailure(e.message));
+      emit(OrganizationPermissionFailureState(e.message));
     }
   }
 
@@ -43,9 +43,9 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
     final useCase = UpdateOrganizationUseCase(_repository);
     try {
       final organization = await useCase(event.params);
-      emit(OrganizationState.updated(organization));
+      emit(OrganizationUpdatedState(organization));
     } on PermissionException catch (e) {
-      emit(OrganizationState.permissionFailure(e.message));
+      emit(OrganizationPermissionFailureState(e.message));
     }
   }
 
@@ -53,9 +53,9 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
     final useCase = DeleteOrganizationUseCase(_repository);
     try {
       await useCase(event.organization.uuid);
-      emit(OrganizationState.deleted(event.organization));
+      emit(OrganizationDeletedState(event.organization));
     } on PermissionException catch (e) {
-      emit(OrganizationState.permissionFailure(e.message));
+      emit(OrganizationPermissionFailureState(e.message));
     }
   }
 }
