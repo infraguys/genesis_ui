@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_domain/entities/status.dart';
 
 final class GetOrganizationsParams {
-  GetOrganizationsParams({
+  const GetOrganizationsParams({
     this.name,
     this.description,
     this.createdAt,
