@@ -62,7 +62,7 @@ class _MyAppState extends State<App> {
 }
 
 class RestartWidget extends StatefulWidget {
-  const RestartWidget({super.key, required this.child});
+  const RestartWidget({required this.child, super.key});
 
   final Widget child;
 

@@ -5,7 +5,9 @@ import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_
 import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
 
 class _MainView extends StatelessWidget {
-  const _MainView({super.key});
+  const _MainView({
+    super.key, // ignore: unused_element_parameter
+  });
 
   @override
   Widget build(context) {

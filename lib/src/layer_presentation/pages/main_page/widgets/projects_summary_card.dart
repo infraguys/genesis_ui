@@ -38,6 +38,5 @@ class ProjectsSummaryCard extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

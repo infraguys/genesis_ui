@@ -91,8 +91,6 @@ class DiContainer extends StatelessWidget {
           RepositoryProvider<IProjectsRepository>(
             create: (context) {
               final projectsApi = ProjectsApi(context.read<RestClient>());
-              final roleBindingApi = RoleBindingsApi(context.read<RestClient>());
-              final roleApi = RolesApi(context.read<RestClient>());
               return ProjectsRepository(projectsApi);
             },
           ),
