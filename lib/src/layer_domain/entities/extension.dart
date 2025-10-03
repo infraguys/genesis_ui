@@ -1,5 +1,7 @@
-final class Extension {
-  Extension({
+import 'package:equatable/equatable.dart';
+
+final class Extension extends Equatable {
+  const Extension({
     required this.uuid,
     required this.name,
     required this.description,
@@ -20,6 +22,9 @@ final class Extension {
   final String version;
   final String installType;
   final String link;
+
+  @override
+  List<Object?> get props => [uuid, name, description, createdAt, updatedAt, status, version, installType, link];
 }
 
 extension type ExtensionUUID(String value) {
