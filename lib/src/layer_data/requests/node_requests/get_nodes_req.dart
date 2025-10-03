@@ -10,7 +10,13 @@ final class GetNodesReq implements PathEncodable, QueryEncodable {
 
   @override
   Map<String, dynamic> toQuery() {
-    return {};
+    // TODO(Koretsky): Добавить параметров
+    return {
+      'uuid': ?_params.uuid,
+      'name': ?_params.name,
+      'created_at': ?_params.createdAt?.toIso8601String(),
+      'updated_at': ?_params.updatedAt?.toIso8601String(),
+    };
   }
 
   @override
