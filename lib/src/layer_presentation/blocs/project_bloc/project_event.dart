@@ -11,7 +11,7 @@ sealed class ProjectEvent {
     required List<Role> roles,
   }) = _Create;
 
-  factory ProjectEvent.delete(ProjectUUID projectUuid) = _Delete;
+  factory ProjectEvent.delete(Project project) = _Delete;
 
   factory ProjectEvent.update({
     required ProjectUUID uuid,
@@ -39,9 +39,9 @@ final class _Create implements ProjectEvent {
 }
 
 final class _Delete implements ProjectEvent {
-  _Delete(this.uuid);
+  _Delete(this.project);
 
-  final ProjectUUID uuid;
+  final Project project;
 }
 
 final class _Update implements ProjectEvent {
