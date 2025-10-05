@@ -476,6 +476,12 @@ abstract class AppLocalizations {
   /// **'Nodes'**
   String get nodes;
 
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard: {uuid}'**
+  String copiedToClipboard(String uuid);
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:

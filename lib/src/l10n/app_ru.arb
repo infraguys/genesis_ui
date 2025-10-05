@@ -61,6 +61,14 @@
   "requiredField": "Обязательное поле",
   "search": "Поиск",
   "nodes": "Ноды",
+  "copiedToClipboard": "Скопировано в буфер обмена: {uuid}",
+  "@copiedToClipboard": {
+    "placeholders": {
+      "uuid": {
+        "type": "String"
+      }
+    }
+  },
   "deleteRole": "Удалить роль {name}?",
   "@deleteRole": {
     "placeholders": {

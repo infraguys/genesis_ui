@@ -64,6 +64,14 @@
   "requiredField": "This field is required",
   "search": "Search",
   "nodes": "Nodes",
+  "copiedToClipboard": "Copied to clipboard: {uuid}",
+  "@copiedToClipboard": {
+    "placeholders": {
+      "uuid": {
+        "type": "String"
+      }
+    }
+  },
   "deleteRole": "Delete role {name}?",
   "@deleteRole": {
     "placeholders": {
