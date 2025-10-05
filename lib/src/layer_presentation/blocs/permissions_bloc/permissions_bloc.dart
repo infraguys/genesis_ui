@@ -8,7 +8,7 @@ part 'permissions_event.dart';
 part 'permissions_state.dart';
 
 class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
-  PermissionsBloc(this._repository) : super(PermissionsState.initial()) {
+  PermissionsBloc(this._repository) : super(PermissionsInitialState()) {
     on(_getPermissions);
     on(_onSearchPermissions);
     add(PermissionsEvent.getPermissions());
@@ -18,9 +18,9 @@ class PermissionsBloc extends Bloc<PermissionsEvent, PermissionsState> {
 
   Future<void> _getPermissions(_GetPermissions event, Emitter<PermissionsState> emit) async {
     final useCase = GetPermissionsUseCases(_repository);
-    emit(PermissionsState.loading());
+    emit(PermissionsLoadingState());
     final permissions = await useCase(event.params);
-    emit(PermissionsState.loaded(permissions: permissions));
+    emit(PermissionsLoadedState(permissions: permissions));
   }
 
   Future<void> _onSearchPermissions(_SearchPermissions event, Emitter<PermissionsState> emit) async {

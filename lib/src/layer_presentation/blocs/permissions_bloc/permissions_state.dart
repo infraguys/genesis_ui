@@ -1,12 +1,6 @@
 part of 'permissions_bloc.dart';
 
-sealed class PermissionsState {
-  factory PermissionsState.initial() = PermissionsInitialState;
-
-  factory PermissionsState.loading() = PermissionsLoadingState;
-
-  factory PermissionsState.loaded({required List<Permission> permissions, String query}) = PermissionsLoadedState;
-}
+sealed class PermissionsState {}
 
 final class PermissionsInitialState implements PermissionsState {}
 
