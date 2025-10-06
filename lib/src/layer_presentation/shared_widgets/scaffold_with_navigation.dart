@@ -5,6 +5,7 @@ import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/theming/palette.dart';
 import 'package:go_router/go_router.dart';
@@ -17,31 +18,6 @@ class ScaffoldWithNavigation extends StatelessWidget {
   @override
   Widget build(context) {
     return Scaffold(
-      // appBar: AppBar(
-      //
-      //   backgroundColor: Colors.green,
-      //   actions: [
-      //     PopupMenuButton<void>(
-      //       itemBuilder: (context) => [
-      //         PopupMenuItem(
-      //           child: const Text('Notification'),
-      //           onTap: () {
-      //             // Sign out logic
-      //           },
-      //         ),
-      //       ],
-      //       child: const Icon(Icons.notifications_none_outlined),
-      //     ),
-      //     const SizedBox(width: 24),
-      //     MeAppbarWidget(),
-      //   ],
-      // ),
-      // drawer: NavigationDrawer(
-      //   tilePadding: EdgeInsetsGeometry.zero,
-      //   selectedIndex: navigationShell.currentIndex,
-      //   onDestinationSelected: (index) {},
-      //   children: [],
-      // ),
       body: Row(
         children: [
           Drawer(
@@ -53,42 +29,38 @@ class ScaffoldWithNavigation extends StatelessWidget {
                 spacing: 4.0,
                 children: [
                   SizedBox(
-                    child: Container(
-                      // margin: EdgeInsets.zero,
-                      // padding: EdgeInsets.zero,
-                      child: Column(
-                        spacing: 16.0,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset('assets/images/purple_logo.svg'),
-                          LayoutBuilder(
-                            builder: (context, constraints) {
-                              return DropdownMenu(
-                                initialSelection: 'ru',
-                                width: double.infinity,
-                                menuStyle: MenuStyle(
-                                  fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
+                    child: Column(
+                      spacing: 16.0,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset('assets/images/purple_logo.svg'),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            return DropdownMenu(
+                              initialSelection: 'ru',
+                              width: double.infinity,
+                              menuStyle: MenuStyle(
+                                fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
+                              ),
+                              dropdownMenuEntries: [
+                                DropdownMenuEntry(
+                                  label: 'Dns-core',
+                                  value: 'en',
+                                  leadingIcon: Icon(Icons.language),
                                 ),
-                                dropdownMenuEntries: [
-                                  DropdownMenuEntry(
-                                    label: 'Dns-core',
-                                    value: 'en',
-                                    leadingIcon: Icon(Icons.language),
-                                  ),
-                                  DropdownMenuEntry(
-                                    label: 'Compute-core',
-                                    value: 'ru',
-                                    leadingIcon: Icon(Icons.language),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                                DropdownMenuEntry(
+                                  label: 'Compute-core',
+                                  value: 'ru',
+                                  leadingIcon: Icon(Icons.language),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  Divider(color: Palette.color1B1B1D),
+                  Divider(color: Palette.color1B1B1D, thickness: 1),
                   ListTile(
                     leading: Icon(Icons.dashboard),
                     selected: GoRouterState.of(context).matchedLocation == '/',
@@ -170,29 +142,18 @@ class ScaffoldWithNavigation extends StatelessWidget {
           ),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 1.0),
                   child: AppBar(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        // bottomLeft: Radius.circular(8.0),
-                        // bottomRight: Radius.circular(8.0),
-                      ),
-                    ),
-                    // leading: Padding(
-                    //   padding: const EdgeInsets.only(left: 20.0),
-                    //   child: SvgPicture.asset('assets/images/purple_logo.svg'),
-                    // ),
                     actions: [
                       const Icon(Icons.notifications_none_outlined, color: Palette.colorAFA8A4),
-                      // const SizedBox(width: 16),
-                      // MeAppbarWidget(),
+                      const SizedBox(width: 16),
+                      MeAppbarWidget(),
                     ],
                   ),
                 ),
-                Expanded(child: Container(child: navigationShell)),
+                Expanded(child: navigationShell),
               ],
             ),
           ),
