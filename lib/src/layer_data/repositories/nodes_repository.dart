@@ -3,14 +3,14 @@ import 'package:genesis/src/layer_data/requests/node_requests/delete_node_req.da
 import 'package:genesis/src/layer_data/requests/node_requests/get_node_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/get_nodes_req.dart';
 import 'package:genesis/src/layer_data/requests/node_requests/update_node_req.dart';
-import 'package:genesis/src/layer_data/source/remote/nodes_api/i_nodes_api.dart';
+import 'package:genesis/src/layer_data/source/remote/nodes_api/nodes_api.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
 
 final class NodesRepository implements INodesRepository {
   NodesRepository(this._client);
 
-  final INodesApi _client;
+  final NodesApi _client;
 
   @override
   Future<Node> createNode(params) async {
