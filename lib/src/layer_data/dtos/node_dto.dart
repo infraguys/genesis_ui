@@ -23,6 +23,7 @@ final class NodeDto implements IDto<Node> {
     required this.image,
     required this.status,
     required this.nodeType,
+    required this.ipv4,
   });
 
   factory NodeDto.fromJson(Map<String, dynamic> json) => _$NodeDtoFromJson(json);
@@ -41,6 +42,12 @@ final class NodeDto implements IDto<Node> {
   final String image;
   final _StatusDto status;
   final NodeTypeDto nodeType;
+  @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork, defaultValue: '')
+  final String ipv4;
+
+  static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
+    return defaultNetwork?['ipv4'] as String;
+  }
 
   @override
   Node toEntity() {
@@ -57,6 +64,7 @@ final class NodeDto implements IDto<Node> {
       image: image,
       status: status.toNodeStatus(),
       nodeType: nodeType.toDomain(),
+      ipv4: ipv4,
     );
   }
 }

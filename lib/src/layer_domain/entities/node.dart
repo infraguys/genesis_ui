@@ -19,6 +19,7 @@ class Node extends Equatable {
     required this.image,
     required this.status,
     required this.nodeType,
+    required this.ipv4,
   });
 
   final NodeUUID uuid;
@@ -33,6 +34,7 @@ class Node extends Equatable {
   final String image;
   final NodeStatus status;
   final NodeType nodeType;
+  final String ipv4;
 
   @override
   List<Object?> get props => [
@@ -48,6 +50,7 @@ class Node extends Equatable {
     image,
     status,
     nodeType,
+    ipv4,
   ];
 }
 

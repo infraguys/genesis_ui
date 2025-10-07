@@ -41,6 +41,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
   late int _rootDiskSize;
   late String _image;
   late NodeType _nodeType;
+  late String _ipv4;
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
             _rootDiskSize = node.rootDiskSize;
             _image = node.image;
             _nodeType = node.nodeType;
+            _ipv4 = node.ipv4;
 
           case NodeUpdatedState(:final node):
             _nodeBloc.add(NodeEvent.getNode(widget.nodeUUID));
@@ -199,13 +201,21 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                                   initialValue: _ram.toString(),
                                   decoration: InputDecoration(
                                     hintText: 'ram'.hardcoded,
-                                    helperText: 'ram'.hardcoded,
+                                    helperText: context.$.ramHelperText,
                                   ),
                                   onSaved: (newValue) => _ram = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
+                                ),
+                                TextFormField(
+                                  readOnly: true,
+                                  initialValue: _ipv4,
+                                  decoration: InputDecoration(
+                                    hintText: 'ipV4'.hardcoded,
+                                    helperText: 'ipV4'.hardcoded,
+                                  ),
                                 ),
                                 TextFormField(
                                   initialValue: _description,
