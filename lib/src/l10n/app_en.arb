@@ -65,6 +65,7 @@
   "requiredField": "This field is required",
   "search": "Search",
   "nodes": "Nodes",
+  "dbaas": "DBaaS",
   "copiedToClipboard": "Copied to clipboard: {uuid}",
   "@copiedToClipboard": {
     "placeholders": {

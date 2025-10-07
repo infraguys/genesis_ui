@@ -482,6 +482,12 @@ abstract class AppLocalizations {
   /// **'Nodes'**
   String get nodes;
 
+  /// No description provided for @dbaas.
+  ///
+  /// In en, this message translates to:
+  /// **'DBaaS'**
+  String get dbaas;
+
   /// No description provided for @copiedToClipboard.
   ///
   /// In en, this message translates to:
