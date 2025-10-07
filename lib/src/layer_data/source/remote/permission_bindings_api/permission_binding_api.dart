@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/permission_binding_dto.dart';
+import 'package:genesis/src/layer_data/requests/permission_binding_requests/create_permission_binding_req.dart';
+import 'package:genesis/src/layer_data/requests/permission_binding_requests/delete_permission_binding_req.dart';
 import 'package:genesis/src/layer_data/requests/permission_binding_requests/get_permission_bindings_req.dart';
-import 'package:genesis/src/layer_data/source/remote/permission_bindings_api/i_permission_bindings_api.dart';
 
-final class PermissionBindingsApi implements IPermissionBindingsApi {
+final class PermissionBindingsApi {
   PermissionBindingsApi(this._client);
 
   final RestClient _client;
 
-  @override
   Future<List<PermissionBindingDto>> getPermissionBindings(GetPermissionBindingsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
@@ -28,8 +28,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
     }
   }
 
-  @override
-  Future<PermissionBindingDto> createPermissionBinding(req) async {
+  Future<PermissionBindingDto> createPermissionBinding(CreatePermissionBindingReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
@@ -41,8 +40,7 @@ final class PermissionBindingsApi implements IPermissionBindingsApi {
     }
   }
 
-  @override
-  Future<void> deletePermissionBinding(req) async {
+  Future<void> deletePermissionBinding(DeletePermissionBindingReq req) async {
     try {
       await _client.delete<Map<String, dynamic>>(req.toPath());
     } on DioException catch (e) {
