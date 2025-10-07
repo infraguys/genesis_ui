@@ -5,8 +5,6 @@ class _DeleteUserButton extends StatelessWidget {
 
   final User user;
 
-  // visible: permUserNames.canDeleteAll || (permUserNames.canDeleteOwn && context.isMe(user.uuid)),
-
   @override
   Widget build(BuildContext context) {
     return DeleteElevatedButton(
