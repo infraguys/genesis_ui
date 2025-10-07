@@ -2,16 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/organization_dto.dart';
+import 'package:genesis/src/layer_data/requests/organization_requests/create_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organization_requests/delete_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organization_requests/edit_organization_req.dart';
+import 'package:genesis/src/layer_data/requests/organization_requests/get_organization_req.dart';
 import 'package:genesis/src/layer_data/requests/organization_requests/get_organizations_req.dart';
-import 'package:genesis/src/layer_data/source/remote/organizations_api/i_organizations_api.dart';
 
-final class OrganizationsApi implements IOrganizationsApi {
+final class OrganizationsApi {
   OrganizationsApi(this._client);
 
   final RestClient _client;
 
-  @override
-  Future<OrganizationDto> createOrganization(req) async {
+  Future<OrganizationDto> createOrganization(CreateOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
@@ -23,8 +25,7 @@ final class OrganizationsApi implements IOrganizationsApi {
     }
   }
 
-  @override
-  Future<void> deleteOrganization(req) async {
+  Future<void> deleteOrganization(DeleteOrganizationReq req) async {
     try {
       await _client.delete<void>(
         req.toPath(),
@@ -34,7 +35,6 @@ final class OrganizationsApi implements IOrganizationsApi {
     }
   }
 
-  @override
   Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
@@ -51,8 +51,7 @@ final class OrganizationsApi implements IOrganizationsApi {
     }
   }
 
-  @override
-  Future<OrganizationDto> editOrganization(req) async {
+  Future<OrganizationDto> updateOrganization(UpdateOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
@@ -64,8 +63,7 @@ final class OrganizationsApi implements IOrganizationsApi {
     }
   }
 
-  @override
-  Future<OrganizationDto> getOrganization(req) async {
+  Future<OrganizationDto> getOrganization(GetOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
