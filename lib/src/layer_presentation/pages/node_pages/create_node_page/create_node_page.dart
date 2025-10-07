@@ -29,9 +29,9 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
   var _name = '';
   var _description = '';
   var _cores = 1;
-  var _ram = 1;
+  var _ram = 1024;
   var _rootDiskSize = 15;
-  var _image = '';
+  var _image = 'http://10.20.0.1:8081/genesis-base/0.2.1/genesis-base.raw.gz';
   var _nodeType = NodeType.vm;
 
   @override
@@ -162,7 +162,10 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: InputDecoration(hintText: 'ram'.hardcoded, helperText: 'Ram'),
+                          decoration: InputDecoration(
+                            hintText: 'ram'.hardcoded,
+                            helperText: context.$.ramHelperText,
+                          ),
                           onSaved: (newValue) => _ram = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,

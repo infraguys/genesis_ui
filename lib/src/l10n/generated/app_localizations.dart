@@ -317,8 +317,14 @@ abstract class AppLocalizations {
   /// No description provided for @rootDiskSize.
   ///
   /// In en, this message translates to:
-  /// **'Root disk size'**
+  /// **'Root disk size (GB)'**
   String get rootDiskSize;
+
+  /// No description provided for @ramHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Ram (MB)'**
+  String get ramHelperText;
 
   /// No description provided for @nodeType.
   ///
