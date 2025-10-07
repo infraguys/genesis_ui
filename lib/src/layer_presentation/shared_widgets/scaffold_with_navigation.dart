@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -36,24 +39,33 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         SvgPicture.asset('assets/images/purple_logo.svg'),
                         LayoutBuilder(
                           builder: (context, constraints) {
-                            return DropdownMenu(
-                              initialSelection: 'ru',
-                              width: double.infinity,
-                              menuStyle: MenuStyle(
-                                fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
-                              ),
-                              dropdownMenuEntries: [
-                                DropdownMenuEntry(
-                                  label: 'Dns-core',
-                                  value: 'en',
-                                  leadingIcon: Icon(Icons.language),
-                                ),
-                                DropdownMenuEntry(
-                                  label: 'Compute-core',
-                                  value: 'ru',
-                                  leadingIcon: Icon(Icons.language),
-                                ),
-                              ],
+                            return BlocBuilder<ProjectsBloc, ProjectsState>(
+                              builder: (context, state) {
+                                late final List<Project> projects;
+                                if (state is! ProjectsLoadedState) {
+                                  projects = List.empty();
+                                } else {
+                                  projects = state.projects;
+                                }
+                                return DropdownMenu(
+                                  enableSearch: false,
+                                  requestFocusOnTap: false,
+                                  initialSelection: projects.isNotEmpty ? projects.first.uuid : null,
+                                  width: double.infinity,
+                                  menuStyle: MenuStyle(
+                                    fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
+                                  ),
+                                  dropdownMenuEntries: projects.map(
+                                    (e) {
+                                      return DropdownMenuEntry(
+                                        label: e.name,
+                                        value: e.uuid,
+                                        leadingIcon: Icon(Icons.folder_copy_rounded, color: Palette.colorAFA8A4),
+                                      );
+                                    },
+                                  ).toList(),
+                                );
+                              },
                             );
                           },
                         ),
@@ -153,7 +165,12 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(child: navigationShell),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0, vertical: 8.0),
+                    child: navigationShell,
+                  ),
+                ),
               ],
             ),
           ),
