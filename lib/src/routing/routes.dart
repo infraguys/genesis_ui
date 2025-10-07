@@ -42,4 +42,7 @@ enum AppRoutes {
   /// elements
   installedExtensions,
   allExtensions,
+
+  /// DBaaS
+
 }
