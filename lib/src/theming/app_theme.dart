@@ -7,7 +7,6 @@ part 'appbar_theme_data.dart';
 part 'drawer_theme_data.dart';
 part 'elevated_button_theme_data.dart';
 part 'input_decoration_theme.dart';
-part 'navigation_drawer_theme_data.dart';
 part 'text_theme.dart';
 
 class AppTheme {
@@ -17,7 +16,6 @@ class AppTheme {
       textTheme: _lightTextTheme,
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
-      navigationDrawerTheme: _navigationDrawerThemeData,
       drawerTheme: _drawerThemeData,
       cardTheme: CardThemeData(color: Colors.white),
       inputDecorationTheme: _inputDecorationThemeData,
@@ -68,7 +66,6 @@ class AppTheme {
       textTheme: _darkTextTheme,
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
-      navigationDrawerTheme: _navigationDrawerThemeData,
       drawerTheme: _drawerThemeData,
       cardTheme: CardThemeData(
         color: Palette.color333333,
