@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
@@ -17,12 +16,15 @@ class ChangeUserPasswordDialog extends StatefulWidget {
 
 class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
   final _formKey = GlobalKey<FormState>();
-  final _controllers = _ChangePasswordFormControllers();
+  late final UserBloc _userBloc;
+
+  var _oldPassword = '';
+  var _newPassword = '';
 
   @override
-  void dispose() {
-    _controllers.dispose();
-    super.dispose();
+  void initState() {
+    _userBloc = context.read<UserBloc>();
+    super.initState();
   }
 
   @override
@@ -36,7 +38,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
           children: [
             Text(context.$.changePassword),
             TextFormField(
-              controller: _controllers.oldPassword,
+              onSaved: (newValue) => _oldPassword = newValue!,
               autovalidateMode: AutovalidateMode.onUnfocus,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(hintText: context.$.oldPassword),
@@ -49,7 +51,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
               },
             ),
             TextFormField(
-              controller: _controllers.newPassword,
+              onSaved: (newValue) => _newPassword = newValue!,
               autovalidateMode: AutovalidateMode.onUnfocus,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(hintText: context.$.newPassword),
@@ -66,38 +68,24 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
       ),
       actions: [
         TextButton(onPressed: context.pop, child: Text(context.$.cancel)),
-        ListenableBuilder(
-          listenable: Listenable.merge(_controllers.all),
-          builder: (context, _) {
-            return TextButton(
-              onPressed: _controllers.allFilled ? () => changePassword(context) : null,
-              child: Text(context.$.ok),
-            );
-          },
+        TextButton(
+          onPressed: changePassword,
+          child: Text(context.$.ok),
         ),
       ],
     );
   }
 
-  void changePassword(BuildContext context) {
-    final userBloc = context.read<UserBloc>();
+  void changePassword() {
     final user = context.read<User>();
-    userBloc.add(
+    _userBloc.add(
       UserEvent.changePassword(
         ChangeUserPasswordParams(
           uuidUUID: user.uuid,
-          oldPassword: _controllers.oldPassword.text,
-          newPassword: _controllers.newPassword.text,
+          oldPassword: _oldPassword,
+          newPassword: _newPassword,
         ),
       ),
     );
   }
-}
-
-class _ChangePasswordFormControllers extends FormControllersManager {
-  final oldPassword = TextEditingController();
-  final newPassword = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [oldPassword, newPassword];
 }
