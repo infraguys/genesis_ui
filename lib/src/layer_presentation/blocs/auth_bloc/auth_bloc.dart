@@ -17,7 +17,7 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._authRepository) : super(AuthState.unauthenticated()) {
+  AuthBloc(this._authRepository) : super(UnauthenticatedAuthState()) {
     on(_onSignIn);
     on(_onSignOut);
     on(_onRestoreSession);
@@ -31,11 +31,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final authSession = await useCase(GetTokenParams(username: event.username, password: event.password));
-      emit(AuthState.authenticated(authSession));
+      emit(AuthenticatedAuthState(authSession));
     } on ApiException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on Exception catch (_) {
       rethrow;
     }
@@ -44,21 +44,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignOut(_SingOut _, Emitter<AuthState> emit) async {
     final useCase = SignOutUseCase(_authRepository);
     await useCase();
-    emit(AuthState.unauthenticated());
+    emit(UnauthenticatedAuthState());
   }
 
   Future<void> _onRestoreSession(_RestoreSession event, Emitter<AuthState> emit) async {
     final useCase = RestoreSessionUseCase(_authRepository);
-    emit(AuthState.loading());
+    emit(AuthStateLoading());
     try {
       final authSession = await useCase();
-      emit(AuthState.authenticated(authSession));
+      emit(AuthenticatedAuthState(authSession));
     } on NoTokenException catch (_) {
-      emit(AuthState.unauthenticated());
+      emit(UnauthenticatedAuthState());
     } on ApiException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on Exception catch (_) {
       rethrow;
     }
@@ -69,11 +69,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final authSession = await useCase(event._params);
-      emit(AuthState.authenticated(authSession));
+      emit(AuthenticatedAuthState(authSession));
     } on ApiException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {
-      emit(AuthState.failure(e.message));
+      emit(AuthStateFailure(e.message));
     } on Exception catch (_) {
       rethrow;
     }

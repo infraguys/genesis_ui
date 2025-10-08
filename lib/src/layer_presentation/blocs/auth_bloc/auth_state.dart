@@ -1,14 +1,6 @@
 part of 'auth_bloc.dart';
 
-sealed class AuthState {
-  factory AuthState.authenticated(AuthSession session) = AuthenticatedAuthState;
-
-  factory AuthState.unauthenticated() = UnauthenticatedAuthState;
-
-  factory AuthState.loading() = AuthStateLoading;
-
-  factory AuthState.failure(String message) = AuthStateFailure;
-}
+sealed class AuthState {}
 
 final class AuthStateLoading implements AuthState {}
 
