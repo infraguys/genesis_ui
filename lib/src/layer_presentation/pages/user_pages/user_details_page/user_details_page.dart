@@ -63,7 +63,6 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
     return BlocListener<UserBloc, UserState>(
       listenWhen: (_, current) => current is! UserLoadingState,
       listener: (context, state) {
-        final navigator = GoRouter.of(context);
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
@@ -82,7 +81,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
           case UserDeletedState(:final user):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(user.username)));
             context.read<UsersBloc>().add(UsersEvent.getUsers());
-            navigator.pop();
+            context.pop();
 
           case UserPermissionFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
