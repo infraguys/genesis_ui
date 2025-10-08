@@ -20,6 +20,13 @@ final class TokenDao {
     await _client.writeSecure(key: _tokenKey, value: value);
   }
 
+  Future<void> writeAllTokens({required String accessToken, required String refreshToken}) async {
+    await Future.wait([
+      writeToken(accessToken),
+      writeRefreshToken(refreshToken),
+    ]);
+  }
+
   // Refresh token   ----------
 
   Future<void> writeRefreshToken(String value) async {
