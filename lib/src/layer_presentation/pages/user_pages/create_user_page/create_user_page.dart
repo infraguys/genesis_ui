@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
@@ -22,8 +20,13 @@ class _CreateUserView extends StatefulWidget {
 
 class _CreateUserViewState extends State<_CreateUserView> {
   final _formKey = GlobalKey<FormState>();
-  final _formController = _FormController();
   late final UserBloc _userBloc;
+
+  var _username = '';
+  var _firstName = '';
+  var _lastName = '';
+  var _email = '';
+  var _password = '';
 
   @override
   void initState() {
@@ -39,17 +42,17 @@ class _CreateUserViewState extends State<_CreateUserView> {
         _ => false,
       },
       listener: (context, state) {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
           case UserCreatedState():
             context.read<UsersBloc>().add(UsersEvent.getUsers());
-            scaffoldMessenger.showSnackBar(
+            messenger.showSnackBar(
               AppSnackBar.success(context.$.msgUserCreated(state.user.username)),
             );
             context.pop();
           case UserFailureState(:final message):
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
@@ -79,41 +82,41 @@ class _CreateUserViewState extends State<_CreateUserView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 24,
                       children: [
-                        AppTextInput(
-                          controller: _formController.username,
-                          hintText: context.$.username,
+                        TextFormField(
+                          decoration: InputDecoration(hintText: context.$.username),
+                          onSaved: (newValue) => _username = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        AppTextInput(
-                          controller: _formController.firstName,
-                          hintText: context.$.firstName,
+                        TextFormField(
+                          decoration: InputDecoration(hintText: context.$.firstName),
+                          onSaved: (newValue) => _firstName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        AppTextInput(
-                          controller: _formController.lastName,
-                          hintText: context.$.lastName,
+                        TextFormField(
+                          decoration: InputDecoration(hintText: context.$.lastName),
+                          onSaved: (newValue) => _lastName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        AppTextInput(
-                          controller: _formController.email,
-                          hintText: context.$.email,
+                        TextFormField(
+                          decoration: InputDecoration(hintText: context.$.email),
+                          onSaved: (newValue) => _email = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        AppTextInput(
-                          controller: _formController.password,
-                          hintText: context.$.password,
+                        TextFormField(
+                          decoration: InputDecoration(hintText: context.$.password),
+                          onSaved: (newValue) => _password = newValue!,
                           obscureText: true,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -134,30 +137,20 @@ class _CreateUserViewState extends State<_CreateUserView> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _userBloc.add(
         UserEvent.createUser(
           CreateUserParams(
-            username: _formController.username.text,
-            firstName: _formController.firstName.text,
-            lastName: _formController.lastName.text,
-            email: _formController.email.text,
-            password: _formController.password.text,
+            username: _username,
+            firstName: _firstName,
+            lastName: _lastName,
+            email: _email,
+            password: _password,
           ),
         ),
       );
     }
   }
-}
-
-class _FormController extends FormControllersManager {
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
-  final email = TextEditingController();
-  final username = TextEditingController();
-  final password = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [firstName, lastName, email, username, password];
 }
 
 class CreateUserPage extends StatelessWidget {
