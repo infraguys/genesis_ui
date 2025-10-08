@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/params/roles/update_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
@@ -15,7 +14,6 @@ import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
@@ -41,7 +39,8 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
   final _formKey = GlobalKey<FormState>();
   late RoleBloc _roleBloc;
 
-  late _ControllersManager _controllersManager;
+  late String _name;
+  late String _description;
 
   @override
   void initState() {
@@ -50,22 +49,14 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
   }
 
   @override
-  void dispose() {
-    _controllersManager.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<RoleBloc, RoleState>(
         listener: (context, state) {
-          final navigator = GoRouter.of(context);
           final messenger = ScaffoldMessenger.of(context);
 
           switch (state) {
             case RoleLoadedState(:final role):
-              _controllersManager = _ControllersManager(role);
             case RoleUpdatedState(:final role):
               context.read<RoleBloc>().add(RoleEvent.get(widget.uuid));
               messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleUpdated(role.name)));
@@ -73,7 +64,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
             case RoleDeletedState(:final role):
               messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleDeleted(role.name)));
               context.read<RolesBloc>().add(RolesEvent.getRoles());
-              navigator.pop();
+              context.pop();
             default:
           }
 
@@ -111,9 +102,9 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                   children: [
                     SizedBox(
                       width: 400,
-                      child: AppTextInput(
-                        controller: _controllersManager.nameController,
-                        hintText: context.$.name,
+                      child: TextFormField(
+                        decoration: InputDecoration(hintText: context.$.name),
+                        onSaved: (newValue) => _name = newValue!,
                         validator: (value) => switch (value) {
                           _ when value!.isEmpty => context.$.requiredField,
                           _ => null,
@@ -122,9 +113,9 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                     ),
                     SizedBox(
                       width: 400,
-                      child: AppTextInput(
-                        controller: _controllersManager.descriptionController,
-                        hintText: context.$.description,
+                      child: TextFormField(
+                        decoration: InputDecoration(hintText: context.$.description),
+                        onSaved: (newValue) => _description = newValue!,
                       ),
                     ),
                   ],
@@ -165,27 +156,19 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
-      final params = UpdateRoleParams(
-        uuid: widget.uuid,
-        name: _controllersManager.nameController.text,
-        description: _controllersManager.descriptionController.text,
-        permissions: context.read<PermissionsSelectionBloc>().state,
+      _formKey.currentState!.save();
+      _roleBloc.add(
+        RoleEvent.update(
+          UpdateRoleParams(
+            uuid: widget.uuid,
+            name: _name,
+            description: _description,
+            permissions: context.read<PermissionsSelectionBloc>().state,
+          ),
+        ),
       );
-      _roleBloc.add(RoleEvent.update(params));
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  _ControllersManager(Role role)
-    : nameController = TextEditingController(text: role.name),
-      descriptionController = TextEditingController(text: role.description);
-
-  late final TextEditingController nameController;
-  late final TextEditingController descriptionController;
-
-  @override
-  List<TextEditingController> get all => [nameController, descriptionController];
 }
 
 class RoleDetailsPage extends StatelessWidget {
