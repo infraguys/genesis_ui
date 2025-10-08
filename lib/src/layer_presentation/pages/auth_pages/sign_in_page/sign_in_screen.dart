@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,11 +18,14 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
-  late final _ControllerManager _controllerManager;
+  late final AuthBloc _authBloc;
+
+  var _username = '';
+  var _password = '';
 
   @override
   void initState() {
-    _controllerManager = _ControllerManager();
+    _authBloc = context.read<AuthBloc>();
     super.initState();
   }
 
@@ -32,12 +35,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthStateFailure) {
-          final snack = SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(state.message),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
+        final messenger = ScaffoldMessenger.of(context);
+
+        switch (state) {
+          case AuthStateFailure(:final message):
+            messenger.showSnackBar(AppSnackBar.failure(message));
+          default:
         }
       },
       child: Scaffold(
@@ -63,44 +66,35 @@ class _SignInScreenState extends State<SignInScreen> {
                     textAlign: TextAlign.center,
                   ),
                   TextFormField(
-                    controller: _controllerManager.usernameController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: 'Login'.hardcoded),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'required'.hardcoded;
-                      }
-                      return null;
+                    onSaved: (newValue) => _username = newValue!,
+                    validator: (value) => switch (value) {
+                      _ when value!.isEmpty => context.$.requiredField,
+                      _ => null,
                     },
                   ),
                   TextFormField(
-                    controller: _controllerManager.passwordController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(hintText: context.$.password),
                     obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'required'.hardcoded;
-                      }
-                      return null;
+                    onSaved: (newValue) => _password = newValue!,
+                    validator: (value) => switch (value) {
+                      _ when value!.isEmpty => context.$.requiredField,
+                      _ => null,
                     },
                   ),
-                  ListenableBuilder(
-                    listenable: Listenable.merge(_controllerManager.all),
-                    builder: (context, _) {
-                      return ElevatedButton(
-                        onPressed: _controllerManager.allFilled ? () => signIn(context) : null,
-                        child: Text(context.$.signIn),
-                      );
-                    },
+                  ElevatedButton(
+                    onPressed: signIn,
+                    child: Text(context.$.signIn),
                   ),
                   ElevatedButton(
                     onPressed: () async {
                       final username = await context.pushNamed<String>(AppRoutes.signUp.name);
                       if (username != null) {
-                        _controllerManager.usernameController.text = username;
+                        _username = username;
                       }
                     },
                     child: Text(context.$.signUp),
@@ -114,24 +108,12 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void signIn(BuildContext context) {
+  void signIn() {
     if (_formKey.currentState!.validate()) {
-      final event = AuthEvent.signIn(
-        username: _controllerManager.usernameController.text,
-        password: _controllerManager.passwordController.text,
+      _formKey.currentState!.save();
+      _authBloc.add(
+        AuthEvent.signIn(username: _username, password: _password),
       );
-      context.read<AuthBloc>().add(event);
     }
   }
-}
-
-class _ControllerManager extends FormControllersManager {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [
-    usernameController,
-    passwordController,
-  ];
 }
