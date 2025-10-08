@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
@@ -13,7 +12,6 @@ import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart'
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
@@ -30,11 +28,14 @@ class _ProjectDetailsView extends StatefulWidget {
 
 class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
+  late final ProjectBloc _projectBloc;
 
-  late _ControllersManager _controllersManager;
+  late String _name;
+  late String _description;
 
   @override
   void initState() {
+    _projectBloc = context.read<ProjectBloc>();
     context.read<OrganizationsBloc>().add(OrganizationsEvent.getOrganizations());
     context.read<UsersBloc>().add(UsersEvent.getUsers());
     super.initState();
@@ -55,7 +56,8 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
 
           switch (state) {
             case ProjectLoadedState(:final project):
-              _controllersManager = _ControllersManager(project);
+              _name = project.name;
+              _description = project.description;
             case ProjectUpdatedState():
               context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
               scaffoldMessenger.showSnackBar(snack).closed.then((_) => navigator.pop(true));
@@ -82,7 +84,7 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                 ),
                 ButtonsBar(
                   children: [
-                    SaveIconButton(onPressed: () => save(context)),
+                    SaveIconButton(onPressed: save),
                   ],
                 ),
                 LayoutBuilder(
@@ -95,9 +97,12 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                         children: [
                           SizedBox(
                             width: constraints.maxWidth * 0.4,
-                            child: AppTextInput(
-                              controller: _controllersManager.nameController,
-                              hintText: context.$.name,
+                            child: TextFormField(
+                              initialValue: _name,
+                              decoration: InputDecoration(
+                                hintText: context.$.name,
+                              ),
+                              onSaved: (newValue) => _name = newValue!,
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -106,9 +111,12 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                           ),
                           SizedBox(
                             width: constraints.maxWidth * 0.4,
-                            child: AppTextInput(
-                              controller: _controllersManager.descriptionController,
-                              hintText: context.$.description,
+                            child: TextFormField(
+                              initialValue: _description,
+                              decoration: InputDecoration(
+                                hintText: context.$.description,
+                              ),
+                              onSaved: (newValue) => _description = newValue!,
                             ),
                           ),
                         ],
@@ -123,8 +131,8 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                     builder: (context, state) {
                       if (state is OrganizationsLoadedState) {
                         context.read<OrganizationsSelectionBloc>().onSetCheckedFromResponse(
-                            project: project,
-                            organizations: state.organizations,
+                          project: project,
+                          organizations: state.organizations,
                         );
                         return OrganizationsTable(organizations: state.organizations, allowMultiSelect: false);
                       }
@@ -140,30 +148,19 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
     );
   }
 
-  void save(BuildContext context) {
+  void save() {
     if (_formKey.currentState!.validate()) {
-      context.read<ProjectBloc>().add(
+      _formKey.currentState!.save();
+      _projectBloc.add(
         ProjectEvent.update(
           uuid: widget.uuid,
-          name: _controllersManager.nameController.text,
-          description: _controllersManager.descriptionController.text,
+          name: _name,
+          description: _description,
           organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
         ),
       );
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  _ControllersManager(Project project)
-    : nameController = TextEditingController(text: project.name),
-      descriptionController = TextEditingController(text: project.description);
-
-  final TextEditingController nameController;
-  final TextEditingController descriptionController;
-
-  @override
-  List<TextEditingController> get all => [nameController, descriptionController];
 }
 
 class ProjectDetailsPage extends StatelessWidget {
