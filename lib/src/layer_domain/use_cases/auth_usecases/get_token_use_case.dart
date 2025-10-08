@@ -8,6 +8,6 @@ class GetTokenUseCase {
   final IAuthRepository _repo;
 
   Future<AuthSession> call(GetTokenParams params) async {
-    return await _repo.signIn(params);
+    return await _repo.getToken(params);
   }
 }
