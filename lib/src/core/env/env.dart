@@ -13,6 +13,7 @@ abstract class Env {
   static const scope = String.fromEnvironment('scope');
 
   static const apiPrefix = '/api';
+  static const dbaasApiPrefix = '/dbaas-api';
 
   static EnvMode mode = switch (_envString) {
     'stage' => EnvMode.stage,
