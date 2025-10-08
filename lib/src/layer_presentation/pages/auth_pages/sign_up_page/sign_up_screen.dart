@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
@@ -19,19 +18,18 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _formController = _FormController();
   late final UserBloc _userBloc;
+
+  var _username = '';
+  var _firstName = '';
+  var _lastName = '';
+  var _email = '';
+  var _password = '';
 
   @override
   void initState() {
     _userBloc = context.read<UserBloc>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _formController.dispose();
-    super.dispose();
   }
 
   @override
@@ -45,6 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         late SnackBar snack;
 
+        // todo(koretsky): Сделать рефакторинг
         if (state is UserFailureState) {
           snack = AppSnackBar.failure(state.message);
           scaffoldMessenger.showSnackBar(snack);
@@ -77,9 +76,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textAlign: TextAlign.center,
                   ),
                   TextFormField(
-                    controller: _formController.username,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'Username'.hardcoded),
+                    decoration: InputDecoration(hintText: context.$.username),
+                    onSaved: (newValue) => _username = newValue!,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
@@ -88,9 +87,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _formController.firstName,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'First name'.hardcoded),
+                    decoration: InputDecoration(hintText: context.$.firstName),
+                    onSaved: (newValue) => _firstName = newValue!,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
@@ -99,9 +98,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _formController.lastName,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'Last name'),
+                    decoration: InputDecoration(hintText: context.$.lastName),
+                    onSaved: (newValue) => _lastName = newValue!,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
@@ -110,10 +109,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _formController.email,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'E-mail'),
+                    decoration: InputDecoration(hintText: context.$.email),
+                    onSaved: (newValue) => _email = newValue!,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
@@ -122,11 +121,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: _formController.password,
                     autovalidateMode: AutovalidateMode.onUnfocus,
                     style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(hintText: 'password'),
+                    decoration: InputDecoration(hintText: context.$.password),
                     obscureText: true,
+                    onSaved: (newValue) => _password = newValue!,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'required'.hardcoded;
@@ -134,14 +133,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                   ),
-                  ListenableBuilder(
-                    listenable: Listenable.merge(_formController.all),
-                    builder: (context, _) {
-                      return ElevatedButton(
-                        onPressed: _formController.allFilled ? save : null,
-                        child: Text(context.$.signUp),
-                      );
-                    },
+                  ElevatedButton(
+                    onPressed: save,
+                    child: Text(context.$.signUp),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -164,28 +158,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _userBloc.add(
         UserEvent.createUser(
           CreateUserParams(
-            username: _formController.username.text,
-            firstName: _formController.firstName.text,
-            lastName: _formController.lastName.text,
-            email: _formController.email.text,
-            password: _formController.password.text,
+            username: _username,
+            firstName: _firstName,
+            lastName: _lastName,
+            email: _email,
+            password: _password,
           ),
         ),
       );
     }
   }
-}
-
-class _FormController extends FormControllersManager {
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
-  final email = TextEditingController();
-  final username = TextEditingController();
-  final password = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [firstName, lastName, email, username, password];
 }
