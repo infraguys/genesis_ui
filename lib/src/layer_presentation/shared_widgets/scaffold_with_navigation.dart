@@ -6,6 +6,8 @@ import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/layer_domain/params/users/refresh_token_params.dart';
+import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/me_appbar_widget.dart';
@@ -41,12 +43,16 @@ class ScaffoldWithNavigation extends StatelessWidget {
                           builder: (context, constraints) {
                             return BlocBuilder<ProjectsBloc, ProjectsState>(
                               builder: (context, state) {
+                                final bloc = context.read<AuthBloc>();
+                                final authState = bloc.state;
+
                                 late final List<Project> projects;
                                 if (state is! ProjectsLoadedState) {
                                   projects = List.empty();
                                 } else {
                                   projects = state.projects;
                                 }
+                                // final currentProject = projects.firstWhere((element) => scope == element.uuid.value);
                                 return DropdownMenu(
                                   enableSearch: false,
                                   requestFocusOnTap: false,
@@ -55,6 +61,16 @@ class ScaffoldWithNavigation extends StatelessWidget {
                                   menuStyle: MenuStyle(
                                     fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
                                   ),
+                                  onSelected: (value) {
+                                    bloc.add(
+                                      AuthEvent.refreshToken(
+                                        RefreshTokenParams(
+                                          refreshToken: (bloc.state as AuthenticatedAuthState).refreshToken,
+                                          scope: value!.value,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   dropdownMenuEntries: projects.map(
                                     (e) {
                                       return DropdownMenuEntry(
