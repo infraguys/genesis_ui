@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/form_controllers.dart';
 import 'package:genesis/src/layer_domain/params/roles/create_role_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -13,7 +12,6 @@ import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
@@ -33,7 +31,9 @@ class _CreateRoleView extends StatefulWidget {
 class _CreateRoleViewState extends State<_CreateRoleView> {
   final _formKey = GlobalKey<FormState>();
 
-  late _ControllersManager _controllersManager;
+  var _name = '';
+  var _description = '';
+
   late final PermissionsSelectionBloc _permissionsSelectionBloc;
   late final RoleBloc _roleBloc;
 
@@ -42,14 +42,7 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
     _permissionsSelectionBloc = context.read<PermissionsSelectionBloc>();
     _roleBloc = context.read<RoleBloc>();
 
-    _controllersManager = _ControllersManager();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controllersManager.dispose();
-    super.dispose();
   }
 
   @override
@@ -62,13 +55,12 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
         },
         listener: (context, state) {
           final messenger = ScaffoldMessenger.of(context);
-          final navigator = GoRouter.of(context);
 
           switch (state) {
             case RoleCreatedState():
               context.read<RolesBloc>().add(RolesEvent.getRoles());
               messenger.showSnackBar(AppSnackBar.success(context.$.success));
-              navigator.pop();
+              context.pop();
             case RoleFailureState(:final message):
               messenger.showSnackBar(AppSnackBar.failure(message));
             default:
@@ -101,9 +93,9 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
                     children: [
                       SizedBox(
                         width: constraints.maxWidth * 0.4,
-                        child: AppTextInput(
-                          controller: _controllersManager.nameController,
-                          hintText: context.$.name,
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: context.$.name),
+                          onSaved: (newValue) => _name = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
@@ -112,9 +104,9 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
                       ),
                       SizedBox(
                         width: constraints.maxWidth * 0.4,
-                        child: AppTextInput(
-                          controller: _controllersManager.descriptionController,
-                          hintText: context.$.description,
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: context.$.description),
+                          onSaved: (newValue) => _description = newValue!,
                         ),
                       ),
                     ],
@@ -141,25 +133,18 @@ class _CreateRoleViewState extends State<_CreateRoleView> {
 
   void save() {
     if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _roleBloc.add(
         RoleEvent.create(
           CreateRoleParams(
-            name: _controllersManager.nameController.text,
-            description: _controllersManager.descriptionController.text,
+            name: _name,
+            description: _description,
             permissions: _permissionsSelectionBloc.state,
           ),
         ),
       );
     }
   }
-}
-
-class _ControllersManager extends FormControllersManager {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-
-  @override
-  List<TextEditingController> get all => [nameController, descriptionController];
 }
 
 class CreateRolePage extends StatelessWidget {
