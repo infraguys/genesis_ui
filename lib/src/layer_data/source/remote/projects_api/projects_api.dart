@@ -2,15 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/project_dto.dart';
-import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
+import 'package:genesis/src/layer_data/requests/projects/create_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
+import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
 
-final class ProjectsApi implements IProjectsApi {
+final class ProjectsApi {
   ProjectsApi(this._client);
 
   final RestClient _client;
 
-  @override
-  Future<ProjectDto> createProject(req) async {
+  Future<ProjectDto> createProject(CreateProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
@@ -22,8 +25,7 @@ final class ProjectsApi implements IProjectsApi {
     }
   }
 
-  @override
-  Future<void> deleteProject(req) async {
+  Future<void> deleteProject(DeleteProjectReq req) async {
     try {
       await _client.delete<void>(
         req.toPath(),
@@ -33,8 +35,7 @@ final class ProjectsApi implements IProjectsApi {
     }
   }
 
-  @override
-  Future<ProjectDto> editProject(req) async {
+  Future<ProjectDto> editProject(EditProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
@@ -46,8 +47,7 @@ final class ProjectsApi implements IProjectsApi {
     }
   }
 
-  @override
-  Future<ProjectDto> getProject(req) async {
+  Future<ProjectDto> getProject(GetProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
@@ -58,8 +58,7 @@ final class ProjectsApi implements IProjectsApi {
     }
   }
 
-  @override
-  Future<List<ProjectDto>> getProjects(req) async {
+  Future<List<ProjectDto>> getProjects(GetProjectsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),

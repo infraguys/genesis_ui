@@ -4,17 +4,17 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/role_dto.dart';
 import 'package:genesis/src/layer_data/requests/roles/create_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
+import 'package:genesis/src/layer_data/requests/roles/get_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
-import 'package:genesis/src/layer_data/source/remote/roles_api/i_roles_api.dart';
+import 'package:genesis/src/layer_data/requests/roles/update_role_req.dart';
 
-final class RolesApi implements IRolesApi {
+final class RolesApi {
   RolesApi(this._client);
 
   final RestClient _client;
 
   static const _userUrl = '/v1/iam/users/';
 
-  @override
   Future<List<RoleDto>> getRolesByUserUuid(String userUuid) async {
     final url = '$_userUrl/$userUuid/actions/get_my_roles';
 
@@ -30,7 +30,6 @@ final class RolesApi implements IRolesApi {
     }
   }
 
-  @override
   Future<RoleDto> createRole(CreateRoleReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
@@ -43,7 +42,6 @@ final class RolesApi implements IRolesApi {
     }
   }
 
-  @override
   Future<List<RoleDto>> getRoles(GetRolesReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
@@ -60,7 +58,6 @@ final class RolesApi implements IRolesApi {
     }
   }
 
-  @override
   Future<void> deleteRole(DeleteRoleReq req) async {
     try {
       await _client.delete<void>(
@@ -71,8 +68,7 @@ final class RolesApi implements IRolesApi {
     }
   }
 
-  @override
-  Future<RoleDto> getRole(req) async {
+  Future<RoleDto> getRole(GetRoleReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
@@ -84,8 +80,7 @@ final class RolesApi implements IRolesApi {
     }
   }
 
-  @override
-  Future<RoleDto> updateRole(req) async {
+  Future<RoleDto> updateRole(UpdateRoleReq req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),

@@ -3,14 +3,14 @@ import 'package:genesis/src/layer_data/requests/projects/delete_project_req.dart
 import 'package:genesis/src/layer_data/requests/projects/edit_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_project_req.dart';
 import 'package:genesis/src/layer_data/requests/projects/get_projects_req.dart';
-import 'package:genesis/src/layer_data/source/remote/projects_api/i_projects_api.dart';
+import 'package:genesis/src/layer_data/source/remote/projects_api/projects_api.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 
 final class ProjectsRepository implements IProjectsRepository {
   ProjectsRepository(this._projectsApi);
 
-  final IProjectsApi _projectsApi;
+  final ProjectsApi _projectsApi;
 
   @override
   Future<Project> createProject(params) async {

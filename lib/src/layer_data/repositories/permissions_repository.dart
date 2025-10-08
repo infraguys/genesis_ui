@@ -1,5 +1,5 @@
 import 'package:genesis/src/layer_data/requests/permission_requests/get_permission_req.dart';
-import 'package:genesis/src/layer_data/source/remote/permissions_api/i_permissions_api.dart';
+import 'package:genesis/src/layer_data/source/remote/permissions_api/permissions_api.dart';
 import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_domain/params/get_permissions_params.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.d
 final class PermissionsRepository implements IPermissionsRepository {
   const PermissionsRepository(this._permissionsApi);
 
-  final IPermissionsApi _permissionsApi;
+  final PermissionsApi _permissionsApi;
 
   @override
   Future<Permission> createPermission() {

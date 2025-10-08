@@ -3,14 +3,14 @@ import 'package:genesis/src/layer_data/requests/roles/delete_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_role_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/get_roles_req.dart';
 import 'package:genesis/src/layer_data/requests/roles/update_role_req.dart';
-import 'package:genesis/src/layer_data/source/remote/roles_api/i_roles_api.dart';
+import 'package:genesis/src/layer_data/source/remote/roles_api/roles_api.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
 
 final class RolesRepository implements IRolesRepository {
   RolesRepository(this._rolesApi);
 
-  final IRolesApi _rolesApi;
+  final RolesApi _rolesApi;
 
   @override
   Future<List<Role>> getRolesByUserUuid(userUuid) async {

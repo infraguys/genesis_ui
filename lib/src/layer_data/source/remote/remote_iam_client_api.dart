@@ -4,16 +4,16 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/layer_data/dtos/client_introspection_dto.dart';
 import 'package:genesis/src/layer_data/dtos/token_dto.dart';
 import 'package:genesis/src/layer_data/dtos/user_dto.dart';
-import 'package:genesis/src/layer_data/requests/users/sign_in_req.dart';
-import 'package:genesis/src/layer_data/source/remote/i_remote_iam_client_api.dart';
+import 'package:genesis/src/layer_data/requests/iam_client_requests/get_introspection_req.dart';
+import 'package:genesis/src/layer_data/requests/users/get_current_user_req.dart';
+import 'package:genesis/src/layer_data/requests/users/get_token_req.dart';
 
-final class RemoteIamClientApi implements IRemoteIamClientApi {
+final class RemoteIamClientApi {
   RemoteIamClientApi(this._client);
 
   final RestClient _client;
 
-  @override
-  Future<TokenDto> createTokenByPassword(SignInReq req) async {
+  Future<TokenDto> getToken(GetTokenReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
@@ -30,8 +30,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
     }
   }
 
-  @override
-  Future<UserDto> getCurrentUser(req) async {
+  Future<UserDto> getCurrentUser(GetCurrentUserReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
@@ -43,8 +42,7 @@ final class RemoteIamClientApi implements IRemoteIamClientApi {
     }
   }
 
-  @override
-  Future<ClientIntrospectionDto> introspectClient(req) async {
+  Future<ClientIntrospectionDto> introspectClient(GetIntrospectionReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
