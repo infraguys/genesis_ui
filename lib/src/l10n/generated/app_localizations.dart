@@ -92,275 +92,11 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
 
-  /// No description provided for @main.
-  ///
-  /// In en, this message translates to:
-  /// **'Main'**
-  String get main;
-
-  /// No description provided for @newText.
-  ///
-  /// In en, this message translates to:
-  /// **'New'**
-  String get newText;
-
-  /// No description provided for @error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get error;
-
-  /// No description provided for @pageNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Page not found'**
-  String get pageNotFound;
-
-  /// No description provided for @goBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Go back'**
-  String get goBack;
-
-  /// No description provided for @genesis.
-  ///
-  /// In en, this message translates to:
-  /// **'Genesis'**
-  String get genesis;
-
-  /// No description provided for @core.
-  ///
-  /// In en, this message translates to:
-  /// **'Core'**
-  String get core;
-
-  /// No description provided for @loading.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading'**
-  String get loading;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @signIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get signIn;
-
-  /// No description provided for @signOut.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
-  String get signOut;
-
-  /// No description provided for @signUp.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign up'**
-  String get signUp;
-
-  /// No description provided for @user.
-  ///
-  /// In en, this message translates to:
-  /// **'User'**
-  String get user;
-
-  /// No description provided for @users.
-  ///
-  /// In en, this message translates to:
-  /// **'Users'**
-  String get users;
-
-  /// No description provided for @project.
-  ///
-  /// In en, this message translates to:
-  /// **'Project'**
-  String get project;
-
-  /// No description provided for @projects.
-  ///
-  /// In en, this message translates to:
-  /// **'Projects'**
-  String get projects;
-
-  /// No description provided for @role.
-  ///
-  /// In en, this message translates to:
-  /// **'Role'**
-  String get role;
-
-  /// No description provided for @roles.
-  ///
-  /// In en, this message translates to:
-  /// **'Roles'**
-  String get roles;
-
-  /// No description provided for @description.
-  ///
-  /// In en, this message translates to:
-  /// **'Description'**
-  String get description;
-
-  /// No description provided for @elements.
-  ///
-  /// In en, this message translates to:
-  /// **'Elements'**
-  String get elements;
-
-  /// No description provided for @element.
-  ///
-  /// In en, this message translates to:
-  /// **'Element'**
-  String get element;
-
-  /// No description provided for @allElements.
-  ///
-  /// In en, this message translates to:
-  /// **'All elements'**
-  String get allElements;
-
-  /// No description provided for @installed.
-  ///
-  /// In en, this message translates to:
-  /// **'Installed'**
-  String get installed;
-
-  /// No description provided for @firstName.
-  ///
-  /// In en, this message translates to:
-  /// **'First name'**
-  String get firstName;
-
-  /// No description provided for @lastName.
-  ///
-  /// In en, this message translates to:
-  /// **'Last name'**
-  String get lastName;
-
-  /// No description provided for @surName.
-  ///
-  /// In en, this message translates to:
-  /// **'Surname'**
-  String get surName;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @uuid.
-  ///
-  /// In en, this message translates to:
-  /// **'Uuid'**
-  String get uuid;
-
-  /// No description provided for @iam.
-  ///
-  /// In en, this message translates to:
-  /// **'Iam'**
-  String get iam;
-
-  /// No description provided for @changePassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Change password'**
-  String get changePassword;
-
-  /// No description provided for @oldPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Old password'**
-  String get oldPassword;
-
-  /// No description provided for @newPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'New password'**
-  String get newPassword;
-
-  /// No description provided for @cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
-
-  /// No description provided for @ok.
-  ///
-  /// In en, this message translates to:
-  /// **'Ok'**
-  String get ok;
-
-  /// No description provided for @success.
-  ///
-  /// In en, this message translates to:
-  /// **'Success'**
-  String get success;
-
-  /// No description provided for @delete.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete'**
-  String get delete;
-
-  /// No description provided for @image.
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get image;
-
-  /// No description provided for @rootDiskSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Root disk size (GB)'**
-  String get rootDiskSize;
-
-  /// No description provided for @ramHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Ram (MB)'**
-  String get ramHelperText;
-
-  /// No description provided for @nodeType.
-  ///
-  /// In en, this message translates to:
-  /// **'Node type'**
-  String get nodeType;
-
-  /// No description provided for @username.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
-
   /// No description provided for @save.
   ///
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
-
-  /// No description provided for @active.
-  ///
-  /// In en, this message translates to:
-  /// **'Active'**
-  String get active;
-
-  /// No description provided for @inactive.
-  ///
-  /// In en, this message translates to:
-  /// **'Inactive'**
-  String get inactive;
-
-  /// No description provided for @status.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get status;
 
   /// No description provided for @edit.
   ///
@@ -380,95 +116,29 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get add;
 
-  /// No description provided for @virtualMachine.
-  ///
-  /// In en, this message translates to:
-  /// **'Virtual machine'**
-  String get virtualMachine;
-
   /// No description provided for @create.
   ///
   /// In en, this message translates to:
   /// **'Create'**
   String get create;
 
-  /// No description provided for @createdAt.
+  /// No description provided for @delete.
   ///
   /// In en, this message translates to:
-  /// **'Created at'**
-  String get createdAt;
+  /// **'Delete'**
+  String get delete;
 
-  /// No description provided for @updatedAt.
+  /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
-  /// **'Updated at'**
-  String get updatedAt;
+  /// **'Cancel'**
+  String get cancel;
 
-  /// No description provided for @permissions.
+  /// No description provided for @ok.
   ///
   /// In en, this message translates to:
-  /// **'Permissions'**
-  String get permissions;
-
-  /// No description provided for @name.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
-
-  /// No description provided for @organization.
-  ///
-  /// In en, this message translates to:
-  /// **'Organization'**
-  String get organization;
-
-  /// No description provided for @organizations.
-  ///
-  /// In en, this message translates to:
-  /// **'Organizations'**
-  String get organizations;
-
-  /// No description provided for @block.
-  ///
-  /// In en, this message translates to:
-  /// **'Block'**
-  String get block;
-
-  /// No description provided for @confirmEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm email'**
-  String get confirmEmail;
-
-  /// No description provided for @changeEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Change email'**
-  String get changeEmail;
-
-  /// No description provided for @verification.
-  ///
-  /// In en, this message translates to:
-  /// **'Verification'**
-  String get verification;
-
-  /// No description provided for @verified.
-  ///
-  /// In en, this message translates to:
-  /// **'Verified'**
-  String get verified;
-
-  /// No description provided for @unverified.
-  ///
-  /// In en, this message translates to:
-  /// **'Unverified'**
-  String get unverified;
-
-  /// No description provided for @requiredField.
-  ///
-  /// In en, this message translates to:
-  /// **'This field is required'**
-  String get requiredField;
+  /// **'Ok'**
+  String get ok;
 
   /// No description provided for @search.
   ///
@@ -476,23 +146,41 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
-  /// No description provided for @nodes.
+  /// No description provided for @main.
   ///
   /// In en, this message translates to:
-  /// **'Nodes'**
-  String get nodes;
+  /// **'Main'**
+  String get main;
 
-  /// No description provided for @dbaas.
+  /// No description provided for @pageNotFound.
   ///
   /// In en, this message translates to:
-  /// **'DBaaS'**
-  String get dbaas;
+  /// **'Page not found'**
+  String get pageNotFound;
 
-  /// No description provided for @copiedToClipboard.
+  /// No description provided for @goBack.
   ///
   /// In en, this message translates to:
-  /// **'Copied to clipboard: {uuid}'**
-  String copiedToClipboard(String uuid);
+  /// **'Go back'**
+  String get goBack;
+
+  /// No description provided for @genesis.
+  ///
+  /// In en, this message translates to:
+  /// **'Genesis'**
+  String get genesis;
+
+  /// No description provided for @verification.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification'**
+  String get verification;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredField;
 
   /// No description provided for @deleteRole.
   ///
@@ -553,6 +241,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete selected ({count}) users?'**
   String deleteUsers(int count);
+
+  /// No description provided for @uuid.
+  ///
+  /// In en, this message translates to:
+  /// **'Uuid'**
+  String get uuid;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @project.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get project;
+
+  /// No description provided for @projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects'**
+  String get projects;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles'**
+  String get roles;
+
+  /// No description provided for @element.
+  ///
+  /// In en, this message translates to:
+  /// **'Element'**
+  String get element;
+
+  /// No description provided for @elements.
+  ///
+  /// In en, this message translates to:
+  /// **'Elements'**
+  String get elements;
+
+  /// No description provided for @allElements.
+  ///
+  /// In en, this message translates to:
+  /// **'All elements'**
+  String get allElements;
+
+  /// No description provided for @installed.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed'**
+  String get installed;
+
+  /// No description provided for @organization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get organization;
+
+  /// No description provided for @organizations.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizations'**
+  String get organizations;
+
+  /// No description provided for @permissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get permissions;
+
+  /// No description provided for @nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get nodes;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// No description provided for @surName.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname'**
+  String get surName;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @virtualMachine.
+  ///
+  /// In en, this message translates to:
+  /// **'Virtual machine'**
+  String get virtualMachine;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @core.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get core;
+
+  /// No description provided for @rootDiskSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Root disk size (GB)'**
+  String get rootDiskSize;
+
+  /// No description provided for @ramHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Ram (MB)'**
+  String get ramHelperText;
+
+  /// No description provided for @nodeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Node type'**
+  String get nodeType;
+
+  /// No description provided for @createdAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at'**
+  String get createdAt;
+
+  /// No description provided for @updatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated at'**
+  String get updatedAt;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @image.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get image;
+
+  /// No description provided for @dbaas.
+  ///
+  /// In en, this message translates to:
+  /// **'DBaaS'**
+  String get dbaas;
+
+  /// No description provided for @iam.
+  ///
+  /// In en, this message translates to:
+  /// **'Iam'**
+  String get iam;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePassword;
+
+  /// No description provided for @oldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Old password'**
+  String get oldPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPassword;
+
+  /// No description provided for @block.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get block;
+
+  /// No description provided for @confirmEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm email'**
+  String get confirmEmail;
+
+  /// No description provided for @changeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Change email'**
+  String get changeEmail;
+
+  /// No description provided for @msgCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard: {uuid}'**
+  String msgCopiedToClipboard(String uuid);
 
   /// No description provided for @msgPermissionDenied.
   ///
@@ -649,6 +595,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Project {name} has been updated'**
   String msgProjectUpdated(String name);
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @newStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newStatus;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @inactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactive;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
+
+  /// No description provided for @scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get scheduled;
+
+  /// No description provided for @started.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get started;
+
+  /// No description provided for @verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get verified;
+
+  /// No description provided for @unverified.
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified'**
+  String get unverified;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading'**
+  String get loading;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
