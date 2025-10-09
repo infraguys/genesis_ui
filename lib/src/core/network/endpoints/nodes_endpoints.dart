@@ -2,8 +2,8 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 
 abstract class NodesEndpoints {
-  static const _nodes = '/${Env.versionApi}/nodes/';
-  static const _node = '/${Env.versionApi}/nodes/:uuid';
+  static const _nodes = '${Env.apiPrefix}/${Env.versionApi}/nodes/';
+  static const _node = '$_nodes:uuid';
 
   static String getNodes() => _nodes;
 

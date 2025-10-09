@@ -2,8 +2,8 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
 abstract class ProjectsEndpoints {
-  static const _projects = '/${Env.versionApi}/iam/projects/';
-  static const _project = '/${Env.versionApi}/iam/projects/:uuid';
+  static const _projects = '${Env.apiPrefix}/${Env.versionApi}/iam/projects/';
+  static const _project = '/$_projects:uuid';
 
   static String getProjects() => _projects;
 

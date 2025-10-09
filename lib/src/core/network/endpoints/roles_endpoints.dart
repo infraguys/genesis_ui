@@ -2,7 +2,7 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 
 abstract class RolesEndpoints {
-  static const _roles = '/${Env.versionApi}/iam/roles/';
+  static const _roles = '${Env.apiPrefix}/${Env.versionApi}/iam/roles/';
   static const _role = '$_roles:uuid';
 
   static String getRoles() => _roles;

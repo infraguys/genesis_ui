@@ -2,8 +2,8 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_domain/entities/extension.dart';
 
 abstract class ExtensionsEndpoints {
-  static const _elements = '/${Env.versionApi}/em/elements/';
-  static const _element = '/${Env.versionApi}/em/elements/:uuid';
+  static const _elements = '${Env.apiPrefix}/${Env.versionApi}/em/elements/';
+  static const _element = '$_elements:uuid';
 
   static String getExtensions() => _elements;
 

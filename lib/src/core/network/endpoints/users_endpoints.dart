@@ -2,8 +2,8 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 
 abstract class UsersEndpoints {
-  static const _users = '/${Env.versionApi}/iam/users/';
-  static const _user = '/${Env.versionApi}/iam/users/:uuid';
+  static const _users = '${Env.apiPrefix}/${Env.versionApi}/iam/users/';
+  static const _user = '/$_users:uuid';
 
   static String getUsers() => _users;
 
