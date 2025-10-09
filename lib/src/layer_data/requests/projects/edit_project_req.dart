@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
@@ -15,7 +16,9 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
     return {
       'name': _params.name,
       'description': ?_params.description,
-      'organization': OrganizationsEndpoints.getOrganization(_params.organizationUUID),
+      'organization': OrganizationsEndpoints.getOrganization(
+        _params.organizationUUID,
+      ).replaceFirst('${Env.apiPrefix}/', ''),
       'status': ?_fromStatus(_params.status),
     };
   }

@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/permission_bindings_endpoints.dart';
@@ -13,8 +14,8 @@ final class CreatePermissionBindingReq implements JsonEncodable, PathEncodable {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'role': RolesEndpoints.getRole(_params.roleUUID),
-      'permission': PermissionsEndpoints.getPermission(_params.permissionUUID),
+      'role': RolesEndpoints.getRole(_params.roleUUID).replaceFirst('${Env.apiPrefix}/', ''),
+      'permission': PermissionsEndpoints.getPermission(_params.permissionUUID).replaceFirst('${Env.apiPrefix}/', ''),
     };
   }
 
