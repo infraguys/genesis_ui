@@ -33,7 +33,7 @@ class OrganizationsListItem extends StatelessWidget {
                     Clipboard.setData(ClipboardData(text: organization.uuid.value));
                     final snack = SnackBar(
                       backgroundColor: Colors.green,
-                      content: Text(context.$.copiedToClipboard(organization.uuid.value)),
+                      content: Text(context.$.msgCopiedToClipboard(organization.uuid.value)),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snack);
                   },
