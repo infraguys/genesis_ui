@@ -61,7 +61,7 @@ enum PGInstanceStatus implements BaseStatusEnum {
 
   @override
   String humanReadable(BuildContext context) => switch (this) {
-    newStatus => context.$.newText,
+    newStatus => context.$.newStatus,
     active => context.$.active,
     error => context.$.error,
     inProgress => context.$.inProgress,
