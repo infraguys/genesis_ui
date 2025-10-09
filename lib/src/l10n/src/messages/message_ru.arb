@@ -1,0 +1,139 @@
+{
+  "@@locale" : "ru",
+  "msgCopiedToClipboard": "Скопировано в буфер обмена: {uuid}",
+  "@msgCopiedToClipboard": {
+    "placeholders": {
+      "uuid": {
+        "type": "String"
+      }
+    }
+  },
+  "msgPermissionDenied": "У вас нет необходимых разрешений. Пожалуйста, свяжитесь с администратором. Отсутствуют:\n{permission}",
+  "@msgPermissionDenied": {
+    "placeholders": {
+      "permission": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserCreated": "Пользователь {username} создан.",
+  "@msgUserCreated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserUpdated": "Пользователь {username} обновлен",
+  "@msgUserUpdated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserDeleted": "Пользователь {username} удален",
+  "@msgUserDeleted": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUsersDeleted": "Пользователи({count}) удалены",
+  "@msgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgOrganizationUpdated": "Организации {name} обновлена",
+  "@msgOrganizationUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationCreated": "Организации {name} создана",
+  "@msgOrganizationCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationDeleted": "Организация {name} удалена",
+  "@msgOrganizationDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationsDeleted": "Организации({count}) удалены",
+  "@msgOrganizationsDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgRoleUpdated": "Роль {name} обновлена",
+  "@msgRoleUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgRoleDeleted": "Роль {name} удалена",
+  "@msgRoleDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeCreated": "Нода {name} создана",
+  "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeUpdated": "Нода {name} обновлена",
+  "@msgNodeUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeDeleted": "Нода {name} удалена",
+  "@msgNodeDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectCreated": "Проект {name} создан",
+  "@msgProjectCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectUpdated": "Проект {name} обновлен",
+  "@msgProjectUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

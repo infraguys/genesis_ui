@@ -1,0 +1,9 @@
+{
+  "@@locale": "ru",
+  "main": "Главная",
+  "error": "Ошибка",
+  "pageNotFound": "Страница не найдена",
+  "goBack": "Назад",
+  "verification": "Верификация",
+  "requiredField": "Обязательное поле"
+}

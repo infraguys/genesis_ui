@@ -1,0 +1,12 @@
+{
+  "@@locale": "ru",
+  "signIn": "Войти",
+  "signOut": "Выйти",
+  "signUp": "Зарегистрироваться",
+  "changePassword": "Изменить пароль",
+  "oldPassword": "Старый пароль",
+  "newPassword": "Новый пароль",
+  "block": "Блокировать",
+  "confirmEmail": "Подтвердить email",
+  "changeEmail": "Изменить email"
+}

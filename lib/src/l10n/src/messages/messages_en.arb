@@ -1,0 +1,139 @@
+{
+  "@@locale" : "en",
+  "msgCopiedToClipboard": "Copied to clipboard: {uuid}",
+  "@msgCopiedToClipboard": {
+    "placeholders": {
+      "uuid": {
+        "type": "String"
+      }
+    }
+  },
+  "msgPermissionDenied": "You do not have the required permissions. Please contact your administrator. Missing:\n{permission}",
+  "@msgPermissionDenied": {
+    "placeholders": {
+      "permission": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserCreated": "User {username} has been created",
+  "@msgUserCreated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserUpdated": "User {username} has been updated",
+  "@msgUserUpdated": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUserDeleted": "User {username} has been deleted",
+  "@msgUserDeleted": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "msgUsersDeleted": "Users({count}) have been deleted",
+  "@msgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgOrganizationCreated": "Organization {name} has been created",
+  "@msgOrganizationCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationUpdated": "Organization {name} has been updated",
+  "@msgOrganizationUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationDeleted": "Organization {name} has been deleted",
+  "@msgOrganizationDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgOrganizationsDeleted": "Organizations({count}) have been deleted",
+  "@msgOrganizationsDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgRoleUpdated": "Role {name} has been updated",
+  "@msgRoleUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgRoleDeleted": "Role {name} has been deleted",
+  "@msgRoleDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeCreated": "Node {name} has been created",
+  "@msgNodeCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeUpdated": "Node {name} has been updated",
+  "@msgNodeUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNodeDeleted": "Node {name} has been deleted",
+  "@msgNodeDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectCreated": "Project {name} has been created",
+  "@msgProjectCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgProjectUpdated": "Project {name} has been updated",
+  "@msgProjectUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

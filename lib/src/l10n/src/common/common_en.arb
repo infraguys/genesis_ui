@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "main": "Main",
+  "pageNotFound": "Page not found",
+  "goBack": "Go back",
+  "genesis": "Genesis",
+  "verification": "Verification",
+  "requiredField": "This field is required"
+}

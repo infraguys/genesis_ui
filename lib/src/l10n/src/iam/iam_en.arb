@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "iam": "Iam",
+  "signIn": "Sign in",
+  "signOut": "Sign out",
+  "signUp": "Sign up",
+  "changePassword": "Change password",
+  "oldPassword": "Old password",
+  "newPassword": "New password",
+  "block": "Block",
+  "confirmEmail": "Confirm email",
+  "changeEmail": "Change email"
+}
