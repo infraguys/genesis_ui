@@ -30,7 +30,7 @@ final class GetTokenReq extends TokenReq {
       'client_secret': Env.clientSecret,
       'scope': ?_params.scope,
       'ttl': Env.ttl,
-      'refresh_ttl': Env.refreshTtl,
+      // 'refresh_ttl': Env.refreshTtl,
       'username': _params.username,
       'password': _params.password,
     };
@@ -50,7 +50,7 @@ final class RefreshTokenReq extends TokenReq {
       'client_secret': Env.clientSecret,
       'scope': ?_params.scope != null ? 'project:${_params.scope}' : null,
       'ttl': Env.ttl,
-      'refresh_ttl': Env.refreshTtl,
+      // 'refresh_ttl': Env.refreshTtl,
       'refresh_token': _params.refreshToken,
     };
   }
