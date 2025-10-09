@@ -48,6 +48,7 @@ GoRouter createRouter(BuildContext context) {
   final organizationsNavKey = GlobalKey<NavigatorState>();
   final nodesNavKey = GlobalKey<NavigatorState>();
   final extensionsNavKey = GlobalKey<NavigatorState>();
+  final dbaasNavKey = GlobalKey<NavigatorState>();
 
   return GoRouter(
     debugLogDiagnostics: true,
@@ -285,6 +286,27 @@ GoRouter createRouter(BuildContext context) {
                     ),
                   ),
                 ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: dbaasNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.dbaas.name,
+                path: '/dbaas',
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: Placeholder(),
+                ),
+                // routes: [
+                //   GoRoute(
+                //     name: AppRoutes.createProject.name,
+                //     path: 'create',
+                //     pageBuilder: (_, _) => NoTransitionPage(
+                //       child: CreateProjectPage(),
+                //     ),
+                //   ),
+                // ],
               ),
             ],
           ),
