@@ -143,7 +143,9 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         leading: Icon(Icons.storage_rounded),
                         selected: GoRouterState.of(context).matchedLocation.startsWith('/dbaas'),
                         title: Text(context.$.dbaas),
-                        onTap: () {},
+                        onTap: () {
+                          context.goNamed(AppRoutes.dbaas.name);
+                        },
                       ),
                       const SizedBox(height: 20.0),
                       ClipRRect(
