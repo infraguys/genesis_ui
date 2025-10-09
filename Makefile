@@ -43,7 +43,7 @@ gen:
 loc:
 	@echo "🛠 Localization project with l10n…"
 	@echo "Merging ARB files..."
-	dart tools/merge_arb.dart
+	flutter pub run tools/merge_arb.dart
 	@echo "Generating localization files..."
 	flutter gen-l10n \
 		--arb-dir lib/src/l10n/merged_arb \
