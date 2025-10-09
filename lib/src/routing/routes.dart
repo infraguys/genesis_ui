@@ -44,5 +44,5 @@ enum AppRoutes {
   allExtensions,
 
   /// DBaaS
-
+  dbaas,
 }
