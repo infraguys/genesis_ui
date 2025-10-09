@@ -42,8 +42,11 @@ gen:
 # Localization project
 loc:
 	@echo "🛠 Localization project with l10n…"
+	@echo "Merging ARB files..."
+	dart tools/merge_arb.dart
+	@echo "Generating localization files..."
 	flutter gen-l10n \
-		--arb-dir lib/src/l10n \
+		--arb-dir lib/src/l10n/merged_arb \
 		--output-dir lib/src/l10n/generated \
 		--output-localization-file app_localizations.dart \
 		--untranslated-messages-file lib/src/l10n/untranslated.txt \
