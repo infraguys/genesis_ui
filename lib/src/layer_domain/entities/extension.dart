@@ -22,7 +22,7 @@ final class Extension extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String status;
+  final ExtensionStatus status;
   final String version;
   final String installType;
   final String link;
@@ -56,6 +56,6 @@ enum ExtensionStatus implements BaseStatusEnum {
     newStatus => context.$.newStatus,
     active => context.$.active,
     inProgress => context.$.inProgress,
-    _ => 'Unknown'.hardcoded,
+    _ => context.$.unknown,
   };
 }
