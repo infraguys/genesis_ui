@@ -40,7 +40,8 @@ final class NodeDto implements IDto<Node> {
   final int ram;
   final int rootDiskSize;
   final String image;
-  final _StatusDto status;
+  @JsonKey(fromJson: _statusFromJson)
+  final NodeStatus status;
   final NodeTypeDto nodeType;
   @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork, defaultValue: '')
   final String ipv4;
@@ -62,37 +63,19 @@ final class NodeDto implements IDto<Node> {
       ram: ram,
       rootDiskSize: rootDiskSize,
       image: image,
-      status: status.toNodeStatus(),
+      status: status,
       nodeType: nodeType.toDomain(),
       ipv4: ipv4,
     );
   }
-}
 
-/// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED
-@JsonEnum()
-enum _StatusDto {
-  @JsonValue('NEW')
-  newStatus,
-  @JsonValue('ACTIVE')
-  active,
-  @JsonValue('ERROR')
-  error,
-  @JsonValue('IN_PROGRESS')
-  inProgress,
-  @JsonValue('SCHEDULED')
-  scheduled,
-  @JsonValue('STARTED')
-  started;
-
-  NodeStatus toNodeStatus() => switch (this) {
-    newStatus => NodeStatus.newStatus,
-    active => NodeStatus.active,
-    error => NodeStatus.error,
-    inProgress => NodeStatus.inProgress,
-    scheduled => NodeStatus.scheduled,
-    started => NodeStatus.started,
+  static NodeStatus _statusFromJson(String json) => switch (json) {
+    'NEW' => NodeStatus.newStatus,
+    'ACTIVE' => NodeStatus.active,
+    'IN_PROGRESS' => NodeStatus.inProgress,
+    'ERROR' => NodeStatus.error,
+    'SCHEDULED' => NodeStatus.scheduled,
+    'STARTED' => NodeStatus.started,
+    _ => NodeStatus.unknown,
   };
 }
-
-/// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED
