@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pg_instance_dto.g.dart';
 
 @JsonSerializable(constructor: '_')
- class PGInstanceDto implements IDto<PgInstance> {
+class PGInstanceDto implements IDto<PgInstance> {
   PGInstanceDto._({
     required this.uuid,
     required this.name,
@@ -65,10 +65,10 @@ part 'pg_instance_dto.g.dart';
   }
 
   static PgInstanceStatus _statusFromJson(String json) => switch (json) {
-  'NEW' => PgInstanceStatus.newStatus,
-  'ACTIVE' => PgInstanceStatus.active,
-  'IN_PROGRESS' => PgInstanceStatus.inProgress,
-  'ERROR' => PgInstanceStatus.error,
-  _ => PgInstanceStatus.unknown,
-};
+    'NEW' => PgInstanceStatus.newStatus,
+    'ACTIVE' => PgInstanceStatus.active,
+    'IN_PROGRESS' => PgInstanceStatus.inProgress,
+    'ERROR' => PgInstanceStatus.error,
+    _ => PgInstanceStatus.unknown,
+  };
 }
