@@ -13,5 +13,6 @@ final class ClientIntrospectionDto {
 
   @JsonKey(name: 'project_id')
   final String? projectId;
+  @JsonKey(name: 'permissions')
   final Set<String> permissions;
 }
