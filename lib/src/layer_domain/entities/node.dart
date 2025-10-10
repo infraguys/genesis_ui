@@ -78,9 +78,9 @@ enum NodeStatus implements BaseStatusEnum {
     newStatus => context.$.newStatus,
     active => context.$.active,
     error => context.$.error,
-    inProgress => 'In Progress'.hardcoded,
-    scheduled => 'Scheduled'.hardcoded,
-    started => 'Started'.hardcoded,
-    _ => 'Unknown'.hardcoded,
+    inProgress => context.$.inProgress,
+    scheduled => context.$.scheduled,
+    started => context.$.started,
+    _ => context.$.unknown,
   };
 }
