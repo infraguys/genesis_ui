@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pg_instance_dto.g.dart';
 
 @JsonSerializable(constructor: '_')
-class PGInstanceDto implements IDto<PGInstance> {
+ class PGInstanceDto implements IDto<PgInstance> {
   PGInstanceDto._({
     required this.uuid,
     required this.name,
@@ -14,7 +14,7 @@ class PGInstanceDto implements IDto<PGInstance> {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.ipsv4,
+    required this.ipv4,
     required this.cpu,
     required this.ram,
     required this.diskSize,
@@ -34,8 +34,9 @@ class PGInstanceDto implements IDto<PGInstance> {
   final DateTime createdAt;
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final PGInstanceStatusDto status;
-  final List<String> ipsv4;
+  @JsonKey(fromJson: _statusFromJson)
+  final PgInstanceStatus status;
+  final List<String> ipv4;
   final int cpu;
   final int ram;
   final int diskSize;
@@ -44,16 +45,16 @@ class PGInstanceDto implements IDto<PGInstance> {
   final String version;
 
   @override
-  PGInstance toEntity() {
-    return PGInstance(
+  PgInstance toEntity() {
+    return PgInstance(
       uuid: PGInstanceUUID(uuid),
       name: name,
       description: description,
       projectId: projectId,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toPGInstanceStatus(),
-      ipsv4: ipsv4,
+      status: status,
+      ipv4: ipv4,
       cpu: cpu,
       ram: ram,
       diskSize: diskSize,
@@ -62,23 +63,12 @@ class PGInstanceDto implements IDto<PGInstance> {
       version: version,
     );
   }
-}
 
-@JsonEnum()
-enum PGInstanceStatusDto {
-  @JsonValue('NEW')
-  newStatus,
-  @JsonValue('ACTIVE')
-  active,
-  @JsonValue('IN_PROGRESS')
-  inProgress,
-  @JsonValue('ERROR')
-  error;
-
-  PGInstanceStatus toPGInstanceStatus() => switch (this) {
-    newStatus => PGInstanceStatus.newStatus,
-    active => PGInstanceStatus.active,
-    inProgress => PGInstanceStatus.inProgress,
-    error => PGInstanceStatus.error,
-  };
+  static PgInstanceStatus _statusFromJson(String json) => switch (json) {
+  'NEW' => PgInstanceStatus.newStatus,
+  'ACTIVE' => PgInstanceStatus.active,
+  'IN_PROGRESS' => PgInstanceStatus.inProgress,
+  'ERROR' => PgInstanceStatus.error,
+  _ => PgInstanceStatus.unknown,
+};
 }
