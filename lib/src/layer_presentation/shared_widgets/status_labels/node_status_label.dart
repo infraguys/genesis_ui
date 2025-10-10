@@ -16,6 +16,7 @@ class NodeStatusLabel extends StatelessWidget {
     NodeStatus.scheduled => Palette.color6DCF91,
     NodeStatus.started => Palette.color6DCF91,
     NodeStatus.error => Palette.colorF04C4C,
+    _ => Palette.colorF04C4C
   };
 
   Color get labelStatusColor => switch (_status as NodeStatus) {
@@ -25,6 +26,7 @@ class NodeStatusLabel extends StatelessWidget {
     NodeStatus.scheduled => Palette.color6DCF91.withValues(alpha: 0.10),
     NodeStatus.started => Palette.color6DCF91.withValues(alpha: 0.10),
     NodeStatus.error => Palette.colorF04C4C.withValues(alpha: 0.10),
+    _ => Palette.colorF04C4C.withValues(alpha: 0.10)
   };
 
   @override
