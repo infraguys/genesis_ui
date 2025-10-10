@@ -3,12 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/interfaces/base_status.dart';
 
-class PGInstance extends Equatable{
+class PGInstance extends Equatable {
   const PGInstance({
     required this.uuid,
     required this.name,
     required this.description,
     required this.projectId,
+    required this.createdAt,
+    required this.updatedAt,
     required this.status,
     required this.ipsv4,
     required this.cpu,
@@ -23,6 +25,8 @@ class PGInstance extends Equatable{
   final String name;
   final String? description;
   final String projectId;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final PGInstanceStatus status;
   final List<String> ipsv4;
   final int cpu;
@@ -37,6 +41,8 @@ class PGInstance extends Equatable{
     name,
     description,
     projectId,
+    createdAt,
+    updatedAt,
     status,
     ipsv4,
     cpu,
