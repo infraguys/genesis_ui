@@ -11,5 +11,6 @@
   "verified": "Verified",
   "unverified": "Unverified",
   "loading": "Loading",
-  "success": "Success"
+  "success": "Success",
+  "unknown": "Unknown"
 }

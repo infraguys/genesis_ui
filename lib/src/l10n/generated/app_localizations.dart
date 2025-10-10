@@ -146,12 +146,6 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
-  /// No description provided for @unknown.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get unknown;
-
   /// No description provided for @main.
   ///
   /// In en, this message translates to:
@@ -673,6 +667,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Success'**
   String get success;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

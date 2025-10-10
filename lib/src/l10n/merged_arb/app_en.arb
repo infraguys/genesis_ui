@@ -9,7 +9,6 @@
   "cancel": "Cancel",
   "ok": "Ok",
   "search": "Search",
-  "unknown": "Unknown",
   "main": "Main",
   "pageNotFound": "Page not found",
   "goBack": "Go back",
@@ -285,5 +284,6 @@
   "verified": "Verified",
   "unverified": "Unverified",
   "loading": "Loading",
-  "success": "Success"
+  "success": "Success",
+  "unknown": "Unknown"
 }
