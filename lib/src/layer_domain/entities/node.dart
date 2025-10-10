@@ -70,7 +70,8 @@ enum NodeStatus implements BaseStatusEnum {
   error,
   inProgress,
   scheduled,
-  started;
+  started,
+  unknown;
 
   @override
   String humanReadable(BuildContext context) => switch (this) {
@@ -80,5 +81,6 @@ enum NodeStatus implements BaseStatusEnum {
     inProgress => 'In Progress'.hardcoded,
     scheduled => 'Scheduled'.hardcoded,
     started => 'Started'.hardcoded,
+    _ => 'Unknown'.hardcoded,
   };
 }
