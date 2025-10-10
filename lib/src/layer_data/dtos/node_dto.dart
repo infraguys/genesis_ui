@@ -28,27 +28,32 @@ final class NodeDto implements IDto<Node> {
 
   factory NodeDto.fromJson(Map<String, dynamic> json) => _$NodeDtoFromJson(json);
 
+  @JsonKey(name: 'uuid')
   final String uuid;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
+  @JsonKey(name: 'project_id')
   final String projectId;
+  @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'description')
   final String description;
+  @JsonKey(name: 'cores')
   final int cores;
+  @JsonKey(name: 'ram')
   final int ram;
+  @JsonKey(name: 'root_disk_size')
   final int rootDiskSize;
+  @JsonKey(name: 'image')
   final String image;
-  @JsonKey(fromJson: _statusFromJson)
+  @JsonKey(name: 'status', fromJson: _statusFromJson)
   final NodeStatus status;
+  @JsonKey(name: 'node_type')
   final NodeTypeDto nodeType;
   @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork, defaultValue: '')
   final String ipv4;
-
-  static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
-    return defaultNetwork?['ipv4'] as String;
-  }
 
   @override
   Node toEntity() {
@@ -67,6 +72,10 @@ final class NodeDto implements IDto<Node> {
       nodeType: nodeType.toDomain(),
       ipv4: ipv4,
     );
+  }
+
+  static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
+    return defaultNetwork?['ipv4'] as String;
   }
 
   static NodeStatus _statusFromJson(String json) => switch (json) {
