@@ -23,7 +23,7 @@ class PGInstance extends Equatable{
   final String name;
   final String? description;
   final String projectId;
-  final String status;
+  final PGInstanceStatus status;
   final List<String> ipsv4;
   final int cpu;
   final int ram;
