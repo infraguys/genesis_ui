@@ -1,6 +1,7 @@
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/extensions_endpoints.dart';
+import 'package:genesis/src/layer_domain/entities/extension.dart';
 import 'package:genesis/src/layer_domain/params/extensions_params/get_extensions_params.dart';
 
 final class GetExtensionsReq implements QueryEncodable, PathEncodable {
@@ -15,12 +16,19 @@ final class GetExtensionsReq implements QueryEncodable, PathEncodable {
       'description': ?_params.description,
       'created_at': ?_params.createdAt?.toIso8601String(),
       'updated_at': ?_params.updatedAt?.toIso8601String(),
-      'status': ?_params.status,
+      'status': ?_fromStatus(_params.status),
       'version': ?_params.version,
       'install_type': ?_params.installType,
       'link': ?_params.link,
     };
   }
+
+  static String? _fromStatus(ExtensionStatus? status) => switch (status) {
+    ExtensionStatus.newStatus => 'NEW',
+    ExtensionStatus.active => 'ACTIVE',
+    ExtensionStatus.inProgress => 'IN_PROGRESS',
+    _ => null,
+  };
 
   @override
   String toPath() {
