@@ -20,16 +20,24 @@ final class ExtensionDto implements IDto<Extension> {
 
   factory ExtensionDto.fromJson(Map<String, dynamic> json) => _$ExtensionDtoFromJson(json);
 
+  @JsonKey(name: 'uuid')
   final String uuid;
+  @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
+  @JsonKey(name: 'status', fromJson: _statusFromJson)
   final String status;
+  @JsonKey(name: 'version')
   final String version;
+  @JsonKey(name: 'install_type')
   final String installType;
+  @JsonKey(name: 'link')
   final String link;
 
   @override
@@ -46,4 +54,11 @@ final class ExtensionDto implements IDto<Extension> {
       link: link,
     );
   }
+
+  static ExtensionStatus _statusFromJson(String json) => switch (json) {
+    'NEW' => ExtensionStatus.newStatus,
+    'ACTIVE' => ExtensionStatus.active,
+    'IN_PROGRESS' => ExtensionStatus.inProgress,
+    _ => ExtensionStatus.unknown,
+  };
 }
