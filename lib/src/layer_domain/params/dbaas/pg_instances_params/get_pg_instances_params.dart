@@ -23,7 +23,7 @@ final class GetPgInstancesParams {
   final String? projectId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final PGInstanceStatus? status;
+  final PgInstanceStatus? status;
   final int? cpu;
   final int? ram;
   final int? diskSize;
