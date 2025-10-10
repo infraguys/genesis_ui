@@ -1,3 +1,5 @@
+import 'package:genesis/src/layer_domain/entities/extension.dart';
+
 final class GetExtensionsParams {
   const GetExtensionsParams({
     this.name,
@@ -14,7 +16,7 @@ final class GetExtensionsParams {
   final String? description;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? status;
+  final ExtensionStatus? status;
   final String? version;
   final String? installType;
   final String? link;
