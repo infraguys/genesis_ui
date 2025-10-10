@@ -11,6 +11,8 @@ class PGInstanceDto implements IDto<PGInstance> {
     required this.name,
     required this.description,
     required this.projectId,
+    required this.createdAt,
+    required this.updatedAt,
     required this.status,
     required this.ipsv4,
     required this.cpu,
@@ -28,6 +30,10 @@ class PGInstanceDto implements IDto<PGInstance> {
   @JsonKey(defaultValue: '')
   final String description;
   final String projectId;
+  @JsonKey(fromJson: DateTime.parse)
+  final DateTime createdAt;
+  @JsonKey(fromJson: DateTime.parse)
+  final DateTime updatedAt;
   final PGInstanceStatusDto status;
   final List<String> ipsv4;
   final int cpu;
@@ -44,6 +50,8 @@ class PGInstanceDto implements IDto<PGInstance> {
       name: name,
       description: description,
       projectId: projectId,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
       status: status.toPGInstanceStatus(),
       ipsv4: ipsv4,
       cpu: cpu,
