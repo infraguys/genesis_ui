@@ -29,24 +29,35 @@ class UserDto implements IDto<User> {
     return _$UserDtoFromJson(modifiedJson);
   }
 
-  @JsonKey(required: true)
+  @JsonKey(name: 'uuid', required: true)
   final String uuid;
+  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
   final AuthUserDtoStatus status;
+  @JsonKey(name: 'username', readValue: _readUsername)
   final String username;
+  @JsonKey(name: 'first_name')
   final String firstName;
+  @JsonKey(name: 'last_name')
   final String lastName;
+  @JsonKey(name: 'surname')
   final String surname;
+  @JsonKey(name: 'phone')
   final String? phone;
+  @JsonKey(name: 'email')
   final String email;
+  @JsonKey(name: 'email_verified')
   final bool emailVerified;
+  @JsonKey(name: 'otp_enabled')
   final bool otpEnabled;
 
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
+
+  static Object? _readUsername(Map<dynamic, dynamic> json, String _) => json['username'] ?? json['name'];
+
 
   @override
   User toEntity() {
