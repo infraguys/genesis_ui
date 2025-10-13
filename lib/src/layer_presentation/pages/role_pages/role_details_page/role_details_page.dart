@@ -56,9 +56,10 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
           final messenger = ScaffoldMessenger.of(context);
 
           switch (state) {
-            case RoleUpdatedState(:final role):
+            case RoleLoadedState(:final role):
               _name = role.name;
               _description = role.description;
+            case RoleUpdatedState(:final role):
               context.read<RoleBloc>().add(RoleEvent.get(widget.uuid));
               messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleUpdated(role.name)));
               context.read<RolesBloc>().add(RolesEvent.getRoles());
