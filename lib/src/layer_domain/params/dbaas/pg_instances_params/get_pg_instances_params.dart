@@ -1,7 +1,7 @@
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 
 final class GetPgInstancesParams {
-  GetPgInstancesParams({
+  const GetPgInstancesParams({
     this.uuid,
     this.name,
     this.description,
