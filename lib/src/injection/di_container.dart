@@ -5,6 +5,8 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
 import 'package:genesis/src/layer_data/repositories/extensions_repository.dart';
 import 'package:genesis/src/layer_data/repositories/nodes_repository.dart';
@@ -33,6 +35,7 @@ import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
+import 'package:genesis/src/layer_domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
@@ -134,6 +137,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final nodesApi = NodesApi(context.read<RestClient>());
               return NodesRepository(nodesApi);
+            },
+          ),
+          RepositoryProvider<IPgInstancesRepository>(
+            create: (context) {
+              final nodesApi = PgInstancesApi(context.read<RestClient>());
+              return PgInstancesRepository(nodesApi);
             },
           ),
         ],
