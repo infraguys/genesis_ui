@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/blocs/widgets/pg_instances_table.dart';
+import 'package:genesis/src/layer_domain/repositories/i_pg_instances_repository.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+
+class _PgInstanceListView extends StatelessWidget {
+  const _PgInstanceListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Breadcrumbs(
+          items: [
+            BreadcrumbItem(text: context.$.elements),
+          ],
+        ),
+        const SizedBox(height: 24),
+        ButtonsBar(
+          children: [
+            // SearchInput(),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Expanded(
+          child: BlocBuilder<PgInstancesBloc, PgInstancesState>(
+            builder: (_, state) => switch (state) {
+              PgInstancesLoadedState(:final instances) => PgInstancesTable(instances: instances),
+              _ => AppProgressIndicator(),
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PgInstancesListPage extends StatelessWidget {
+  const PgInstancesListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              PgInstancesBloc(context.read<IPgInstancesRepository>())..add(PgInstancesEvent.getInstances()),
+        ),
+      ],
+      child: _PgInstanceListView(),
+    );
+  }
+}
