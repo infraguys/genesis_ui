@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pg_instance_dto.g.dart';
 
-@JsonSerializable(constructor: '_')
+@JsonSerializable(constructor: '_', explicitToJson: true)
 class PGInstanceDto implements IDto<PgInstance> {
   PGInstanceDto._({
     required this.uuid,
@@ -14,7 +14,7 @@ class PGInstanceDto implements IDto<PgInstance> {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.ipv4,
+    // required this.ipv4,
     required this.cpu,
     required this.ram,
     required this.diskSize,
@@ -25,36 +25,45 @@ class PGInstanceDto implements IDto<PgInstance> {
 
   factory PGInstanceDto.fromJson(Map<String, dynamic> json) => _$PGInstanceDtoFromJson(json);
 
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toUuid)
+  final PgInstanceUUID uuid;
+  @JsonKey(name: 'name')
   final String name;
-  @JsonKey(defaultValue: '')
+  @JsonKey(name: 'description', defaultValue: '')
   final String description;
+  @JsonKey(name: 'project_id')
   final String projectId;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(fromJson: _statusFromJson)
+  @JsonKey(name: 'status', fromJson: _toStatus)
   final PgInstanceStatus status;
-  final List<String> ipv4;
+  // final List<String> ipv4;
+  @JsonKey(name: 'cpu')
   final int cpu;
+  @JsonKey(name: 'ram')
   final int ram;
+  @JsonKey(name: 'disk_size')
   final int diskSize;
+  @JsonKey(name: 'nodes_number')
   final int nodesNumber;
+  @JsonKey(name: 'sync_replica_number')
   final int syncReplicaNumber;
+  @JsonKey(name: 'version')
   final String version;
 
   @override
   PgInstance toEntity() {
     return PgInstance(
-      uuid: PGInstanceUUID(uuid),
+      uuid: uuid,
       name: name,
       description: description,
       projectId: projectId,
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
-      ipv4: ipv4,
+      // ipv4: ipv4,
       cpu: cpu,
       ram: ram,
       diskSize: diskSize,
@@ -64,7 +73,9 @@ class PGInstanceDto implements IDto<PgInstance> {
     );
   }
 
-  static PgInstanceStatus _statusFromJson(String json) => switch (json) {
+  static PgInstanceUUID _toUuid(String json) => PgInstanceUUID(json);
+
+  static PgInstanceStatus _toStatus(String json) => switch (json) {
     'NEW' => PgInstanceStatus.newStatus,
     'ACTIVE' => PgInstanceStatus.active,
     'IN_PROGRESS' => PgInstanceStatus.inProgress,
