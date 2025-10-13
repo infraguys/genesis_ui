@@ -56,8 +56,9 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
           final messenger = ScaffoldMessenger.of(context);
 
           switch (state) {
-            case RoleLoadedState(:final role):
             case RoleUpdatedState(:final role):
+              _name = role.name;
+              _description = role.description;
               context.read<RoleBloc>().add(RoleEvent.get(widget.uuid));
               messenger.showSnackBar(AppSnackBar.success(context.$.msgRoleUpdated(role.name)));
               context.read<RolesBloc>().add(RolesEvent.getRoles());
@@ -103,6 +104,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                     SizedBox(
                       width: 400,
                       child: TextFormField(
+                        initialValue: _name,
                         decoration: InputDecoration(hintText: context.$.name),
                         onSaved: (newValue) => _name = newValue!,
                         validator: (value) => switch (value) {
@@ -114,6 +116,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                     SizedBox(
                       width: 400,
                       child: TextFormField(
+                        initialValue: _description,
                         decoration: InputDecoration(hintText: context.$.description),
                         onSaved: (newValue) => _description = newValue!,
                       ),
