@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/blocs/widgets/pg_instances_table.dart';
 import 'package:genesis/src/layer_domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/create_icon_button.dart';
 
 class _PgInstanceListView extends StatelessWidget {
-  const _PgInstanceListView({super.key});
+  const _PgInstanceListView({super.key});  // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,14 @@ class _PgInstanceListView extends StatelessWidget {
       children: [
         Breadcrumbs(
           items: [
-            BreadcrumbItem(text: context.$.elements),
+            BreadcrumbItem(text: 'instance'.hardcoded),
           ],
         ),
         const SizedBox(height: 24),
         ButtonsBar(
           children: [
             // SearchInput(),
+            CreateIconButton(onPressed: () {})
           ],
         ),
         const SizedBox(height: 24),
@@ -49,8 +51,9 @@ class PgInstancesListPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              PgInstancesBloc(context.read<IPgInstancesRepository>())..add(PgInstancesEvent.getInstances()),
+          create: (context) {
+            return PgInstancesBloc(context.read<IPgInstancesRepository>())..add(PgInstancesEvent.getInstances());
+          },
         ),
       ],
       child: _PgInstanceListView(),
