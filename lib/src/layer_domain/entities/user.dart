@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
+import 'package:flutter/widgets.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/core/interfaces/base_status.dart';
 
 class User extends Equatable {
   const User({
@@ -23,7 +25,7 @@ class User extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Status status;
+  final UserStatus status;
   final String firstName;
   final String lastName;
   final String? surname;
@@ -89,3 +91,12 @@ class User extends Equatable {
 // }
 
 extension type UserUUID(String value) {}
+
+enum UserStatus implements BaseStatusEnum {
+  active;
+
+  @override
+  String humanReadable(BuildContext context) => switch (this) {
+    active => context.$.active,
+  };
+}
