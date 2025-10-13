@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/pg_instance_list_page.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
@@ -296,17 +297,8 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.dbaas.name,
                 path: '/dbaas',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: Placeholder(),
+                  child: PgInstancesListPage(),
                 ),
-                // routes: [
-                //   GoRoute(
-                //     name: AppRoutes.createProject.name,
-                //     path: 'create',
-                //     pageBuilder: (_, _) => NoTransitionPage(
-                //       child: CreateProjectPage(),
-                //     ),
-                //   ),
-                // ],
               ),
             ],
           ),
