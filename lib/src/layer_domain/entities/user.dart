@@ -93,10 +93,12 @@ class User extends Equatable {
 extension type UserUUID(String value) {}
 
 enum UserStatus implements BaseStatusEnum {
-  active;
+  active,
+  unknown;
 
   @override
   String humanReadable(BuildContext context) => switch (this) {
     active => context.$.active,
+    _ => context.$.unknown,
   };
 }
