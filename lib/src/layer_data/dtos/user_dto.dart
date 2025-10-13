@@ -23,21 +23,18 @@ class UserDto implements IDto<User> {
     required this.otpEnabled,
   });
 
-  factory UserDto.fromJson(Map<String, dynamic> json) {
-    final modifiedJson = Map.of(json);
-    modifiedJson['username'] ??= json['name'];
-    return _$UserDtoFromJson(modifiedJson);
-  }
+  factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', required: true)
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toUuid)
+  final UserUUID uuid;
   @JsonKey(name: 'description')
   final String description;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final AuthUserDtoStatus status;
+  @JsonKey(name: 'status', fromJson: _toStatus)
+  final UserStatus status;
   @JsonKey(name: 'username', readValue: _readUsername)
   final String username;
   @JsonKey(name: 'first_name')
@@ -55,19 +52,15 @@ class UserDto implements IDto<User> {
   @JsonKey(name: 'otp_enabled')
   final bool otpEnabled;
 
-
-  static Object? _readUsername(Map<dynamic, dynamic> json, String _) => json['username'] ?? json['name'];
-
-
   @override
   User toEntity() {
     return User(
-      uuid: UserUUID(uuid),
+      uuid: uuid,
       username: username,
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toUserStatus(),
+      status: status,
       firstName: firstName,
       lastName: lastName,
       surname: surname,
@@ -77,14 +70,13 @@ class UserDto implements IDto<User> {
       otpEnabled: otpEnabled,
     );
   }
-}
 
-@JsonEnum()
-enum AuthUserDtoStatus {
-  @JsonValue('ACTIVE')
-  active;
+  static Object? _readUsername(Map<dynamic, dynamic> json, String _) => json['username'] ?? json['name'];
 
-  Status toUserStatus() => switch (this) {
-    active => Status.active,
+  static UserUUID _toUuid(String json) => UserUUID(json);
+
+  static UserStatus _toStatus(String json) => switch (json) {
+    'ACTIVE' => UserStatus.active,
+    _ => UserStatus.unknown,
   };
 }
