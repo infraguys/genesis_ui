@@ -13,7 +13,7 @@ class PgInstance extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.ipv4,
+    // required this.ipv4,
     required this.cpu,
     required this.ram,
     required this.diskSize,
@@ -22,14 +22,14 @@ class PgInstance extends Equatable {
     required this.version,
   });
 
-  final PGInstanceUUID uuid;
+  final PgInstanceUUID uuid;
   final String name;
   final String? description;
   final String projectId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final PgInstanceStatus status;
-  final List<String> ipv4;
+  // final List<String> ipv4;
   final int cpu;
   final int ram;
   final int diskSize;
@@ -45,7 +45,7 @@ class PgInstance extends Equatable {
     createdAt,
     updatedAt,
     status,
-    ipv4,
+    // ipv4,
     cpu,
     ram,
     diskSize,
@@ -55,8 +55,8 @@ class PgInstance extends Equatable {
   ];
 }
 
-extension type PGInstanceUUID(String raw) {
-  bool isEqualTo(PGInstanceUUID other) => raw == other.raw;
+extension type PgInstanceUUID(String raw) {
+  bool isEqualTo(PgInstanceUUID other) => raw == other.raw;
 }
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW
