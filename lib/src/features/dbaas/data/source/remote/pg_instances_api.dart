@@ -10,7 +10,7 @@ final class PgInstancesApi {
 
   final RestClient _client;
 
-  Future<PGInstanceDto> getPgInstance(PGInstanceUUID uuid) async {
+  Future<PGInstanceDto> getPgInstance(PgInstanceUUID uuid) async {
     // TODO: implement getPGInstance
     throw UnimplementedError();
   }
@@ -31,7 +31,7 @@ final class PgInstancesApi {
     }
   }
 
-  Future<void> deletePgInstance(PGInstanceUUID uuid) async {
+  Future<void> deletePgInstance(PgInstanceUUID uuid) async {
     // TODO: implement deletePGInstance
     throw UnimplementedError();
   }
