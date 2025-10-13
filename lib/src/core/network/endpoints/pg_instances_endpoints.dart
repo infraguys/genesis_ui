@@ -9,14 +9,14 @@ abstract class PGInstancesEndpoints {
 
   static String createInstance() => _instances;
 
-  static String getInstance(PGInstanceUUID uuid) => _instance.fillUuid(uuid);
+  static String getInstance(PgInstanceUUID uuid) => _instance.fillUuid(uuid);
 
-  static String updateInstance(PGInstanceUUID uuid) => _instance.fillUuid(uuid);
+  static String updateInstance(PgInstanceUUID uuid) => _instance.fillUuid(uuid);
 
-  static String deleteInstance(PGInstanceUUID uuid) => _instance.fillUuid(uuid);
+  static String deleteInstance(PgInstanceUUID uuid) => _instance.fillUuid(uuid);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(PGInstanceUUID uuid) => replaceFirst(':uuid', uuid.raw);
+  String fillUuid(PgInstanceUUID uuid) => replaceFirst(':uuid', uuid.raw);
 }
