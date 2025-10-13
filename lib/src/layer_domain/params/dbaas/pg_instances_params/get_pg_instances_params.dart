@@ -17,7 +17,7 @@ final class GetPgInstancesParams {
     this.version,
   });
 
-  final PGInstanceUUID? uuid;
+  final PgInstanceUUID? uuid;
   final String? name;
   final String? description;
   final String? projectId;
