@@ -10,7 +10,7 @@ final class PgInstancesRepository implements IPgInstancesRepository {
   final PgInstancesApi _pgInstancesApi;
 
   @override
-  Future<void> deletePgInstance(PGInstanceUUID uuid) {
+  Future<void> deletePgInstance(PgInstanceUUID uuid) {
     // TODO: implement deletePgInstance
     throw UnimplementedError();
   }
