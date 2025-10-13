@@ -29,7 +29,8 @@ class AuthRepository implements IAuthRepository {
     late UserDto userDto;
 
     final tokenDto = await _iamApi.getToken(GetTokenReq(params));
-    await _tokenDao.writeAllTokens(accessToken: tokenDto.accessToken, refreshToken: tokenDto.refreshToken);
+    await _tokenDao.writeToken(tokenDto.accessToken);
+    await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
 
     userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
 
@@ -39,8 +40,9 @@ class AuthRepository implements IAuthRepository {
 
       final paramsWithNewScope = params.copyWith(scope: 'project:$projectUuid');
       final tokenDto = await _iamApi.getToken(GetTokenReq(paramsWithNewScope));
-      await _tokenDao.writeAllTokens(accessToken: tokenDto.accessToken, refreshToken: tokenDto.refreshToken);
 
+      await _tokenDao.writeToken(tokenDto.accessToken);
+      await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
       userDto = await _iamApi.getCurrentUser(GetCurrentUserReq());
     }
     final clientIntrospectionDto = await _iamApi.introspectClient(GetIntrospectionReq());
@@ -57,8 +59,9 @@ class AuthRepository implements IAuthRepository {
     late UserDto userDto;
 
     final tokenDto = await _iamApi.getToken(RefreshTokenReq(params));
-    await _tokenDao.writeAllTokens(accessToken: tokenDto.accessToken, refreshToken: tokenDto.refreshToken);
 
+    await _tokenDao.writeToken(tokenDto.accessToken);
+    await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
     userDto = await _iamApi.getCurrentUser();
     final clientIntrospectionDto = await _iamApi.introspectClient(GetIntrospectionReq());
 
@@ -72,6 +75,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<AuthSession> restoreSession() async {
+    // await _tokenDao.deleteToken();
     final token = await _tokenDao.readToken();
     final refreshToken = await _tokenDao.readRefreshToken();
     if (token == null || token.isEmpty) {
@@ -83,7 +87,7 @@ class AuthRepository implements IAuthRepository {
       user: userDto.toEntity(),
       permissionNames: PermissionNames(clientIntrospectionDto.permissions),
       refreshToken: refreshToken!,
-        scope: clientIntrospectionDto.projectId != null ? clientIntrospectionDto.projectId! : ''
+      scope: clientIntrospectionDto.projectId != null ? clientIntrospectionDto.projectId! : '',
     );
   }
 
