@@ -10,5 +10,5 @@ abstract interface class IPgInstancesRepository {
 
   // Future<PGInstance> updateNode(UpdateNodeParams params);
 
-  Future<void> deletePgInstance(PGInstanceUUID uuid);
+  Future<void> deletePgInstance(PgInstanceUUID uuid);
 }
