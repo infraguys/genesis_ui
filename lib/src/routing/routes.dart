@@ -45,4 +45,5 @@ enum AppRoutes {
 
   /// DBaaS
   dbaas,
+  createInstance,
 }
