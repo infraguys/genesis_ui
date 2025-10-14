@@ -5,8 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pg_instance_dto.g.dart';
 
 @JsonSerializable(constructor: '_', explicitToJson: true)
-class PGInstanceDto implements IDto<PgInstance> {
-  PGInstanceDto._({
+class PgInstanceDto implements IDto<PgInstance> {
+  PgInstanceDto._({
     required this.id,
     required this.name,
     required this.description,
@@ -23,7 +23,7 @@ class PGInstanceDto implements IDto<PgInstance> {
     required this.version,
   });
 
-  factory PGInstanceDto.fromJson(Map<String, dynamic> json) => _$PGInstanceDtoFromJson(json);
+  factory PgInstanceDto.fromJson(Map<String, dynamic> json) => _$PGInstanceDtoFromJson(json);
 
   @JsonKey(name: 'uuid', fromJson: _toID)
   final PgInstanceID id;
