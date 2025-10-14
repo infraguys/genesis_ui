@@ -18,7 +18,7 @@ class RoleBinding extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
-  final ProjectUUID? projectUUID;
+  final ProjectID? projectUUID;
   final UserUUID userUUID;
   final RoleUUID roleUUID;
 

@@ -6,11 +6,11 @@ import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dar
 abstract interface class IProjectsRepository {
   Future<Project> createProject(CreateProjectParams params);
 
-  Future<void> deleteProject(ProjectUUID uuid);
+  Future<void> deleteProject(ProjectID uuid);
 
   Future<Project> editProject(EditProjectParams params);
 
-  Future<Project> getProject(ProjectUUID uuid);
+  Future<Project> getProject(ProjectID uuid);
 
   Future<List<Project>> getProjects(GetProjectsParams params);
 }

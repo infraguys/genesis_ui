@@ -6,7 +6,7 @@ final class GetProjectUseCase {
 
   final IProjectsRepository _projectsRepository;
 
-  Future<Project> call(ProjectUUID uuid) async {
+  Future<Project> call(ProjectID uuid) async {
     return await _projectsRepository.getProject(uuid);
   }
 }

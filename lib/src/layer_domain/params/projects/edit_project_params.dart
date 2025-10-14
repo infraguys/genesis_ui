@@ -10,7 +10,7 @@ final class EditProjectParams {
     this.description,
   });
 
-  final ProjectUUID uuid;
+  final ProjectID uuid;
   final String name;
   final String? description;
   final OrganizationUUID organizationUUID;

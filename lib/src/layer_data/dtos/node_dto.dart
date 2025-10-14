@@ -61,7 +61,7 @@ final class NodeDto implements IDto<Node> {
       uuid: NodeUUID(uuid),
       createdAt: createdAt,
       updatedAt: updatedAt,
-      projectId: ProjectUUID(projectId),
+      projectId: ProjectID(projectId),
       name: name,
       description: description,
       cores: cores,

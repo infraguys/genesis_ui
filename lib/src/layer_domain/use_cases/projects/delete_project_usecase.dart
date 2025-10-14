@@ -6,7 +6,7 @@ final class DeleteProjectUseCase {
 
   final IProjectsRepository _repository;
 
-  Future<void> call(ProjectUUID uuid) async {
+  Future<void> call(ProjectID uuid) async {
     await _repository.deleteProject(uuid);
   }
 }

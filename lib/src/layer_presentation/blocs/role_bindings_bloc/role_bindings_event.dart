@@ -4,7 +4,7 @@ sealed class RoleBindingsEvent {
   factory RoleBindingsEvent.delete({
     required final UserUUID userUUID,
     required final RoleUUID roleUUID,
-    required final ProjectUUID projectUUID,
+    required final ProjectID projectUUID,
   }) = _Delete;
 
   factory RoleBindingsEvent.get(GetRoleBindingsParams params) = _GetBinding;
@@ -17,7 +17,7 @@ final class _Delete implements RoleBindingsEvent {
 
   final UserUUID userUUID;
   final RoleUUID roleUUID;
-  final ProjectUUID projectUUID;
+  final ProjectID projectUUID;
 }
 
 final class _GetBinding implements RoleBindingsEvent {

@@ -20,7 +20,7 @@ final class GetNodesParams {
   final NodeUUID? uuid;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final ProjectUUID? projectId;
+  final ProjectID? projectId;
   final String? name;
   final String? description;
   final int? cores;

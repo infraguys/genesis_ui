@@ -58,7 +58,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         (role) => CreateRoleBindingParams(
           userUUID: event.userUUID!,
           roleUUID: role.uuid,
-          projectUUID: createdProject.uuid,
+          projectUUID: createdProject.id,
         ),
       );
       await createRoleBindingUseCase(listOfParams.toList());
@@ -70,7 +70,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   Future<void> _onDeleteProject(_Delete event, Emitter<ProjectState> emit) async {
     final useCase = DeleteProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-    await useCase(event.project.uuid);
+    await useCase(event.project.id);
     emit(ProjectDeletedState(event.project));
   }
 

@@ -3,7 +3,7 @@ import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 class Project extends Equatable {
   const Project({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -12,7 +12,7 @@ class Project extends Equatable {
     required this.organizationUUID,
   });
 
-  final ProjectUUID uuid;
+  final ProjectID id;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -22,7 +22,7 @@ class Project extends Equatable {
 
   @override
   List<Object?> get props => [
-    uuid,
+    id,
     name,
     description,
     createdAt,
@@ -38,6 +38,6 @@ enum ProjectStatus {
   inProgress,
 }
 
-extension type ProjectUUID(String value) {
-  bool isEqual(ProjectUUID other) => value == other.value;
+extension type ProjectID(String value) {
+  bool isEqual(ProjectID other) => value == other.value;
 }

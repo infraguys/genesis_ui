@@ -18,7 +18,7 @@ import 'package:go_router/go_router.dart';
 class _AttachRolesView extends StatelessWidget {
   const _AttachRolesView({required this.projectUUID});
 
-  final ProjectUUID projectUUID;
+  final ProjectID projectUUID;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class _AttachRolesView extends StatelessWidget {
 class AttachRolesPage extends StatelessWidget {
   const AttachRolesPage({required this.projectUUID, super.key});
 
-  final ProjectUUID projectUUID;
+  final ProjectID projectUUID;
 
   @override
   Widget build(BuildContext context) {

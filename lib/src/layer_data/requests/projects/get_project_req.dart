@@ -5,7 +5,7 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 final class GetProjectReq implements PathEncodable {
   GetProjectReq(this._uuid);
 
-  final ProjectUUID _uuid;
+  final ProjectID _uuid;
 
   @override
   String toPath() {

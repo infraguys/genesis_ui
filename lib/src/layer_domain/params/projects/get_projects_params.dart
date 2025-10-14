@@ -10,7 +10,7 @@ final class GetProjectsParams {
     this.organization,
   });
 
-  final List<ProjectUUID>? uuids;
+  final List<ProjectID>? uuids;
   final String? name;
   final String? description;
   final DateTime? createdAt;

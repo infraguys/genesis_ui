@@ -37,66 +37,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 4.0,
                     children: [
-                      SizedBox(
-                        child: Column(
-                          spacing: 16.0,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SvgPicture.asset('assets/images/purple_logo.svg'),
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return BlocBuilder<ProjectsBloc, ProjectsState>(
-                                  builder: (context, state) {
-                                    final bloc = context.read<AuthBloc>();
-
-                                    late final List<Project> projects;
-                                    if (state is! ProjectsLoadedState) {
-                                      projects = List.empty();
-                                    } else {
-                                      projects = state.projects;
-                                    }
-
-                                    return DropdownMenu(
-                                      enableSearch: false,
-                                      requestFocusOnTap: false,
-                                      // todo(Koretsky): немного переделать
-                                      initialSelection: projects.isNotEmpty
-                                          ? projects.firstWhereOrNull((it) => it.uuid.value == authState.scope)?.uuid
-                                          : null,
-                                      width: double.infinity,
-                                      menuStyle: MenuStyle(
-                                        fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
-                                      ),
-                                      onSelected: (value) {
-                                        bloc.add(
-                                          AuthEvent.refreshToken(
-                                            RefreshTokenParams(
-                                              refreshToken: (bloc.state as AuthenticatedAuthState).refreshToken,
-                                              scope: value!.value,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      dropdownMenuEntries: projects.map(
-                                        (e) {
-                                          return DropdownMenuEntry(
-                                            label: e.name,
-                                            value: e.uuid,
-                                            leadingIcon: Icon(
-                                              Icons.folder_copy_rounded,
-                                              color: Palette.colorAFA8A4,
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      _Header(scope: authState.scope),
                       Divider(color: Palette.color1B1B1D, thickness: 1),
                       ListTile(
                         leading: Icon(Icons.dashboard),
@@ -208,6 +149,79 @@ class ScaffoldWithNavigation extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    required this.scope,
+    super.key,  // ignore: unused_element_parameter
+  });
+
+  final String scope;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        spacing: 16.0,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset('assets/images/purple_logo.svg'),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return BlocBuilder<ProjectsBloc, ProjectsState>(
+                builder: (context, state) {
+                  final bloc = context.read<AuthBloc>();
+
+                  late final List<Project> projects;
+                  if (state is! ProjectsLoadedState) {
+                    projects = List.empty();
+                  } else {
+                    projects = state.projects;
+                  }
+
+                  return DropdownMenu<ProjectID>(
+                    enableSearch: false,
+                    requestFocusOnTap: false,
+                    // todo(Koretsky): немного переделать
+                    initialSelection: projects.isNotEmpty
+                        ? projects.firstWhereOrNull((it) => it.id.value == scope)?.id
+                        : null,
+                    width: double.infinity,
+                    menuStyle: MenuStyle(
+                      fixedSize: WidgetStatePropertyAll(Size(constraints.maxWidth, double.nan)),
+                    ),
+                    onSelected: (value) {
+                      bloc.add(
+                        AuthEvent.refreshToken(
+                          RefreshTokenParams(
+                            refreshToken: (bloc.state as AuthenticatedAuthState).refreshToken,
+                            scope: value!.value,
+                          ),
+                        ),
+                      );
+                    },
+                    dropdownMenuEntries: projects.map(
+                      (e) {
+                        return DropdownMenuEntry(
+                          label: e.name,
+                          value: e.id,
+                          leadingIcon: Icon(
+                            Icons.folder_copy_rounded,
+                            color: Palette.colorAFA8A4,
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

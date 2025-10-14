@@ -85,7 +85,7 @@ class ProjectsTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    project.uuid.value,
+                    project.id.value,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -95,8 +95,8 @@ class ProjectsTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: project.uuid.value));
-                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${project.uuid}');
+                      Clipboard.setData(ClipboardData(text: project.id.value));
+                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${project.id}');
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
                   ),
@@ -115,7 +115,7 @@ class ProjectsTable extends StatelessWidget {
         final project = projects[index];
         context.goNamed(
           AppRoutes.project.name,
-          pathParameters: {'uuid': project.uuid.value},
+          pathParameters: {'uuid': project.id.value},
           extra: project,
         );
       },

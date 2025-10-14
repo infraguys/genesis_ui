@@ -7,7 +7,7 @@ final class DeleteProjectsUseCase {
   final IProjectsRepository _repository;
 
   Future<void> call(List<Project> project) async {
-    final uuids = project.map((project) => project.uuid).toList();
+    final uuids = project.map((project) => project.id).toList();
     await Future.wait(uuids.map(_repository.deleteProject));
   }
 }

@@ -52,7 +52,7 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
 
       // todo: ипсравить projectUUID
       for (final project in projects) {
-        final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
+        final projectsBindings = bindings.where((binding) => binding.projectUUID == project.id).toList();
         final roles = await Future.wait(
           projectsBindings.map((binding) => getRoleUseCase(binding.roleUUID)),
         );

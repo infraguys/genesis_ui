@@ -170,7 +170,7 @@ GoRouter createRouter(BuildContext context) {
                         name: AppRoutes.attachRoles.name,
                         path: 'attach/project/:projectUuid/attach_roles',
                         pageBuilder: (_, state) => NoTransitionPage(
-                          child: AttachRolesPage(projectUUID: ProjectUUID(state.pathParameters['projectUuid']!)),
+                          child: AttachRolesPage(projectUUID: ProjectID(state.pathParameters['projectUuid']!)),
                         ),
                       ),
                     ],
@@ -200,7 +200,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.project.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: ProjectDetailsPage(uuid: ProjectUUID(state.pathParameters['uuid']!)),
+                      child: ProjectDetailsPage(uuid: ProjectID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],

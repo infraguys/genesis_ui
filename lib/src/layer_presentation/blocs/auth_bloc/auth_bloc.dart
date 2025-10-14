@@ -14,6 +14,7 @@ import 'package:genesis/src/layer_domain/use_cases/auth_usecases/restore_session
 import 'package:genesis/src/layer_domain/use_cases/auth_usecases/sign_out_usecase.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

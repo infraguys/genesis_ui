@@ -23,7 +23,7 @@ class PgInstanceDto implements IDto<PgInstance> {
     required this.version,
   });
 
-  factory PgInstanceDto.fromJson(Map<String, dynamic> json) => _$PGInstanceDtoFromJson(json);
+  factory PgInstanceDto.fromJson(Map<String, dynamic> json) => _$PgInstanceDtoFromJson(json);
 
   @JsonKey(name: 'uuid', fromJson: _toID)
   final PgInstanceID id;

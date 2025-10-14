@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/base_status.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
@@ -25,7 +24,7 @@ class Node extends Equatable {
   final NodeUUID uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final ProjectUUID projectId;
+  final ProjectID projectId;
   final String name;
   final String description;
   final int cores;

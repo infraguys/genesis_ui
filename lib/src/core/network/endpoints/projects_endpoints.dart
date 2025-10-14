@@ -3,20 +3,20 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 
 abstract class ProjectsEndpoints {
   static const _projects = '${Env.apiPrefix}/${Env.versionApi}/iam/projects/';
-  static const _project = '/$_projects:uuid';
+  static const _project = '/$_projects:id';
 
   static String getProjects() => _projects;
 
   static String createProject() => _projects;
 
-  static String getProject(ProjectUUID uuid) => _project.fillUuid(uuid);
+  static String getProject(ProjectID id) => _project.fillUuid(id);
 
-  static String updateProject(ProjectUUID uuid) => _project.fillUuid(uuid);
+  static String updateProject(ProjectID id) => _project.fillUuid(id);
 
-  static String deleteProject(ProjectUUID uuid) => _project.fillUuid(uuid);
+  static String deleteProject(ProjectID id) => _project.fillUuid(id);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(ProjectUUID uuid) => replaceFirst(':uuid', uuid.value);
+  String fillUuid(ProjectID uuid) => replaceFirst(':id', uuid.value);
 }

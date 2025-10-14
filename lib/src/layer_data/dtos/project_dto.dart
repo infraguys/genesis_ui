@@ -8,7 +8,7 @@ part 'project_dto.g.dart';
 @JsonSerializable(constructor: '_')
 class ProjectDto implements IDto<Project> {
   ProjectDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -19,23 +19,25 @@ class ProjectDto implements IDto<Project> {
 
   factory ProjectDto.fromJson(Map<String, dynamic> json) => _$ProjectDtoFromJson(json);
 
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final ProjectID id;
+  @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
+  @JsonKey(name: 'status')
   final ProjectStatusDto status;
-  @JsonKey(fromJson: _fromUrlToUuid)
+  @JsonKey(name: 'organization', fromJson: _fromUrlToUuid)
   final String organization;
-
-  static String _fromUrlToUuid(String value) => value.split('/').last;
 
   @override
   Project toEntity() {
     return Project(
-      uuid: ProjectUUID(uuid),
+      id: id,
       name: name,
       description: description,
       createdAt: createdAt,
@@ -44,6 +46,10 @@ class ProjectDto implements IDto<Project> {
       organizationUUID: OrganizationUUID(organization),
     );
   }
+
+  static ProjectID _toID(String json) => ProjectID(json);
+
+  static String _fromUrlToUuid(String value) => value.split('/').last;
 }
 
 @JsonEnum()

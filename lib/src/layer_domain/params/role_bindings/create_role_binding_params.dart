@@ -11,5 +11,5 @@ final class CreateRoleBindingParams {
 
   final UserUUID userUUID;
   final RoleUUID roleUUID;
-  final ProjectUUID? projectUUID;
+  final ProjectID? projectUUID;
 }

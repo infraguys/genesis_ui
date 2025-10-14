@@ -36,9 +36,9 @@ class AuthRepository implements IAuthRepository {
 
     if (userDto.username.toLowerCase() != 'admin') {
       final projectDtos = await _projectsApi.getProjects(GetProjectsReq());
-      final projectUuid = projectDtos.first.uuid;
+      final projectID = projectDtos.first.id;
 
-      final paramsWithNewScope = params.copyWith(scope: 'project:$projectUuid');
+      final paramsWithNewScope = params.copyWith(scope: 'project:$projectID');
       final tokenDto = await _iamApi.getToken(GetTokenReq(paramsWithNewScope));
 
       await _tokenDao.writeToken(tokenDto.accessToken);

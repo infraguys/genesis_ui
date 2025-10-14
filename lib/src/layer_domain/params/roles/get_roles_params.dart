@@ -8,5 +8,5 @@ final class GetRolesParams {
   });
 
   final List<RoleUUID>? uuids;
-  final ProjectUUID? projectUUID;
+  final ProjectID? projectUUID;
 }
