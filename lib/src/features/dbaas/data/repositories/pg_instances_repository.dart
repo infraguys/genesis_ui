@@ -1,8 +1,8 @@
+import 'package:genesis/src/features/dbaas/data/requests/create_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/layer_data/requests/pg_instances_requests/get_pg_instances_req.dart';
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
-import 'package:genesis/src/layer_domain/params/dbaas/pg_instances_params/get_pg_instances_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_pg_instances_repository.dart';
 
 final class PgInstancesRepository implements IPgInstancesRepository {
   PgInstancesRepository(this._pgInstancesApi);
@@ -10,20 +10,32 @@ final class PgInstancesRepository implements IPgInstancesRepository {
   final PgInstancesApi _pgInstancesApi;
 
   @override
-  Future<void> deletePgInstance(PgInstanceUUID uuid) {
+  Future<void> deletePgInstance(PgInstanceID uuid) {
     // TODO: implement deletePgInstance
     throw UnimplementedError();
   }
 
   @override
-  Future<PgInstance> getPgInstance(PgInstance uuid) {
+  Future<PgInstance> getPgInstance(PgInstanceID uuid) {
     // TODO: implement getPgInstance
     throw UnimplementedError();
   }
 
   @override
-  Future<List<PgInstance>> getPgInstances(GetPgInstancesParams params) async {
+  Future<List<PgInstance>> getPgInstances(params) async {
     final dtos = await _pgInstancesApi.getPgInstances(GetPgInstancesReq(params));
     return dtos.map((it) => it.toEntity()).toList();
+  }
+
+  @override
+  Future<PgInstance> createPgInstance(params) async {
+    final dto = await _pgInstancesApi.createPgInstance(params);
+    return dto.toEntity();
+  }
+
+  @override
+  Future<PgInstance> updatePgInstance(params) {
+    // TODO: implement updatePgInstance
+    throw UnimplementedError();
   }
 }
