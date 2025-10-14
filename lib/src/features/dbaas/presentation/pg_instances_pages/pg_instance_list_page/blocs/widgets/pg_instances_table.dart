@@ -5,6 +5,7 @@ import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_in
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class PgInstancesTable extends StatelessWidget {
@@ -47,7 +48,7 @@ class PgInstancesTable extends StatelessWidget {
         Text(context.$.user, style: TextStyle(color: Colors.white)),
         Text(context.$.status, style: TextStyle(color: Colors.white)),
         Text(context.$.uuid, style: TextStyle(color: Colors.white)),
-        Text(context.$.verification, style: TextStyle(color: Colors.white)),
+        Text(context.$.createdAt, style: TextStyle(color: Colors.white)),
       ],
       cellsBuilder: (index) {
         final instance = instances[index];
@@ -92,8 +93,10 @@ class PgInstancesTable extends StatelessWidget {
               ],
             ),
           ),
-          // VerifiedLabel(isVerified: instances[index].emailVerified),
-          SizedBox.shrink(),
+          Text(
+            DateFormat('dd.MM.yyyy HH:mm').format(instance.createdAt),
+            style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
+          ),
           SizedBox.shrink(),
         ];
       },
