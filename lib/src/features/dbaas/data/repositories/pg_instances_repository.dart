@@ -1,4 +1,3 @@
-import 'package:genesis/src/features/dbaas/data/requests/create_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/layer_data/requests/pg_instances_requests/get_pg_instances_req.dart';
