@@ -28,7 +28,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
   String? _description;
   var _cores = 1;
   var _ram = 512;
-  var _diskSize = 1;
+  var _diskSize = 10;
   var _nodesNumber = 1;
   var _ipv4List = <String>[];
   var _syncReplicaNumber = 1;
