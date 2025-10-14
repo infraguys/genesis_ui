@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instances_usecase.dart';
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/layer_domain/params/dbaas/pg_instances_params/get_pg_instances_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_pg_instances_repository.dart';
 
 part 'pg_instances_event.dart';
+
 part 'pg_instances_state.dart';
 
 class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
