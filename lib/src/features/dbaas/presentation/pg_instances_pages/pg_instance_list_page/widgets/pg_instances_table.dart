@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/blocs/widgets/pg_instance_status_label.dart';
+import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/widgets/pg_instance_status_label.dart';
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +71,7 @@ class PgInstancesTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    instance.uuid.raw,
+                    instance.id.raw,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -81,10 +81,10 @@ class PgInstancesTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: instance.uuid.raw));
+                      Clipboard.setData(ClipboardData(text: instance.id.raw));
                       final snack = SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text(context.$.msgCopiedToClipboard(instance.uuid.raw)),
+                        content: Text(context.$.msgCopiedToClipboard(instance.id.raw)),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
