@@ -34,8 +34,8 @@ final class NodeDto implements IDto<Node> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'project_id')
-  final String projectId;
+  @JsonKey(name: 'project_id', fromJson: _toProjectID)
+  final ProjectID projectId;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'description')
@@ -61,7 +61,7 @@ final class NodeDto implements IDto<Node> {
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      projectId: ProjectID(projectId),
+      projectId: projectId,
       name: name,
       description: description,
       cores: cores,
@@ -75,6 +75,8 @@ final class NodeDto implements IDto<Node> {
   }
 
   static NodeID _toID(String json) => NodeID(json);
+
+  static ProjectID _toProjectID(String json) => ProjectID(json);
 
   static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
     return defaultNetwork?['ipv4'] as String;
