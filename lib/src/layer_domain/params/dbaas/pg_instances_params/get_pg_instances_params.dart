@@ -2,14 +2,14 @@ import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 
 final class GetPgInstancesParams {
   const GetPgInstancesParams({
-    this.uuid,
+    this.id,
     this.name,
     this.description,
     this.projectId,
     this.createdAt,
     this.updatedAt,
     this.status,
-    this.cpu,
+    this.cores,
     this.ram,
     this.diskSize,
     this.nodesNumber,
@@ -17,14 +17,14 @@ final class GetPgInstancesParams {
     this.version,
   });
 
-  final PgInstanceUUID? uuid;
+  final PgInstanceID? id;
   final String? name;
   final String? description;
   final String? projectId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final PgInstanceStatus? status;
-  final int? cpu;
+  final int? cores;
   final int? ram;
   final int? diskSize;
   final int? nodesNumber;
