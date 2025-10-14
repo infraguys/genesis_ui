@@ -295,8 +295,9 @@ GoRouter createRouter(BuildContext context) {
             navigatorKey: dbaasNavKey,
             routes: [
               GoRoute(
-                name: AppRoutes.dbaas.name,
-                path: '/dbaas',
+                // TODO(Koretsky): возможно придется переименовать
+                name: AppRoutes.instances.name,
+                path: '/instances',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: PgInstancesListPage(),
                 ),
@@ -306,6 +307,13 @@ GoRouter createRouter(BuildContext context) {
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
                       child: CreatePgInstancePage(),
+                    ),
+                  ),
+                  GoRoute(
+                    name: AppRoutes.instance.name,
+                    path: ':id',
+                    pageBuilder: (_, _) => NoTransitionPage(
+                      child: Placeholder(),
                     ),
                   ),
                 ],
