@@ -2,7 +2,7 @@ import 'package:genesis/src/layer_domain/entities/node.dart';
 
 final class UpdateNodeParams {
   const UpdateNodeParams({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.cores,
@@ -12,7 +12,7 @@ final class UpdateNodeParams {
     required this.nodeType,
   });
 
-  final NodeUUID uuid;
+  final NodeID id;
   final String name;
   final String description;
   final int cores;

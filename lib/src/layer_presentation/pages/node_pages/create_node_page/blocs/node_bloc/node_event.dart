@@ -1,7 +1,7 @@
 part of 'node_bloc.dart';
 
 sealed class NodeEvent {
-  factory NodeEvent.getNode(NodeUUID uuid) = _GetNode;
+  factory NodeEvent.getNode(NodeID id) = _GetNode;
 
   factory NodeEvent.create(CreateNodeParams params) = _CreateNode;
 
@@ -11,9 +11,9 @@ sealed class NodeEvent {
 }
 
 final class _GetNode implements NodeEvent {
-  _GetNode(this.uuid);
+  _GetNode(this.id);
 
-  final NodeUUID uuid;
+  final NodeID id;
 }
 
 final class _CreateNode implements NodeEvent {

@@ -6,7 +6,7 @@ final class GetNodeUseCase {
 
   final INodesRepository _repository;
 
-  Future<Node> call(NodeUUID uuid) async {
-    return await _repository.getNode(uuid);
+  Future<Node> call(NodeID id) async {
+    return await _repository.getNode(id);
   }
 }

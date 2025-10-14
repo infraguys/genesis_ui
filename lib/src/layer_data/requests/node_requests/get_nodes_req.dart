@@ -12,7 +12,7 @@ final class GetNodesReq implements PathEncodable, QueryEncodable {
   Map<String, dynamic> toQuery() {
     // TODO(Koretsky): Добавить параметров
     return {
-      'uuid': ?_params.uuid,
+      'uuid': ?_params.id,
       'name': ?_params.name,
       'created_at': ?_params.createdAt?.toIso8601String(),
       'updated_at': ?_params.updatedAt?.toIso8601String(),

@@ -3,7 +3,7 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 
 final class GetNodesParams {
   const GetNodesParams({
-    this.uuid,
+    this.id,
     this.createdAt,
     this.updatedAt,
     this.projectId,
@@ -17,7 +17,7 @@ final class GetNodesParams {
     this.nodeType,
   });
 
-  final NodeUUID? uuid;
+  final NodeID? id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final ProjectID? projectId;

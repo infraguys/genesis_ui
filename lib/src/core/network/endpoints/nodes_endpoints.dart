@@ -3,20 +3,20 @@ import 'package:genesis/src/layer_domain/entities/node.dart';
 
 abstract class NodesEndpoints {
   static const _nodes = '${Env.apiPrefix}/${Env.versionApi}/nodes/';
-  static const _node = '$_nodes:uuid';
+  static const _node = '$_nodes:id';
 
   static String getNodes() => _nodes;
 
   static String createNode() => _nodes;
 
-  static String getNode(NodeUUID uuid) => _node.fillUuid(uuid);
+  static String getNode(NodeID id) => _node.fillUuid(id);
 
-  static String updateNode(NodeUUID uuid) => _node.fillUuid(uuid);
+  static String updateNode(NodeID id) => _node.fillUuid(id);
 
-  static String deleteNode(NodeUUID uuid) => _node.fillUuid(uuid);
+  static String deleteNode(NodeID id) => _node.fillUuid(id);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(NodeUUID uuid) => replaceFirst(':uuid', uuid.value);
+  String fillUuid(NodeID id) => replaceFirst(':id', id.value);
 }

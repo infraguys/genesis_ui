@@ -8,7 +8,7 @@ final class DeleteNodesUseCase {
 
   Future<void> call(List<Node> nodes) async {
     await Future.wait(
-      nodes.map((node) => _repository.deleteNode(node.uuid)),
+      nodes.map((node) => _repository.deleteNode(node.id)),
     );
   }
 }

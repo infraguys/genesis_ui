@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 
 class Node extends Equatable {
   const Node({
-    required this.uuid,
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
     required this.projectId,
@@ -21,7 +21,7 @@ class Node extends Equatable {
     required this.ipv4,
   });
 
-  final NodeUUID uuid;
+  final NodeID id;
   final DateTime createdAt;
   final DateTime updatedAt;
   final ProjectID projectId;
@@ -37,7 +37,7 @@ class Node extends Equatable {
 
   @override
   List<Object?> get props => [
-    uuid,
+    id,
     createdAt,
     updatedAt,
     projectId,
@@ -53,8 +53,8 @@ class Node extends Equatable {
   ];
 }
 
-extension type NodeUUID(String value) {
-  bool isEqualTo(NodeUUID other) => value == other.value;
+extension type NodeID(String value) {
+  bool isEqualTo(NodeID other) => value == other.value;
 }
 
 enum NodeType {

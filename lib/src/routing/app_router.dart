@@ -284,7 +284,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.node.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: NodeDetailsPage(nodeUUID: NodeUUID(state.pathParameters['uuid']!)),
+                      child: NodeDetailsPage(id: NodeID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],

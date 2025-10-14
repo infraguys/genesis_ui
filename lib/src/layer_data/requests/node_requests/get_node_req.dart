@@ -3,12 +3,12 @@ import 'package:genesis/src/core/network/endpoints/nodes_endpoints.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 
 final class GetNodeReq implements PathEncodable {
-  GetNodeReq(this.uuid);
+  GetNodeReq(this.id);
 
-  final NodeUUID uuid;
+  final NodeID id;
 
   @override
   String toPath() {
-    return NodesEndpoints.getNode(uuid);
+    return NodesEndpoints.getNode(id);
   }
 }

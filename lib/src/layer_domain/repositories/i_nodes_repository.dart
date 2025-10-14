@@ -4,7 +4,7 @@ import 'package:genesis/src/layer_domain/params/nodes_params/get_nodes_params.da
 import 'package:genesis/src/layer_domain/params/nodes_params/update_node_params.dart';
 
 abstract interface class INodesRepository {
-  Future<Node> getNode(NodeUUID uuid);
+  Future<Node> getNode(NodeID id);
 
   Future<List<Node>> getNodes(GetNodesParams params);
 
@@ -12,5 +12,5 @@ abstract interface class INodesRepository {
 
   Future<Node> updateNode(UpdateNodeParams params);
 
-  Future<void> deleteNode(NodeUUID uuid);
+  Future<void> deleteNode(NodeID id);
 }

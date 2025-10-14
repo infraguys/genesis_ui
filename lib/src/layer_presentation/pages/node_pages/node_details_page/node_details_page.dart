@@ -21,9 +21,9 @@ import 'package:go_router/go_router.dart';
 part './widgets/delete_node_btn.dart';
 
 class _NodeDetailsView extends StatefulWidget {
-  const _NodeDetailsView({required this.nodeUUID, super.key}); //ignore: unused_element_parameter
+  const _NodeDetailsView({required this.id, super.key}); //ignore: unused_element_parameter
 
-  final NodeUUID nodeUUID;
+  final NodeID id;
 
   @override
   State<_NodeDetailsView> createState() => _NodeDetailsViewState();
@@ -73,7 +73,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
             _ipv4 = node.ipv4;
 
           case NodeUpdatedState(:final node):
-            _nodeBloc.add(NodeEvent.getNode(widget.nodeUUID));
+            _nodeBloc.add(NodeEvent.getNode(widget.id));
             messenger.showSnackBar(AppSnackBar.success(context.$.msgNodeUpdated(node.name)));
             context.read<NodesBloc>().add(NodesEvent.getNodes());
 
@@ -281,7 +281,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
       _nodeBloc.add(
         NodeEvent.update(
           UpdateNodeParams(
-            uuid: widget.nodeUUID,
+            id: widget.id,
             name: _name,
             image: _image,
             cores: _cores,
@@ -297,15 +297,15 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
 }
 
 class NodeDetailsPage extends StatelessWidget {
-  const NodeDetailsPage({required this.nodeUUID, super.key});
+  const NodeDetailsPage({required this.id, super.key});
 
-  final NodeUUID nodeUUID;
+  final NodeID id;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NodeBloc(context.read<INodesRepository>())..add(NodeEvent.getNode(nodeUUID)),
-      child: _NodeDetailsView(nodeUUID: nodeUUID),
+      create: (context) => NodeBloc(context.read<INodesRepository>())..add(NodeEvent.getNode(id)),
+      child: _NodeDetailsView(id: id),
     );
   }
 }

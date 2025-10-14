@@ -24,6 +24,6 @@ final class UpdateNodeReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return NodesEndpoints.updateNode(_params.uuid);
+    return NodesEndpoints.updateNode(_params.id);
   }
 }

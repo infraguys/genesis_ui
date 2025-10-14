@@ -6,7 +6,7 @@ final class DeleteNodeUseCase {
 
   final INodesRepository _repository;
 
-  Future<void> call(NodeUUID uuid) async {
-    await _repository.deleteNode(uuid);
+  Future<void> call(NodeID id) async {
+    await _repository.deleteNode(id);
   }
 }

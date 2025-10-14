@@ -25,7 +25,7 @@ class NodeBloc extends Bloc<NodeEvent, NodeState> {
   Future<void> _onGetNode(_GetNode event, Emitter<NodeState> emit) async {
     final useCase = GetNodeUseCase(_repository);
     emit(NodeState.loading());
-    final node = await useCase(event.uuid);
+    final node = await useCase(event.id);
     emit(NodeState.loaded(node));
   }
 
@@ -42,7 +42,7 @@ class NodeBloc extends Bloc<NodeEvent, NodeState> {
   Future<void> _onDeleteNode(_DeleteNode event, Emitter<NodeState> emit) async {
     final useCase = DeleteNodeUseCase(_repository);
     try {
-      await useCase(event.node.uuid);
+      await useCase(event.node.id);
       emit(NodeState.deleted(event.node));
     } on PermissionException catch (e) {
       emit(NodePermissionFailureState(e.message));

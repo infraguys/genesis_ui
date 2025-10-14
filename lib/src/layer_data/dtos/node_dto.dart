@@ -11,7 +11,7 @@ part 'node_dto.g.dart';
 @JsonSerializable(constructor: '_')
 final class NodeDto implements IDto<Node> {
   NodeDto._({
-    required this.uuid,
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
     required this.projectId,
@@ -28,8 +28,8 @@ final class NodeDto implements IDto<Node> {
 
   factory NodeDto.fromJson(Map<String, dynamic> json) => _$NodeDtoFromJson(json);
 
-  @JsonKey(name: 'uuid')
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final NodeID id;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
@@ -58,7 +58,7 @@ final class NodeDto implements IDto<Node> {
   @override
   Node toEntity() {
     return Node(
-      uuid: NodeUUID(uuid),
+      id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
       projectId: ProjectID(projectId),
@@ -73,6 +73,8 @@ final class NodeDto implements IDto<Node> {
       ipv4: ipv4,
     );
   }
+
+  static NodeID _toID(String json) => NodeID(json);
 
   static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
     return defaultNetwork?['ipv4'] as String;
