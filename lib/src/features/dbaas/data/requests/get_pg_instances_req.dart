@@ -5,7 +5,7 @@ import 'package:genesis/src/layer_domain/params/dbaas/pg_instances_params/get_pg
 extension GetPgInstancesReqExt on GetPgInstancesParams {
   Map<String, dynamic> toQuery() {
     return {
-      'uuid': id,
+      'uuid': ?id,
       'name': ?name,
       'description': ?description,
       'project_id': ?projectId,
