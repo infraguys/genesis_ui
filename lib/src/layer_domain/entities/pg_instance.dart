@@ -14,7 +14,7 @@ class PgInstance extends Equatable {
     required this.updatedAt,
     required this.status,
     // required this.ipv4,
-    required this.cpu,
+    required this.cores,
     required this.ram,
     required this.diskSize,
     required this.nodesNumber,
@@ -30,7 +30,7 @@ class PgInstance extends Equatable {
   final DateTime updatedAt;
   final PgInstanceStatus status;
   // final List<String> ipv4;
-  final int cpu;
+  final int cores;
   final int ram;
   final int diskSize;
   final int nodesNumber;
@@ -46,7 +46,7 @@ class PgInstance extends Equatable {
     updatedAt,
     status,
     // ipv4,
-    cpu,
+    cores,
     ram,
     diskSize,
     nodesNumber,
