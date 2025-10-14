@@ -12,14 +12,14 @@ final class GetPgInstancesReq implements QueryEncodable, PathEncodable {
   @override
   Map<String, dynamic> toQuery() {
     return {
-      'uuid': ?_params.uuid?.raw,
+      'uuid': ?_params.id?.raw,
       'name': ?_params.name,
       'description': ?_params.description,
       'project_id': ?_params.projectId,
       'created_at': ?_params.createdAt?.toIso8601String(),
       'updated_at': ?_params.updatedAt?.toIso8601String(),
       'status': ?_fromStatus(_params.status),
-      'cpu': ?_params.cpu?.toString(),
+      'cpu': ?_params.cores?.toString(),
       'ram': ?_params.ram?.toString(),
       'disk_size': ?_params.diskSize?.toString(),
       'nodes_number': ?_params.nodesNumber?.toString(),
@@ -29,9 +29,7 @@ final class GetPgInstancesReq implements QueryEncodable, PathEncodable {
   }
 
   @override
-  String toPath() {
-    return PGInstancesEndpoints.getInstances();
-  }
+  String toPath() => PgInstancesEndpoints.getInstances();
 
   String? _fromStatus(PgInstanceStatus? status) {
     return switch (status) {
