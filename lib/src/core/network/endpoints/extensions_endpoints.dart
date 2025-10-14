@@ -3,20 +3,20 @@ import 'package:genesis/src/layer_domain/entities/extension.dart';
 
 abstract class ExtensionsEndpoints {
   static const _elements = '${Env.apiPrefix}/${Env.versionApi}/em/elements/';
-  static const _element = '$_elements:uuid';
+  static const _element = '$_elements:id';
 
   static String getExtensions() => _elements;
 
   static String createExtension() => _elements;
 
-  static String getExtension(ExtensionUUID uuid) => _element.fillUuid(uuid);
+  static String getExtension(ExtensionID id) => _element.fillUuid(id);
 
-  static String updateExtension(ExtensionUUID uuid) => _element.fillUuid(uuid);
+  static String updateExtension(ExtensionID id) => _element.fillUuid(id);
 
-  static String deleteExtension(ExtensionUUID uuid) => _element.fillUuid(uuid);
+  static String deleteExtension(ExtensionID id) => _element.fillUuid(id);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(ExtensionUUID uuid) => replaceFirst(':uuid', uuid.value);
+  String fillUuid(ExtensionID id) => replaceFirst(':id', id.value);
 }

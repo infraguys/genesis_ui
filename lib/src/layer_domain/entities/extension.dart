@@ -1,12 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/interfaces/base_status.dart';
 
 final class Extension extends Equatable {
   const Extension({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -17,7 +16,7 @@ final class Extension extends Equatable {
     required this.link,
   });
 
-  final ExtensionUUID uuid;
+  final ExtensionID id;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -29,7 +28,7 @@ final class Extension extends Equatable {
 
   @override
   List<Object?> get props => [
-    uuid,
+    id,
     name,
     description,
     createdAt,
@@ -41,8 +40,8 @@ final class Extension extends Equatable {
   ];
 }
 
-extension type ExtensionUUID(String value) {
-  bool isEqualTo(ExtensionUUID other) => value == other.value;
+extension type ExtensionID(String value) {
+  bool isEqualTo(ExtensionID other) => value == other.value;
 }
 
 enum ExtensionStatus implements BaseStatusEnum {

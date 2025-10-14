@@ -4,5 +4,5 @@ import 'package:genesis/src/layer_domain/params/extensions_params/get_extensions
 abstract interface class IExtensionsRepository {
   Future<List<Extension>> getExtensions(GetExtensionsParams params);
 
-  Future<Extension> getExtension(ExtensionUUID uuid);
+  Future<Extension> getExtension(ExtensionID id);
 }

@@ -10,7 +10,7 @@ final class ExtensionsApi {
 
   final RestClient _client;
 
-  Future<ExtensionDto> getExtension(ExtensionUUID uuid) {
+  Future<ExtensionDto> getExtension(ExtensionID id) {
     // TODO: implement getExtension
     throw UnimplementedError();
   }

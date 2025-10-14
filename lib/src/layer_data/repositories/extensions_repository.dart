@@ -10,7 +10,7 @@ final class ExtensionsRepository implements IExtensionsRepository {
   final ExtensionsApi _api;
 
   @override
-  Future<Extension> getExtension(ExtensionUUID uuid) {
+  Future<Extension> getExtension(ExtensionID id) {
     // TODO: implement getExtension
     throw UnimplementedError();
   }

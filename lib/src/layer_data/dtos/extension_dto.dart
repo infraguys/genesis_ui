@@ -7,7 +7,7 @@ part 'extension_dto.g.dart';
 @JsonSerializable(constructor: '_')
 final class ExtensionDto implements IDto<Extension> {
   ExtensionDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -20,8 +20,8 @@ final class ExtensionDto implements IDto<Extension> {
 
   factory ExtensionDto.fromJson(Map<String, dynamic> json) => _$ExtensionDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toUuid)
-  final ExtensionUUID uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final ExtensionID id;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'description')
@@ -40,7 +40,7 @@ final class ExtensionDto implements IDto<Extension> {
   @JsonKey(name: 'link')
   final String link;
 
-  static ExtensionUUID _toUuid(String json) => ExtensionUUID(json);
+  static ExtensionID _toID(String json) => ExtensionID(json);
 
   static ExtensionStatus _toStatus(String json) => switch (json) {
     'NEW' => ExtensionStatus.newStatus,
@@ -52,7 +52,7 @@ final class ExtensionDto implements IDto<Extension> {
   @override
   Extension toEntity() {
     return Extension(
-      uuid: uuid,
+      id: id,
       name: name,
       description: description,
       createdAt: createdAt,
