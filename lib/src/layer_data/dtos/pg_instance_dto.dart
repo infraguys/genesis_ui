@@ -7,7 +7,7 @@ part 'pg_instance_dto.g.dart';
 @JsonSerializable(constructor: '_', explicitToJson: true)
 class PGInstanceDto implements IDto<PgInstance> {
   PGInstanceDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.projectId,
@@ -15,7 +15,7 @@ class PGInstanceDto implements IDto<PgInstance> {
     required this.updatedAt,
     required this.status,
     // required this.ipv4,
-    required this.cpu,
+    required this.cores,
     required this.ram,
     required this.diskSize,
     required this.nodesNumber,
@@ -25,8 +25,8 @@ class PGInstanceDto implements IDto<PgInstance> {
 
   factory PGInstanceDto.fromJson(Map<String, dynamic> json) => _$PGInstanceDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toUuid)
-  final PgInstanceUUID uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final PgInstanceID id;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'description', defaultValue: '')
@@ -41,7 +41,7 @@ class PGInstanceDto implements IDto<PgInstance> {
   final PgInstanceStatus status;
   // final List<String> ipv4;
   @JsonKey(name: 'cpu')
-  final int cpu;
+  final int cores;
   @JsonKey(name: 'ram')
   final int ram;
   @JsonKey(name: 'disk_size')
@@ -56,7 +56,7 @@ class PGInstanceDto implements IDto<PgInstance> {
   @override
   PgInstance toEntity() {
     return PgInstance(
-      uuid: uuid,
+      id: id,
       name: name,
       description: description,
       projectId: projectId,
@@ -64,7 +64,7 @@ class PGInstanceDto implements IDto<PgInstance> {
       updatedAt: updatedAt,
       status: status,
       // ipv4: ipv4,
-      cpu: cpu,
+      cores: cores,
       ram: ram,
       diskSize: diskSize,
       nodesNumber: nodesNumber,
@@ -73,7 +73,7 @@ class PGInstanceDto implements IDto<PgInstance> {
     );
   }
 
-  static PgInstanceUUID _toUuid(String json) => PgInstanceUUID(json);
+  static PgInstanceID _toID(String json) => PgInstanceID(json);
 
   static PgInstanceStatus _toStatus(String json) => switch (json) {
     'NEW' => PgInstanceStatus.newStatus,
