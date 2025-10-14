@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/core/interfaces/base_status.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/base_status_label.dart';
 import 'package:genesis/src/theming/palette.dart';
