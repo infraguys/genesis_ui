@@ -6,7 +6,7 @@ import 'package:genesis/src/core/interfaces/base_status.dart';
 
 class PgInstance extends Equatable {
   const PgInstance({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.projectId,
@@ -22,7 +22,7 @@ class PgInstance extends Equatable {
     required this.version,
   });
 
-  final PgInstanceUUID uuid;
+  final PgInstanceID id;
   final String name;
   final String? description;
   final String projectId;
@@ -55,9 +55,7 @@ class PgInstance extends Equatable {
   ];
 }
 
-extension type PgInstanceUUID(String raw) {
-  bool isEqualTo(PgInstanceUUID other) => raw == other.raw;
-}
+extension type PgInstanceID(String raw) {}
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW
 enum PgInstanceStatus implements BaseStatusEnum {
