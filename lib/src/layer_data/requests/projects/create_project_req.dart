@@ -15,7 +15,7 @@ final class CreateProjectReq implements JsonEncodable, PathEncodable {
     return {
       'name': _params.name,
       'description': ?_params.description,
-      'organization': OrganizationsEndpoints.getOrganization(_params.organizationUuid).replaceFirst(
+      'organization': OrganizationsEndpoints.getOrganization(_params.organizationID).replaceFirst(
           '${Env.apiPrefix}/', ''),
     };
   }

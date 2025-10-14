@@ -6,7 +6,7 @@ final class GetOrganizationUseCase {
 
   final IOrganizationsRepository _repository;
 
-  Future<Organization> call(OrganizationUUID uuid) async {
-    return await _repository.getOrganization(uuid);
+  Future<Organization> call(OrganizationID id) async {
+    return await _repository.getOrganization(id);
   }
 }

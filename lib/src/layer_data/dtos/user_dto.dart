@@ -1,5 +1,4 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,7 +7,7 @@ part 'user_dto.g.dart';
 @JsonSerializable(constructor: '_')
 class UserDto implements IDto<User> {
   UserDto._({
-    required this.uuid,
+    required this.id,
     required this.username,
     required this.description,
     required this.createdAt,
@@ -25,8 +24,8 @@ class UserDto implements IDto<User> {
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toUuid)
-  final UserUUID uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final UserUUID id;
   @JsonKey(name: 'description')
   final String description;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
@@ -55,7 +54,7 @@ class UserDto implements IDto<User> {
   @override
   User toEntity() {
     return User(
-      uuid: uuid,
+      uuid: id,
       username: username,
       description: description,
       createdAt: createdAt,
@@ -73,7 +72,7 @@ class UserDto implements IDto<User> {
 
   static Object? _readUsername(Map<dynamic, dynamic> json, String _) => json['username'] ?? json['name'];
 
-  static UserUUID _toUuid(String json) => UserUUID(json);
+  static UserUUID _toID(String json) => UserUUID(json);
 
   static UserStatus _toStatus(String json) => switch (json) {
     'ACTIVE' => UserStatus.active,

@@ -6,7 +6,7 @@ final class DeleteOrganizationUseCase {
 
   final IOrganizationsRepository _repository;
 
-  Future<void> call(OrganizationUUID params) async {
-    await _repository.deleteOrganization(params);
+  Future<void> call(OrganizationID id) async {
+    await _repository.deleteOrganization(id);
   }
 }

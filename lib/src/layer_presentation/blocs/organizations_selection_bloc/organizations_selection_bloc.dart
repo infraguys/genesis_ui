@@ -24,7 +24,7 @@ class OrganizationsSelectionBloc extends Cubit<List<Organization>> {
   }
 
   void onSetCheckedFromResponse({required Project project, required List<Organization> organizations}) {
-    final filteredOrganizations = organizations.where((it) => it.uuid.isEqualTo(project.organizationUUID));
+    final filteredOrganizations = organizations.where((it) => it.id.isEqualTo(project.organizationID));
     emit(filteredOrganizations.toList());
   }
 

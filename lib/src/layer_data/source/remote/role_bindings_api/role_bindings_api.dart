@@ -13,7 +13,7 @@ final class RoleBindingsApi {
 
   Future<void> createRoleBinding(CreateRoleBindingReq req) async {
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(
+      final Response() = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );

@@ -3,16 +3,16 @@ import 'package:genesis/src/layer_domain/entities/project.dart';
 
 final class EditProjectParams {
   const EditProjectParams({
-    required this.uuid,
+    required this.id,
     required this.name,
-    required this.organizationUUID,
+    required this.organizationID,
     required this.status,
     this.description,
   });
 
-  final ProjectID uuid;
+  final ProjectID id;
   final String name;
   final String? description;
-  final OrganizationUUID organizationUUID;
+  final OrganizationID organizationID;
   final ProjectStatus? status;
 }

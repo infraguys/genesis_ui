@@ -26,14 +26,14 @@ class OrganizationsListItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(organization.uuid.value),
+                Text(organization.id.value),
                 IconButton(
                   icon: Icon(Icons.copy, color: Colors.white, size: 18),
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: organization.uuid.value));
+                    Clipboard.setData(ClipboardData(text: organization.id.value));
                     final snack = SnackBar(
                       backgroundColor: Colors.green,
-                      content: Text(context.$.msgCopiedToClipboard(organization.uuid.value)),
+                      content: Text(context.$.msgCopiedToClipboard(organization.id.value)),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snack);
                   },
@@ -55,7 +55,7 @@ class OrganizationsListItem extends StatelessWidget {
       onTap: () {
         context.goNamed(
           AppRoutes.organization.name,
-          pathParameters: {'uuid': organization.uuid.value},
+          pathParameters: {'uuid': organization.id.value},
           extra: organization,
         );
       },

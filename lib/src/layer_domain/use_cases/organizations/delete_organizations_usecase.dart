@@ -7,7 +7,7 @@ final class DeleteOrganizationsUseCase {
   final IOrganizationsRepository _repository;
 
   Future<void> call(List<Organization> organizations) async {
-    final uuids = organizations.map((it) => it.uuid).toList();
+    final uuids = organizations.map((it) => it.id).toList();
     await Future.wait(uuids.map(_repository.deleteOrganization));
   }
 }

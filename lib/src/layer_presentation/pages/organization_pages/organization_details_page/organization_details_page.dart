@@ -19,9 +19,9 @@ part './widgets/delete_organization_btn.dart';
 part './widgets/save_organization_btn.dart';
 
 class _OrganizationDetailsView extends StatefulWidget {
-  const _OrganizationDetailsView({required this.uuid});
+  const _OrganizationDetailsView({required this.id});
 
-  final OrganizationUUID uuid;
+  final OrganizationID id;
 
   @override
   State<_OrganizationDetailsView> createState() => _OrganizationDetailsViewState();
@@ -149,7 +149,11 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
       _formKey.currentState!.save();
       _organizationBloc.add(
         OrganizationEvent.update(
-          UpdateOrganizationParams(uuid: widget.uuid, name: _name, description: _description),
+          UpdateOrganizationParams(
+            id: widget.id,
+            name: _name,
+            description: _description,
+          ),
         ),
       );
     }
@@ -157,17 +161,17 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
 }
 
 class OrganizationDetailsPage extends StatelessWidget {
-  const OrganizationDetailsPage({required this.uuid, super.key});
+  const OrganizationDetailsPage({required this.id, super.key});
 
-  final OrganizationUUID uuid;
+  final OrganizationID id;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OrganizationBloc(
         context.read<IOrganizationsRepository>(),
-      )..add(OrganizationEvent.get(uuid)),
-      child: _OrganizationDetailsView(uuid: uuid),
+      )..add(OrganizationEvent.get(id)),
+      child: _OrganizationDetailsView(id: id),
     );
   }
 }

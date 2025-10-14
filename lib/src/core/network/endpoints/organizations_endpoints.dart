@@ -3,20 +3,20 @@ import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 abstract class OrganizationsEndpoints {
   static const _organizations = '${Env.apiPrefix}/${Env.versionApi}/iam/organizations/';
-  static const _organization = '$_organizations:uuid';
+  static const _organization = '$_organizations:id';
 
   static String getOrganizations() => _organizations;
 
   static String createOrganization() => _organizations;
 
-  static String getOrganization(OrganizationUUID uuid) => _organization.fillUuid(uuid);
+  static String getOrganization(OrganizationID id) => _organization.withID(id);
 
-  static String updateOrganization(OrganizationUUID uuid) => _organization.fillUuid(uuid);
+  static String updateOrganization(OrganizationID id) => _organization.withID(id);
 
-  static String deleteOrganization(OrganizationUUID uuid) => _organization.fillUuid(uuid);
+  static String deleteOrganization(OrganizationID id) => _organization.withID(id);
 }
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(OrganizationUUID uuid) => replaceFirst(':uuid', uuid.value);
+  String withID(OrganizationID id) => replaceFirst(':id', id.value);
 }

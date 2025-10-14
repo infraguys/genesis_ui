@@ -3,12 +3,12 @@ import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart'
 import 'package:genesis/src/layer_domain/entities/organization.dart';
 
 final class GetOrganizationReq implements PathEncodable {
-  GetOrganizationReq(this._uuid);
+  GetOrganizationReq(this._id);
 
-  final OrganizationUUID _uuid;
+  final OrganizationID _id;
 
   @override
   String toPath() {
-    return OrganizationsEndpoints.getOrganization(_uuid);
+    return OrganizationsEndpoints.getOrganization(_id);
   }
 }

@@ -43,7 +43,7 @@ class ProjectDto implements IDto<Project> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status.toProjectStatus(),
-      organizationUUID: OrganizationUUID(organization),
+      organizationID: OrganizationID(organization),
     );
   }
 

@@ -17,7 +17,7 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
       'name': _params.name,
       'description': ?_params.description,
       'organization': OrganizationsEndpoints.getOrganization(
-        _params.organizationUUID,
+        _params.organizationID,
       ).replaceFirst('${Env.apiPrefix}/', ''),
       'status': ?_fromStatus(_params.status),
     };
@@ -34,6 +34,6 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return ProjectsEndpoints.updateProject(_params.uuid);
+    return ProjectsEndpoints.updateProject(_params.id);
   }
 }

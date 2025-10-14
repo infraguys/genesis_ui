@@ -6,16 +6,16 @@ sealed class ProjectEvent {
   factory ProjectEvent.create({
     required String name,
     required String description,
-    required OrganizationUUID organizationUUID,
-    required UserUUID? userUUID,
+    required OrganizationID organizationID,
+    required UserUUID? userID,
     required List<Role> roles,
   }) = _Create;
 
   factory ProjectEvent.delete(Project project) = _Delete;
 
   factory ProjectEvent.update({
-    required ProjectID uuid,
-    required OrganizationUUID organizationUUID,
+    required ProjectID projectID,
+    required OrganizationID organizationID,
     required String name,
     String? description,
     ProjectStatus? status,
@@ -24,17 +24,17 @@ sealed class ProjectEvent {
 
 final class _Create implements ProjectEvent {
   _Create({
-    required this.userUUID,
+    required this.userID,
     required this.name,
     required this.description,
-    required this.organizationUUID,
+    required this.organizationID,
     required this.roles,
   });
 
   final String name;
   final String description;
-  final OrganizationUUID organizationUUID;
-  final UserUUID? userUUID;
+  final OrganizationID organizationID;
+  final UserUUID? userID;
   final List<Role> roles;
 }
 
@@ -46,15 +46,15 @@ final class _Delete implements ProjectEvent {
 
 final class _Update implements ProjectEvent {
   _Update({
-    required this.uuid,
-    required this.organizationUUID,
+    required this.projectID,
+    required this.organizationID,
     required this.name,
     this.description,
     this.status,
   });
 
-  final ProjectID uuid;
-  final OrganizationUUID organizationUUID;
+  final ProjectID projectID;
+  final OrganizationID organizationID;
   final String name;
   final String? description;
   final ProjectStatus? status;

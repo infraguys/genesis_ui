@@ -168,8 +168,8 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
         ProjectEvent.create(
           name: _name,
           description: _description,
-          organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
-          userUUID: context.read<UsersSelectionBloc>().state.firstOrNull?.uuid,
+          organizationID: context.read<OrganizationsSelectionBloc>().state.first.id,
+          userID: context.read<UsersSelectionBloc>().state.firstOrNull?.uuid,
           roles: context.read<RolesSelectionBloc>().state,
         ),
       );

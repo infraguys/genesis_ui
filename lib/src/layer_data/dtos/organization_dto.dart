@@ -8,7 +8,7 @@ part 'organization_dto.g.dart';
 @JsonSerializable(constructor: '_')
 class OrganizationDto implements IDto<Organization> {
   OrganizationDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -19,20 +19,25 @@ class OrganizationDto implements IDto<Organization> {
 
   factory OrganizationDto.fromJson(Map<String, dynamic> json) => _$OrganizationDtoFromJson(json);
 
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final OrganizationID id;
+  @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
+  @JsonKey(name: 'status')
   final OrganizationStatusDto status;
+  @JsonKey(name: 'info')
   final dynamic info;
 
   @override
   Organization toEntity() {
     return Organization(
-      uuid: OrganizationUUID(uuid),
+      id: id,
       name: name,
       description: description,
       createdAt: createdAt,
@@ -40,6 +45,8 @@ class OrganizationDto implements IDto<Organization> {
       status: status.toOrganizationStatus(),
     );
   }
+
+  static OrganizationID _toID(String json) => OrganizationID(json);
 }
 
 @JsonEnum()

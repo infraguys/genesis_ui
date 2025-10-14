@@ -3,7 +3,7 @@ part of 'organization_bloc.dart';
 sealed class OrganizationEvent {
   factory OrganizationEvent.create(CreateOrganizationParams params) = _Create;
 
-  factory OrganizationEvent.get(OrganizationUUID uuid) = _Get;
+  factory OrganizationEvent.get(OrganizationID id) = _Get;
 
   factory OrganizationEvent.update(UpdateOrganizationParams params) = _Update;
 
@@ -11,9 +11,9 @@ sealed class OrganizationEvent {
 }
 
 final class _Get implements OrganizationEvent {
-  const _Get(this.uuid);
+  const _Get(this.id);
 
-  final OrganizationUUID uuid;
+  final OrganizationID id;
 }
 
 final class _Create implements OrganizationEvent {

@@ -49,14 +49,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       CreateProjectParams(
         name: event.name,
         description: event.description,
-        organizationUuid: event.organizationUUID,
+        organizationID: event.organizationID,
       ),
     );
 
-    if (event.userUUID != null) {
+    if (event.userID != null) {
       final listOfParams = event.roles.map(
         (role) => CreateRoleBindingParams(
-          userUUID: event.userUUID!,
+          userUUID: event.userID!,
           roleUUID: role.uuid,
           projectUUID: createdProject.id,
         ),
@@ -79,10 +79,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(ProjectLoadingState());
 
     final params = EditProjectParams(
-      uuid: event.uuid,
+      id: event.projectID,
       name: event.name,
       description: event.description,
-      organizationUUID: event.organizationUUID,
+      organizationID: event.organizationID,
       status: event.status,
     );
     final updatedProject = await useCase(params);

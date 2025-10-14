@@ -153,10 +153,10 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
       _formKey.currentState!.save();
       _projectBloc.add(
         ProjectEvent.update(
-          uuid: widget.uuid,
+          projectID: widget.uuid,
           name: _name,
           description: _description,
-          organizationUUID: context.read<OrganizationsSelectionBloc>().state.first.uuid,
+          organizationID: context.read<OrganizationsSelectionBloc>().state.first.id,
         ),
       );
     }

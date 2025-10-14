@@ -25,7 +25,7 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   Future<void> _onGetOrganization(_Get event, Emitter<OrganizationState> emit) async {
     final useCase = GetOrganizationUseCase(_repository);
     emit(OrganizationLoadingState());
-    final organization = await useCase(event.uuid);
+    final organization = await useCase(event.id);
     emit(OrganizationLoadedState(organization));
   }
 
@@ -52,7 +52,7 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   Future<void> _onDeleteOrganization(_Delete event, Emitter<OrganizationState> emit) async {
     final useCase = DeleteOrganizationUseCase(_repository);
     try {
-      await useCase(event.organization.uuid);
+      await useCase(event.organization.id);
       emit(OrganizationDeletedState(event.organization));
     } on PermissionException catch (e) {
       emit(OrganizationPermissionFailureState(e.message));
