@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/create_pg_instance_page/create_pg_instance_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pg_instance_details_page/pg_instance_details_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/pg_instance_list_page.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
@@ -312,8 +314,8 @@ GoRouter createRouter(BuildContext context) {
                   GoRoute(
                     name: AppRoutes.instance.name,
                     path: ':id',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: Placeholder(),
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: PgInstanceDetailsPage(id: PgInstanceID(state.pathParameters['id']!)),
                     ),
                   ),
                 ],
