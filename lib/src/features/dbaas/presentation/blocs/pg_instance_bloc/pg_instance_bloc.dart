@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
