@@ -10,20 +10,6 @@ class PgInstanceStatusWidget extends StatelessWidget {
 
   final PgInstanceStatus _status;
 
-  Color get textStatusColor => switch (_status) {
-    PgInstanceStatus.active => Palette.color6DCF91,
-    PgInstanceStatus.newStatus => Palette.color6DCF91,
-    PgInstanceStatus.inProgress => Palette.color6DCF91,
-    _ => Palette.colorF04C4C,
-  };
-
-  Color get labelStatusColor => switch (_status) {
-    PgInstanceStatus.active => Palette.color6DCF91.withValues(alpha: 0.10),
-    PgInstanceStatus.newStatus => Palette.color6DCF91.withValues(alpha: 0.10),
-    PgInstanceStatus.inProgress => Palette.color6DCF91.withValues(alpha: 0.10),
-    _ => Palette.colorF04C4C.withValues(alpha: 0.10),
-  };
-
   @override
   Widget build(BuildContext context) {
     final params = _getStatusParams(context);
