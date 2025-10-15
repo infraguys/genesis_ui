@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_domain/entities/permission.dart';
 import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/permission_status_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
@@ -63,7 +63,7 @@ class PermissionsTable extends StatelessWidget {
             },
           ),
           Text(permission.name, style: TextStyle(color: Colors.white)),
-          StatusLabel(status: permission.status),
+          PermissionStatusWidget(status: permission.status),
           RichText(
             text: TextSpan(
               children: [

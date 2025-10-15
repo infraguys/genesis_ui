@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 
 class Permission extends Equatable {
   const Permission({
@@ -16,7 +15,7 @@ class Permission extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Status status;
+  final PermissionStatus status;
 
   @override
   List<Object?> get props => [
@@ -32,3 +31,5 @@ class Permission extends Equatable {
 extension type PermissionUUID(String value) {
   bool isEqualTo(PermissionUUID other) => value == other.value;
 }
+
+enum PermissionStatus { active, unknown }
