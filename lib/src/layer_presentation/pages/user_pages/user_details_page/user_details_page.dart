@@ -20,11 +20,14 @@ import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/user_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 
 part './widgets/confirm_email_btn.dart';
+
 part './widgets/delete_user_btn.dart';
+
 part './widgets/save_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
@@ -208,7 +211,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                                     spacing: 8.0,
                                     children: [
                                       Text(context.$.status),
-                                      StatusLabel(status: user.status),
+                                      UserStatusWidget(status: user.status),
                                     ],
                                   ),
                                   Column(
