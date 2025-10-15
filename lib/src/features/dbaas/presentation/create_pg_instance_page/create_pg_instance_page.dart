@@ -198,7 +198,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
             diskSize: _diskSize,
             nodesNumber: _nodesNumber,
             syncReplicaNumber: _syncReplicaNumber,
-            ipv4: _ipv4List,
+            ipsv4: _ipv4List,
           ),
         ),
       );

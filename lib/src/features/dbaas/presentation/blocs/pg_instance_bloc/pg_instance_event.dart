@@ -4,6 +4,8 @@ sealed class PgInstanceEvent {
   factory PgInstanceEvent.getInstance(PgInstanceID id) = _GetInstance;
 
   factory PgInstanceEvent.createInstance(CreatePgInstanceParams params) = _CreateInstance;
+
+  factory PgInstanceEvent.updateInstance(UpdatePgInstanceParams params) = _UpdateInstance;
 }
 
 final class _GetInstance implements PgInstanceEvent {
@@ -18,14 +20,8 @@ final class _CreateInstance implements PgInstanceEvent {
   final CreatePgInstanceParams params;
 }
 
-// final class _UpdateNode implements NodeEvent {
-//   _UpdateNode(this.params);
-//
-//   final UpdateNodeParams params;
-// }
-//
-// final class _DeleteNode implements NodeEvent {
-//   _DeleteNode(this.node);
-//
-//   final Node node;
-// }
+final class _UpdateInstance implements PgInstanceEvent {
+  _UpdateInstance(this.params);
+
+  final UpdatePgInstanceParams params;
+}

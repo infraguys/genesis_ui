@@ -6,7 +6,7 @@ extension CreatePgInstanceReqExt on CreatePgInstanceParams {
     return {
       'name': name,
       'description': description,
-      'ipsv4': ipv4,
+      'ipsv4': ipsv4,
       'cpu': cores,
       'ram': ram,
       'disk_size': diskSize,
