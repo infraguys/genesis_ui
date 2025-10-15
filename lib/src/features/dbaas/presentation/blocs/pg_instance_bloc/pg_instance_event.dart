@@ -1,15 +1,15 @@
 part of 'pg_instance_bloc.dart';
 
 sealed class PgInstanceEvent {
-  factory PgInstanceEvent.getNode(PgInstanceID uuid) = _GetInstance;
+  factory PgInstanceEvent.getInstance(PgInstanceID id) = _GetInstance;
 
-  factory PgInstanceEvent.create(CreatePgInstanceParams params) = _CreateInstance;
+  factory PgInstanceEvent.createInstance(CreatePgInstanceParams params) = _CreateInstance;
 }
 
 final class _GetInstance implements PgInstanceEvent {
-  _GetInstance(this.uuid);
+  _GetInstance(this.id);
 
-  final PgInstanceID uuid;
+  final PgInstanceID id;
 }
 
 final class _CreateInstance implements PgInstanceEvent {
