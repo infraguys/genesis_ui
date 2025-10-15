@@ -14,10 +14,11 @@ import 'package:genesis/src/layer_domain/use_cases/users/get_user_usecase.dart';
 import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
 
 part 'user_event.dart';
+
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc(this._repository) : super(UserState.loading()) {
+  UserBloc(this._repository) : super(UserInitialState()) {
     on(_onGetUser);
     on(_onCreateUser);
     on(_onDeleteUser);
@@ -31,27 +32,27 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onGetUser(_GetUser event, Emitter<UserState> emit) async {
     final useCase = GetUserUseCase(_repository);
-    emit(UserState.loading());
+    emit(UserLoadingState());
     try {
       final user = await useCase(event.uuid);
-      emit(UserState.loaded(user));
+      emit(UserLoadedState(user));
     } on PermissionException catch (e) {
-      emit(UserState.permissionFailure(e.message));
+      emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
-      emit(UserState.failure(e.message));
+      emit(UserFailureState(e.message));
     }
   }
 
   Future<void> _onCreateUser(_CreateUser event, Emitter<UserState> emit) async {
     final useCase = CreateUserUseCase(_repository);
-    emit(UserState.loading());
+    emit(UserLoadingState());
     try {
       final createdUser = await useCase(event.params);
-      emit(UserState.created(createdUser));
+      emit(UserCreatedState(createdUser));
     } on PermissionException catch (e) {
-      emit(UserState.permissionFailure(e.message));
+      emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
-      emit(UserState.failure(e.message));
+      emit(UserFailureState(e.message));
     }
   }
 
@@ -59,11 +60,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = DeleteUserUseCase(_repository);
     try {
       await useCase(event.user);
-      emit(UserState.deleted(event.user));
+      emit(UserDeletedState(event.user));
     } on PermissionException catch (e) {
-      emit(UserState.permissionFailure(e.message));
+      emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
-      emit(UserState.failure(e.message));
+      emit(UserFailureState(e.message));
     }
   }
 
@@ -77,30 +78,30 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     final useCase = UpdateUserUseCase(_repository);
     try {
       final user = await useCase(event.params);
-      emit(UserState.updated(user));
+      emit(UserUpdatedState(user));
     } on PermissionException catch (e) {
-      emit(UserState.permissionFailure(e.message));
+      emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
-      emit(UserState.failure(e.message));
+      emit(UserFailureState(e.message));
     }
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
-    emit(UserState.loading());
+    emit(UserLoadingState());
     final useCase = ConfirmEmailsUseCase(_repository);
     await useCase(event.users);
-    emit(UserState.confirmed());
+    emit(UserConfirmedState());
   }
 
   Future<void> _onForceConfirmEmail(_ForceConfirmEmail event, Emitter<UserState> emit) async {
     final useCase = ForceConfirmEmailUseCase(_repository);
     try {
       final user = await useCase(event.user.uuid);
-      emit(UserState.loaded(user));
+      emit(UserLoadedState(user));
     } on PermissionException catch (e) {
-      emit(UserState.permissionFailure(e.message));
+      emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
-      emit(UserState.failure(e.message));
+      emit(UserFailureState(e.message));
     }
   }
 }
