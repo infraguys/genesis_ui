@@ -1,6 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_dto.g.dart';
@@ -29,8 +28,8 @@ class OrganizationDto implements IDto<Organization> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status')
-  final OrganizationStatusDto status;
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  final OrganizationStatus status;
   @JsonKey(name: 'info')
   final dynamic info;
 
@@ -42,19 +41,14 @@ class OrganizationDto implements IDto<Organization> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toOrganizationStatus(),
+      status: status,
     );
   }
 
   static OrganizationID _toID(String json) => OrganizationID(json);
-}
 
-@JsonEnum()
-enum OrganizationStatusDto {
-  @JsonValue('ACTIVE')
-  active;
-
-  Status toOrganizationStatus() => switch (this) {
-    active => Status.active,
+  static OrganizationStatus _toStatusFromJson(String json) => switch (json) {
+    'ACTIVE' => OrganizationStatus.active,
+    _ => OrganizationStatus.unknown,
   };
 }

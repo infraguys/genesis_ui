@@ -6,7 +6,7 @@ import 'package:genesis/src/layer_domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/organization_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,7 +75,7 @@ class OrganizationsTable extends StatelessWidget {
             },
           ),
           Text(organization.name, style: TextStyle(color: Colors.white)),
-          StatusLabel(status: organization.status),
+          OrganizationStatusWidget(status: organization.status),
           RichText(
             text: TextSpan(
               children: [

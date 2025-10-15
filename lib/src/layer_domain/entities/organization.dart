@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 
 class Organization extends Equatable {
   const Organization({
@@ -16,7 +15,7 @@ class Organization extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Status status;
+  final OrganizationStatus status;
 
   @override
   List<Object?> get props => [
@@ -28,6 +27,8 @@ class Organization extends Equatable {
     status,
   ];
 }
+
+enum OrganizationStatus { active, unknown }
 
 extension type OrganizationID(String value) {
   bool isEqualTo(OrganizationID other) => value == other.value;
