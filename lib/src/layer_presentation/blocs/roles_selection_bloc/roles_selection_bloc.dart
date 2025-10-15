@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 part 'roles_selection_event.dart';
 

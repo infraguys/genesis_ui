@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class AppTable extends StatelessWidget {

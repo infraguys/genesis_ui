@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/bloc_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/bloc_icon_button.dart';
 
 class UsersBlockIconButton extends StatelessWidget {
   const UsersBlockIconButton({super.key});

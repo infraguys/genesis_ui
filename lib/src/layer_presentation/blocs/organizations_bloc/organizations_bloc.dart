@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/params/organizations/get_organizations_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/organizations/delete_organizations_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/organizations/get_orgaizations_usecase.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+import 'package:genesis/src/features/organizations/domain/params/get_organizations_params.dart';
+import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
+import 'package:genesis/src/features/organizations/domain/usecases/delete_organizations_usecase.dart';
+import 'package:genesis/src/features/organizations/domain/usecases/get_orgaizations_usecase.dart';
 
 part 'organizations_event.dart';
 part 'organizations_state.dart';

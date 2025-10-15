@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
-import 'package:genesis/src/layer_domain/params/dbaas/pg_instances_params/get_pg_instances_params.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
 
 extension GetPgInstancesReqExt on GetPgInstancesParams {
   Map<String, dynamic> toQuery() {

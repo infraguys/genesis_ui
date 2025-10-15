@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_users_dialog.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class UsersActionsPopupMenuButton extends StatelessWidget {
   const UsersActionsPopupMenuButton({required this.user, super.key});

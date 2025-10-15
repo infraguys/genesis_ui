@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/permission.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 
 abstract class PermissionsEndpoints {
   static const _permissions = '${Env.apiPrefix}/${Env.versionApi}/iam/permissions/';

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_progress_indicator.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
 class _AttachRolesView extends StatelessWidget {

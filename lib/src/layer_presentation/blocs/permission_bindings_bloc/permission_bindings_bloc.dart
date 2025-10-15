@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/permission_binding.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/permission_bindings_params/get_permission_bindings_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/get_permission_bindings_usecase.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/permissions/domain/params/get_permission_bindings_params.dart';
+import 'package:genesis/src/features/permissions/domain/repositories/i_permission_bindings_repository.dart';
+import 'package:genesis/src/features/permissions/domain/usecases/get_permission_bindings_usecase.dart';
 
 part 'permission_bindings_event.dart';
 

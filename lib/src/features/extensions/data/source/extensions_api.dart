@@ -3,8 +3,8 @@ import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/extensions/data/dtos/extension_dto.dart';
 import 'package:genesis/src/features/extensions/data/requests/get_extensions_req.dart';
-import 'package:genesis/src/layer_domain/entities/extension.dart';
-import 'package:genesis/src/layer_domain/params/extensions_params/get_extensions_params.dart';
+import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
+import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
 
 final class ExtensionsApi {
   ExtensionsApi(this._client);

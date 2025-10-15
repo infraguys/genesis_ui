@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_domain/params/nodes_params/get_nodes_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/delete_nodes_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/get_nodes_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/domain/params/get_nodes_params.dart';
+import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/delete_nodes_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/get_nodes_usecase.dart';
 
 part 'nodes_event.dart';
 part 'nodes_state.dart';

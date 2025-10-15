@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/get_users_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/force_confirm_emails_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/get_users_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/params/get_users_params.dart';
+import 'package:genesis/src/features/users/domain/usecases/delete_users_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/force_confirm_emails_usecase.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/domain/usecases/get_users_usecase.dart';
 
 part 'users_event.dart';
+
 part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
@@ -35,7 +36,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     // todo: Подумать что сделать с запросом
     emit(UsersState.loading());
     try {
-      await useCase(event.users);
+      await useCase(event.users.map((it) => it.uuid).toList());
       emit(UsersState.deleted(event.users));
       add(UsersEvent.getUsers());
     } on PermissionException catch (e) {

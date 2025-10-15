@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 
 abstract class OrganizationsEndpoints {
   static const _organizations = '${Env.apiPrefix}/${Env.versionApi}/iam/organizations/';

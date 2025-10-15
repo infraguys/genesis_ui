@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/permission.dart';
-import 'package:genesis/src/layer_domain/entities/permission_binding.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
 
 part 'permissions_selection_event.dart';
 

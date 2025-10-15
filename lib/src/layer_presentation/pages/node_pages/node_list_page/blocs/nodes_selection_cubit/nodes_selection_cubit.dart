@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 
 class NodesSelectionCubit extends Cubit<List<Node>> {
   NodesSelectionCubit() : super(List.empty());

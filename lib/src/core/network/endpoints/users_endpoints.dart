@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 
 abstract class UsersEndpoints {
   static const _users = '${Env.apiPrefix}/${Env.versionApi}/iam/users/';

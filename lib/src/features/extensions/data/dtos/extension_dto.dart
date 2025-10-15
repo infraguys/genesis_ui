@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
-import 'package:genesis/src/layer_domain/entities/extension.dart';
+import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'extension_dto.g.dart';

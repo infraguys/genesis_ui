@@ -1,7 +1,7 @@
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 final class PgInstancesRepository implements IPgInstancesRepository {
   PgInstancesRepository(this._pgInstancesApi);

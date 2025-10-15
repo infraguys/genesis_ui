@@ -8,9 +8,9 @@ import 'package:genesis/src/features/dbaas/data/requests/update_pg_instance_req.
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
-import 'package:genesis/src/layer_data/dtos/pg_instance_dto.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
-import 'package:genesis/src/layer_domain/params/dbaas/pg_instances_params/get_pg_instances_params.dart';
+import 'package:genesis/src/features/dbaas/data/dtos/pg_instance_dto.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
 
 final class PgInstancesApi {
   PgInstancesApi(this._client);

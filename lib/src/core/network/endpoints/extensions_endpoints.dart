@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/extension.dart';
+import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 
 abstract class ExtensionsEndpoints {
   static const _elements = '${Env.apiPrefix}/${Env.versionApi}/em/elements/';

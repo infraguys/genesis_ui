@@ -1,17 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
-import 'package:genesis/src/layer_domain/params/users/create_user_params.dart';
-import 'package:genesis/src/layer_domain/params/users/update_user_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/change_user_password_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/confirm_emails_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/create_user_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/delete_users_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/force_confirm_emails_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/get_user_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/users/update_user_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/params/change_user_password_params.dart';
+import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
+import 'package:genesis/src/features/users/domain/params/update_user_params.dart';
+import 'package:genesis/src/features/users/domain/usecases/delete_user_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/force_confirm_email_usecase.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
+import 'package:genesis/src/features/users/domain/usecases/change_user_password_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/confirm_emails_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/create_user_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/get_user_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/update_user_usecase.dart';
 
 part 'user_event.dart';
 
@@ -59,7 +59,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
     final useCase = DeleteUserUseCase(_repository);
     try {
-      await useCase(event.user);
+      await useCase(event.user.uuid);
       emit(UserDeletedState(event.user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -89,7 +89,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
     emit(UserLoadingState());
     final useCase = ConfirmEmailsUseCase(_repository);
-    await useCase(event.users);
+    await useCase(event.users.map((it) => it.uuid).toList());
     emit(UserConfirmedState());
   }
 

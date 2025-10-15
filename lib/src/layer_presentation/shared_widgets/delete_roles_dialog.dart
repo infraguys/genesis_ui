@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:go_router/go_router.dart';
 
 class DeleteRolesDialog extends StatelessWidget {

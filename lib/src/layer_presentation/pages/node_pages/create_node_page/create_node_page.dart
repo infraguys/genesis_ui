@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_domain/params/nodes_params/create_node_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/domain/params/create_node_params.dart';
+import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
 class _CreateNodeView extends StatefulWidget {

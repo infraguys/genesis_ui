@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class DeleteElevatedButton extends StatelessWidget {
   const DeleteElevatedButton({required this.onPressed, super.key});

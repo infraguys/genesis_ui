@@ -2,19 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/core/exceptions/no_token_exception.dart';
-import 'package:genesis/src/layer_domain/entities/auth_session.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/iam/permission_names.dart';
-import 'package:genesis/src/layer_domain/params/get_token_params.dart';
-import 'package:genesis/src/layer_domain/params/users/refresh_token_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/auth_usecases/force_refresh_token_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/auth_usecases/get_token_use_case.dart';
-import 'package:genesis/src/layer_domain/use_cases/auth_usecases/restore_session_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/auth_usecases/sign_out_usecase.dart';
+import 'package:genesis/src/features/iam_client/domain/entities/auth_session.dart';
+import 'package:genesis/src/features/iam_client/domain/params/get_token_params.dart';
+import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
+import 'package:genesis/src/features/iam_client/domain/repositories/i_auth_repository.dart';
+import 'package:genesis/src/features/iam_client/domain/usecases/force_refresh_token_usecase.dart';
+import 'package:genesis/src/features/iam_client/domain/usecases/get_token_usecase.dart';
+import 'package:genesis/src/features/iam_client/domain/usecases/restore_session_usecase.dart';
+import 'package:genesis/src/features/iam_client/domain/usecases/sign_out_usecase.dart';
+import 'package:genesis/src/features/permissions/permission_names/permission_names.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 
 part 'auth_event.dart';
-
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

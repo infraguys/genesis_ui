@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/typedefs/status_view_params.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/base_status_widget.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/base_status_widget.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class ProjectStatusWidget extends StatelessWidget {
   const ProjectStatusWidget({

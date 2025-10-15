@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:genesis/src/theming/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({

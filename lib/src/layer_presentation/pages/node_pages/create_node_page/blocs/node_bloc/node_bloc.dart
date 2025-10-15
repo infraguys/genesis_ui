@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_domain/params/nodes_params/create_node_params.dart';
-import 'package:genesis/src/layer_domain/params/nodes_params/update_node_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_nodes_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/create_node_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/delete_node_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/get_node_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/nodes_usecases/update_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/domain/params/create_node_params.dart';
+import 'package:genesis/src/features/nodes/domain/params/update_node_params.dart';
+import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/create_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/delete_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/get_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/update_node_usecase.dart';
 
 part 'node_event.dart';
 part 'node_state.dart';

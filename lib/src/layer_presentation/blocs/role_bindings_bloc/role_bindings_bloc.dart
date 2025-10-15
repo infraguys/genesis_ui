@@ -1,17 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/role_binding.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/create_role_binding_params.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/create_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/delete_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindings_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/entities/role_binding.dart';
+import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
+import 'package:genesis/src/features/roles/domain/params/get_role_bindings_params.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/usecases/create_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/delete_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_bindings_usecase.dart';
 
 part 'role_bindings_event.dart';
-
 part 'role_bindings_state.dart';
 
 class RoleBindingsBloc extends Bloc<RoleBindingsEvent, RoleBindingsState> {

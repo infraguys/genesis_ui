@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 abstract class RolesEndpoints {
   static const _roles = '${Env.apiPrefix}/${Env.versionApi}/iam/roles/';

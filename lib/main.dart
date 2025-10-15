@@ -5,7 +5,7 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/injection/di_container.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
-import 'package:genesis/src/theming/app_theme.dart';
+import 'package:genesis/src/shared/presentation/ui/theme/app_theme.dart';
 import 'package:go_router/go_router.dart';
 
 void main() async {

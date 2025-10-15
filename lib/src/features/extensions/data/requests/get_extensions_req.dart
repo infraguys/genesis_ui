@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/network/endpoints/extensions_endpoints.dart';
-import 'package:genesis/src/layer_domain/entities/extension.dart';
-import 'package:genesis/src/layer_domain/params/extensions_params/get_extensions_params.dart';
+import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
+import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
 
 extension GetExtensionsReqExt on GetExtensionsParams {
   Map<String, dynamic> toQuery() {

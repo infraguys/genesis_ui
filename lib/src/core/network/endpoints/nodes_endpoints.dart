@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 
 abstract class NodesEndpoints {
   static const _nodes = '${Env.apiPrefix}/${Env.versionApi}/nodes/';

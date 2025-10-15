@@ -6,7 +6,7 @@ import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_para
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instance_usecase.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 part 'pg_instance_event.dart';
 

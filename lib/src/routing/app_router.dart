@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/create_pg_instance_page/create_pg_instance_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pg_instance_details_page/pg_instance_details_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/pg_instance_list_page.dart';
-import 'package:genesis/src/layer_domain/entities/node.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/pg_instance_details_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/pg_instance_list_page.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
@@ -36,8 +36,8 @@ import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen
 import 'package:genesis/src/layer_presentation/pages/user_pages/create_user_page/create_user_page.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/user_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/user_list_page.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/page_not_found.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/scaffold_with_navigation.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_not_found.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.dart';

@@ -1,16 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/use_cases/projects/get_project_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/roles/get_role_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/projects/domain/params/get_projects_params.dart';
+import 'package:genesis/src/features/roles/domain/params/get_role_bindings_params.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/projects/domain/usecases/get_project_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_usecase.dart';
 
 part 'user_projects_event.dart';
 part 'user_projects_state.dart';

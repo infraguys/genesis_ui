@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
 class OrganizationsSelectionBloc extends Cubit<List<Organization>> {
   OrganizationsSelectionBloc() : super(List.empty());

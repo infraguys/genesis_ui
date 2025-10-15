@@ -1,4 +1,4 @@
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 final class UpdatePgInstanceParams {
   UpdatePgInstanceParams({

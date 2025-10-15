@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
 abstract class ProjectsEndpoints {
   static const _projects = '${Env.apiPrefix}/${Env.versionApi}/iam/projects/';

@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 abstract class PgInstancesEndpoints {
   static const _instances = '${Env.dbaasApiPrefix}/${Env.versionApi}/types/postgres/instances/';

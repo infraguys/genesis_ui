@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/users/change_user_password_params.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/users/domain/params/change_user_password_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -81,7 +81,7 @@ class _ChangeUserPasswordDialogState extends State<ChangeUserPasswordDialog> {
     _userBloc.add(
       UserEvent.changePassword(
         ChangeUserPasswordParams(
-          uuidUUID: user.uuid,
+          id: user.uuid,
           oldPassword: _oldPassword,
           newPassword: _newPassword,
         ),
