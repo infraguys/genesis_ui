@@ -4,6 +4,8 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/pg_instance_list_page/widgets/pg_instance_status_label.dart';
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
+import 'package:genesis/src/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
@@ -101,12 +103,11 @@ class PgInstancesTable extends StatelessWidget {
         ];
       },
       onTap: (index) {
-        // final user = users[index];
-        // context.goNamed(
-        //   AppRoutes.user.name,
-        //   pathParameters: {'uuid': user.uuid.value},
-        //   extra: user,
-        // );
+        final instance = instances[index];
+        context.goNamed(
+          AppRoutes.instance.name,
+          pathParameters: {'id': instance.id.raw},
+        );
       },
     );
   }
