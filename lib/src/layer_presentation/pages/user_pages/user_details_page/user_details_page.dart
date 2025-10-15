@@ -20,7 +20,6 @@ import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 
@@ -61,7 +60,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
-      listenWhen: (_, current) => current is! UserLoadingState,
+      listenWhen: (_, current) => current.shouldListen,
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
@@ -93,7 +92,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
       },
       child: Scaffold(
         body: BlocBuilder<UserBloc, UserState>(
-          buildWhen: (previous, current) => current is UserLoadedState || current is UserLoadingState,
+          buildWhen: (_, current) => current.shouldBuild,
           builder: (context, state) {
             if (state is! UserLoadedState) {
               return AppProgressIndicator();
