@@ -2,9 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_usecase.dart';
-import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instance_usecase.dart';
+import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
 
 part 'pg_instance_event.dart';
 
@@ -13,16 +14,17 @@ part 'pg_instance_state.dart';
 class PgInstanceBloc extends Bloc<PgInstanceEvent, PgInstanceState> {
   PgInstanceBloc(this._repository) : super(PgInstanceInitialState()) {
     on(_onCreateInstance);
+    on(_onGetInstance);
   }
 
   final IPgInstancesRepository _repository;
 
-  // Future<void> _onGetNode(_GetNode event, Emitter<NodeState> emit) async {
-  //   final useCase = GetNodeUseCase(_repository);
-  //   emit(NodeState.loading());
-  //   final node = await useCase(event.uuid);
-  //   emit(NodeState.loaded(node));
-  // }
+  Future<void> _onGetInstance(_GetInstance event, Emitter<PgInstanceState> emit) async {
+    final useCase = GetPgInstanceUseCase(_repository);
+    emit(PgInstanceLoadingState());
+    final instance = await useCase(event.id);
+    emit(PgInstanceLoadedState(instance));
+  }
 
   Future<void> _onCreateInstance(_CreateInstance event, Emitter<PgInstanceState> emit) async {
     final useCase = CreatePgInstanceUseCase(_repository);
