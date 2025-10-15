@@ -37,7 +37,7 @@ class PgInstanceDto implements IDto<PgInstance> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatus)
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final PgInstanceStatus status;
   // final List<String> ipv4;
   @JsonKey(name: 'cpu')
@@ -75,7 +75,7 @@ class PgInstanceDto implements IDto<PgInstance> {
 
   static PgInstanceID _toID(String json) => PgInstanceID(json);
 
-  static PgInstanceStatus _toStatus(String json) => switch (json) {
+  static PgInstanceStatus _toStatusFromJson(String json) => switch (json) {
     'NEW' => PgInstanceStatus.newStatus,
     'ACTIVE' => PgInstanceStatus.active,
     'IN_PROGRESS' => PgInstanceStatus.inProgress,
