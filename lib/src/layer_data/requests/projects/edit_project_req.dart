@@ -27,7 +27,7 @@ final class EditProjectReq implements JsonEncodable, PathEncodable {
     return switch (status) {
       ProjectStatus.active => 'ACTIVE',
       ProjectStatus.inProgress => 'IN_PROGRESS',
-      ProjectStatus.newProject => 'NEW',
+      ProjectStatus.newStatus => 'NEW',
       _ => null,
     };
   }
