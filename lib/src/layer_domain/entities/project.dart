@@ -32,11 +32,7 @@ class Project extends Equatable {
   ];
 }
 
-enum ProjectStatus {
-  newProject,
-  active,
-  inProgress,
-}
+enum ProjectStatus { newStatus, active, inProgress, unknown }
 
 extension type ProjectID(String value) {
   bool isEqual(ProjectID other) => value == other.value;

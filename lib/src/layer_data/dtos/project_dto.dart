@@ -29,8 +29,8 @@ class ProjectDto implements IDto<Project> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status')
-  final ProjectStatusDto status;
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  final ProjectStatus status;
   @JsonKey(name: 'organization', fromJson: _fromUrlToUuid)
   final String organization;
 
@@ -42,7 +42,7 @@ class ProjectDto implements IDto<Project> {
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toProjectStatus(),
+      status: status,
       organizationID: OrganizationID(organization),
     );
   }
@@ -50,20 +50,11 @@ class ProjectDto implements IDto<Project> {
   static ProjectID _toID(String json) => ProjectID(json);
 
   static String _fromUrlToUuid(String value) => value.split('/').last;
-}
 
-@JsonEnum()
-enum ProjectStatusDto {
-  @JsonValue('NEW')
-  newProject,
-  @JsonValue('ACTIVE')
-  active,
-  @JsonValue('IN_PROGRESS')
-  inProgress;
-
-  ProjectStatus toProjectStatus() => switch (this) {
-    newProject => ProjectStatus.newProject,
-    ProjectStatusDto.active => ProjectStatus.active,
-    ProjectStatusDto.inProgress => ProjectStatus.inProgress,
+  static ProjectStatus _toStatusFromJson(String json) => switch (json) {
+    'NEW' => ProjectStatus.newStatus,
+    'ACTIVE' => ProjectStatus.active,
+    'IN_PROGRESS' => ProjectStatus.inProgress,
+    _ => ProjectStatus.unknown,
   };
 }
