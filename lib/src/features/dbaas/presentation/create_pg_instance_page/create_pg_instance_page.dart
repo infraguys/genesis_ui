@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/pg_instances_pages/blocs/pg_instance_bloc/pg_instance_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/breadcrumbs.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
