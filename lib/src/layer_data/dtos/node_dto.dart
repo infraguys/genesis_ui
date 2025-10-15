@@ -48,7 +48,7 @@ final class NodeDto implements IDto<Node> {
   final int rootDiskSize;
   @JsonKey(name: 'image')
   final String image;
-  @JsonKey(name: 'status', fromJson: _statusFromJson)
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final NodeStatus status;
   @JsonKey(name: 'node_type')
   final NodeTypeDto nodeType;
@@ -82,7 +82,7 @@ final class NodeDto implements IDto<Node> {
     return defaultNetwork?['ipv4'] as String;
   }
 
-  static NodeStatus _statusFromJson(String json) => switch (json) {
+  static NodeStatus _toStatusFromJson(String json) => switch (json) {
     'NEW' => NodeStatus.newStatus,
     'ACTIVE' => NodeStatus.active,
     'IN_PROGRESS' => NodeStatus.inProgress,
