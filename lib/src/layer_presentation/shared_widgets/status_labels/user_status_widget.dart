@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/base_status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/base_status_widget.dart';
 import 'package:genesis/src/theming/palette.dart';
 
 class UserStatusWidget extends StatelessWidget {
