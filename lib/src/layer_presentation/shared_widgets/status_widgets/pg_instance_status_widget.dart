@@ -46,7 +46,7 @@ class PgInstanceStatusWidget extends StatelessWidget {
           color: Palette.colorF04C4C,
           labelColor: Palette.colorF04C4C.withValues(alpha: 0.10),
         );
-      default:
+      case PgInstanceStatus.unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,

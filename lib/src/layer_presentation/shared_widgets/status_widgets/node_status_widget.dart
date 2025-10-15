@@ -62,7 +62,7 @@ class NodeStatusWidget extends StatelessWidget {
           color: Palette.colorF04C4C,
           labelColor: Palette.colorF04C4C.withValues(alpha: 0.10),
         );
-      default:
+      case NodeStatus.unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,

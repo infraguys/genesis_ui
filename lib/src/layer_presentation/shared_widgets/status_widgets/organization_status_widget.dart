@@ -32,7 +32,7 @@ class OrganizationStatusWidget extends StatelessWidget {
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      default:
+      case OrganizationStatus.unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,
