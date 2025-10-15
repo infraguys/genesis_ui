@@ -15,7 +15,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_widget.dart';
 import 'package:go_router/go_router.dart';
 
 part './widgets/delete_node_btn.dart';
@@ -241,7 +241,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                                 spacing: 8.0,
                                 children: [
                                   Text(context.$.status),
-                                  NodeStatusLabel(status: state.node.status),
+                                  NodeStatusWidget(status: state.node.status),
                                 ],
                               ),
                               Column(
