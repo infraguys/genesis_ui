@@ -47,3 +47,9 @@ base class _FailureState {
 
   final String message;
 }
+
+extension UserStateX on UserState {
+  bool get shouldListen => this is! UserLoadingState && this is! UserInitialState;
+
+  bool get shouldBuild => this is UserLoadedState || this is UserLoadingState;
+}
