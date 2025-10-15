@@ -189,7 +189,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _pgInstanceBloc.add(
-        PgInstanceEvent.create(
+        PgInstanceEvent.createInstance(
           CreatePgInstanceParams(
             name: _name,
             description: _description,
