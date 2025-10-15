@@ -5,7 +5,7 @@ import 'package:genesis/src/layer_domain/entities/extension.dart';
 import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/extension_status_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
@@ -64,8 +64,7 @@ class ExtensionsTable extends StatelessWidget {
             },
           ),
           Text(extension.name, style: TextStyle(color: Colors.white)),
-          // todo: поменять статус
-          StatusLabel(status: Status.active), // Assuming all projects are active for simplicity
+          ExtensionStatusWidget(status: extension.status),
           RichText(
             text: TextSpan(
               children: [

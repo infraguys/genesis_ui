@@ -44,17 +44,4 @@ extension type ExtensionID(String value) {
   bool isEqualTo(ExtensionID other) => value == other.value;
 }
 
-enum ExtensionStatus implements BaseStatusEnum {
-  newStatus,
-  active,
-  inProgress,
-  unknown;
-
-  @override
-  String humanReadable(BuildContext context) => switch (this) {
-    newStatus => context.$.newStatus,
-    active => context.$.active,
-    inProgress => context.$.inProgress,
-    _ => context.$.unknown,
-  };
-}
+enum ExtensionStatus { newStatus, active, inProgress, unknown }
