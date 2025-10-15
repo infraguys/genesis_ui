@@ -1,7 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/base_status.dart';
 import 'package:genesis/src/layer_domain/entities/project.dart';
 
 class Node extends Equatable {
@@ -63,23 +60,4 @@ enum NodeType {
 }
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED
-enum NodeStatus implements BaseStatusEnum {
-  newStatus,
-  active,
-  error,
-  inProgress,
-  scheduled,
-  started,
-  unknown;
-
-  @override
-  String humanReadable(BuildContext context) => switch (this) {
-    newStatus => context.$.newStatus,
-    active => context.$.active,
-    error => context.$.error,
-    inProgress => context.$.inProgress,
-    scheduled => context.$.scheduled,
-    started => context.$.started,
-    _ => context.$.unknown,
-  };
-}
+enum NodeStatus { newStatus, active, error, inProgress, scheduled, started, unknown }

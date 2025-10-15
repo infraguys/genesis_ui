@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/interfaces/base_status.dart';
 import 'package:genesis/src/core/typedefs/status_view_params.dart';
 import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/base_status_widget.dart';
@@ -12,7 +11,7 @@ class NodeStatusWidget extends StatelessWidget {
     super.key,
   }) : _status = status;
 
-  final BaseStatusEnum _status;
+  final NodeStatus _status;
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon
 import 'package:genesis/src/layer_presentation/shared_widgets/confirmation_dialog.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/user_status_widget.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/user_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 

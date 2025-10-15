@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_domain/entities/node.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_labels/node_status_widget.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/node_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
