@@ -13,7 +13,7 @@ class PgInstance extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    // required this.ipv4,
+    // required this.ipsv4,
     required this.cores,
     required this.ram,
     required this.diskSize,
@@ -29,7 +29,8 @@ class PgInstance extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final PgInstanceStatus status;
-  // final List<String> ipv4;
+
+  // final List<String> ipsv4;
   final int cores;
   final int ram;
   final int diskSize;
@@ -58,19 +59,4 @@ class PgInstance extends Equatable {
 extension type PgInstanceID(String raw) {}
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW
-enum PgInstanceStatus implements BaseStatusEnum {
-  newStatus,
-  active,
-  error,
-  inProgress,
-  unknown;
-
-  @override
-  String humanReadable(BuildContext context) => switch (this) {
-    newStatus => context.$.newStatus,
-    active => context.$.active,
-    error => context.$.error,
-    inProgress => context.$.inProgress,
-    _ => 'Unknown'.hardcoded,
-  };
-}
+enum PgInstanceStatus { newStatus, active, error, inProgress, unknown }
