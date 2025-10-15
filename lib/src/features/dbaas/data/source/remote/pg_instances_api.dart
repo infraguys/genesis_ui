@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/dbaas/data/requests/create_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/get_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/get_pg_instances_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/update_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 import 'package:genesis/src/layer_data/dtos/pg_instance_dto.dart';
 import 'package:genesis/src/layer_domain/entities/pg_instance.dart';
@@ -19,9 +21,15 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<PgInstanceDto> getPgInstance(PgInstanceID uuid) async {
-    // TODO: implement getPGInstance
-    throw UnimplementedError();
+  Future<PgInstanceDto> getPgInstance(GetPgInstanceParams params) async {
+    try {
+      final Response(:data) = await _client.get<Map<String, dynamic>>(
+        params.toPath(),
+      );
+      return PgInstanceDto.fromJson(data!);
+    } on DioException catch (e) {
+      throw BaseNetworkException.from(e);
+    }
   }
 
   Future<void> deletePgInstance(PgInstanceID uuid) async {
