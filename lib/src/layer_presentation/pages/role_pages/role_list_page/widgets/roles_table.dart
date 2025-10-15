@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_action_popup_menu_button.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_snackbar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_label.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/role_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,7 +66,7 @@ class RolesTable extends StatelessWidget {
             },
           ),
           Text(role.name, style: TextStyle(color: Colors.white)),
-          StatusLabel(status: role.status),
+          RoleStatusWidget(status: role.status),
           RichText(
             text: TextSpan(
               children: [

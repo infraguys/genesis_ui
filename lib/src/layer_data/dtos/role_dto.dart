@@ -1,6 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'role_dto.g.dart';
@@ -10,7 +9,7 @@ class RoleDto implements IDto<Role> {
   factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
 
   RoleDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -19,36 +18,38 @@ class RoleDto implements IDto<Role> {
     required this.projectId,
   });
 
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final RoleUUID id;
+  @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'createdAt', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final RoleStatusDto status;
-  final dynamic projectId;
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  final RoleStatus status;
+  @JsonKey(name: 'project_id')
+  final String projectId;
 
   @override
   Role toEntity() {
     return Role(
-      uuid: RoleUUID(uuid),
+      uuid: id,
       name: name,
       description: description,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      status: status.toRoleStatus(),
+      status: status,
       projectId: projectId,
     );
   }
-}
 
-@JsonEnum()
-enum RoleStatusDto {
-  @JsonValue('ACTIVE')
-  active;
+  static RoleUUID _toID(String json) => RoleUUID(json);
 
-  Status toRoleStatus() => switch (this) {
-    active => Status.active,
+  static RoleStatus _toStatusFromJson(String json) => switch (json) {
+    'ACTIVE' => RoleStatus.active,
+    _ => RoleStatus.unknow,
   };
 }

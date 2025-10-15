@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:genesis/src/layer_domain/entities/status.dart';
 
 class Role extends Equatable {
   const Role({
@@ -17,8 +16,8 @@ class Role extends Equatable {
   final String description;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Status status;
-  final dynamic projectId;
+  final RoleStatus status;
+  final String projectId;
 
   @override
   List<Object?> get props => [
@@ -57,3 +56,5 @@ class Role extends Equatable {
 // }
 
 extension type RoleUUID(String value) {}
+
+enum RoleStatus { active, unknow }
