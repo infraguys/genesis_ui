@@ -14,7 +14,10 @@ import 'package:genesis/src/layer_presentation/shared_widgets/save_icon_button.d
 import 'package:go_router/go_router.dart';
 
 class _PgInstanceDetailsPage extends StatefulWidget {
-  const _PgInstanceDetailsPage({required this.id, super.key});
+  const _PgInstanceDetailsPage({
+    required this.id,
+    super.key, // ignore: unused_element_parameter
+  });
 
   final PgInstanceID id;
 
@@ -192,7 +195,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _pgInstanceBloc.add(
-        PgInstanceEvent.create(
+        PgInstanceEvent.createInstance(
           CreatePgInstanceParams(
             name: _name,
             description: _description,
