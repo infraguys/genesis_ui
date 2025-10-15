@@ -18,5 +18,5 @@ abstract class PgInstancesEndpoints {
 
 // ignore: camel_case_extensions
 extension _ on String {
-  String fillUuid(PgInstanceID uuid) => replaceFirst('id', uuid.raw);
+  String fillUuid(PgInstanceID uuid) => replaceFirst(':id', uuid.raw);
 }
