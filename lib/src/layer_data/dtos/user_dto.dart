@@ -32,7 +32,7 @@ class UserDto implements IDto<User> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatus)
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final UserStatus status;
   @JsonKey(name: 'username', readValue: _readUsername)
   final String username;
@@ -74,7 +74,7 @@ class UserDto implements IDto<User> {
 
   static UserUUID _toID(String json) => UserUUID(json);
 
-  static UserStatus _toStatus(String json) => switch (json) {
+  static UserStatus _toStatusFromJson(String json) => switch (json) {
     'ACTIVE' => UserStatus.active,
     _ => UserStatus.unknown,
   };
