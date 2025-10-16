@@ -6,6 +6,7 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
@@ -48,14 +49,14 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
   Widget build(BuildContext context) {
     return BlocListener<PgInstanceBloc, PgInstanceState>(
       listener: (context, state) {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final messenger = ScaffoldMessenger.of(context);
         switch (state) {
           case PgInstanceCreatedState():
-            // context.read<NodesBloc>().add(NodesEvent.getNodes());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.success));
+            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            messenger.showSnackBar(AppSnackBar.success(context.$.success));
             context.pop();
           case PgInstanceFailureState(:final message):
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
