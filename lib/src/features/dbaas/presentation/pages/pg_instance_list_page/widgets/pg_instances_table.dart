@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_selection_cubit/pg_instance_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -33,19 +35,22 @@ class PgInstancesTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        Checkbox(
-          tristate: true,
-          value: true,
-          onChanged: (_) {
-            // if (allowMultiSelect) {
-            //   // context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleAll(users));
-            // }
+        BlocBuilder<PgInstanceSelectionCubit, List<PgInstance>>(
+          builder: (context, state) {
+            return Checkbox(
+              tristate: true,
+              onChanged: (_) {
+                if (allowMultiSelect) {
+                  context.read<PgInstanceSelectionCubit>().onToggleAll(instances);
+                }
+              },
+              value: switch (state.length) {
+                0 => false,
+                final len when len == instances.length => true,
+                _ => null,
+              },
+            );
           },
-          // value: switch (state.length) {
-          //   0 => false,
-          //   final len when len == users.length => true,
-          //   _ => null,
-          // },
         ),
         Text(context.$.user, style: TextStyle(color: Colors.white)),
         Text(context.$.status, style: TextStyle(color: Colors.white)),
@@ -55,14 +60,17 @@ class PgInstancesTable extends StatelessWidget {
       cellsBuilder: (index) {
         final instance = instances[index];
         return [
-          Checkbox(
-            // value: state.contains(instance),
-            value: true,
-            onChanged: (_) {
-              // if (!allowMultiSelect) {
-              //   context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
-              // }
-              // context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggle(instance));
+          BlocBuilder<PgInstanceSelectionCubit, List<PgInstance>>(
+            builder: (context, state) {
+              return Checkbox(
+                value: state.contains(instance),
+                onChanged: (_) {
+                  if (!allowMultiSelect) {
+                    context.read<PgInstanceSelectionCubit>().onClear();
+                  }
+                  context.read<PgInstanceSelectionCubit>().onToggle(instance);
+                },
+              );
             },
           ),
           Text(instance.name, style: TextStyle(color: Colors.white)),
