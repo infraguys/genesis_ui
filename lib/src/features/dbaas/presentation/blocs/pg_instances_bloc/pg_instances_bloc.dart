@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instances_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instances_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instances_usecase.dart';
 
 part 'pg_instances_event.dart';
 
@@ -11,6 +12,7 @@ part 'pg_instances_state.dart';
 class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
   PgInstancesBloc(this._repository) : super(PgInstancesInitialState()) {
     on(_onGetInstances);
+    on(_onDeleteInstances);
   }
 
   final IPgInstancesRepository _repository;
@@ -20,5 +22,13 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
     emit(PgInstancesLoadingState());
     final instances = await useCase(event.params);
     emit(PgInstancesLoadedState(instances));
+  }
+
+  Future<void> _onDeleteInstances(_DeleteInstances event, Emitter<PgInstancesState> emit) async {
+    final useCase = DeletePgInstancesUseCase(_repository);
+    emit(PgInstancesLoadingState());
+    await useCase(event.instances.map((it) => it.id).toList());
+    emit(PgInstancesDeletedState(event.instances));
+    add(PgInstancesEvent.getInstances());
   }
 }

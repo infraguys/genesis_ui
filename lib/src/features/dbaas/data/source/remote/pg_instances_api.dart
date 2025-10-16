@@ -1,16 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
+import 'package:genesis/src/features/dbaas/data/dtos/pg_instance_dto.dart';
 import 'package:genesis/src/features/dbaas/data/requests/create_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/delete_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/get_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/get_pg_instances_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/update_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/delete_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/data/dtos/pg_instance_dto.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 
 final class PgInstancesApi {
   PgInstancesApi(this._client);
@@ -32,9 +33,14 @@ final class PgInstancesApi {
     }
   }
 
-  Future<void> deletePgInstance(PgInstanceID uuid) async {
-    // TODO: implement deletePGInstance
-    throw UnimplementedError();
+  Future<void> deletePgInstance(DeletePgInstanceParams params) async {
+    try {
+      await _client.delete<void>(
+        params.toPath(),
+      );
+    } on DioException catch (e) {
+      throw BaseNetworkException.from(e);
+    }
   }
 
   Future<PgInstanceDto> createPgInstance(CreatePgInstanceParams params) async {
