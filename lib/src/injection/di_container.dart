@@ -8,6 +8,7 @@ import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/extensions/data/repositories/extensions_repository.dart';
 import 'package:genesis/src/features/extensions/data/source/extensions_api.dart';
 import 'package:genesis/src/features/extensions/domain/repositories/i_extensions_repository.dart';
@@ -202,6 +203,13 @@ class DiContainer extends StatelessWidget {
               create: (context) {
                 final repository = context.read<INodesRepository>();
                 return NodesBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                return PgInstancesBloc(context.read<IPgInstancesRepository>())..add(
+                  PgInstancesEvent.getInstances(),
+                );
               },
             ),
             Provider(
