@@ -6,10 +6,14 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
+
+part './widgets/delete_pg_instance_btn.dart';
 
 class _PgInstanceDetailsPage extends StatefulWidget {
   const _PgInstanceDetailsPage({
@@ -65,7 +69,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             // _ipv4List = instance.ipv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
           case PgInstanceUpdatedState():
-            // messenger.showSnackBar(App)
+          // messenger.showSnackBar(App)
           // case PgInstanceFailureState(:final message):
           //   scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
           default:
@@ -77,6 +81,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
           if (state is! PgInstanceLoadedState) {
             return AppProgressIndicator();
           }
+          final instance = state.instance;
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,6 +95,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                 ),
                 ButtonsBar(
                   children: [
+                    _DeletePgInstanceButton(instance: instance),
                     SaveIconButton(onPressed: save),
                   ],
                 ),
