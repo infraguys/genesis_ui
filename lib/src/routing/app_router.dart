@@ -303,7 +303,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 // TODO(Koretsky): возможно придется переименовать
                 onExit: (context, state) {
-                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  // context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
                   return true;
                 },
                 name: AppRoutes.instances.name,
