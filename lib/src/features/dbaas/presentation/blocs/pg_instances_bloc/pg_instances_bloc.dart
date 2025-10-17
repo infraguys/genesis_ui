@@ -23,8 +23,6 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> with Poll
 
   final IPgInstancesRepository _repository;
 
-  Timer? _timer;
-
   Future<void> _onGetInstances(_GetInstances event, Emitter<PgInstancesState> emit) async {
     final useCase = GetPgInstancesUseCase(_repository);
     emit(PgInstancesLoadingState());
@@ -52,7 +50,7 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> with Poll
     emit(PgInstancesLoadedState(instances));
   }
 
-  void _onStopPolling(_StopPolling event, Emitter<PgInstancesState> emit) {
+  void _onStopPolling(_StopPolling _, Emitter<PgInstancesState> _) {
     polling.stop();
   }
 }
