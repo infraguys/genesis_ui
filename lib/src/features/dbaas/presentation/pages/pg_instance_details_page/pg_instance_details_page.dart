@@ -6,12 +6,14 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 part './widgets/delete_pg_instance_btn.dart';
 
@@ -101,105 +103,183 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                 ),
                 LayoutBuilder(
                   builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth * 0.4,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 24,
-                          children: [
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _name,
-                              decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
-                              onSaved: (newValue) => _name = newValue!,
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 128,
+                      children: [
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 24,
+                              children: [
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _name,
+                                  decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
+                                  onSaved: (newValue) => _name = newValue!,
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _cores.toString(),
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: InputDecoration(
+                                    hintText: 'cores'.hardcoded,
+                                    helperText: 'cores'.hardcoded,
+                                  ),
+                                  onSaved: (newValue) => _cores = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _diskSize.toString(),
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  // TODO(Koretsky): Проверить локализацию
+                                  decoration: InputDecoration(
+                                    hintText: context.$.rootDiskSize,
+                                    helperText: context.$.rootDiskSize,
+                                  ),
+                                  onSaved: (newValue) => _diskSize = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _ram.toString(),
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: InputDecoration(
+                                    hintText: 'ram'.hardcoded,
+                                    helperText: context.$.ramHelperText,
+                                  ),
+                                  onSaved: (newValue) => _ram = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _nodesNumber.toString(),
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  decoration: InputDecoration(
+                                    hintText: 'nodes number'.hardcoded,
+                                    helperText: 'nodes number'.hardcoded,
+                                  ),
+                                  onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                  initialValue: _syncReplicaNumber.toString(),
+                                  decoration: InputDecoration(
+                                    hintText: 'sync replica number'.hardcoded,
+                                    helperText: 'sync replica number'.hardcoded,
+                                  ),
+                                  onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ => null,
+                                  },
+                                ),
+                                TextFormField(
+                                  initialValue: _description,
+                                  decoration: InputDecoration(
+                                    hintText: context.$.description,
+                                    helperText: context.$.description,
+                                  ),
+                                  onSaved: (newValue) => _description = newValue!,
+                                ),
+                              ],
                             ),
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _cores.toString(),
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              decoration: InputDecoration(
-                                hintText: 'cores'.hardcoded,
-                                helperText: 'cores'.hardcoded,
-                              ),
-                              onSaved: (newValue) => _cores = int.parse(newValue!),
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _diskSize.toString(),
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              // TODO(Koretsky): Проверить локализацию
-                              decoration: InputDecoration(
-                                hintText: context.$.rootDiskSize,
-                                helperText: context.$.rootDiskSize,
-                              ),
-                              onSaved: (newValue) => _diskSize = int.parse(newValue!),
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _ram.toString(),
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              decoration: InputDecoration(
-                                hintText: 'ram'.hardcoded,
-                                helperText: context.$.ramHelperText,
-                              ),
-                              onSaved: (newValue) => _ram = int.parse(newValue!),
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _nodesNumber.toString(),
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              decoration: InputDecoration(
-                                hintText: 'nodes number'.hardcoded,
-                                helperText: 'nodes number'.hardcoded,
-                              ),
-                              onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                            TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              initialValue: _syncReplicaNumber.toString(),
-                              decoration: InputDecoration(
-                                hintText: 'sync replica number'.hardcoded,
-                                helperText: 'sync replica number'.hardcoded,
-                              ),
-                              onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                            TextFormField(
-                              initialValue: _description,
-                              decoration: InputDecoration(
-                                hintText: context.$.description,
-                                helperText: context.$.description,
-                              ),
-                              onSaved: (newValue) => _description = newValue!,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          width: constraints.maxWidth * 0.4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: 32,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.uuid),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          alignment: PlaceholderAlignment.middle,
+                                          child: SelectableText(
+                                            instance.id.raw,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: GoogleFonts.robotoMono().fontFamily,
+                                            ),
+                                          ),
+                                        ),
+                                        WidgetSpan(child: const SizedBox(width: 8)),
+                                        WidgetSpan(
+                                          alignment: PlaceholderAlignment.middle,
+                                          child: IconButton(
+                                            icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                                            onPressed: () {
+                                              Clipboard.setData(ClipboardData(text: instance.id.raw));
+                                              final snack = SnackBar(
+                                                backgroundColor: Colors.green,
+                                                content: Text('Скопировано в буфер обмена: ${instance.id.raw}'),
+                                              );
+                                              ScaffoldMessenger.of(context).showSnackBar(snack);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.status),
+                                  PgInstanceStatusWidget(status: state.instance.status),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.createdAt),
+                                  Text(state.instance.createdAt.toString()),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.updatedAt),
+                                  Text(state.instance.updatedAt.toString()),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),

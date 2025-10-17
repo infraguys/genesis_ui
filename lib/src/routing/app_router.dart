@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/pg_instance_details_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/pg_instance_list_page.dart';
@@ -41,6 +42,8 @@ import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigat
 import 'package:go_router/go_router.dart';
 
 part 'routes.dart';
+
+final RouteObserver<PageRoute<dynamic>> instancesObserver = RouteObserver<PageRoute<dynamic>>();
 
 GoRouter createRouter(BuildContext context) {
   print('router');
@@ -295,9 +298,14 @@ GoRouter createRouter(BuildContext context) {
           ),
           StatefulShellBranch(
             navigatorKey: dbaasNavKey,
+            observers: [instancesObserver],
             routes: [
               GoRoute(
                 // TODO(Koretsky): возможно придется переименовать
+                onExit: (context, state) {
+                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  return true;
+                },
                 name: AppRoutes.instances.name,
                 path: '/instances',
                 pageBuilder: (_, _) => NoTransitionPage(

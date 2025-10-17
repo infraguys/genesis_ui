@@ -69,8 +69,25 @@ class _PgInstanceListView extends StatelessWidget {
   }
 }
 
-class PgInstancesListPage extends StatelessWidget {
+class PgInstancesListPage extends StatefulWidget {
   const PgInstancesListPage({super.key});
+
+  @override
+  State<PgInstancesListPage> createState() => _PgInstancesListPageState();
+}
+
+class _PgInstancesListPageState extends State<PgInstancesListPage> {
+  @override
+  initState() {
+    context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
