@@ -596,6 +596,12 @@ abstract class AppLocalizations {
   /// **'Project {name} has been updated'**
   String msgProjectUpdated(String name);
 
+  /// No description provided for @msgClusterCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Cluster {name} has been created'**
+  String msgClusterCreated(String name);
+
   /// No description provided for @status.
   ///
   /// In en, this message translates to:

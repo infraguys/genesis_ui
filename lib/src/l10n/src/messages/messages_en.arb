@@ -135,5 +135,13 @@
         "type": "String"
       }
     }
+  },
+  "msgClusterCreated": "Cluster {name} has been created",
+  "@msgClusterCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

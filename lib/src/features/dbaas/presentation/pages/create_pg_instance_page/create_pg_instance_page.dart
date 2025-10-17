@@ -51,9 +51,9 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
         switch (state) {
-          case PgInstanceCreatedState():
+          case PgInstanceCreatedState(:final instance):
             context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterCreated(instance.name)));
             context.pop();
           case PgInstanceFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
