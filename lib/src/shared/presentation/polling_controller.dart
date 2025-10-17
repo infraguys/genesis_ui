@@ -24,8 +24,6 @@ class PollingController {
     _timer = null;
   }
 
-  void dispose() => stop();
-
   Future<void> _run(void Function() onTick) async {
     if (_isTickInProgress) {
       return;
