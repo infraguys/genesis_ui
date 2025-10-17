@@ -6,12 +6,13 @@ import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instances_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instances_usecase.dart';
+import 'package:genesis/src/shared/presentation/polling_bloc_mixin.dart';
 
 part 'pg_instances_event.dart';
 
 part 'pg_instances_state.dart';
 
-class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
+class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> with PollingBlocMixin {
   PgInstancesBloc(this._repository) : super(PgInstancesInitialState()) {
     on(_onGetInstances);
     on(_onDeleteInstances);
@@ -40,10 +41,9 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
   }
 
   Future<void> _onStartPolling(_StartPolling e, Emitter<PgInstancesState> emit) async {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
-      add(_Tick());
-    });
+    polling.start(
+      () => add(_Tick()),
+    );
   }
 
   Future<void> _onTick(_Tick event, Emitter<PgInstancesState> emit) async {
@@ -53,13 +53,6 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> {
   }
 
   void _onStopPolling(_StopPolling event, Emitter<PgInstancesState> emit) {
-    _timer?.cancel();
-    _timer = null;
-  }
-
-  @override
-  Future<void> close() {
-    _timer?.cancel();
-    return super.close();
+    polling.stop();
   }
 }
