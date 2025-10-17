@@ -48,6 +48,22 @@
       }
     }
   },
+  "deletePgClusterConfirmation": "Удалить кластер {name}?",
+  "@deletePgClusterConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteClustersConfirmation": "Удалить выбранные({count}) кластеры?",
+  "@deleteClustersConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "deleteOrganizationConfirmation": "Удалить организацию {name}?",
   "@deleteOrganizationConfirmation": {
     "placeholders": {

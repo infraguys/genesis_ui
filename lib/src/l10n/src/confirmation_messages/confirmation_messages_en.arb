@@ -48,6 +48,22 @@
       }
     }
   },
+  "deletePgClusterConfirmation": "Delete cluster {name}?",
+  "@deletePgClusterConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteClustersConfirmation": "Delete selected({count}) clusters?",
+  "@deleteClustersConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "deleteOrganizationConfirmation": "Delete organization {name}?",
   "@deleteOrganizationConfirmation": {
     "placeholders": {

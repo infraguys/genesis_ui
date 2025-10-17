@@ -48,7 +48,6 @@ class _PgInstanceListView extends StatelessWidget {
           const SizedBox(height: 24),
           ButtonsBar(
             children: [
-              // SearchInput(),
               _DeletePgInstancesButton(),
               CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createInstance.name)),
             ],
