@@ -42,6 +42,8 @@ app_localizations_*.dart
 *.mocks.dart
 *.config.dart
 untranslated.txt
+app_en.arb
+app_ru.arb
 
 # Symbolication related
 app.*.symbols
