@@ -9,6 +9,12 @@ final class PgInstancesLoadingState implements PgInstancesState {}
 final class PgInstancesLoadedState implements PgInstancesState {
   PgInstancesLoadedState(this.instances);
 
+  int get activeCount => instances.where((it) => it.status == PgInstanceStatus.active).toList().length;
+
+  int get newCount => instances.where((it) => it.status == PgInstanceStatus.newStatus).toList().length;
+
+  int get inProgressCount => instances.where((it) => it.status == PgInstanceStatus.inProgress).toList().length;
+
   final List<PgInstance> instances;
 }
 
