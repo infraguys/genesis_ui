@@ -76,15 +76,28 @@ class PgInstancesListPage extends StatefulWidget {
   State<PgInstancesListPage> createState() => _PgInstancesListPageState();
 }
 
-class _PgInstancesListPageState extends State<PgInstancesListPage> {
+class _PgInstancesListPageState extends State<PgInstancesListPage> with RouteAware {
   @override
-  initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    instancesObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  // Экран стал видимым (вернулись назад / сняли перекрытие)
+  @override
+  void didPopNext() {
     context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
-    super.initState();
+  }
+
+  // Поверх запушили другой экран — можно приостановить
+  @override
+  void didPushNext() {
+    context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
   }
 
   @override
   void dispose() {
+    instancesObserver.unsubscribe(this);
     context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
     super.dispose();
   }

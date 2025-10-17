@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
@@ -86,6 +87,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         title: Text(context.$.dbaas),
                         onTap: () {
                           context.goNamed(AppRoutes.instances.name);
+                          context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
                         },
                       ),
                       const SizedBox(height: 20.0),
@@ -159,7 +161,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
 class _Header extends StatelessWidget {
   const _Header({
     required this.scope,
-    super.key,  // ignore: unused_element_parameter
+    super.key, // ignore: unused_element_parameter
   });
 
   final String scope;
