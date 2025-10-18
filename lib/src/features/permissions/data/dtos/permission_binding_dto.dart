@@ -1,7 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
-import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
-import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'permission_binding_dto.g.dart';
@@ -9,31 +7,36 @@ part 'permission_binding_dto.g.dart';
 @JsonSerializable(constructor: '_')
 class PermissionBindingDto implements IDto<PermissionBinding> {
   PermissionBindingDto._({
-    required this.uuid,
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.role,
-    required this.permission,
+    required this.roleLocation,
+    required this.permissionLocation,
   });
 
   factory PermissionBindingDto.fromJson(Map<String, dynamic> json) => _$PermissionBindingDtoFromJson(json);
 
-  final String uuid;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final PermissionBindingUUID id;
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: DateTime.parse)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  final String role;
-  final String permission;
+  @JsonKey(name: 'role')
+  final String roleLocation;
+  @JsonKey(name: 'permission')
+  final String permissionLocation;
+
+  static PermissionBindingUUID _toID(String uuid) => PermissionBindingUUID(uuid);
 
   @override
   PermissionBinding toEntity() {
     return PermissionBinding(
-      uuid: PermissionBindingUUID(uuid),
+      uuid: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      roleUUID: RoleUUID(role.split('/').last),
-      permissionUUID: PermissionUUID(permission.split('/').last),
+      roleLocation: roleLocation,
+      permissionLocation: permissionLocation,
     );
   }
 }
