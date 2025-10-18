@@ -1,14 +1,14 @@
 import 'package:genesis/src/core/exceptions/no_token_exception.dart';
+import 'package:genesis/src/features/iam_client/data/requests/get_introspection_req.dart';
 import 'package:genesis/src/features/iam_client/data/requests/token_req.dart';
 import 'package:genesis/src/features/iam_client/domain/entities/auth_session.dart';
 import 'package:genesis/src/features/iam_client/domain/repositories/i_auth_repository.dart';
 import 'package:genesis/src/features/iam_client/sources/remote_iam_client_api.dart';
 import 'package:genesis/src/features/iam_client/sources/token_dao.dart';
-import 'package:genesis/src/features/users/data/dtos/user_dto.dart';
-import 'package:genesis/src/features/iam_client/data/requests/get_introspection_req.dart';
+import 'package:genesis/src/features/permissions/permission_names/permission_names.dart';
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
 import 'package:genesis/src/features/projects/data/sources/projects_api.dart';
-import 'package:genesis/src/features/permissions/permission_names/permission_names.dart';
+import 'package:genesis/src/features/users/data/dtos/user_dto.dart';
 
 class AuthRepository implements IAuthRepository {
   AuthRepository({
