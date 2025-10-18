@@ -17,13 +17,20 @@ class TokenDto {
 
   factory TokenDto.fromJson(Map<String, dynamic> json) => _$TokenDtoFromJson(json);
 
+  @JsonKey(name: 'access_token')
   final String accessToken;
+  @JsonKey(name: 'token_type')
   final String tokenType;
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
+  @JsonKey(name: 'expires_at', fromJson: DateTime.fromMillisecondsSinceEpoch)
   final DateTime expiresAt;
+  @JsonKey(name: 'expires_in')
   final int expiresIn;
+  @JsonKey(name: 'id_token')
   final String idToken;
+  @JsonKey(name: 'refresh_token')
   final String refreshToken;
+  @JsonKey(name: 'refresh_expires_in')
   final int refreshExpiresIn;
+  @JsonKey(name: 'scope')
   final String scope;
 }
