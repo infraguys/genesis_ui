@@ -31,7 +31,7 @@ final class ExtensionDto implements IDto<Extension> {
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatus)
+  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final ExtensionStatus status;
   @JsonKey(name: 'version')
   final String version;
@@ -42,7 +42,7 @@ final class ExtensionDto implements IDto<Extension> {
 
   static ExtensionID _toID(String json) => ExtensionID(json);
 
-  static ExtensionStatus _toStatus(String json) => switch (json) {
+  static ExtensionStatus _toStatusFromJson(String json) => switch (json) {
     'NEW' => ExtensionStatus.newStatus,
     'ACTIVE' => ExtensionStatus.active,
     'IN_PROGRESS' => ExtensionStatus.inProgress,
