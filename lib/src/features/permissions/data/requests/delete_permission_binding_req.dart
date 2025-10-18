@@ -3,12 +3,12 @@ import 'package:genesis/src/core/network/endpoints/permission_bindings_endpoints
 import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
 
 final class DeletePermissionBindingReq implements PathEncodable {
-  DeletePermissionBindingReq(this._uuid);
+  DeletePermissionBindingReq(this._id);
 
-  final PermissionBindingUUID _uuid;
+  final PermissionBindingID _id;
 
   @override
   String toPath() {
-    return PermissionBindingsEndpoints.deletePermissionBinding(_uuid.value);
+    return PermissionBindingsEndpoints.deletePermissionBinding(_id.value);
   }
 }

@@ -3,20 +3,23 @@ import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 class PermissionBinding {
   PermissionBinding({
-    required this.uuid,
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.roleUUID,
-    required this.permissionUUID,
+    required this.roleLocation,
+    required this.permissionLocation,
   });
 
-  final PermissionBindingUUID uuid;
+  RoleUUID get roleId => RoleUUID(roleLocation.split('/').last);
+  PermissionUUID get permissionId => PermissionUUID(permissionLocation.split('/').last);
+
+  final PermissionBindingID id;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final RoleUUID roleUUID;
-  final PermissionUUID permissionUUID;
+  final String roleLocation;
+  final String permissionLocation;
 }
 
-extension type PermissionBindingUUID(String value) {
-  bool isEqualTo(PermissionBindingUUID other) => value == other.value;
+extension type PermissionBindingID(String value) {
+  bool isEqualTo(PermissionBindingID other) => value == other.value;
 }

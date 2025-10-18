@@ -17,7 +17,7 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
   factory PermissionBindingDto.fromJson(Map<String, dynamic> json) => _$PermissionBindingDtoFromJson(json);
 
   @JsonKey(name: 'uuid', fromJson: _toID)
-  final PermissionBindingUUID id;
+  final PermissionBindingID id;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
@@ -27,12 +27,12 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
   @JsonKey(name: 'permission')
   final String permissionLocation;
 
-  static PermissionBindingUUID _toID(String uuid) => PermissionBindingUUID(uuid);
+  static PermissionBindingID _toID(String uuid) => PermissionBindingID(uuid);
 
   @override
   PermissionBinding toEntity() {
     return PermissionBinding(
-      uuid: id,
+      id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
       roleLocation: roleLocation,
