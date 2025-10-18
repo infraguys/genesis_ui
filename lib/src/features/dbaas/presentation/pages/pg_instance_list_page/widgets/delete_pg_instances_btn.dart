@@ -12,8 +12,8 @@ class _DeletePgInstancesButton extends StatelessWidget {
         }
 
         final message = switch (state.length) {
-          1 => context.$.deleteNodeConfirmation(state.single.name),
-          final len => context.$.deleteNodesConfirmation(len),
+          1 => context.$.deletePgClusterConfirmation(state.single.name),
+          final len => context.$.deleteClustersConfirmation(len),
         };
 
         return DeleteElevatedButton(

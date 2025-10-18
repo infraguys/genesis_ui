@@ -218,6 +218,18 @@ abstract class AppLocalizations {
   /// **'Delete selected({count}) nodes?'**
   String deleteNodesConfirmation(int count);
 
+  /// No description provided for @deletePgClusterConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete cluster {name}?'**
+  String deletePgClusterConfirmation(String name);
+
+  /// No description provided for @deleteClustersConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) clusters?'**
+  String deleteClustersConfirmation(int count);
+
   /// No description provided for @deleteOrganizationConfirmation.
   ///
   /// In en, this message translates to:
