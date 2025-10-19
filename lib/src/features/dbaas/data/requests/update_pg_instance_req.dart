@@ -1,19 +1,23 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 
-extension CreatePgInstanceReqExt on UpdatePgInstanceParams {
+final class UpdatePgInstanceReq {
+  UpdatePgInstanceReq(this._params);
+
+  final UpdatePgInstanceParams _params;
+
   Map<String, dynamic> toJson() {
     return {
-      'name': ?name,
-      'description': ?description,
-      'ipsv4': ?ipsv4,
-      'cpu': ?cores,
-      'ram': ?ram,
-      'disk_size': ?diskSize,
-      'nodes_number': ?nodesNumber,
-      'sync_replica_number': ?syncReplicaNumber,
+      'name': ?_params.name,
+      'description': ?_params.description,
+      'ipsv4': ?_params.ipsv4,
+      'cpu': ?_params.cores,
+      'ram': ?_params.ram,
+      'disk_size': ?_params.diskSize,
+      'nodes_number': ?_params.nodesNumber,
+      'sync_replica_number': ?_params.syncReplicaNumber,
     };
   }
 
-  String toPath() => PgInstancesEndpoints.updateInstance(id);
+  String toPath() => PgInstancesEndpoints.updateInstance(_params.id);
 }

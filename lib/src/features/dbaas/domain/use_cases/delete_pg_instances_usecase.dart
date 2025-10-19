@@ -1,5 +1,4 @@
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
-import 'package:genesis/src/features/dbaas/domain/params/delete_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 
 final class DeletePgInstancesUseCase {
@@ -9,7 +8,7 @@ final class DeletePgInstancesUseCase {
 
   Future<void> call(List<PgInstanceID> ids) async {
     await Future.wait(
-      ids.map((id) => _repository.deletePgInstance(DeletePgInstanceParams(id))),
+      ids.map(_repository.deletePgInstance),
     );
   }
 }

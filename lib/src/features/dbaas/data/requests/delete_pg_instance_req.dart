@@ -1,6 +1,10 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
-import 'package:genesis/src/features/dbaas/domain/params/delete_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
-extension DeletePgInstanceExt on DeletePgInstanceParams {
+final class DeletePgInstanceReq {
+  DeletePgInstanceReq(this.id);
+
+  final PgInstanceID id;
+
   String toPath() => PgInstancesEndpoints.deleteInstance(id);
 }

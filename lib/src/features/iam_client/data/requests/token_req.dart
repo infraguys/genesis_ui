@@ -1,17 +1,13 @@
 import 'package:genesis/src/core/env/env.dart';
-import 'package:genesis/src/core/interfaces/json_encodable.dart';
-import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/clients_endpoints.dart';
 import 'package:genesis/src/features/iam_client/domain/params/get_token_params.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 
-abstract base class TokenReq implements JsonEncodable, PathEncodable {
+abstract base class TokenReq {
   const TokenReq();
 
-  @override
   Map<String, dynamic> toJson();
 
-  @override
   String toPath() {
     return ClientsEndpoints.getToken();
   }

@@ -1,3 +1,4 @@
+import 'package:genesis/src/features/extensions/data/requests/get_extensions_req.dart';
 import 'package:genesis/src/features/extensions/data/source/extensions_api.dart';
 import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
@@ -16,7 +17,7 @@ final class ExtensionsRepository implements IExtensionsRepository {
 
   @override
   Future<List<Extension>> getExtensions(GetExtensionsParams params) async {
-    final dtos = await _api.getExtensions(params);
+    final dtos = await _api.getExtensions(GetExtensionsReq(params));
     return dtos.map((dto) => dto.toEntity()).toList();
   }
 }

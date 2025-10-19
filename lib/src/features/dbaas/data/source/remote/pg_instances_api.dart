@@ -7,11 +7,6 @@ import 'package:genesis/src/features/dbaas/data/requests/delete_pg_instance_req.
 import 'package:genesis/src/features/dbaas/data/requests/get_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/get_pg_instances_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/update_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/delete_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 
 final class PgInstancesApi {
   PgInstancesApi(this._client);
@@ -22,10 +17,10 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<PgInstanceDto> getPgInstance(GetPgInstanceParams params) async {
+  Future<PgInstanceDto> getPgInstance(GetPgInstanceReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
-        params.toPath(),
+        req.toPath(),
       );
       return PgInstanceDto.fromJson(data!);
     } on DioException catch (e) {
@@ -33,21 +28,21 @@ final class PgInstancesApi {
     }
   }
 
-  Future<void> deletePgInstance(DeletePgInstanceParams params) async {
+  Future<void> deletePgInstance(DeletePgInstanceReq req) async {
     try {
       await _client.delete<void>(
-        params.toPath(),
+        req.toPath(),
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
   }
 
-  Future<PgInstanceDto> createPgInstance(CreatePgInstanceParams params) async {
+  Future<PgInstanceDto> createPgInstance(CreatePgInstanceReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        params.toPath(),
-        data: params.toJson(),
+        req.toPath(),
+        data: req.toJson(),
       );
       return PgInstanceDto.fromJson(data!);
     } on DioException catch (e) {
@@ -55,11 +50,11 @@ final class PgInstancesApi {
     }
   }
 
-  Future<PgInstanceDto> updatePgInstance(UpdatePgInstanceParams params) async {
+  Future<PgInstanceDto> updatePgInstance(UpdatePgInstanceReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        params.toPath(),
-        data: params.toJson(),
+        req.toPath(),
+        data: req.toJson(),
       );
       return PgInstanceDto.fromJson(data!);
     } on DioException catch (e) {
@@ -71,11 +66,11 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с несколькими экземплярами
 
-  Future<List<PgInstanceDto>> getPgInstances(GetPgInstancesParams params) async {
+  Future<List<PgInstanceDto>> getPgInstances(GetPgInstancesReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        params.toPath(),
-        queryParameters: params.toQuery(),
+        req.toPath(),
+        queryParameters: req.toQuery(),
       );
       if (data == null) {
         return List.empty();

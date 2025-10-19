@@ -1,6 +1,10 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
-import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
-extension GetPgInstanceReqExt on GetPgInstanceParams {
+final class GetPgInstanceReq {
+  GetPgInstanceReq(this.id);
+
+  final PgInstanceID id;
+
   String toPath() => PgInstancesEndpoints.getInstance(id);
 }

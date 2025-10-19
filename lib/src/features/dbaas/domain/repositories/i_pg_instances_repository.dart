@@ -8,11 +8,11 @@ import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_para
 abstract interface class IPgInstancesRepository {
   Future<List<PgInstance>> getPgInstances(GetPgInstancesParams params);
 
-  Future<PgInstance> getPgInstance(GetPgInstanceParams params);
+  Future<PgInstance> getPgInstance(PgInstanceID id);
 
   Future<PgInstance> createPgInstance(CreatePgInstanceParams params);
 
   Future<PgInstance> updatePgInstance(UpdatePgInstanceParams params);
 
-  Future<void> deletePgInstance(DeletePgInstanceParams params);
+  Future<void> deletePgInstance(PgInstanceID id);
 }

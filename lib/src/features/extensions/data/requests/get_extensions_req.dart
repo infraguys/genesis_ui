@@ -2,21 +2,25 @@ import 'package:genesis/src/core/network/endpoints/extensions_endpoints.dart';
 import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
 
-extension GetExtensionsReqExt on GetExtensionsParams {
+final class GetExtensionsReq {
+  GetExtensionsReq(this._params);
+
+  final GetExtensionsParams _params;
+
   Map<String, dynamic> toQuery() {
     return {
-      'name': ?name,
-      'description': ?description,
-      'created_at': ?createdAt?.toIso8601String(),
-      'updated_at': ?updatedAt?.toIso8601String(),
-      'status': ?_statusToJson(status),
-      'version': ?version,
-      'install_type': ?installType,
-      'link': ?link,
+      'name': ?_params.name,
+      'description': ?_params.description,
+      'created_at': ?_params.createdAt?.toIso8601String(),
+      'updated_at': ?_params.updatedAt?.toIso8601String(),
+      'status': ?_fromStatusToQuery(_params.status),
+      'version': ?_params.version,
+      'install_type': ?_params.installType,
+      'link': ?_params.link,
     };
   }
 
-  String? _statusToJson(ExtensionStatus? status) => switch (status) {
+  String? _fromStatusToQuery(ExtensionStatus? status) => switch (status) {
     ExtensionStatus.newStatus => 'NEW',
     ExtensionStatus.active => 'ACTIVE',
     ExtensionStatus.inProgress => 'IN_PROGRESS',

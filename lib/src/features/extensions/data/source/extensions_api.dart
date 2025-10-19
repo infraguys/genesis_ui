@@ -4,7 +4,6 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/extensions/data/dtos/extension_dto.dart';
 import 'package:genesis/src/features/extensions/data/requests/get_extensions_req.dart';
 import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
-import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
 
 final class ExtensionsApi {
   ExtensionsApi(this._client);
@@ -16,11 +15,11 @@ final class ExtensionsApi {
     throw UnimplementedError();
   }
 
-  Future<List<ExtensionDto>> getExtensions(GetExtensionsParams params) async {
+  Future<List<ExtensionDto>> getExtensions(GetExtensionsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        params.toPath(),
-        queryParameters: params.toQuery(),
+        req.toPath(),
+        queryParameters: req.toQuery(),
       );
       if (data == null) {
         return List.empty();
