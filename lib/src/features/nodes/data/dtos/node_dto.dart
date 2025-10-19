@@ -1,7 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:genesis/src/core/interfaces/i_dto.dart';
-import 'package:genesis/src/features/nodes/data/dtos/node_type_dto.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -50,8 +47,8 @@ final class NodeDto implements IDto<Node> {
   final String image;
   @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final NodeStatus status;
-  @JsonKey(name: 'node_type')
-  final NodeTypeDto nodeType;
+  @JsonKey(name: 'node_type', fromJson: _toNodeTypeFromJson)
+  final NodeType nodeType;
   @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork, defaultValue: '')
   final String ipv4;
 
@@ -69,7 +66,7 @@ final class NodeDto implements IDto<Node> {
       rootDiskSize: rootDiskSize,
       image: image,
       status: status,
-      nodeType: nodeType.toDomain(),
+      nodeType: nodeType,
       ipv4: ipv4,
     );
   }
@@ -90,5 +87,11 @@ final class NodeDto implements IDto<Node> {
     'SCHEDULED' => NodeStatus.scheduled,
     'STARTED' => NodeStatus.started,
     _ => NodeStatus.unknown,
+  };
+
+  static NodeType _toNodeTypeFromJson(String json) => switch (json) {
+    'HW' => NodeType.hw,
+    'VM' => NodeType.vm,
+    _ => NodeType.unknown,
   };
 }

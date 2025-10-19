@@ -1,15 +1,12 @@
-import 'package:genesis/src/core/interfaces/json_encodable.dart';
-import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/nodes_endpoints.dart';
-import 'package:genesis/src/features/nodes/data/dtos/node_type_dto.dart';
+import 'package:genesis/src/features/nodes/data/requests/node_type_json_mixin.dart';
 import 'package:genesis/src/features/nodes/domain/params/update_node_params.dart';
 
-final class UpdateNodeReq implements JsonEncodable, PathEncodable {
+final class UpdateNodeReq with NodeTypeJsonMixin {
   UpdateNodeReq(this._params);
 
   final UpdateNodeParams _params;
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'name': _params.name,
@@ -17,13 +14,10 @@ final class UpdateNodeReq implements JsonEncodable, PathEncodable {
       'ram': _params.ram,
       'root_disk_size': _params.rootDiskSize,
       'image': _params.image,
-      'node_type': NodeTypeDto.of(_params.nodeType).toJson(),
+      'node_type': fromNodeTypeToJson(_params.nodeType),
       'description': _params.description,
     };
   }
 
-  @override
-  String toPath() {
-    return NodesEndpoints.updateNode(_params.id);
-  }
+  String toPath() => NodesEndpoints.updateNode(_params.id);
 }
