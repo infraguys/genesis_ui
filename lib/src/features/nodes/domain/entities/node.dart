@@ -57,6 +57,7 @@ extension type NodeID(String value) {
 enum NodeType {
   hw,
   vm,
+  unknown,
 }
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW, SCHEDULED, STARTED
