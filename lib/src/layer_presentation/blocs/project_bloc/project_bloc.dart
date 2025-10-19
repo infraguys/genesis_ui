@@ -77,15 +77,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   Future<void> _onUpdateProject(_Update event, Emitter<ProjectState> emit) async {
     final useCase = EditProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-
-    final params = EditProjectParams(
-      id: event.projectID,
-      name: event.name,
-      description: event.description,
-      organizationID: event.organizationID,
-      status: event.status,
-    );
-    final updatedProject = await useCase(params);
+    final updatedProject = await useCase(event.params);
     emit(ProjectUpdatedState(updatedProject));
   }
 }

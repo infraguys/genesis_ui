@@ -8,7 +8,7 @@ abstract interface class IProjectsRepository {
 
   Future<void> deleteProject(ProjectID uuid);
 
-  Future<Project> editProject(EditProjectParams params);
+  Future<Project> editProject(UpdateProjectParams params);
 
   Future<Project> getProject(ProjectID uuid);
 

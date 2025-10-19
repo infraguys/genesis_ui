@@ -1,18 +1,17 @@
-import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
-final class EditProjectParams {
-  const EditProjectParams({
+final class UpdateProjectParams {
+  const UpdateProjectParams({
     required this.id,
     required this.name,
-    required this.organizationID,
-    required this.status,
+    required this.organizationLink,
+    this.status,
     this.description,
   });
 
   final ProjectID id;
   final String name;
   final String? description;
-  final OrganizationID organizationID;
+  final String organizationLink;
   final ProjectStatus? status;
 }

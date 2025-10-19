@@ -1,15 +1,12 @@
-import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/permissions_endpoints.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:genesis/src/features/permissions/domain/params/get_permissions_params.dart';
 
-final class GetPermissionsReq implements QueryEncodable, PathEncodable {
+final class GetPermissionsReq {
   GetPermissionsReq(this._params);
 
   final GetPermissionsParams _params;
 
-  @override
   Map<String, dynamic> toQuery() {
     return {
       'name': ?_params.name,
@@ -25,8 +22,5 @@ final class GetPermissionsReq implements QueryEncodable, PathEncodable {
     _ => null,
   };
 
-  @override
-  String toPath() {
-    return PermissionsEndpoints.getPermissions();
-  }
+  String toPath() => PermissionsEndpoints.getPermissions();
 }

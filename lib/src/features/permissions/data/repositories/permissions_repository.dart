@@ -1,5 +1,5 @@
 import 'package:genesis/src/features/permissions/data/requests/get_permission_req.dart';
-import 'package:genesis/src/features/permissions/data/requests/permissions_api.dart';
+import 'package:genesis/src/features/permissions/data/sources/permissions_api.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:genesis/src/features/permissions/domain/params/get_permissions_params.dart';
 import 'package:genesis/src/features/permissions/domain/repositories/i_permissions_repository.dart';

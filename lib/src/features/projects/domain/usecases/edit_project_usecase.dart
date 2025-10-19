@@ -7,7 +7,7 @@ final class EditProjectUseCase {
 
   final IProjectsRepository _repository;
 
-  Future<Project> call(EditProjectParams params) async {
+  Future<Project> call(UpdateProjectParams params) async {
     return await _repository.editProject(params);
   }
 }

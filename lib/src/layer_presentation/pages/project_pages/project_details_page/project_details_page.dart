@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/projects/domain/params/edit_project_params.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
@@ -84,7 +85,7 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                 ),
                 ButtonsBar(
                   children: [
-                    SaveIconButton(onPressed: save),
+                    SaveIconButton(onPressed: () => save(project)),
                   ],
                 ),
                 LayoutBuilder(
@@ -148,15 +149,17 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
     );
   }
 
-  void save() {
+  void save(Project project) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _projectBloc.add(
         ProjectEvent.update(
-          projectID: widget.uuid,
-          name: _name,
-          description: _description,
-          organizationID: context.read<OrganizationsSelectionBloc>().state.first.id,
+          UpdateProjectParams(
+            name: _name,
+            description: _description,
+            id: widget.uuid,
+            organizationLink: project.organizationLink,
+          ),
         ),
       );
     }

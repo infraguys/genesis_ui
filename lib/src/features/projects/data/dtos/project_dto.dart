@@ -1,5 +1,4 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
-import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,7 +13,7 @@ class ProjectDto implements IDto<Project> {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    required this.organization,
+    required this.organizationLink,
   });
 
   factory ProjectDto.fromJson(Map<String, dynamic> json) => _$ProjectDtoFromJson(json);
@@ -31,8 +30,8 @@ class ProjectDto implements IDto<Project> {
   final DateTime updatedAt;
   @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final ProjectStatus status;
-  @JsonKey(name: 'organization', fromJson: _fromUrlToUuid)
-  final String organization;
+  @JsonKey(name: 'organization')
+  final String organizationLink;
 
   @override
   Project toEntity() {
@@ -43,13 +42,11 @@ class ProjectDto implements IDto<Project> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
-      organizationID: OrganizationID(organization),
+      organizationLink: organizationLink,
     );
   }
 
   static ProjectID _toID(String json) => ProjectID(json);
-
-  static String _fromUrlToUuid(String value) => value.split('/').last;
 
   static ProjectStatus _toStatusFromJson(String json) => switch (json) {
     'NEW' => ProjectStatus.newStatus,

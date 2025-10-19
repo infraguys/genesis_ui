@@ -13,13 +13,7 @@ sealed class ProjectEvent {
 
   factory ProjectEvent.delete(Project project) = _Delete;
 
-  factory ProjectEvent.update({
-    required ProjectID projectID,
-    required OrganizationID organizationID,
-    required String name,
-    String? description,
-    ProjectStatus? status,
-  }) = _Update;
+  factory ProjectEvent.update(UpdateProjectParams params) = _Update;
 }
 
 final class _Create implements ProjectEvent {
@@ -45,19 +39,9 @@ final class _Delete implements ProjectEvent {
 }
 
 final class _Update implements ProjectEvent {
-  _Update({
-    required this.projectID,
-    required this.organizationID,
-    required this.name,
-    this.description,
-    this.status,
-  });
+  _Update(this.params);
 
-  final ProjectID projectID;
-  final OrganizationID organizationID;
-  final String name;
-  final String? description;
-  final ProjectStatus? status;
+  final UpdateProjectParams params;
 }
 
 final class _GetProject implements ProjectEvent {
