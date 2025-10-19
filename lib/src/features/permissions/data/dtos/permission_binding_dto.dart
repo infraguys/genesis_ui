@@ -10,8 +10,8 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.roleLocation,
-    required this.permissionLocation,
+    required this.roleLink,
+    required this.permissionLink,
   });
 
   factory PermissionBindingDto.fromJson(Map<String, dynamic> json) => _$PermissionBindingDtoFromJson(json);
@@ -23,9 +23,9 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
   @JsonKey(name: 'role')
-  final String roleLocation;
+  final String roleLink;
   @JsonKey(name: 'permission')
-  final String permissionLocation;
+  final String permissionLink;
 
   static PermissionBindingID _toID(String uuid) => PermissionBindingID(uuid);
 
@@ -35,8 +35,8 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
       id: id,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      roleLocation: roleLocation,
-      permissionLocation: permissionLocation,
+      roleLink: roleLink,
+      permissionLink: permissionLink,
     );
   }
 }

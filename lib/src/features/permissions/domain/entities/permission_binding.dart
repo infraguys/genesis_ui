@@ -6,18 +6,19 @@ class PermissionBinding {
     required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.roleLocation,
-    required this.permissionLocation,
+    required this.roleLink,
+    required this.permissionLink,
   });
 
-  RoleUUID get roleId => RoleUUID(roleLocation.split('/').last);
-  PermissionUUID get permissionId => PermissionUUID(permissionLocation.split('/').last);
+  RoleUUID get roleId => RoleUUID(roleLink.split('/').last);
+
+  PermissionID get permissionId => PermissionID(permissionLink.split('/').last);
 
   final PermissionBindingID id;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String roleLocation;
-  final String permissionLocation;
+  final String roleLink;
+  final String permissionLink;
 }
 
 extension type PermissionBindingID(String value) {

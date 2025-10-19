@@ -1,15 +1,12 @@
-import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/core/interfaces/query_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/organizations/domain/params/get_organizations_params.dart';
 
-final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
+final class GetOrganizationsReq {
   GetOrganizationsReq(this._params);
 
   final GetOrganizationsParams _params;
 
-  @override
   Map<String, dynamic> toQuery() {
     return {
       'name': ?_params.name,
@@ -25,8 +22,5 @@ final class GetOrganizationsReq implements QueryEncodable, PathEncodable {
     _ => null,
   };
 
-  @override
-  String toPath() {
-    return OrganizationsEndpoints.getOrganizations();
-  }
+  String toPath() => OrganizationsEndpoints.getOrganizations();
 }

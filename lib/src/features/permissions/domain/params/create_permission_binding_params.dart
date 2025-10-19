@@ -7,6 +7,6 @@ final class CreatePermissionBindingParams {
     required this.roleUUID,
   });
 
-  final PermissionUUID permissionUUID;
+  final PermissionID permissionUUID;
   final RoleUUID roleUUID;
 }

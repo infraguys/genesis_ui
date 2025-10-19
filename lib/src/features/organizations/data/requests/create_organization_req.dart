@@ -1,14 +1,11 @@
-import 'package:genesis/src/core/interfaces/json_encodable.dart';
-import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
 import 'package:genesis/src/features/organizations/domain/params/create_organization_params.dart';
 
-final class CreateOrganizationReq implements JsonEncodable, PathEncodable {
+final class CreateOrganizationReq {
   CreateOrganizationReq(this._params);
 
   final CreateOrganizationParams _params;
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'name': _params.name,
@@ -16,8 +13,5 @@ final class CreateOrganizationReq implements JsonEncodable, PathEncodable {
     };
   }
 
-  @override
-  String toPath() {
-    return OrganizationsEndpoints.createOrganization();
-  }
+  String toPath() => OrganizationsEndpoints.createOrganization();
 }

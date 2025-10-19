@@ -7,7 +7,7 @@ part 'permission_dto.g.dart';
 @JsonSerializable(constructor: '_')
 final class PermissionDto implements IDto<Permission> {
   PermissionDto._({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -17,8 +17,8 @@ final class PermissionDto implements IDto<Permission> {
 
   factory PermissionDto.fromJson(Map<String, dynamic> json) => _$PermissionDtoFromJson(json);
 
-  @JsonKey(name: 'uuid')
-  final String uuid;
+  @JsonKey(name: 'uuid', fromJson: _toID)
+  final PermissionID id;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'description')
@@ -28,12 +28,12 @@ final class PermissionDto implements IDto<Permission> {
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
   @JsonKey(name: 'status', fromJson: _toStatusFromJson)
-  final PermissionStatus status; // ignore: library_private_types_in_public_api
+  final PermissionStatus status;
 
   @override
   Permission toEntity() {
     return Permission(
-      uuid: PermissionUUID(uuid),
+      id: id,
       name: name,
       description: description,
       createdAt: createdAt,
@@ -41,6 +41,8 @@ final class PermissionDto implements IDto<Permission> {
       status: status,
     );
   }
+
+  static PermissionID _toID(String json) => PermissionID(json);
 
   static PermissionStatus _toStatusFromJson(String json) => switch (json) {
     'ACTIVE' => PermissionStatus.active,

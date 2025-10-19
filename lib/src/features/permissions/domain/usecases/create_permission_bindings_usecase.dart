@@ -23,7 +23,7 @@ final class CreatePermissionBindingsUseCase {
       await Future.wait(
         permissions.map(
           (permission) => _repository.createPermissionBinding(
-            CreatePermissionBindingParams(permissionUUID: permission.uuid, roleUUID: roleUUID),
+            CreatePermissionBindingParams(permissionUUID: permission.id, roleUUID: roleUUID),
           ),
         ),
       );

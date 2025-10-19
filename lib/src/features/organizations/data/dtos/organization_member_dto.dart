@@ -6,28 +6,28 @@ part 'organization_member_dto.g.dart';
 @JsonSerializable(constructor: '_')
 class OrganizationMemberDto implements IDto<dynamic> {
   OrganizationMemberDto._({
-    required this.uuid,
+    required this.id,
     required this.createdAt,
     required this.updatedAt,
-    required this.organizationsSource,
-    required this.userSource,
+    required this.organizationLink,
+    required this.userLink,
     required this.role,
   });
 
   factory OrganizationMemberDto.fromJson(Map<String, dynamic> json) => _$OrganizationMemberDtoFromJson(json);
 
-  final String uuid;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(name: 'uuid')
+  final String id;
+  @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
-  @JsonKey(fromJson: _fromIsoStringToDateTime)
+  @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
   @JsonKey(name: 'organization')
-  final String? organizationsSource;
+  final String? organizationLink;
   @JsonKey(name: 'user')
-  final String userSource;
+  final String userLink;
+  @JsonKey(name: 'role')
   final String role;
-
-  static DateTime _fromIsoStringToDateTime(String value) => DateTime.parse(value);
 
   @override
   toEntity() {

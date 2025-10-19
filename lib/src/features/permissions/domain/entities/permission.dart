@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Permission extends Equatable {
   const Permission({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.description,
     required this.createdAt,
@@ -10,7 +10,7 @@ class Permission extends Equatable {
     required this.status,
   });
 
-  final PermissionUUID uuid;
+  final PermissionID id;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -19,7 +19,7 @@ class Permission extends Equatable {
 
   @override
   List<Object?> get props => [
-    uuid,
+    id,
     name,
     description,
     createdAt,
@@ -28,8 +28,8 @@ class Permission extends Equatable {
   ];
 }
 
-extension type PermissionUUID(String value) {
-  bool isEqualTo(PermissionUUID other) => value == other.value;
+extension type PermissionID(String value) {
+  bool isEqualTo(PermissionID other) => value == other.value;
 }
 
 enum PermissionStatus { active, unknown }
