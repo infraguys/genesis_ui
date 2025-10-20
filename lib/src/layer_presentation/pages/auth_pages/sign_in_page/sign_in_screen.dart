@@ -4,9 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:genesis/src/core/extensions/color_extension.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/iam_client/domain/params/get_token_params.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/routing/app_router.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -112,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _authBloc.add(
-        AuthEvent.signIn(username: _username, password: _password),
+        AuthEvent.signIn(GetTokenParams(username: _username, password: _password)),
       );
     }
   }

@@ -30,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final useCase = GetTokenUseCase(_authRepository);
 
     try {
-      final authSession = await useCase(GetTokenParams(username: event.username, password: event.password));
+      final authSession = await useCase(event.params);
       emit(AuthenticatedAuthState(authSession));
     } on ApiException catch (e) {
       emit(AuthStateFailure(e.message));

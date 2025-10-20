@@ -50,6 +50,7 @@ class AuthRepository implements IAuthRepository {
       user: userDto.toEntity(),
       permissionNames: PermissionNames(clientIntrospectionDto.permissions),
       refreshToken: tokenDto.refreshToken,
+      scope: clientIntrospectionDto.projectId != null ? clientIntrospectionDto.projectId! : '',
     );
   }
 
