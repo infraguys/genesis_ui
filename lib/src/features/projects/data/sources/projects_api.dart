@@ -4,9 +4,9 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/projects/data/dtos/project_dto.dart';
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/delete_project_req.dart';
-import 'package:genesis/src/features/projects/data/requests/edit_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/get_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
+import 'package:genesis/src/features/projects/data/requests/update_project_req.dart';
 
 final class ProjectsApi {
   ProjectsApi(this._client);
@@ -35,7 +35,7 @@ final class ProjectsApi {
     }
   }
 
-  Future<ProjectDto> editProject(EditProjectReq req) async {
+  Future<ProjectDto> editProject(UpdateProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
         req.toPath(),

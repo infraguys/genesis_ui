@@ -1,18 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/features/projects/domain/params/create_project_params.dart';
 import 'package:genesis/src/features/projects/domain/params/edit_project_params.dart';
-import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/projects/domain/usecases/create_project_usecase.dart';
 import 'package:genesis/src/features/projects/domain/usecases/delete_project_usecase.dart';
-import 'package:genesis/src/features/projects/domain/usecases/edit_project_usecase.dart';
 import 'package:genesis/src/features/projects/domain/usecases/get_project_usecase.dart';
+import 'package:genesis/src/features/projects/domain/usecases/update_project_usecase.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/domain/usecases/create_role_bindings_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 
 part 'project_event.dart';
 part 'project_state.dart';
@@ -75,7 +75,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   Future<void> _onUpdateProject(_Update event, Emitter<ProjectState> emit) async {
-    final useCase = EditProjectUseCase(_projectsRepository);
+    final useCase = UpdateProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
     final updatedProject = await useCase(event.params);
     emit(ProjectUpdatedState(updatedProject));

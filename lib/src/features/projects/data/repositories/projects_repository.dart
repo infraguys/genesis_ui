@@ -1,8 +1,8 @@
 import 'package:genesis/src/features/projects/data/requests/create_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/delete_project_req.dart';
-import 'package:genesis/src/features/projects/data/requests/edit_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/get_project_req.dart';
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
+import 'package:genesis/src/features/projects/data/requests/update_project_req.dart';
 import 'package:genesis/src/features/projects/data/sources/projects_api.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
@@ -24,8 +24,8 @@ final class ProjectsRepository implements IProjectsRepository {
   }
 
   @override
-  Future<Project> editProject(params) async {
-    final req = EditProjectReq(params);
+  Future<Project> updateProject(params) async {
+    final req = UpdateProjectReq(params);
     final dto = await _projectsApi.editProject(req);
     return dto.toEntity();
   }
