@@ -137,6 +137,10 @@ GoRouter createRouter(BuildContext context) {
                 pageBuilder: (context, _) {
                   return NoTransitionPage(child: MainPage());
                 },
+                onExit: (context, _) {
+                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  return true;
+                },
               ),
             ],
           ),
@@ -303,7 +307,7 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 // TODO(Koretsky): возможно придется переименовать
                 onExit: (context, state) {
-                  // context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
                   return true;
                 },
                 name: AppRoutes.instances.name,

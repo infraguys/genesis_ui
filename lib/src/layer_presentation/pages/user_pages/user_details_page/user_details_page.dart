@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
@@ -23,6 +24,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart
 import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/user_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 part './widgets/confirm_email_btn.dart';
 
@@ -76,8 +78,8 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
             _surname = user.surname;
             _phone = user.phone;
             _email = user.email;
-          case UserUpdatedState():
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(state.user.username)));
+          case UserUpdatedState(:final user):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserUpdated(user.username)));
             context.read<UsersBloc>().add(UsersEvent.getUsers());
 
           case UserDeletedState(:final user):
@@ -121,140 +123,152 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                   ),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      return SizedBox(
-                        height: 410,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: constraints.maxWidth * 0.5,
-                              child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  spacing: 24,
-                                  children: [
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _username,
-                                        decoration: InputDecoration(
-                                          hintText: context.$.username,
-                                        ),
-                                        onSaved: (newValue) => _username = newValue!,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _firstName,
-                                        decoration: InputDecoration(
-                                          hintText: context.$.firstName,
-                                        ),
-                                        onSaved: (newValue) => _firstName = newValue!,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _lastName,
-                                        decoration: InputDecoration(
-                                          hintText: context.$.lastName,
-                                        ),
-                                        onSaved: (newValue) => _lastName = newValue!,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _surname,
-                                        decoration: InputDecoration(
-                                          hintText: context.$.surName,
-                                        ),
-                                        onSaved: (newValue) => _surname = newValue!,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _phone,
-                                        decoration: InputDecoration(
-                                          hintText: 'Phone'.hardcoded,
-                                        ),
-                                        onSaved: (newValue) => _phone = newValue!,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.4,
-                                      child: TextFormField(
-                                        initialValue: _email,
-                                        decoration: InputDecoration(
-                                          hintText: context.$.email,
-                                        ),
-                                        onSaved: (newValue) => _email = newValue!,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: constraints.maxWidth * 0.5,
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 128,
+                        children: [
+                          SizedBox(
+                            width: constraints.maxWidth * 0.4,
+                            child: Form(
+                              key: _formKey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                // spacing: 48,
+                                spacing: 24,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    spacing: 8.0,
-                                    children: [
-                                      Text(context.$.status),
-                                      UserStatusWidget(status: user.status),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    spacing: 8.0,
-                                    children: [
-                                      Text(context.$.verification),
-                                      VerifiedLabel(isVerified: user.emailVerified),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    spacing: 8.0,
-                                    children: [
-                                      Text(context.$.createdAt),
-                                      Text(user.createdAt.toString()),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    spacing: 8.0,
-                                    children: [
-                                      Text(context.$.updatedAt),
-                                      Text(user.updatedAt.toString()),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: constraints.maxWidth * 0.4,
-                                    child: TextFormField(
-                                      initialValue: _description,
-                                      decoration: InputDecoration(
-                                        hintText: context.$.description,
-                                      ),
-                                      onSaved: (newValue) => _description = newValue!,
-                                      maxLines: 4,
-                                      minLines: 4,
+                                  TextFormField(
+                                    initialValue: _username,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.username,
                                     ),
+                                    onSaved: (newValue) => _username = newValue!,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                  TextFormField(
+                                    initialValue: _firstName,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.firstName,
+                                    ),
+                                    onSaved: (newValue) => _firstName = newValue!,
+                                  ),
+                                  TextFormField(
+                                    initialValue: _lastName,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.lastName,
+                                    ),
+                                    onSaved: (newValue) => _lastName = newValue!,
+                                  ),
+                                  TextFormField(
+                                    initialValue: _surname,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.surName,
+                                    ),
+                                    onSaved: (newValue) => _surname = newValue!,
+                                  ),
+                                  TextFormField(
+                                    initialValue: _phone,
+                                    decoration: InputDecoration(
+                                      hintText: 'Phone'.hardcoded,
+                                    ),
+                                    onSaved: (newValue) => _phone = newValue!,
+                                  ),
+                                  TextFormField(
+                                    initialValue: _email,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.email,
+                                    ),
+                                    onSaved: (newValue) => _email = newValue!,
+                                  ),
+                                  TextFormField(
+                                    initialValue: _description,
+                                    decoration: InputDecoration(
+                                      hintText: context.$.description,
+                                    ),
+                                    onSaved: (newValue) => _description = newValue!,
+                                    maxLines: 4,
+                                    minLines: 4,
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: 24,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(context.$.uuid),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          alignment: PlaceholderAlignment.middle,
+                                          child: SelectableText(
+                                            user.uuid.value,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: GoogleFonts.robotoMono().fontFamily,
+                                            ),
+                                          ),
+                                        ),
+                                        WidgetSpan(child: const SizedBox(width: 8)),
+                                        WidgetSpan(
+                                          alignment: PlaceholderAlignment.middle,
+                                          child: IconButton(
+                                            icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                                            onPressed: () {
+                                              Clipboard.setData(ClipboardData(text: user.uuid.value));
+                                              final msg = context.$.msgCopiedToClipboard(user.uuid.value);
+                                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.status),
+                                  UserStatusWidget(status: user.status),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.verification),
+                                  VerifiedLabel(isVerified: user.emailVerified),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.createdAt),
+                                  Text(user.createdAt.toString()),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8.0,
+                                children: [
+                                  Text(context.$.updatedAt),
+                                  Text(user.updatedAt.toString()),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       );
                     },
                   ),

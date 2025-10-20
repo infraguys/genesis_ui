@@ -1,8 +1,6 @@
 // lib/src/core/polling/polling_controller.dart
 import 'dart:async';
 
-// typedef PollingTick = FutureOr<void> Function();
-
 class PollingController {
   static const Duration _period = Duration(seconds: 5);
 

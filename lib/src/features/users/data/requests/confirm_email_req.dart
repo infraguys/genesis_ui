@@ -6,5 +6,7 @@ extension ConfirmEmailParamsX on ConfirmEmailParams {
     return {};
   }
 
-  String toPath() => UsersEndpoints.confirmUserEmail(id);
+  String toPath() {
+    return UsersEndpoints.confirmUserEmail(id).fullPath;
+  }
 }

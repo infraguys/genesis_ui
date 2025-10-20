@@ -3,10 +3,12 @@ import 'package:genesis/src/core/network/endpoints/projects_endpoints.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
 final class GetProjectReq implements PathEncodable {
-  GetProjectReq(this._uuid);
+  GetProjectReq(this._id);
 
-  final ProjectID _uuid;
+  final ProjectID _id;
 
   @override
-  String toPath() => ProjectsEndpoints.getProject(_uuid);
+  String toPath() {
+    return ProjectsEndpoints.item(_id).fullPath;
+  }
 }

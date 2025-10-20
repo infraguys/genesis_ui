@@ -52,8 +52,8 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
         final messenger = ScaffoldMessenger.of(context);
         switch (state) {
           case PgInstanceCreatedState(:final instance):
-            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterCreated(instance.name)));
+            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
             context.pop();
           case PgInstanceFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
@@ -84,12 +84,15 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24,
+                      spacing: 16,
                       children: [
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _name,
-                          decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: InputDecoration(
+                            labelText: context.$.name,
+                            helperText: ''
+                          ),
                           onSaved: (newValue) => _name = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -97,12 +100,12 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                           },
                         ),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _cores.toString(),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           decoration: InputDecoration(
-                            hintText: 'cores'.hardcoded,
-                            helperText: 'cores'.hardcoded,
+                            labelText: 'cores'.hardcoded,
+                            helperText: '',
                           ),
                           onSaved: (newValue) => _cores = int.parse(newValue!),
                           validator: (value) => switch (value) {
@@ -111,13 +114,13 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                           },
                         ),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _diskSize.toString(),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           // TODO(Koretsky): Проверить локализацию
                           decoration: InputDecoration(
-                            hintText: context.$.rootDiskSize,
-                            helperText: context.$.rootDiskSize,
+                            labelText: context.$.rootDiskSize,
+                            helperText: '',
                           ),
                           onSaved: (newValue) => _diskSize = int.parse(newValue!),
                           validator: (value) => switch (value) {
@@ -126,12 +129,13 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                           },
                         ),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _ram.toString(),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           decoration: InputDecoration(
-                            hintText: 'ram'.hardcoded,
-                            helperText: context.$.ramHelperText,
+                            labelText: 'ram'.hardcoded,
+                            helperText: '',
+                            // helperText: context.$.ramHelperText,
                           ),
                           onSaved: (newValue) => _ram = int.parse(newValue!),
                           validator: (value) => switch (value) {
@@ -140,12 +144,13 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                           },
                         ),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _nodesNumber.toString(),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           decoration: InputDecoration(
-                            hintText: 'nodes number'.hardcoded,
-                            helperText: 'nodes number'.hardcoded,
+                            labelText: 'nodes number'.hardcoded,
+                            helperText: '',
+                            // helperText: 'nodes number'.hardcoded,
                           ),
                           onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
                           validator: (value) => switch (value) {
@@ -154,11 +159,12 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                           },
                         ),
                         TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
                           initialValue: _syncReplicaNumber.toString(),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                            hintText: 'sync replica number'.hardcoded,
-                            helperText: 'sync replica number'.hardcoded,
+                            labelText: 'sync replica number'.hardcoded,
+                            helperText: '',
+                            // helperText: 'sync replica number'.hardcoded,
                           ),
                           onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
                           validator: (value) => switch (value) {
@@ -169,8 +175,9 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                         TextFormField(
                           initialValue: _description,
                           decoration: InputDecoration(
-                            hintText: context.$.description,
-                            helperText: context.$.description,
+                            labelText: context.$.description,
+                            helperText: ''
+                            // helperText: context.$.description,
                           ),
                           onSaved: (newValue) => _description = newValue!,
                         ),

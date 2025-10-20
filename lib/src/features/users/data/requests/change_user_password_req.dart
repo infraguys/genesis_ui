@@ -9,5 +9,7 @@ extension ChangeUserPasswordParamsX on ChangeUserPasswordParams {
     };
   }
 
-  String toPath() => UsersEndpoints.changeUserPassword(id);
+  String toPath() {
+    return UsersEndpoints.changeUserPassword(id).fullPath;
+  }
 }

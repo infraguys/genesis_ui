@@ -18,5 +18,5 @@ extension GetUsersParamsX on GetUsersParams {
     };
   }
 
-  String toPath() => UsersEndpoints.getUsers();
+  String toPath() => UsersEndpoints.items().fullPath;
 }

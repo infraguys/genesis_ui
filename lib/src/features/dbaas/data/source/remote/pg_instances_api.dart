@@ -52,7 +52,7 @@ final class PgInstancesApi {
 
   Future<PgInstanceDto> updatePgInstance(UpdatePgInstanceReq req) async {
     try {
-      final Response(:data) = await _client.post<Map<String, dynamic>>(
+      final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );

@@ -8,5 +8,7 @@ final class GetNodeReq implements PathEncodable {
   final NodeID id;
 
   @override
-  String toPath() => NodesEndpoints.getNode(id);
+  String toPath() {
+    return NodesEndpoints.item(id).fullPath;
+  }
 }

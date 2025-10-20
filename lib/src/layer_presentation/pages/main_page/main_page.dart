@@ -22,35 +22,21 @@ class _MainView extends StatelessWidget {
           children: [
             if (context.permissionNames.users.canListAll)
               Expanded(
-                // width: 200,
-                // height: 100,
                 child: ActiveUsersCard(),
               ),
             if (context.permissionNames.users.canListAll)
               Expanded(
-                // width: 200,
-                // height: 100,
                 child: VerifiedUsersCountCard(),
               ),
             Expanded(
-              // width: 200,
-              // height: 100,
               child: ProjectsSummaryCard(),
             ),
-            // Flexible(
-            //   child: SummaryCard(
-            //     title: 'Resource Usage',
-            //     value: '62.3%',
-            //     secondaryTitle: '',
-            //     secondaryValue: '',
-            //   ),
-            // ),
           ],
         ),
         Row(
           spacing: 10,
           children: [
-            Expanded(child: ClustersCard()),
+            Expanded(child: PgClustersCard()),
             Expanded(child: SizedBox.shrink()),
             Expanded(child: SizedBox.shrink()),
           ],

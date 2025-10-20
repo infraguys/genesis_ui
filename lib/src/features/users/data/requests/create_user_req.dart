@@ -15,5 +15,7 @@ extension CreateUserParamsX on CreateUserParams {
     };
   }
 
-  String toPath() => UsersEndpoints.createUser();
+  String toPath() {
+    return UsersEndpoints.items().fullPath;
+  }
 }

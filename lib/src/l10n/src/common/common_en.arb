@@ -5,5 +5,6 @@
   "goBack": "Go back",
   "genesis": "Genesis",
   "verification": "Verification",
-  "requiredField": "This field is required"
+  "requiredField": "This field is required",
+  "total": "Total"
 }

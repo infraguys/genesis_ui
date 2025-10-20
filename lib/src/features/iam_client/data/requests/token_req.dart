@@ -9,7 +9,7 @@ abstract base class TokenReq {
   Map<String, dynamic> toJson();
 
   String toPath() {
-    return ClientsEndpoints.getToken();
+    return ClientsEndpoints.getToken().fullPath;
   }
 }
 

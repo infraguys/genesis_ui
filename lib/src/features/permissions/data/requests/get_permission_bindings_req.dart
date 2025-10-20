@@ -15,5 +15,7 @@ final class GetPermissionBindingsReq {
     };
   }
 
-  String toPath() => PermissionBindingsEndpoints.getPermissionBindings();
+  String toPath() {
+    return PermissionBindingsEndpoints.items().fullPath;
+  }
 }

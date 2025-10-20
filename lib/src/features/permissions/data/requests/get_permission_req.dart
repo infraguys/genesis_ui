@@ -22,5 +22,7 @@ final class GetPermissionsReq {
     _ => null,
   };
 
-  String toPath() => PermissionsEndpoints.getPermissions();
+  String toPath() {
+    return PermissionsEndpoints.items().fullPath;
+  }
 }

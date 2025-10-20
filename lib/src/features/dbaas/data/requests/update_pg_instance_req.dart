@@ -19,5 +19,7 @@ final class UpdatePgInstanceReq {
     };
   }
 
-  String toPath() => PgInstancesEndpoints.updateInstance(_params.id);
+  String toPath() {
+    return PgInstancesEndpoints.item(_params.id).fullPath;
+  }
 }

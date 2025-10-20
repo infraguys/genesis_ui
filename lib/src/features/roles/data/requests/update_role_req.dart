@@ -17,7 +17,5 @@ final class UpdateRoleReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath() {
-    return RolesEndpoints.updateRole(_params.uuid);
-  }
+  String toPath() => RolesEndpoints.item(_params.id).fullPath;
 }

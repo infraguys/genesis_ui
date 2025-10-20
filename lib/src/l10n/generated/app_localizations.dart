@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'This field is required'**
   String get requiredField;
 
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:

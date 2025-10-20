@@ -20,5 +20,7 @@ final class CreatePgInstanceReq {
     };
   }
 
-  String toPath() => PgInstancesEndpoints.createInstance();
+  String toPath() {
+    return PgInstancesEndpoints.items().fullPath;
+  }
 }

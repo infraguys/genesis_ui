@@ -20,7 +20,5 @@ final class GetRoleBindingsReq implements QueryEncodable, PathEncodable {
   }
 
   @override
-  String toPath() {
-    return RoleBindingsEndpoints.getRoleBindings();
-  }
+  String toPath() => RoleBindingsEndpoints.items().fullPath;
 }

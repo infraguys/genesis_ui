@@ -17,5 +17,7 @@ final class GetProjectsReq implements PathEncodable, QueryEncodable {
   }
 
   @override
-  String toPath() => ProjectsEndpoints.getProjects();
+  String toPath() {
+    return ProjectsEndpoints.items().fullPath;
+  }
 }

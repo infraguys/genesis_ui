@@ -6,5 +6,7 @@ final class GetOrganizationReq {
 
   final OrganizationID _id;
 
-  String toPath() => OrganizationsEndpoints.getOrganization(_id);
+  String toPath() {
+    return OrganizationsEndpoints.item(_id).fullPath;
+  }
 }

@@ -44,7 +44,10 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         leading: Icon(Icons.dashboard),
                         selected: GoRouterState.of(context).matchedLocation == '/',
                         title: Text(context.$.main),
-                        onTap: () => context.goNamed(AppRoutes.main.name),
+                        onTap: () {
+                          context.goNamed(AppRoutes.main.name);
+                          context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
+                        },
                       ),
                       if (context.permissionNames.users.canListAll)
                         ListTile(
@@ -168,7 +171,17 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return BlocListener<AuthBloc, AuthState>(
+      listenWhen: (_, current) {
+        if (current is! AuthenticatedAuthState) {
+          return false;
+        }
+        return current.scope != scope;
+      },
+      listener: (context, state) {
+        App.restartApplication(context);
+        context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
+      },
       child: Column(
         spacing: 16.0,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,5 +25,7 @@ final class UpdateProjectReq {
     };
   }
 
-  String toPath() => ProjectsEndpoints.updateProject(_params.id);
+  String toPath() {
+    return ProjectsEndpoints.item(_params.id).fullPath;
+  }
 }

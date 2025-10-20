@@ -6,5 +6,7 @@ final class DeletePgInstanceReq {
 
   final PgInstanceID id;
 
-  String toPath() => PgInstancesEndpoints.deleteInstance(id);
+  String toPath() {
+    return PgInstancesEndpoints.item(id).fullPath;
+  }
 }

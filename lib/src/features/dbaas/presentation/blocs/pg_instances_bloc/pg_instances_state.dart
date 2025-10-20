@@ -23,3 +23,7 @@ final class PgInstancesDeletedState implements PgInstancesState {
 
   final List<PgInstance> instances;
 }
+
+extension PgInstancesStateX on PgInstancesState {
+  bool get shouldBuild => this is PgInstancesLoadingState || this is PgInstancesLoadedState;
+}

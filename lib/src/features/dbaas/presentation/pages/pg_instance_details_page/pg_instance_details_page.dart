@@ -3,16 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 part './widgets/delete_pg_instance_btn.dart';
@@ -71,9 +75,11 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             // _ipv4List = instance.ipv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
           case PgInstanceUpdatedState():
-          // messenger.showSnackBar(App)
-          // case PgInstanceFailureState(:final message):
-          //   scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.success('success'.hardcoded));
+          case PgInstanceDeletedState(:final instance):
+            messenger.showSnackBar(AppSnackBar.success('success'.hardcoded));
+            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            context.pop();
           default:
         }
       },
@@ -294,20 +300,22 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   void save() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // _pgInstanceBloc.add(
-      //   // PgInstanceEvent.updateInstance(
-      //   //   CreatePgInstanceParams(
-      //   //     name: _name,
-      //   //     description: _description,
-      //   //     cores: _cores,
-      //   //     ram: _ram,
-      //   //     diskSize: _diskSize,
-      //   //     nodesNumber: _nodesNumber,
-      //   //     syncReplicaNumber: _syncReplicaNumber,
-      //   //     // ipv4: _ipv4List,
-      //   //   ),
-      //   // ),
-      // );
+      _pgInstanceBloc.add(
+        PgInstanceEvent.updateInstance(
+          UpdatePgInstanceParams(
+            id: widget.id,
+            name: _name,
+            description: _description,
+            cores: _cores,
+            ram: _ram,
+            ipsv4: null,
+            diskSize: _diskSize,
+            nodesNumber: _nodesNumber,
+            syncReplicaNumber: _syncReplicaNumber,
+            // ipv4: _ipv4List,
+          ),
+        ),
+      );
     }
   }
 }

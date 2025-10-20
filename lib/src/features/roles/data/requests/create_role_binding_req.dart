@@ -1,4 +1,3 @@
-import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/network/endpoints/projects_endpoints.dart';
@@ -12,19 +11,22 @@ final class CreateRoleBindingReq implements JsonEncodable, PathEncodable {
 
   final CreateRoleBindingParams _params;
 
+  String? get _projectRelativePath {
+    if (_params.projectUUID == null) {
+      return null;
+    }
+    return ProjectsEndpoints.item(_params.projectUUID!).relativePath;
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return {
-      'user': UsersEndpoints.getUser(_params.userUUID).replaceFirst('${Env.apiPrefix}/', ''),
-      'role': RolesEndpoints.getRole(_params.roleUUID).replaceFirst('${Env.apiPrefix}/', ''),
-      'project': ?_params.projectUUID != null
-          ? ProjectsEndpoints.getProject(_params.projectUUID!).replaceFirst('${Env.apiPrefix}/', '')
-          : null,
+      'user': UsersEndpoints.item(_params.userUUID).relativePath,
+      'role': RolesEndpoints.item(_params.roleUUID).relativePath,
+      'project': ?_projectRelativePath,
     };
   }
 
   @override
-  String toPath() {
-    return RoleBindingsEndpoints.createRoleBinding();
-  }
+  String toPath() => RoleBindingsEndpoints.items().fullPath;
 }

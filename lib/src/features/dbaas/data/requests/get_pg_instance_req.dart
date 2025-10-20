@@ -6,5 +6,7 @@ final class GetPgInstanceReq {
 
   final PgInstanceID id;
 
-  String toPath() => PgInstancesEndpoints.getInstance(id);
+  String toPath() {
+    return PgInstancesEndpoints.item(id).fullPath;
+  }
 }

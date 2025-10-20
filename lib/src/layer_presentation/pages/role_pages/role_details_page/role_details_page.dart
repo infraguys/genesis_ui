@@ -164,7 +164,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
       _roleBloc.add(
         RoleEvent.update(
           UpdateRoleParams(
-            uuid: widget.uuid,
+            id: widget.uuid,
             name: _name,
             description: _description,
             permissions: context.read<PermissionsSelectionBloc>().state,

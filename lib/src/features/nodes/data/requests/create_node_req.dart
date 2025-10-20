@@ -19,5 +19,7 @@ final class CreateNodeReq with NodeTypeJsonMixin {
     };
   }
 
-  String toPath() => NodesEndpoints.createNode();
+  String toPath() {
+    return NodesEndpoints.items().fullPath;
+  }
 }

@@ -27,5 +27,7 @@ final class GetExtensionsReq {
     _ => null,
   };
 
-  String toPath() => ExtensionsEndpoints.getExtensions();
+  String toPath() {
+    return ExtensionsEndpoints.items().fullPath;
+  }
 }

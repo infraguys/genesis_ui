@@ -13,5 +13,7 @@ final class UpdateOrganizationReq {
     };
   }
 
-  String toPath() => OrganizationsEndpoints.updateOrganization(_params.id);
+  String toPath() {
+    return OrganizationsEndpoints.item(_params.id).fullPath;
+  }
 }

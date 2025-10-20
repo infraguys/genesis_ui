@@ -1,22 +1,12 @@
-import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 
 abstract class NodesEndpoints {
-  static const _nodes = '${Env.apiPrefix}/${Env.versionApi}/nodes/';
-  static const _node = '$_nodes:id';
-
-  static String getNodes() => _nodes;
-
-  static String createNode() => _nodes;
-
-  static String getNode(NodeID id) => _node.fillUuid(id);
-
-  static String updateNode(NodeID id) => _node.fillUuid(id);
-
-  static String deleteNode(NodeID id) => _node.fillUuid(id);
-}
-
-// ignore: camel_case_extensions
-extension _ on String {
-  String fillUuid(NodeID id) => replaceFirst(':id', id.value);
+  static Endpoint items() {
+    return Endpoint.withCorePrefix('/nodes/');
+  }
+/**/
+  static Endpoint item(NodeID id) {
+    return Endpoint.withCorePrefix('/nodes/$id');
+  }
 }

@@ -14,5 +14,7 @@ extension UpdateUserParamsX on UpdateUserParams {
     };
   }
 
-  String toPath() => UsersEndpoints.updateUser(id);
+  String toPath() {
+    return UsersEndpoints.item(id).fullPath;
+  }
 }

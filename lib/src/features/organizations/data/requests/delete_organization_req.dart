@@ -6,5 +6,7 @@ final class DeleteOrganizationReq {
 
   final OrganizationID _id;
 
-  String toPath() => OrganizationsEndpoints.deleteOrganization(_id);
+  String toPath() {
+    return OrganizationsEndpoints.item(_id).fullPath;
+  }
 }

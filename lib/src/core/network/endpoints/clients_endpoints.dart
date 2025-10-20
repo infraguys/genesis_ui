@@ -1,11 +1,16 @@
 import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
 
 abstract class ClientsEndpoints {
-  static const _clients = '${Env.apiPrefix}/${Env.versionApi}/iam/clients';
+  static Endpoint getToken() {
+    return Endpoint.withCorePrefix('/iam/clients/${Env.iamClientUuid}/actions/get_token/invoke');
+  }
 
-  static String getToken() => '$_clients/${Env.iamClientUuid}/actions/get_token/invoke';
+  static Endpoint getMe() {
+    return Endpoint.withCorePrefix('/iam/clients/${Env.iamClientUuid}/actions/me');
+  }
 
-  static String getMe() => '$_clients/${Env.iamClientUuid}/actions/me';
-
-  static String introspectIamClient() => '$_clients/${Env.iamClientUuid}/actions/introspect';
+  static Endpoint introspectIamClient() {
+    return Endpoint.withCorePrefix('/iam/clients/${Env.iamClientUuid}/actions/introspect');
+  }
 }

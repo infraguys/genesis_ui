@@ -3,12 +3,10 @@ import 'package:genesis/src/core/network/endpoints/role_bindings_endpoints.dart'
 import 'package:genesis/src/features/roles/domain/entities/role_binding.dart';
 
 final class DeleteRoleBindingReq implements PathEncodable {
-  DeleteRoleBindingReq(this._uuid);
+  DeleteRoleBindingReq(this._id);
 
-  final RoleBindingUUID _uuid;
+  final RoleBindingUUID _id;
 
   @override
-  String toPath() {
-    return RoleBindingsEndpoints.deleteRoleBinding(_uuid.value);
-  }
+  String toPath() => RoleBindingsEndpoints.item(_id).fullPath;
 }

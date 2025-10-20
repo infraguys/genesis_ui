@@ -16,7 +16,5 @@ final class GetRolesReq implements QueryEncodable, PathEncodable {
   }
 
   @override
-  String toPath() {
-    return RolesEndpoints.getRoles();
-  }
+  String toPath() => RolesEndpoints.items().fullPath;
 }

@@ -7,6 +7,9 @@ class _ConfirmEmailButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (user.emailVerified) {
+      return const SizedBox.shrink();
+    }
     return ConfirmEmailElevatedButton(
       onPressed: () {
         context.read<UserBloc>().add(UserEvent.forceConfirmEmail(user));

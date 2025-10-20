@@ -37,10 +37,7 @@ class _CreateUserViewState extends State<_CreateUserView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
-      listenWhen: (_, current) => switch (current) {
-        UserCreatedState() || UserFailureState() => true,
-        _ => false,
-      },
+      listenWhen: (_, current) => current.shouldListen,
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
@@ -80,10 +77,14 @@ class _CreateUserViewState extends State<_CreateUserView> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24,
+                      spacing: 16,
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(hintText: context.$.username),
+                          decoration: InputDecoration(
+                            labelText: context.$.username,
+                            helperText: '',
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (newValue) => _username = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -91,7 +92,11 @@ class _CreateUserViewState extends State<_CreateUserView> {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(hintText: context.$.firstName),
+                          decoration: InputDecoration(
+                            labelText: context.$.firstName,
+                            helperText: '',
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (newValue) => _firstName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -99,7 +104,11 @@ class _CreateUserViewState extends State<_CreateUserView> {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(hintText: context.$.lastName),
+                          decoration: InputDecoration(
+                            labelText: context.$.lastName,
+                            helperText: '',
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (newValue) => _lastName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -107,7 +116,11 @@ class _CreateUserViewState extends State<_CreateUserView> {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(hintText: context.$.email),
+                          decoration: InputDecoration(
+                            labelText: context.$.email,
+                            helperText: '',
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (newValue) => _email = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -115,9 +128,10 @@ class _CreateUserViewState extends State<_CreateUserView> {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(hintText: context.$.password),
+                          decoration: InputDecoration(labelText: context.$.password, helperText: ''),
                           onSaved: (newValue) => _password = newValue!,
                           obscureText: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,

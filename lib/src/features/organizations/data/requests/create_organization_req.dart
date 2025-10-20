@@ -13,5 +13,7 @@ final class CreateOrganizationReq {
     };
   }
 
-  String toPath() => OrganizationsEndpoints.createOrganization();
+  String toPath() {
+    return OrganizationsEndpoints.items().fullPath;
+  }
 }

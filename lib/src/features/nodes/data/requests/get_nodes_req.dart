@@ -16,5 +16,7 @@ final class GetNodesReq {
     };
   }
 
-  String toPath() => NodesEndpoints.getNodes();
+  String toPath() {
+    return NodesEndpoints.items().fullPath;
+  }
 }

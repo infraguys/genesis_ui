@@ -3,13 +3,13 @@ import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 final class UpdateRoleParams {
   UpdateRoleParams({
-    required this.uuid,
+    required this.id,
     required this.name,
     required this.permissions,
     this.description,
   });
 
-  final RoleUUID uuid;
+  final RoleUUID id;
   final String name;
   final String? description;
   final List<Permission> permissions;

@@ -6,5 +6,7 @@ final class DeleteNodeReq {
 
   final NodeID _id;
 
-  String toPath() => NodesEndpoints.deleteNode(_id);
+  String toPath() {
+    return NodesEndpoints.item(_id).fullPath;
+  }
 }

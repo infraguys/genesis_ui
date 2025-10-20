@@ -1,21 +1,12 @@
-import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
 
 abstract class PermissionBindingsEndpoints {
-  static const _permissionBindings = '${Env.apiPrefix}/${Env.versionApi}/iam/permission_bindings/';
-  static const _permissionBinding = '/$_permissionBindings:uuid';
+  static Endpoint items() {
+    return Endpoint.withCorePrefix('/iam/permission_bindings/');
+  }
 
-  static String getPermissionBindings() => _permissionBindings;
-
-  static String createPermissionBinding() => _permissionBindings;
-
-  static String getPermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
-
-  static String updatePermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
-
-  static String deletePermissionBinding(String uuid) => _permissionBinding.fillUuid(uuid);
-}
-
-// ignore: camel_case_extensions
-extension _ on String {
-  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
+  static Endpoint item(PermissionBindingID id) {
+    return Endpoint.withCorePrefix('/iam/permission_bindings/$id');
+  }
 }

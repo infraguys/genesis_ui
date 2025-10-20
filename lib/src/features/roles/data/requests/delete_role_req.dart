@@ -3,12 +3,10 @@ import 'package:genesis/src/core/network/endpoints/roles_endpoints.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 final class DeleteRoleReq implements PathEncodable {
-  DeleteRoleReq(this._uuid);
+  DeleteRoleReq(this._id);
 
-  final RoleUUID _uuid;
+  final RoleUUID _id;
 
   @override
-  String toPath() {
-    return RolesEndpoints.deleteRole(_uuid);
-  }
+  String toPath() => RolesEndpoints.item(_id).fullPath;
 }

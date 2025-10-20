@@ -55,10 +55,12 @@ class _PgInstanceListView extends StatelessWidget {
           const SizedBox(height: 24),
           Expanded(
             child: BlocBuilder<PgInstancesBloc, PgInstancesState>(
-              buildWhen: (previous, current) => current is PgInstancesLoadingState || current is PgInstancesLoadedState,
-              builder: (_, state) => switch (state) {
-                PgInstancesLoadedState(:final instances) => PgInstancesTable(instances: instances),
-                _ => AppProgressIndicator(),
+              buildWhen: (_, current) => current.shouldBuild,
+              builder: (_, state) {
+                if (state is! PgInstancesLoadedState) {
+                  return AppProgressIndicator();
+                }
+                return PgInstancesTable(instances: state.instances);
               },
             ),
           ),

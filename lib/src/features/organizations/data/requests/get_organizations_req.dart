@@ -22,5 +22,7 @@ final class GetOrganizationsReq {
     _ => null,
   };
 
-  String toPath() => OrganizationsEndpoints.getOrganizations();
+  String toPath() {
+    return OrganizationsEndpoints.items().fullPath;
+  }
 }

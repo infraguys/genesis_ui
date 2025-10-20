@@ -17,7 +17,5 @@ final class CreateRoleReq implements JsonEncodable, PathEncodable {
   }
 
   @override
-  String toPath() {
-    return RolesEndpoints.createRole();
-  }
+  String toPath() => RolesEndpoints.items().fullPath;
 }

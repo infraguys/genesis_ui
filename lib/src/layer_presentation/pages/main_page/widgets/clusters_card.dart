@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
-class ClustersCard extends StatelessWidget {
-  const ClustersCard({super.key});
+class PgClustersCard extends StatelessWidget {
+  const PgClustersCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ClustersCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Clusters', style: textTheme.titleMedium),
+            Text('PG clusters', style: textTheme.titleMedium),
             BlocBuilder<PgInstancesBloc, PgInstancesState>(
               builder: (context, state) {
                 if (state is! PgInstancesLoadedState) {
@@ -24,8 +25,8 @@ class ClustersCard extends StatelessWidget {
                     style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
                   );
                 }
-                final clusters = state.instances;
 
+                final clusters = state.instances;
                 return Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -34,8 +35,8 @@ class ClustersCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            'New:',
-                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                            context.$.newStatus,
+                            style: textTheme.titleSmall!,
                           ),
                         ),
                         Padding(
@@ -46,12 +47,13 @@ class ClustersCard extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),TableRow(
+                    ),
+                    TableRow(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            'Active:',
+                            context.$.active,
                             style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -69,7 +71,7 @@ class ClustersCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0, bottom: 16.0, left: 4.0, right: 4.0),
                           child: Text(
-                            'In progress:',
+                            context.$.inProgress,
                             style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -92,7 +94,7 @@ class ClustersCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 16.0, bottom: 4.0, left: 4.0, right: 4.0),
                           child: Text(
-                            'Total:',
+                            context.$.total,
                             style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),

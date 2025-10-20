@@ -19,5 +19,7 @@ final class UpdateNodeReq with NodeTypeJsonMixin {
     };
   }
 
-  String toPath() => NodesEndpoints.updateNode(_params.id);
+  String toPath() {
+    return NodesEndpoints.item(_params.id).fullPath;
+  }
 }
