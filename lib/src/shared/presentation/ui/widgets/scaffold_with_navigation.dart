@@ -12,6 +12,7 @@ import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
+import 'package:genesis/src/routing/branch_index.dart';
 import 'package:genesis/src/shared/presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/me_appbar_widget.dart';
@@ -21,6 +22,10 @@ class ScaffoldWithNavigation extends StatelessWidget {
   const ScaffoldWithNavigation({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
+
+  void _goBranch(int index) {
+    navigationShell.goBranch(index);
+  }
 
   @override
   Widget build(context) {
@@ -42,54 +47,67 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       Divider(color: Palette.color1B1B1D, thickness: 1),
                       ListTile(
                         leading: Icon(Icons.dashboard),
-                        selected: GoRouterState.of(context).matchedLocation == '/',
+                        // selected: GoRouterState.of(context).matchedLocation == '/',
+                        selected: navigationShell.currentIndex == BranchIndex.main.index,
                         title: Text(context.$.main),
                         onTap: () {
-                          context.goNamed(AppRoutes.main.name);
+                          _goBranch(BranchIndex.main.index);
                           context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
                         },
                       ),
                       if (context.permissionNames.users.canListAll)
                         ListTile(
                           leading: Icon(CupertinoIcons.person_2_fill),
-                          selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
+                          // selected: GoRouterState.of(context).matchedLocation.startsWith('/users'),
+                          selected: navigationShell.currentIndex == BranchIndex.users.index,
                           title: Text(context.$.users),
-                          onTap: () => context.goNamed(AppRoutes.users.name),
+                          onTap: () {
+                            _goBranch(BranchIndex.users.index);
+                          },
                         ),
                       ListTile(
                         leading: Icon(Icons.folder_copy_rounded),
-                        selected: GoRouterState.of(context).matchedLocation.startsWith('/projects'),
+                        // selected: GoRouterState.of(context).matchedLocation.startsWith('/projects'),
+                        selected: navigationShell.currentIndex == BranchIndex.projects.index,
                         title: Text(context.$.projects),
-                        onTap: () => context.goNamed(AppRoutes.projects.name),
+                        onTap: () {
+                          _goBranch(BranchIndex.projects.index);
+                        },
                       ),
                       if (context.permissionNames.roles.canRead)
                         ListTile(
                           leading: Icon(Icons.admin_panel_settings),
-                          selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
+                          // selected: GoRouterState.of(context).matchedLocation.startsWith('/roles'),
+                          selected: navigationShell.currentIndex == BranchIndex.roles.index,
                           title: Text(context.$.roles),
-                          onTap: () => context.goNamed(AppRoutes.roles.name),
+                          onTap: () {
+                            _goBranch(BranchIndex.roles.index);
+                          },
                         ),
                       if (context.permissionNames.organizations.canReadAll)
                         ListTile(
                           leading: Icon(Icons.business_sharp),
-                          selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
+                          // selected: GoRouterState.of(context).matchedLocation.startsWith('/organizations'),
+                          selected: navigationShell.currentIndex == BranchIndex.organizations.index,
                           title: Text(context.$.organizations),
-                          onTap: () => context.goNamed(AppRoutes.organizations.name),
+                          onTap: () {
+                            _goBranch(BranchIndex.organizations.index);
+                          },
                         ),
                       ListTile(
                         leading: Icon(Icons.hub_rounded),
-                        selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
+                        // selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
+                        selected: navigationShell.currentIndex == BranchIndex.nodes.index,
                         title: Text(context.$.nodes),
-                        onTap: () {
-                          context.goNamed(AppRoutes.nodes.name);
-                        },
+                        onTap: () => _goBranch(BranchIndex.nodes.index),
                       ),
                       ListTile(
                         leading: Icon(Icons.storage_rounded),
-                        selected: GoRouterState.of(context).matchedLocation.startsWith('/dbaas'),
+                        // selected: GoRouterState.of(context).matchedLocation.startsWith('/dbaas'),
+                        selected: navigationShell.currentIndex == BranchIndex.dbaas.index,
                         title: Text(context.$.dbaas),
                         onTap: () {
-                          context.goNamed(AppRoutes.instances.name);
+                          _goBranch(BranchIndex.dbaas.index);
                           context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
                         },
                       ),
@@ -125,7 +143,9 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       ListTile(
                         leading: Icon(CupertinoIcons.restart),
                         title: Text('Restart'.hardcoded),
-                        onTap: () => App.restartApplication(context),
+                        onTap: () {
+                          App.restartApplication(context);
+                        },
                       ),
                     ],
                   ),
