@@ -2,6 +2,11 @@ name: build & deploy
 
 on:
   push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
 
 env:
   REPO_ENDPOINT: http://10.20.0.1:8081
