@@ -8,6 +8,7 @@ import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_re
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
@@ -84,101 +85,77 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
+                      spacing: 4.0,
                       children: [
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _name,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: InputDecoration(
-                            labelText: context.$.name,
-                            helperText: ''
-                          ),
+                          labelText: context.$.name,
+                          hintText: context.$.name,
                           onSaved: (newValue) => _name = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _cores.toString(),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          labelText: 'cores'.hardcoded,
+                          hintText: 'cores'.hardcoded,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(
-                            labelText: 'cores'.hardcoded,
-                            helperText: '',
-                          ),
                           onSaved: (newValue) => _cores = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _diskSize.toString(),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          labelText: context.$.rootDiskSize,
+                          hintText: context.$.rootDiskSize,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           // TODO(Koretsky): Проверить локализацию
-                          decoration: InputDecoration(
-                            labelText: context.$.rootDiskSize,
-                            helperText: '',
-                          ),
                           onSaved: (newValue) => _diskSize = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _ram.toString(),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          labelText: 'ram'.hardcoded,
+                          hintText: 'ram'.hardcoded,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(
-                            labelText: 'ram'.hardcoded,
-                            helperText: '',
-                            // helperText: context.$.ramHelperText,
-                          ),
                           onSaved: (newValue) => _ram = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _nodesNumber.toString(),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          labelText: 'nodes number'.hardcoded,
+                          hintText: 'nodes number'.hardcoded,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(
-                            labelText: 'nodes number'.hardcoded,
-                            helperText: '',
-                            // helperText: 'nodes number'.hardcoded,
-                          ),
                           onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _syncReplicaNumber.toString(),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: InputDecoration(
-                            labelText: 'sync replica number'.hardcoded,
-                            helperText: '',
-                            // helperText: 'sync replica number'.hardcoded,
-                          ),
+                          labelText: 'sync replica number'.hardcoded,
+                          hintText: 'sync replica number'.hardcoded,
                           onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _description,
-                          decoration: InputDecoration(
-                            labelText: context.$.description,
-                            helperText: ''
-                            // helperText: context.$.description,
-                          ),
+                          labelText: context.$.description,
+                          hintText: context.$.description,
                           onSaved: (newValue) => _description = newValue!,
                         ),
                       ],
