@@ -25,7 +25,7 @@ final class _DeleteInstances implements PgInstancesEvent {
 final class _StartPolling implements PgInstancesEvent {}
 
 final class _Tick implements PgInstancesEvent {
-  const _Tick([this.params = const GetPgInstancesParams()]);
+  const _Tick(this.params);
 
   final GetPgInstancesParams params;
 }
