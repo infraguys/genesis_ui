@@ -15,6 +15,7 @@ import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart'
 import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/widgets/list_of_projects.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/confirm_email_icon_button.dart';
@@ -29,8 +30,6 @@ import 'package:google_fonts/google_fonts.dart';
 part './widgets/confirm_email_btn.dart';
 
 part './widgets/delete_user_btn.dart';
-
-part './widgets/save_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
   const _UserDetailsView();
@@ -118,7 +117,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                     children: [
                       _DeleteUserButton(user: user),
                       _ConfirmEmailButton(user: user),
-                      _SaveUserButton(onPressed: () => save(user.uuid)),
+                      SaveIconButton(onPressed: () => save(user.uuid)),
                     ],
                   ),
                   LayoutBuilder(
@@ -134,59 +133,51 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                spacing: 24,
+                                spacing: 16.0,
                                 children: [
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _username,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.username,
-                                    ),
+                                    helperText: context.$.username,
                                     onSaved: (newValue) => _username = newValue!,
                                     validator: (value) => switch (value) {
                                       _ when value!.isEmpty => context.$.requiredField,
                                       _ => null,
                                     },
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _firstName,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.firstName,
-                                    ),
+                                    helperText: context.$.firstName,
                                     onSaved: (newValue) => _firstName = newValue!,
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _lastName,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.lastName,
-                                    ),
+                                    helperText: context.$.lastName,
                                     onSaved: (newValue) => _lastName = newValue!,
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _surname,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.surName,
-                                    ),
+                                    helperText: context.$.surName,
                                     onSaved: (newValue) => _surname = newValue!,
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _phone,
-                                    decoration: InputDecoration(
-                                      hintText: 'Phone'.hardcoded,
-                                    ),
+                                    // labelText: context.$.phoneNumber,
+                                    // hintText: context.$.phoneNumber,
+                                    helperText: context.$.phoneNumber,
                                     onSaved: (newValue) => _phone = newValue!,
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _email,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.email,
-                                    ),
+                                    // labelText: context.$.email,
+                                    // hintText: context.$.email,
+                                    helperText: context.$.email,
                                     onSaved: (newValue) => _email = newValue!,
                                   ),
-                                  TextFormField(
+                                  AppTextFormInput(
                                     initialValue: _description,
-                                    decoration: InputDecoration(
-                                      hintText: context.$.description,
-                                    ),
+                                    // labelText: context.$.description,
+                                    // hintText: context.$.description,
+                                    helperText: context.$.description,
                                     onSaved: (newValue) => _description = newValue!,
                                     maxLines: 4,
                                     minLines: 4,
@@ -203,7 +194,7 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(context.$.uuid),
+                                  Text('ID'),
                                   RichText(
                                     text: TextSpan(
                                       children: [

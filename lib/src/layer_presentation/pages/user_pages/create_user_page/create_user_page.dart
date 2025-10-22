@@ -6,6 +6,7 @@ import 'package:genesis/src/features/users/domain/repositories/i_users_repositor
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
@@ -79,59 +80,43 @@ class _CreateUserViewState extends State<_CreateUserView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 16,
                       children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: context.$.username,
-                            helperText: '',
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        AppTextFormInput(
+                          helperText: context.$.username,
                           onSaved: (newValue) => _username = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: context.$.firstName,
-                            helperText: '',
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        AppTextFormInput(
+                          helperText: context.$.firstName,
                           onSaved: (newValue) => _firstName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: context.$.lastName,
-                            helperText: '',
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        AppTextFormInput(
+                          helperText: context.$.lastName,
                           onSaved: (newValue) => _lastName = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: context.$.email,
-                            helperText: '',
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        AppTextFormInput(
+                          helperText: context.$.email,
                           onSaved: (newValue) => _email = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: context.$.password, helperText: ''),
+                        AppTextFormInput(
+                          helperText: context.$.password,
                           onSaved: (newValue) => _password = newValue!,
                           obscureText: true,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          maxLines: 1,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,

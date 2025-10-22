@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/nodes/domain/params/create_node_params.dart';
 import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
 class _CreateNodeView extends StatefulWidget {
-  const _CreateNodeView({super.key});
+  const _CreateNodeView({super.key}); // ignore: unused_element_parameter
 
   @override
   State<_CreateNodeView> createState() => _CreateNodeViewState();
@@ -48,15 +48,17 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<NodeBloc, NodeState>(
+      listenWhen: (_, current) => current.shouldListen,
       listener: (context, state) {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
+        final messenger = ScaffoldMessenger.of(context);
+
         switch (state) {
-          case NodeCreatedState():
+          case NodeCreatedState(:final node):
             context.read<NodesBloc>().add(NodesEvent.getNodes());
-            scaffoldMessenger.showSnackBar(AppSnackBar.success(context.$.msgNodeCreated(state.node.name)));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgNodeCreated(node.name)));
             context.pop();
           case NodeFailureState(:final message):
-            scaffoldMessenger.showSnackBar(AppSnackBar.failure(message));
+            messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
       },
@@ -84,12 +86,11 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24,
+                      spacing: 16,
                       children: [
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
+                        AppTextFormInput(
                           initialValue: _name,
-                          decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
+                          helperText: context.$.name,
                           onSaved: (newValue) => _name = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
@@ -112,72 +113,52 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
                             ),
                             DropdownMenuEntry(
                               value: NodeType.hw,
-                              label: 'Hardware',
+                              label: context.$.hardware,
                             ),
                           ],
                         ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
+                        AppTextFormInput(
                           initialValue: _image,
-                          decoration: InputDecoration(hintText: context.$.image, helperText: context.$.image),
+                          helperText: context.$.image,
                           onSaved: (newValue) => _image = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
+                        AppTextFormInput(
                           initialValue: _cores.toString(),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          decoration: InputDecoration(
-                            hintText: 'cores'.hardcoded,
-                            helperText: 'cores'.hardcoded,
-                          ),
+                          helperText: context.$.cores,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           onSaved: (newValue) => _cores = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
+                        AppTextFormInput(
                           initialValue: _rootDiskSize.toString(),
+                          helperText: context.$.rootDiskSize,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(
-                            hintText: context.$.rootDiskSize,
-                            helperText: context.$.rootDiskSize,
-                          ),
                           onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUnfocus,
+                        AppTextFormInput(
                           initialValue: _ram.toString(),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          decoration: InputDecoration(
-                            hintText: 'ram'.hardcoded,
-                            helperText: context.$.ramHelperText,
-                          ),
+                          helperText: context.$.ramHelperText,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           onSaved: (newValue) => _ram = int.parse(newValue!),
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _description,
-                          decoration: InputDecoration(
-                            hintText: context.$.description,
-                            helperText: context.$.description,
-                          ),
+                          helperText: context.$.description,
                           onSaved: (newValue) => _description = newValue!,
                         ),
                       ],
@@ -195,19 +176,16 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
   void save() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _nodeBloc.add(
-        NodeEvent.create(
-          CreateNodeParams(
-            name: _name,
-            description: _description,
-            cores: _cores,
-            ram: _ram,
-            rootDiskSize: _rootDiskSize,
-            image: _image,
-            nodeType: _nodeType,
-          ),
-        ),
+      final params = CreateNodeParams(
+        name: _name,
+        description: _description,
+        cores: _cores,
+        ram: _ram,
+        rootDiskSize: _rootDiskSize,
+        image: _image,
+        nodeType: _nodeType,
       );
+      _nodeBloc.add(NodeEvent.create(params));
     }
   }
 }
@@ -219,7 +197,7 @@ class CreateNodePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NodeBloc(context.read<INodesRepository>()),
-      child: _CreateNodeView(key: key),
+      child: _CreateNodeView(),
     );
   }
 }

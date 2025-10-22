@@ -35,3 +35,7 @@ base class _FailureState implements UsersState {
 
   final String message;
 }
+
+extension UsersStateX on UsersState {
+  bool get shouldListen => this is! UsersLoadingState || this is! _InitialState;
+}

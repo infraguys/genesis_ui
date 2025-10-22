@@ -53,7 +53,7 @@ class UsersTable extends StatelessWidget {
             );
           },
         ),
-        Text(context.$.user, style: TextStyle(color: Colors.white)),
+        Text(context.$.username, style: TextStyle(color: Colors.white)),
         Text(context.$.status, style: TextStyle(color: Colors.white)),
         Text(context.$.uuid, style: TextStyle(color: Colors.white)),
         Text(context.$.verification, style: TextStyle(color: Colors.white)),

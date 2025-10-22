@@ -6,6 +6,7 @@ import 'package:genesis/src/features/organizations/domain/repositories/i_organiz
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
@@ -82,24 +83,20 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 24,
+                      spacing: 16,
                       children: [
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _name,
-                          decoration: InputDecoration(
-                            hintText: context.$.name,
-                          ),
+                          helperText: context.$.projectName,
                           onSaved: (newValue) => _name = newValue!,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
                             _ => null,
                           },
                         ),
-                        TextFormField(
+                        AppTextFormInput(
                           initialValue: _description,
-                          decoration: InputDecoration(
-                            hintText: context.$.description,
-                          ),
+                          helperText: context.$.description,
                           onSaved: (newValue) => _description = newValue!,
                           minLines: 3,
                           maxLines: 3,

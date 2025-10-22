@@ -17,6 +17,7 @@ import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 
 part './widgets/confirm_email_btn.dart';
+
 part './widgets/delete_user_btn.dart';
 
 class _UserListView extends StatelessWidget {
@@ -25,7 +26,7 @@ class _UserListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UsersBloc, UsersState>(
-      listenWhen: (_, current) => current is! UsersLoadingState,
+      listenWhen: (_, current) => current.shouldListen,
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
@@ -59,9 +60,11 @@ class _UserListView extends StatelessWidget {
           Expanded(
             child: BlocBuilder<UsersBloc, UsersState>(
               buildWhen: (_, current) => current is UsersLoadingState || current is UsersLoadedState,
-              builder: (_, state) => switch (state) {
-                UsersLoadedState(:final users) => UsersTable(users: users),
-                _ => AppProgressIndicator(),
+              builder: (_, state) {
+                return switch (state) {
+                  UsersLoadedState(:final users) => UsersTable(users: users),
+                  _ => AppProgressIndicator(),
+                };
               },
             ),
           ),
