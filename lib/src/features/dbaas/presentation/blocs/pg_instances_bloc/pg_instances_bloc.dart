@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
@@ -17,7 +18,7 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> with Poll
     on(_onGetInstances);
     on(_onDeleteInstances);
     on(_onStartPolling);
-    on(_onTick);
+    on(_onTick, transformer: droppable<_Tick>());
     on(_onStopPolling);
   }
 
@@ -39,8 +40,9 @@ class PgInstancesBloc extends Bloc<PgInstancesEvent, PgInstancesState> with Poll
   }
 
   Future<void> _onStartPolling(_StartPolling e, Emitter<PgInstancesState> emit) async {
+    final params = GetPgInstancesParams();
     polling.start(
-      () => add(_Tick()),
+      () => add(_Tick(params)),
     );
   }
 
