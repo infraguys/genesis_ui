@@ -113,7 +113,6 @@ class UsersTable extends StatelessWidget {
         context.goNamed(
           AppRoutes.user.name,
           pathParameters: {'uuid': user.uuid.value},
-          extra: user,
         );
       },
     );

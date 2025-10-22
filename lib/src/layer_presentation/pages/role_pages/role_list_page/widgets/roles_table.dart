@@ -104,7 +104,6 @@ class RolesTable extends StatelessWidget {
         context.goNamed(
           AppRoutes.role.name,
           pathParameters: {'uuid': role.uuid.value},
-          extra: role,
         );
       },
     );

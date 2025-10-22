@@ -102,7 +102,6 @@ class ExtensionsTable extends StatelessWidget {
         // context.goNamed(
         //   AppRoutes.project.name,
         //   pathParameters: {'uuid': project.uuid.value},
-        //   extra: project,
         // );
       },
     );

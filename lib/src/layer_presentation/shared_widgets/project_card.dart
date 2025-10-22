@@ -77,7 +77,6 @@ class ProjectCard extends StatelessWidget {
                       'projectUuid': project.id.value,
                       ...GoRouterState.of(context).pathParameters,
                     },
-                    extra: GoRouterState.of(context).extra,
                   );
 
                   if (isCreated == true) {

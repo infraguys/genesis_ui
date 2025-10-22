@@ -116,7 +116,6 @@ class OrganizationsTable extends StatelessWidget {
         context.goNamed(
           AppRoutes.organization.name,
           pathParameters: {'uuid': organization.id.value},
-          extra: organization,
         );
       },
     );
