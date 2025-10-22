@@ -188,6 +188,114 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get total;
 
+  /// No description provided for @createdAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at'**
+  String get createdAt;
+
+  /// No description provided for @updatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated at'**
+  String get updatedAt;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @image.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get image;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// No description provided for @surName.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname'**
+  String get surName;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNumber;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @virtualMachine.
+  ///
+  /// In en, this message translates to:
+  /// **'Virtual machine'**
+  String get virtualMachine;
+
+  /// No description provided for @hardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get hardware;
+
+  /// No description provided for @cores.
+  ///
+  /// In en, this message translates to:
+  /// **'Cores'**
+  String get cores;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @core.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get core;
+
+  /// No description provided for @rootDiskSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Root disk size (GB)'**
+  String get rootDiskSize;
+
+  /// No description provided for @projectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Project name'**
+  String get projectName;
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:
@@ -350,66 +458,6 @@ abstract class AppLocalizations {
   /// **'Nodes'**
   String get nodes;
 
-  /// No description provided for @name.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
-
-  /// No description provided for @username.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
-
-  /// No description provided for @firstName.
-  ///
-  /// In en, this message translates to:
-  /// **'First name'**
-  String get firstName;
-
-  /// No description provided for @lastName.
-  ///
-  /// In en, this message translates to:
-  /// **'Last name'**
-  String get lastName;
-
-  /// No description provided for @surName.
-  ///
-  /// In en, this message translates to:
-  /// **'Surname'**
-  String get surName;
-
-  /// No description provided for @description.
-  ///
-  /// In en, this message translates to:
-  /// **'Description'**
-  String get description;
-
-  /// No description provided for @virtualMachine.
-  ///
-  /// In en, this message translates to:
-  /// **'Virtual machine'**
-  String get virtualMachine;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @core.
-  ///
-  /// In en, this message translates to:
-  /// **'Core'**
-  String get core;
-
-  /// No description provided for @rootDiskSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Root disk size (GB)'**
-  String get rootDiskSize;
-
   /// No description provided for @ramHelperText.
   ///
   /// In en, this message translates to:
@@ -421,30 +469,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Node type'**
   String get nodeType;
-
-  /// No description provided for @createdAt.
-  ///
-  /// In en, this message translates to:
-  /// **'Created at'**
-  String get createdAt;
-
-  /// No description provided for @updatedAt.
-  ///
-  /// In en, this message translates to:
-  /// **'Updated at'**
-  String get updatedAt;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @image.
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get image;
 
   /// No description provided for @dbaas.
   ///
@@ -517,6 +541,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change email'**
   String get changeEmail;
+
+  /// No description provided for @enterUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter username'**
+  String get enterUsername;
+
+  /// No description provided for @enterFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name'**
+  String get enterFirstName;
+
+  /// No description provided for @enterLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter last name'**
+  String get enterLastName;
+
+  /// No description provided for @enterSurName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter surname'**
+  String get enterSurName;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get enterPhoneNumber;
+
+  /// No description provided for @enterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email'**
+  String get enterEmail;
+
+  /// No description provided for @enterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description'**
+  String get enterDescription;
 
   /// No description provided for @msgCopiedToClipboard.
   ///

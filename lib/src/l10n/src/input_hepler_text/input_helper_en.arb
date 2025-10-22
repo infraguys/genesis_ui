@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "enterUsername": "Enter username",
+  "enterFirstName": "Enter name",
+  "enterLastName": "Enter last name",
+  "enterSurName": "Enter surname",
+  "enterPhoneNumber": "Enter phone number",
+  "enterEmail": "Enter email",
+  "enterDescription": "Enter description"
+}

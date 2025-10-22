@@ -6,5 +6,21 @@
   "goBack": "Назад",
   "verification": "Верификация",
   "requiredField": "Обязательное поле",
-  "total": "Всего"
+  "total": "Всего",
+  "createdAt": "Создано",
+  "updatedAt": "Обновлено",
+  "password": "Пароль",
+  "image": "Образ",
+  "name": "Имя",
+  "username": "Имя пользователя",
+  "firstName": "Имя",
+  "lastName": "Фамилия",
+  "surName": "Отчество",
+  "phoneNumber": "Номер телефона",
+  "description": "Описание",
+  "virtualMachine": "Виртуальная машина",
+  "hardware": "Физический сервер",
+  "cores": "Количество ядер",
+  "rootDiskSize": "Размер корневого диска (GB)",
+  "projectName": "Название проекта"
 }
