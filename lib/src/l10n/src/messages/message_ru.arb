@@ -143,5 +143,21 @@
         "type": "String"
       }
     }
+  },
+  "msgClusterUpdated": "Кластер {name} обновлен",
+  "@msgClusterUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgClusterDeleted": "Кластер {name} удален",
+  "@msgClusterDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

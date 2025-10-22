@@ -27,5 +27,6 @@
   "createdAt": "Создано",
   "updatedAt": "Обновлено",
   "password": "Пароль",
-  "image": "Образ"
+  "image": "Образ",
+  "pgCluster": "PG Кластер"
 }

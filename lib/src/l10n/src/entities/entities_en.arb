@@ -31,5 +31,6 @@
   "updatedAt": "Updated at",
   "password": "Password",
   "image": "Image",
-  "dbaas": "DBaaS"
+  "dbaas": "DBaaS",
+  "pgCluster": "PG Cluster"
 }

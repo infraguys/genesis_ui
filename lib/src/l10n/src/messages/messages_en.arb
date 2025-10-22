@@ -143,5 +143,29 @@
         "type": "String"
       }
     }
+  },
+  "msgClusterUpdated": "Cluster {name} has been updated",
+  "@msgClusterUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgClusterDeleted": "Cluster {name} has been deleted",
+  "@msgClusterDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgClustersDeleted": "Clusters({count}) have been deleted",
+  "@msgClustersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

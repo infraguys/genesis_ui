@@ -452,6 +452,12 @@ abstract class AppLocalizations {
   /// **'DBaaS'**
   String get dbaas;
 
+  /// No description provided for @pgCluster.
+  ///
+  /// In en, this message translates to:
+  /// **'PG Cluster'**
+  String get pgCluster;
+
   /// No description provided for @iam.
   ///
   /// In en, this message translates to:
@@ -619,6 +625,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cluster {name} has been created'**
   String msgClusterCreated(String name);
+
+  /// No description provided for @msgClusterUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Cluster {name} has been updated'**
+  String msgClusterUpdated(String name);
+
+  /// No description provided for @msgClusterDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Cluster {name} has been deleted'**
+  String msgClusterDeleted(String name);
+
+  /// No description provided for @msgClustersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Clusters({count}) have been deleted'**
+  String msgClustersDeleted(int count);
 
   /// No description provided for @status.
   ///
