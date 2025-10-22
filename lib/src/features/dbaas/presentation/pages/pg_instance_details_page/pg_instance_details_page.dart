@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
@@ -44,8 +45,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   late int _ram;
   late int _diskSize;
   late int _nodesNumber;
-
-  // late List<String> _ipv4List;
+  late List<String> _ipsv4List;
   int _syncReplicaNumber = 1;
 
   @override
@@ -74,7 +74,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             _ram = instance.ram;
             _diskSize = instance.diskSize;
             _nodesNumber = instance.nodesNumber;
-            // _ipv4List = instance.ipv4;
+            _ipsv4List = instance.ipsv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
           case PgInstanceUpdatedState(:final instance):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
@@ -121,94 +121,86 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                             key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 24,
+                              mainAxisSize: MainAxisSize.min,
+                              spacing: 4.0,
                               children: [
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
                                   initialValue: _name,
-                                  decoration: InputDecoration(hintText: context.$.name, helperText: context.$.name),
+                                  labelText: context.$.name,
+                                  hintText: context.$.name,
                                   onSaved: (newValue) => _name = newValue!,
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
                                   initialValue: _cores.toString(),
+                                  labelText: 'cores'.hardcoded,
+                                  hintText: 'cores'.hardcoded,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  decoration: InputDecoration(
-                                    hintText: 'cores'.hardcoded,
-                                    helperText: 'cores'.hardcoded,
-                                  ),
                                   onSaved: (newValue) => _cores = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
                                   initialValue: _diskSize.toString(),
+                                  labelText: context.$.rootDiskSize,
+                                  hintText: context.$.rootDiskSize,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   // TODO(Koretsky): Проверить локализацию
-                                  decoration: InputDecoration(
-                                    hintText: context.$.rootDiskSize,
-                                    helperText: context.$.rootDiskSize,
-                                  ),
                                   onSaved: (newValue) => _diskSize = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
                                   initialValue: _ram.toString(),
+                                  labelText: 'ram'.hardcoded,
+                                  hintText: 'ram'.hardcoded,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  decoration: InputDecoration(
-                                    hintText: 'ram'.hardcoded,
-                                    helperText: context.$.ramHelperText,
-                                  ),
                                   onSaved: (newValue) => _ram = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
                                   initialValue: _nodesNumber.toString(),
+                                  labelText: 'nodes number'.hardcoded,
+                                  hintText: 'nodes number'.hardcoded,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  decoration: InputDecoration(
-                                    hintText: 'nodes number'.hardcoded,
-                                    helperText: 'nodes number'.hardcoded,
-                                  ),
                                   onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUnfocus,
+                                AppTextFormInput(
+                                  readOnly: true,
+                                  initialValue: _ipsv4List.join(', '),
+                                  labelText: 'Ipsv4'.hardcoded,
+                                  hintText: 'Ipsv4'.hardcoded,
+                                  maxLines: 3,
+                                  minLines: 1,
+                                ),
+                                AppTextFormInput(
                                   initialValue: _syncReplicaNumber.toString(),
-                                  decoration: InputDecoration(
-                                    hintText: 'sync replica number'.hardcoded,
-                                    helperText: 'sync replica number'.hardcoded,
-                                  ),
+                                  labelText: 'sync replica number'.hardcoded,
+                                  hintText: 'sync replica number'.hardcoded,
                                   onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _description,
-                                  decoration: InputDecoration(
-                                    hintText: context.$.description,
-                                    helperText: context.$.description,
-                                  ),
+                                  labelText: context.$.description,
+                                  hintText: context.$.description,
                                   onSaved: (newValue) => _description = newValue!,
                                 ),
                               ],
