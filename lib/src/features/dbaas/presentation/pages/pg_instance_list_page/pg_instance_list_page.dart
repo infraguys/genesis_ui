@@ -30,9 +30,9 @@ class _PgInstanceListView extends StatelessWidget {
 
         switch (state) {
           case PgInstancesDeletedState(:final instances) when instances.length == 1:
-            messenger.showSnackBar(AppSnackBar.success('Success'.hardcoded));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instances.single.name)));
           case PgInstancesDeletedState(:final instances) when instances.length > 1:
-            messenger.showSnackBar(AppSnackBar.success('Success'.hardcoded));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgClustersDeleted(instances.length)));
 
           default:
         }
@@ -42,7 +42,7 @@ class _PgInstanceListView extends StatelessWidget {
         children: [
           Breadcrumbs(
             items: [
-              BreadcrumbItem(text: 'instance'.hardcoded),
+              BreadcrumbItem(text: context.$.pgCluster),
             ],
           ),
           const SizedBox(height: 24),
