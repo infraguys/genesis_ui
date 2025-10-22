@@ -51,11 +51,13 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   @override
   void initState() {
     _pgInstanceBloc = context.read<PgInstanceBloc>();
+    _pgInstanceBloc.add(PgInstanceEvent.startPolling(widget.id));
     super.initState();
   }
 
   @override
   void dispose() {
+    _pgInstanceBloc.add(PgInstanceEvent.stopPolling());
     super.dispose();
   }
 
@@ -74,10 +76,10 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             _nodesNumber = instance.nodesNumber;
             // _ipv4List = instance.ipv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
-          case PgInstanceUpdatedState():
-            messenger.showSnackBar(AppSnackBar.success('success'.hardcoded));
+          case PgInstanceUpdatedState(:final instance):
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
           case PgInstanceDeletedState(:final instance):
-            messenger.showSnackBar(AppSnackBar.success('success'.hardcoded));
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instance.name)));
             context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
             context.pop();
           default:
@@ -97,7 +99,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
               children: [
                 Breadcrumbs(
                   items: [
-                    BreadcrumbItem(text: 'instance'.hardcoded),
+                    BreadcrumbItem(text: context.$.pgCluster),
                     BreadcrumbItem(text: context.$.create),
                   ],
                 ),
@@ -300,22 +302,19 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   void save() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _pgInstanceBloc.add(
-        PgInstanceEvent.updateInstance(
-          UpdatePgInstanceParams(
-            id: widget.id,
-            name: _name,
-            description: _description,
-            cores: _cores,
-            ram: _ram,
-            ipsv4: null,
-            diskSize: _diskSize,
-            nodesNumber: _nodesNumber,
-            syncReplicaNumber: _syncReplicaNumber,
-            // ipv4: _ipv4List,
-          ),
-        ),
+      final params = UpdatePgInstanceParams(
+        id: widget.id,
+        name: _name,
+        description: _description,
+        cores: _cores,
+        ram: _ram,
+        ipsv4: null,
+        diskSize: _diskSize,
+        nodesNumber: _nodesNumber,
+        syncReplicaNumber: _syncReplicaNumber,
+        // ipv4: _ipv4List,
       );
+      _pgInstanceBloc.add(PgInstanceEvent.updateInstance(params));
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
@@ -9,17 +10,21 @@ import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_u
 import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instance_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instance_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/update_pg_instance_usecase.dart';
+import 'package:genesis/src/shared/presentation/polling_bloc_mixin.dart';
 
 part 'pg_instance_event.dart';
 
 part 'pg_instance_state.dart';
 
-class PgInstanceBloc extends Bloc<PgInstanceEvent, PgInstanceState> {
+class PgInstanceBloc extends Bloc<PgInstanceEvent, PgInstanceState> with PollingBlocMixin {
   PgInstanceBloc(this._repository) : super(PgInstanceInitialState()) {
     on(_onCreateInstance);
     on(_onGetInstance);
     on(_onDeleteInstance);
     on(_onUpdatePgInstance);
+    on(_onStartPolling);
+    on(_onStopPolling);
+    on(_onTick, transformer: droppable<_Tick>());
   }
 
   final IPgInstancesRepository _repository;
@@ -64,5 +69,21 @@ class PgInstanceBloc extends Bloc<PgInstanceEvent, PgInstanceState> {
     } on PermissionException catch (e) {
       // emit(NodePermissionFailureState(e.message));
     }
+  }
+
+  Future<void> _onStartPolling(_StartPolling event, Emitter<PgInstanceState> emit) async {
+    polling.start(
+      () => add(_Tick(event.id)),
+    );
+  }
+
+  Future<void> _onTick(_Tick event, Emitter<PgInstanceState> emit) async {
+    final useCase = GetPgInstanceUseCase(_repository);
+    final instance = await useCase(event.id);
+    emit(PgInstanceLoadedState(instance));
+  }
+
+  void _onStopPolling(_StopPolling _, Emitter<PgInstanceState> _) {
+    polling.stop();
   }
 }
