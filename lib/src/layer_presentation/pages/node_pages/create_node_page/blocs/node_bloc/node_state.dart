@@ -1,24 +1,8 @@
 part of 'node_bloc.dart';
 
-sealed class NodeState {
-  factory NodeState.initial() = NodeInitialState;
+sealed class NodeState {}
 
-  factory NodeState.loading() = NodeLoadingState;
-
-  factory NodeState.loaded(Node node) = NodeLoadedState;
-
-  factory NodeState.updated(Node node) = NodeUpdatedState;
-
-  factory NodeState.created(Node node) = NodeCreatedState;
-
-  factory NodeState.deleted(Node node) = NodeDeletedState;
-
-  factory NodeState.failure(String message) = NodeFailureState;
-
-  factory NodeState.permissionFailure(String message) = NodePermissionFailureState;
-}
-
-final class NodeInitialState implements NodeState {}
+final class _InitialState implements NodeState {}
 
 final class NodeLoadingState implements NodeState {}
 
@@ -58,4 +42,8 @@ base class _FailureState implements NodeState {
   _FailureState(this.message);
 
   final String message;
+}
+
+extension NodeStateX on NodeState {
+  bool get shouldListen => this is! NodeLoadingState || this is! _InitialState;
 }

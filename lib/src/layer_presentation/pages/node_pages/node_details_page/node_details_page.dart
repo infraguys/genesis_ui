@@ -10,6 +10,7 @@ import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart'
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
@@ -126,12 +127,9 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: 24,
                               children: [
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _name,
-                                  decoration: InputDecoration(
-                                    hintText: context.$.name,
-                                    helperText: context.$.name,
-                                  ),
+                                  helperText: context.$.name,
                                   onSaved: (newValue) => _name = newValue!,
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
@@ -154,75 +152,55 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                                     ),
                                     DropdownMenuEntry(
                                       value: NodeType.hw,
-                                      label: 'Hardware',
+                                      label: context.$.hardware,
                                     ),
                                   ],
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _image,
-                                  decoration: InputDecoration(
-                                    hintText: context.$.image,
-                                    helperText: context.$.image,
-                                  ),
+                                  helperText: context.$.image,
                                   onSaved: (newValue) => _image = newValue!,
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _cores.toString(),
-                                  decoration: InputDecoration(
-                                    hintText: 'cores'.hardcoded,
-                                    helperText: 'cores'.hardcoded,
-                                  ),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                  ],
+                                  helperText: context.$.cores,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   onSaved: (newValue) => _cores = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _rootDiskSize.toString(),
-                                  decoration: InputDecoration(
-                                    hintText: context.$.rootDiskSize,
-                                    helperText: context.$.rootDiskSize,
-                                  ),
+                                  helperText: context.$.rootDiskSize,
                                   onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _ram.toString(),
-                                  decoration: InputDecoration(
-                                    hintText: 'ram'.hardcoded,
-                                    helperText: context.$.ramHelperText,
-                                  ),
+                                  helperText: context.$.ramHelperText,
                                   onSaved: (newValue) => _ram = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   readOnly: true,
                                   initialValue: _ipv4,
-                                  decoration: InputDecoration(
-                                    hintText: 'ipV4'.hardcoded,
-                                    helperText: 'ipV4'.hardcoded,
-                                  ),
+                                  helperText: 'ipV4'.hardcoded,
                                 ),
-                                TextFormField(
+                                AppTextFormInput(
                                   initialValue: _description,
-                                  decoration: InputDecoration(
-                                    hintText: context.$.description,
-                                    helperText: context.$.description,
-                                  ),
+                                  helperText: context.$.description,
                                   onSaved: (newValue) => _description = newValue!,
                                 ),
                               ],
