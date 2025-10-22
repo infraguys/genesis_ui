@@ -14,7 +14,7 @@ class PgInstanceDto implements IDto<PgInstance> {
     required this.createdAt,
     required this.updatedAt,
     required this.status,
-    // required this.ipv4,
+    required this.ipsv4,
     required this.cores,
     required this.ram,
     required this.diskSize,
@@ -39,8 +39,8 @@ class PgInstanceDto implements IDto<PgInstance> {
   final DateTime updatedAt;
   @JsonKey(name: 'status', fromJson: _toStatusFromJson)
   final PgInstanceStatus status;
-
-  // final List<String> ipv4;
+  @JsonKey(name: 'ipsv4')
+  final List<String> ipsv4;
   @JsonKey(name: 'cpu')
   final int cores;
   @JsonKey(name: 'ram')
@@ -64,7 +64,7 @@ class PgInstanceDto implements IDto<PgInstance> {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
-      // ipv4: ipv4,
+      ipsv4: ipsv4,
       cores: cores,
       ram: ram,
       diskSize: diskSize,
