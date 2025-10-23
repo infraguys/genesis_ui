@@ -125,7 +125,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                             key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 24,
+                              spacing: 16,
                               children: [
                                 AppTextFormInput(
                                   initialValue: _name,
@@ -196,7 +196,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                                 AppTextFormInput(
                                   readOnly: true,
                                   initialValue: _ipv4,
-                                  helperText: 'ipV4'.hardcoded,
+                                  helperText: 'ipv4'.hardcoded,
                                 ),
                                 AppTextFormInput(
                                   initialValue: _description,
