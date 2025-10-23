@@ -10,6 +10,7 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/routing/branch_index.dart';
@@ -99,7 +100,10 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         // selected: GoRouterState.of(context).matchedLocation.startsWith('/nodes'),
                         selected: navigationShell.currentIndex == BranchIndex.nodes.index,
                         title: Text(context.$.nodes),
-                        onTap: () => _goBranch(BranchIndex.nodes.index),
+                        onTap: () {
+                          _goBranch(BranchIndex.nodes.index);
+                          context.read<NodesBloc>().add(NodesEvent.startPollingInstances());
+                        },
                       ),
                       ListTile(
                         leading: Icon(Icons.storage_rounded),
