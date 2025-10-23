@@ -31,6 +31,8 @@ class AppTextFormInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final textTheme = Theme.of(context).textTheme;
+
     if (labelText != null) {
       return Column(
         spacing: 4.0,
@@ -74,6 +76,12 @@ class AppTextFormInput extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       obscureText: obscureText,
+      // style: WidgetStateTextStyle.resolveWith((states) {
+      //   if (states.contains(WidgetState.disabled)) {
+      //     return textTheme.bodyLarge!.copyWith(color: Colors.white);
+      //   }
+      //   return textTheme.bodyLarge!.copyWith(color: Colors.white);
+      // }),
     );
   }
 }

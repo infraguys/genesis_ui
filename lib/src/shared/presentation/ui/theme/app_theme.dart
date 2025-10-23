@@ -78,6 +78,7 @@ class AppTheme {
       elevatedButtonTheme: _elevatedButtonThemeData,
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: _inputDecorationThemeData,
+        disabledColor: Colors.white,
         menuStyle: MenuStyle(
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(

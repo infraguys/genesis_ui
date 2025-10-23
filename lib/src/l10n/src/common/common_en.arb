@@ -24,5 +24,6 @@
   "email": "Email",
   "core": "Core",
   "rootDiskSize": "Root disk size (GB)",
-  "projectName": "Project name"
+  "projectName": "Project name",
+  "otp": "Two-factor authentication"
 }

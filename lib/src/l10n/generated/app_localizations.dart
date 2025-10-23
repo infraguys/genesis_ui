@@ -296,6 +296,12 @@ abstract class AppLocalizations {
   /// **'Project name'**
   String get projectName;
 
+  /// No description provided for @otp.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication'**
+  String get otp;
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:
