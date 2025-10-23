@@ -124,10 +124,10 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                     builder: (context, constraints) {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 128,
+                        spacing: 100,
                         children: [
                           SizedBox(
-                            width: constraints.maxWidth * 0.4,
+                            width: 500,
                             child: Form(
                               key: _formKey,
                               child: Column(
