@@ -122,12 +122,11 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
-                              spacing: 4.0,
+                              spacing: 16.0,
                               children: [
                                 AppTextFormInput(
                                   initialValue: _name,
-                                  labelText: context.$.name,
-                                  hintText: context.$.name,
+                                  helperText: context.$.name,
                                   onSaved: (newValue) => _name = newValue!,
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
@@ -136,8 +135,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _cores.toString(),
-                                  labelText: 'cores'.hardcoded,
-                                  hintText: 'cores'.hardcoded,
+                                  helperText: context.$.cores,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   onSaved: (newValue) => _cores = int.parse(newValue!),
                                   validator: (value) => switch (value) {
@@ -147,8 +145,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _diskSize.toString(),
-                                  labelText: context.$.rootDiskSize,
-                                  hintText: context.$.rootDiskSize,
+                                  helperText: context.$.rootDiskSize,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   // TODO(Koretsky): Проверить локализацию
                                   onSaved: (newValue) => _diskSize = int.parse(newValue!),
@@ -159,8 +156,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _ram.toString(),
-                                  labelText: 'ram'.hardcoded,
-                                  hintText: 'ram'.hardcoded,
+                                  helperText: context.$.ramHelperText,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   onSaved: (newValue) => _ram = int.parse(newValue!),
                                   validator: (value) => switch (value) {
@@ -170,8 +166,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _nodesNumber.toString(),
-                                  labelText: 'nodes number'.hardcoded,
-                                  hintText: 'nodes number'.hardcoded,
+                                  helperText: 'Nodes number'.hardcoded,
                                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                   onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
                                   validator: (value) => switch (value) {
@@ -182,15 +177,13 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 AppTextFormInput(
                                   readOnly: true,
                                   initialValue: _ipsv4List.join(', '),
-                                  labelText: 'Ipsv4'.hardcoded,
-                                  hintText: 'Ipsv4'.hardcoded,
+                                  helperText: 'Ipsv4'.hardcoded,
                                   maxLines: 3,
                                   minLines: 1,
                                 ),
                                 AppTextFormInput(
                                   initialValue: _syncReplicaNumber.toString(),
-                                  labelText: 'sync replica number'.hardcoded,
-                                  hintText: 'sync replica number'.hardcoded,
+                                  helperText: 'sync replica number'.hardcoded,
                                   onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
@@ -199,8 +192,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _description,
-                                  labelText: context.$.description,
-                                  hintText: context.$.description,
+                                  helperText: context.$.description,
                                   onSaved: (newValue) => _description = newValue!,
                                 ),
                               ],
