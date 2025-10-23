@@ -49,7 +49,7 @@ final class NodeDto implements IDto<Node> {
   final NodeStatus status;
   @JsonKey(name: 'node_type', fromJson: _toNodeTypeFromJson)
   final NodeType nodeType;
-  @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork, defaultValue: '')
+  @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork)
   final String ipv4;
 
   @override
@@ -75,8 +75,8 @@ final class NodeDto implements IDto<Node> {
 
   static ProjectID _toProjectID(String json) => ProjectID(json);
 
-  static String _ipv4FromDefaultNetwork(Map<String, dynamic>? defaultNetwork) {
-    return defaultNetwork?['ipv4'] as String;
+  static String _ipv4FromDefaultNetwork(Map<String, dynamic> defaultNetwork) {
+    return defaultNetwork['ipv4'] as String? ?? '';
   }
 
   static NodeStatus _toStatusFromJson(String json) => switch (json) {
