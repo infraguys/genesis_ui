@@ -13,6 +13,7 @@ import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_list_page/extension_list_page.dart';
@@ -278,6 +279,10 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.nodes.name,
                 path: '/nodes',
+                onExit: (context, state) {
+                  context.read<NodesBloc>().add(NodesEvent.stopPollingInstances());
+                  return true;
+                },
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: NodeListPage(),
                 ),
