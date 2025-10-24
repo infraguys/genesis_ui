@@ -111,7 +111,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        backgroundColor: Palette.color1B1B1D,
+        backgroundColor: Palette.color333333,
         contentTextStyle: TextStyle(color: Colors.white),
       ),
       dividerTheme: DividerThemeData(
