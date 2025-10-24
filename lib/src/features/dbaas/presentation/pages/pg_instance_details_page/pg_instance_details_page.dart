@@ -16,9 +16,12 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.d
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 part './widgets/delete_pg_instance_btn.dart';
 
@@ -46,7 +49,8 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   late int _diskSize;
   late int _nodesNumber;
   late List<String> _ipsv4List;
-  int _syncReplicaNumber = 1;
+  late int _syncReplicaNumber;
+  late String _version;
 
   @override
   void initState() {
@@ -76,8 +80,11 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             _nodesNumber = instance.nodesNumber;
             _ipsv4List = instance.ipsv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
+            _version = instance.version;
           case PgInstanceUpdatedState(:final instance):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
+            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+
           case PgInstanceDeletedState(:final instance):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instance.name)));
             context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
@@ -91,191 +98,242 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
           if (state is! PgInstanceLoadedState) {
             return AppProgressIndicator();
           }
-          final instance = state.instance;
+          final PgInstanceLoadedState(:instance) = state;
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 24,
-              children: [
-                Breadcrumbs(
+            child: Form(
+              key: _formKey,
+              child: PageLayout(
+                breadcrumbs: Breadcrumbs(
                   items: [
                     BreadcrumbItem(text: context.$.pgCluster),
                     BreadcrumbItem(text: context.$.create),
                   ],
                 ),
-                ButtonsBar(
+                buttonsBar: ButtonsBar(
                   children: [
                     _DeletePgInstanceButton(instance: instance),
                     SaveIconButton(onPressed: save),
                   ],
                 ),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 128,
+                children: [
+                  FormCard(
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: constraints.maxWidth * 0.4,
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.storage_rounded, size: 100),
+                            SizedBox(width: 32),
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
                               spacing: 16.0,
                               children: [
-                                AppTextFormInput(
-                                  initialValue: _name,
-                                  helperText: context.$.name,
-                                  onSaved: (newValue) => _name = newValue!,
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'ID: ',
+                                    children: [
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: SelectableText(
+                                          instance.id.raw,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: GoogleFonts.robotoMono().fontFamily,
+                                          ),
+                                        ),
+                                      ),
+                                      WidgetSpan(child: const SizedBox(width: 8)),
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: IconButton(
+                                          icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                                          onPressed: () {
+                                            Clipboard.setData(ClipboardData(text: instance.id.raw));
+                                            final msg = context.$.msgCopiedToClipboard(instance.id.raw);
+                                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                AppTextFormInput(
-                                  initialValue: _cores.toString(),
-                                  helperText: context.$.cores,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  onSaved: (newValue) => _cores = int.parse(newValue!),
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _diskSize.toString(),
-                                  helperText: context.$.rootDiskSize,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  // TODO(Koretsky): Проверить локализацию
-                                  onSaved: (newValue) => _diskSize = int.parse(newValue!),
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _ram.toString(),
-                                  helperText: context.$.ramHelperText,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  onSaved: (newValue) => _ram = int.parse(newValue!),
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _nodesNumber.toString(),
-                                  helperText: 'Nodes number'.hardcoded,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                  onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
-                                ),
-                                AppTextFormInput(
-                                  readOnly: true,
-                                  initialValue: _ipsv4List.join(', '),
-                                  helperText: 'Ipsv4'.hardcoded,
-                                  maxLines: 3,
-                                  minLines: 1,
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _syncReplicaNumber.toString(),
-                                  helperText: 'sync replica number'.hardcoded,
-                                  onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
-                                  validator: (value) => switch (value) {
-                                    _ when value!.isEmpty => context.$.requiredField,
-                                    _ => null,
-                                  },
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _description,
-                                  helperText: context.$.description,
-                                  onSaved: (newValue) => _description = newValue!,
+                                SizedBox(
+                                  width: 500,
+                                  child: AppTextFormInput(
+                                    initialValue: _name,
+                                    helperText: context.$.username,
+                                    onSaved: (newValue) => _name = newValue!,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: constraints.maxWidth * 0.4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: 32,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 8.0,
-                                children: [
-                                  Text(context.$.uuid),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: SelectableText(
-                                            instance.id.raw,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: GoogleFonts.robotoMono().fontFamily,
-                                            ),
-                                          ),
-                                        ),
-                                        WidgetSpan(child: const SizedBox(width: 8)),
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: IconButton(
-                                            icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                                            onPressed: () {
-                                              Clipboard.setData(ClipboardData(text: instance.id.raw));
-                                              final snack = SnackBar(
-                                                backgroundColor: Colors.green,
-                                                content: Text('Скопировано в буфер обмена: ${instance.id.raw}'),
-                                              );
-                                              ScaffoldMessenger.of(context).showSnackBar(snack);
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                            Spacer(),
+                            Table(
+                              defaultColumnWidth: FixedColumnWidth(140),
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.status),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 8.0,
-                                children: [
-                                  Text(context.$.status),
-                                  PgInstanceStatusWidget(status: state.instance.status),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 8.0,
-                                children: [
-                                  Text(context.$.createdAt),
-                                  Text(state.instance.createdAt.toString()),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 8.0,
-                                children: [
-                                  Text(context.$.updatedAt),
-                                  Text(state.instance.updatedAt.toString()),
-                                ],
-                              ),
-                            ],
-                          ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: PgInstanceStatusWidget(status: instance.status),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.createdAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(instance.createdAt)),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.updatedAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(instance.updatedAt)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
-                    );
-                  },
-                ),
-              ],
+                    ),
+                  ),
+                  FormCard(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        const gapWidth = 16.0;
+                        final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                        return Column(
+                          spacing: gapWidth,
+                          children: [
+                            Row(
+                              spacing: 16.0,
+                              children: [
+                                SizedBox(
+                                  width: columnWidth,
+                                  child: AppTextFormInput(
+                                    initialValue: _cores.toString(),
+                                    helperText: context.$.cores,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    onSaved: (newValue) => _cores = int.parse(newValue!),
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: columnWidth,
+                                  child: AppTextFormInput(
+                                    initialValue: _diskSize.toString(),
+                                    helperText: context.$.rootDiskSize,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    // TODO(Koretsky): Проверить локализацию
+                                    onSaved: (newValue) => _diskSize = int.parse(newValue!),
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: columnWidth,
+                                  child: AppTextFormInput(
+                                    initialValue: _nodesNumber.toString(),
+                                    helperText: 'Nodes number'.hardcoded,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: columnWidth,
+                                  child: AppTextFormInput(
+                                    initialValue: _syncReplicaNumber.toString(),
+                                    helperText: 'sync replica number'.hardcoded,
+                                    onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: gapWidth,
+                              children: [
+                                SizedBox(
+                                  width: columnWidth,
+                                  child: AppTextFormInput(
+                                    initialValue: _ram.toString(),
+                                    helperText: context.$.ramHelperText,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                    onSaved: (newValue) => _ram = int.parse(newValue!),
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: (columnWidth * 3) + (gapWidth * 2),
+                                  child: AppTextFormInput(
+                                    readOnly: true,
+                                    initialValue: _ipsv4List.join(', '),
+                                    helperText: 'Ipsv4'.hardcoded,
+                                    maxLines: 3,
+                                    minLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            AppTextFormInput(
+                              initialValue: _version,
+                              helperText: 'Version'.hardcoded,
+                              onSaved: (newValue) => _version = newValue!,
+                              validator: (value) => switch (value) {
+                                _ when value!.isEmpty => context.$.requiredField,
+                                _ => null,
+                              },
+                            ),
+                            AppTextFormInput(
+                              initialValue: _description,
+                              helperText: context.$.description,
+                              maxLines: 2,
+                              minLines: 2,
+                              onSaved: (newValue) => _description = newValue!,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
