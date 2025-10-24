@@ -16,7 +16,7 @@ final class CreatePgInstanceReq {
       'disk_size': _params.diskSize,
       'nodes_number': _params.nodesNumber,
       'sync_replica_number': _params.syncReplicaNumber,
-      'version': '/v1/types/postgres/versions/26786c09-d175-44e5-9013-ac14c88acd1c',
+      'version': _params.versionLink,
     };
   }
 
