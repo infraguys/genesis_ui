@@ -15,19 +15,25 @@ class AppTextFormInput extends StatelessWidget {
     this.minLines,
     this.helperText,
     this.obscureText = false,
+    this.onChanged,
+    this.controller,
+    this.forceErrorText,
   });
 
-  final void Function(String?)? onSaved;
+  final void Function(String? value)? onSaved;
   final String? initialValue;
   final String? labelText;
   final String? hintText;
   final String? helperText;
   final List<TextInputFormatter>? inputFormatters;
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
+  final void Function(String value)? onChanged;
   final bool readOnly;
   final int? maxLines;
   final int? minLines;
   final bool obscureText;
+  final TextEditingController? controller;
+  final String? forceErrorText;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +59,7 @@ class AppTextFormInput extends StatelessWidget {
               hintText: hintText,
               helperText: helperText,
             ),
+            onChanged: onChanged,
             onSaved: onSaved,
             inputFormatters: inputFormatters,
             validator: validator,
@@ -63,9 +70,11 @@ class AppTextFormInput extends StatelessWidget {
       );
     }
     return TextFormField(
+      controller: controller,
       initialValue: initialValue,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       readOnly: readOnly,
+      forceErrorText: forceErrorText,
       decoration: InputDecoration(
         hintText: hintText,
         helperText: helperText,
