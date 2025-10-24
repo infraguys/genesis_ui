@@ -10,6 +10,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -74,25 +75,19 @@ class _CreateUserViewState extends State<_CreateUserView> {
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 16.0,
+            child: PageLayout(
+              breadcrumbs: Breadcrumbs(
+                items: [
+                  BreadcrumbItem(text: context.$.users),
+                  BreadcrumbItem(text: context.$.create),
+                ],
+              ),
+              buttonsBar: ButtonsBar(
+                children: [
+                  SaveIconButton(onPressed: save),
+                ],
+              ),
               children: [
-                Row(
-                  children: [
-                    Breadcrumbs(
-                      items: [
-                        BreadcrumbItem(text: context.$.users),
-                        BreadcrumbItem(text: context.$.create),
-                      ],
-                    ),
-                  ],
-                ),
-                ButtonsBar(
-                  children: [
-                    SaveIconButton(onPressed: save),
-                  ],
-                ),
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
