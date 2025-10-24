@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_selection_cubit/pg_instance_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/widgets/pg_instances_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -13,7 +14,6 @@ import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
-import 'package:go_router/go_router.dart';
 
 part './widgets/delete_pg_instances_btn.dart';
 
@@ -48,7 +48,14 @@ class _PgInstanceListView extends StatelessWidget {
           ButtonsBar(
             children: [
               _DeletePgInstancesButton(),
-              CreateIconButton(onPressed: () => context.goNamed(AppRoutes.createInstance.name)),
+              CreateIconButton(
+                onPressed: () async {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (context) => Dialog(child: CreatePgInstancePage()),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 24),
