@@ -284,12 +284,6 @@ abstract class AppLocalizations {
   /// **'Core'**
   String get core;
 
-  /// No description provided for @rootDiskSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Root disk size (GB)'**
-  String get rootDiskSize;
-
   /// No description provided for @projectName.
   ///
   /// In en, this message translates to:
@@ -464,12 +458,6 @@ abstract class AppLocalizations {
   /// **'Nodes'**
   String get nodes;
 
-  /// No description provided for @ramHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Ram (MB)'**
-  String get ramHelperText;
-
   /// No description provided for @nodeType.
   ///
   /// In en, this message translates to:
@@ -553,6 +541,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PostgreSQL cluster name'**
   String get pgClusterName;
+
+  /// No description provided for @ramLabelText.
+  ///
+  /// In en, this message translates to:
+  /// **'Ram (MB)'**
+  String get ramLabelText;
+
+  /// No description provided for @nodeCountHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Node count'**
+  String get nodeCountHelperText;
+
+  /// No description provided for @diskSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Disk size (GB)'**
+  String get diskSize;
+
+  /// No description provided for @versionHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Link to PostgreSQL version'**
+  String get versionHelperText;
 
   /// No description provided for @repeatPassword.
   ///

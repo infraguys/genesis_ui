@@ -15,7 +15,6 @@
   "organizations": "Organizations",
   "permissions": "Permissions",
   "nodes": "Nodes",
-  "ramHelperText": "Ram (MB)",
   "nodeType": "Node type",
   "dbaas": "DBaaS",
   "pgCluster": "PG Cluster"

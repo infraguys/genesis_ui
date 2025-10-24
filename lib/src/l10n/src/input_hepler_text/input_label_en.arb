@@ -1,6 +1,10 @@
 {
   "@@locale": "en",
   "pgClusterName": "PostgreSQL cluster name",
+  "ramLabelText": "Ram (MB)",
+  "nodeCountHelperText": "Node count",
+  "diskSize": "Disk size (GB)",
+  "versionHelperText": "Link to PostgreSQL version",
   "repeatPassword": "Repeat password",
   "passwordsDoNotMatch": "Passwords do not match"
 }

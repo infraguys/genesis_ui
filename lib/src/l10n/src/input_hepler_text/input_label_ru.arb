@@ -1,6 +1,10 @@
 {
   "@@locale": "ru",
   "pgClusterName": "Имя кластера PostgreSQL",
+  "ramLabelText": "ОЗУ (МБ)",
+  "diskSize": "Размер диска (GB)",
+  "nodeCountHelperText": "Количество нод",
+  "versionHelperText": "Ссылка на версию PostgreSQL",
   "repeatPassword": "Повторите пароль",
   "passwordsDoNotMatch": "Пароли не совпадают"
 }
