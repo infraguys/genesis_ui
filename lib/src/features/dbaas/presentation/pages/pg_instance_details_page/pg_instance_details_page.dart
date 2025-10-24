@@ -50,7 +50,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
   late int _nodesNumber;
   late List<String> _ipsv4List;
   late int _syncReplicaNumber;
-  late String _version;
+  late String _versionLink;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             _nodesNumber = instance.nodesNumber;
             _ipsv4List = instance.ipsv4;
             _syncReplicaNumber = instance.syncReplicaNumber;
-            _version = instance.version;
+            _versionLink = instance.version;
           case PgInstanceUpdatedState(:final instance):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
             context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
@@ -103,12 +103,10 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             child: Form(
               key: _formKey,
               child: PageLayout(
-                breadcrumbs: Breadcrumbs(
-                  items: [
-                    BreadcrumbItem(text: context.$.pgCluster),
-                    BreadcrumbItem(text: context.$.create),
-                  ],
-                ),
+                breadcrumbs: [
+                  BreadcrumbItem(text: context.$.pgCluster),
+                  BreadcrumbItem(text: instance.name),
+                ],
                 buttonsBar: ButtonsBar(
                   children: [
                     _DeletePgInstanceButton(instance: instance),
@@ -227,7 +225,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                           spacing: gapWidth,
                           children: [
                             Row(
-                              spacing: 16.0,
+                              spacing: gapWidth,
                               children: [
                                 SizedBox(
                                   width: columnWidth,
@@ -246,7 +244,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                   width: columnWidth,
                                   child: AppTextFormInput(
                                     initialValue: _diskSize.toString(),
-                                    helperText: context.$.rootDiskSize,
+                                    helperText: context.$.diskSize,
                                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                     // TODO(Koretsky): Проверить локализацию
                                     onSaved: (newValue) => _diskSize = int.parse(newValue!),
@@ -260,7 +258,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                   width: columnWidth,
                                   child: AppTextFormInput(
                                     initialValue: _nodesNumber.toString(),
-                                    helperText: 'Nodes number'.hardcoded,
+                                    helperText: context.$.nodeCountHelperText,
                                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                     onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
                                     validator: (value) => switch (value) {
@@ -273,7 +271,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                   width: columnWidth,
                                   child: AppTextFormInput(
                                     initialValue: _syncReplicaNumber.toString(),
-                                    helperText: 'sync replica number'.hardcoded,
+                                    helperText: 'Sync replica number'.hardcoded,
                                     onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
                                     validator: (value) => switch (value) {
                                       _ when value!.isEmpty => context.$.requiredField,
@@ -290,7 +288,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                   width: columnWidth,
                                   child: AppTextFormInput(
                                     initialValue: _ram.toString(),
-                                    helperText: context.$.ramHelperText,
+                                    helperText: context.$.ramLabelText,
                                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                     onSaved: (newValue) => _ram = int.parse(newValue!),
                                     validator: (value) => switch (value) {
@@ -312,9 +310,9 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                               ],
                             ),
                             AppTextFormInput(
-                              initialValue: _version,
-                              helperText: 'Version'.hardcoded,
-                              onSaved: (newValue) => _version = newValue!,
+                              initialValue: _versionLink,
+                              helperText: context.$.versionHelperText,
+                              onSaved: (newValue) => _versionLink = newValue!,
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
