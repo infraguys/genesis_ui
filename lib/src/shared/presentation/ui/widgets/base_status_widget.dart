@@ -6,21 +6,23 @@ class BaseStatusWidget extends StatelessWidget {
     required String text,
     required Color color,
     required Color labelColor,
+    Size size = const Size(120, 24),
     super.key,
   }) : _text = text,
        _color = color,
-       _labelColor = labelColor;
+       _labelColor = labelColor,
+       _size = size;
 
   final String _text;
   final Color _color;
   final Color _labelColor;
+  final Size _size;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
-    return SizedBox(
-      width: 120,
-      height: 24,
+    return SizedBox.fromSize(
+      size: _size,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: _labelColor,
