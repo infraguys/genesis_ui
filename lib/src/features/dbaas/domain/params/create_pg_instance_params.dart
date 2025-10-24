@@ -7,6 +7,7 @@ final class CreatePgInstanceParams {
     required this.nodesNumber,
     required this.syncReplicaNumber,
     required this.ipsv4,
+    required this.versionLink,
     this.description,
   });
 
@@ -18,4 +19,5 @@ final class CreatePgInstanceParams {
   final int diskSize;
   final int nodesNumber;
   final int syncReplicaNumber;
+  final String versionLink;
 }
