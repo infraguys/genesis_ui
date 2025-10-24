@@ -11,6 +11,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -63,111 +64,256 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
         }
       },
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.nodes),
-                BreadcrumbItem(text: context.$.create),
-              ],
-            ),
-            ButtonsBar(
-              children: [
-                SaveIconButton(onPressed: save),
-              ],
-            ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SizedBox(
-                  width: constraints.maxWidth * 0.4,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
-                      children: [
-                        AppTextFormInput(
-                          initialValue: _name,
-                          helperText: context.$.name,
-                          onSaved: (newValue) => _name = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        DropdownMenuFormField<NodeType>(
-                          menuStyle: MenuStyle(
-                            fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              PageLayout(
+                breadcrumbs: Breadcrumbs(
+                  items: [
+                    BreadcrumbItem(text: context.$.nodes),
+                    BreadcrumbItem(text: context.$.create),
+                  ],
+                ),
+                buttonsBar: ButtonsBar(
+                  children: [
+                    SaveIconButton(onPressed: save),
+                  ],
+                ),
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.hub_rounded, size: 100),
+                              SizedBox(width: 32),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 16.0,
+                                children: [
+                                  SizedBox(
+                                    width: 500,
+                                    child: AppTextFormInput(
+                                      initialValue: _name,
+                                      helperText: context.$.name,
+                                      onSaved: (newValue) => _name = newValue!,
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          width: double.infinity,
-                          initialSelection: _nodeType,
-                          helperText: context.$.nodeType,
-                          requestFocusOnTap: false,
-                          onSaved: (newValue) => _nodeType = newValue!,
-                          dropdownMenuEntries: [
-                            DropdownMenuEntry(
-                              value: NodeType.vm,
-                              label: context.$.virtualMachine,
-                            ),
-                            DropdownMenuEntry(
-                              value: NodeType.hw,
-                              label: context.$.hardware,
-                            ),
-                          ],
-                        ),
-                        AppTextFormInput(
-                          initialValue: _image,
-                          helperText: context.$.image,
-                          onSaved: (newValue) => _image = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          initialValue: _cores.toString(),
-                          helperText: context.$.cores,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          onSaved: (newValue) => _cores = int.parse(newValue!),
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          initialValue: _rootDiskSize.toString(),
-                          helperText: context.$.rootDiskSize,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          initialValue: _ram.toString(),
-                          helperText: context.$.ramHelperText,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          onSaved: (newValue) => _ram = int.parse(newValue!),
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          initialValue: _description,
-                          helperText: context.$.description,
-                          onSaved: (newValue) => _description = newValue!,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                );
-              },
-            ),
-          ],
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        spacing: 16.0,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 16.0,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  spacing: 16.0,
+                                  children: [
+                                    LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        return DropdownMenuFormField<NodeType>(
+                                          menuStyle: MenuStyle(
+                                            alignment: Alignment(-1, 0.5),
+                                            fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth)),
+                                          ),
+                                          width: double.infinity,
+                                          initialSelection: _nodeType,
+                                          requestFocusOnTap: false,
+                                          helperText: context.$.nodeType,
+                                          onSaved: (newValue) => _nodeType = newValue!,
+                                          dropdownMenuEntries: [
+                                            DropdownMenuEntry(
+                                              value: NodeType.vm,
+                                              label: context.$.virtualMachine,
+                                            ),
+                                            DropdownMenuEntry(
+                                              value: NodeType.hw,
+                                              label: context.$.hardware,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _image,
+                                      helperText: context.$.image,
+                                      onSaved: (newValue) => _image = newValue!,
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _cores.toString(),
+                                      helperText: context.$.cores,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      onSaved: (newValue) => _cores = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  spacing: 16.0,
+                                  children: [
+                                    AppTextFormInput(
+                                      initialValue: _rootDiskSize.toString(),
+                                      helperText: context.$.rootDiskSize,
+                                      onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _ram.toString(),
+                                      helperText: context.$.ramHelperText,
+                                      onSaved: (newValue) => _ram = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                    // AppTextFormInput(
+                                    //   readOnly: true,
+                                    //   initialValue: _ipv4,
+                                    //   helperText: 'ipv4'.hardcoded,
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          AppTextFormInput(
+                            initialValue: _description,
+                            helperText: context.$.description,
+                            onSaved: (newValue) => _description = newValue!,
+                            maxLines: 2,
+                            minLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // LayoutBuilder(
+              //   builder: (context, constraints) {
+              //     return SizedBox(
+              //       width: constraints.maxWidth * 0.4,
+              //       child: Form(
+              //         key: _formKey,
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           spacing: 16,
+              //           children: [
+              //             AppTextFormInput(
+              //               initialValue: _name,
+              //               helperText: context.$.name,
+              //               onSaved: (newValue) => _name = newValue!,
+              //               validator: (value) => switch (value) {
+              //                 _ when value!.isEmpty => context.$.requiredField,
+              //                 _ => null,
+              //               },
+              //             ),
+              //             DropdownMenuFormField<NodeType>(
+              //               menuStyle: MenuStyle(
+              //                 fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+              //               ),
+              //               width: double.infinity,
+              //               initialSelection: _nodeType,
+              //               helperText: context.$.nodeType,
+              //               requestFocusOnTap: false,
+              //               onSaved: (newValue) => _nodeType = newValue!,
+              //               dropdownMenuEntries: [
+              //                 DropdownMenuEntry(
+              //                   value: NodeType.vm,
+              //                   label: context.$.virtualMachine,
+              //                 ),
+              //                 DropdownMenuEntry(
+              //                   value: NodeType.hw,
+              //                   label: context.$.hardware,
+              //                 ),
+              //               ],
+              //             ),
+              //             AppTextFormInput(
+              //               initialValue: _image,
+              //               helperText: context.$.image,
+              //               onSaved: (newValue) => _image = newValue!,
+              //               validator: (value) => switch (value) {
+              //                 _ when value!.isEmpty => context.$.requiredField,
+              //                 _ => null,
+              //               },
+              //             ),
+              //             AppTextFormInput(
+              //               initialValue: _cores.toString(),
+              //               helperText: context.$.cores,
+              //               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              //               onSaved: (newValue) => _cores = int.parse(newValue!),
+              //               validator: (value) => switch (value) {
+              //                 _ when value!.isEmpty => context.$.requiredField,
+              //                 _ => null,
+              //               },
+              //             ),
+              //             AppTextFormInput(
+              //               initialValue: _rootDiskSize.toString(),
+              //               helperText: context.$.rootDiskSize,
+              //               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              //               onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
+              //               validator: (value) => switch (value) {
+              //                 _ when value!.isEmpty => context.$.requiredField,
+              //                 _ => null,
+              //               },
+              //             ),
+              //             AppTextFormInput(
+              //               initialValue: _ram.toString(),
+              //               helperText: context.$.ramHelperText,
+              //               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              //               onSaved: (newValue) => _ram = int.parse(newValue!),
+              //               validator: (value) => switch (value) {
+              //                 _ when value!.isEmpty => context.$.requiredField,
+              //                 _ => null,
+              //               },
+              //             ),
+              //             AppTextFormInput(
+              //               initialValue: _description,
+              //               helperText: context.$.description,
+              //               onSaved: (newValue) => _description = newValue!,
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
+            ],
+          ),
         ),
       ),
     );
