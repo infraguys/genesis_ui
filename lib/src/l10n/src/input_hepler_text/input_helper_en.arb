@@ -6,5 +6,7 @@
   "enterSurName": "Enter surname",
   "enterPhoneNumber": "Enter phone number",
   "enterEmail": "Enter email",
-  "enterDescription": "Enter description"
+  "enterDescription": "Enter description",
+  "repeatPassword": "Repeat password",
+  "passwordsDoNotMatch": "Passwords do not match"
 }

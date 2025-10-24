@@ -590,6 +590,18 @@ abstract class AppLocalizations {
   /// **'Enter description'**
   String get enterDescription;
 
+  /// No description provided for @repeatPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat password'**
+  String get repeatPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
   /// No description provided for @msgCopiedToClipboard.
   ///
   /// In en, this message translates to:

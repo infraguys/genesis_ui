@@ -6,5 +6,7 @@
   "enterSurName": "Введите отчество",
   "enterPhoneNumber": "Введите номер телефона",
   "enterEmail": "Введите адрес электронной почты",
-  "enterDescription": "Введите описание"
+  "enterDescription": "Введите описание",
+  "repeatPassword": "Повторите пароль",
+  "passwordsDoNotMatch": "Пароли не совпадают"
 }
