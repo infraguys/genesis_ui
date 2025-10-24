@@ -1,6 +1,6 @@
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 final class CreatePgInstanceUseCase {
   CreatePgInstanceUseCase(this._repository);
