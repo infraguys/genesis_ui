@@ -5,6 +5,7 @@ import 'package:genesis/src/features/users/domain/params/create_user_params.dart
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_modal_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -23,16 +24,31 @@ class _CreateUserViewState extends State<_CreateUserView> {
   final _formKey = GlobalKey<FormState>();
   late final UserBloc _userBloc;
 
+  final _passwordController = TextEditingController();
+  final _repeatedPasswordController = TextEditingController();
+
   var _username = '';
-  var _firstName = '';
-  var _lastName = '';
+  var _firstname = '';
+  var _lastname = '';
+  var _surname = '';
   var _email = '';
-  var _password = '';
+  var _phone = '';
+  var _description = '';
+
+  // var _password = '';
+  // var _repeatedPassword = '';
 
   @override
   void initState() {
     _userBloc = context.read<UserBloc>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // _passwordController.dispose();
+    // _repeatedPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,99 +71,189 @@ class _CreateUserViewState extends State<_CreateUserView> {
         }
       },
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.users),
-                BreadcrumbItem(text: context.$.create),
-              ],
-            ),
-            ButtonsBar(
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 16.0,
               children: [
-                SaveIconButton(onPressed: save),
-              ],
-            ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SizedBox(
-                  width: constraints.maxWidth * 0.4,
-                  child: Form(
-                    key: _formKey,
+                Row(
+                  children: [
+                    Breadcrumbs(
+                      items: [
+                        BreadcrumbItem(text: context.$.users),
+                        BreadcrumbItem(text: context.$.create),
+                      ],
+                    ),
+                  ],
+                ),
+                ButtonsBar(
+                  children: [
+                    SaveIconButton(onPressed: save),
+                  ],
+                ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
                       children: [
-                        AppTextFormInput(
-                          helperText: context.$.username,
-                          onSaved: (newValue) => _username = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          helperText: context.$.firstName,
-                          onSaved: (newValue) => _firstName = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          helperText: context.$.lastName,
-                          onSaved: (newValue) => _lastName = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          helperText: context.$.email,
-                          onSaved: (newValue) => _email = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          helperText: context.$.password,
-                          onSaved: (newValue) => _password = newValue!,
-                          obscureText: true,
-                          maxLines: 1,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
+                        Row(
+                          children: [
+                            Icon(Icons.account_circle, size: 100),
+                            SizedBox(width: 32),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 16.0,
+                              children: [
+                                SizedBox(
+                                  width: 500,
+                                  child: AppTextFormInput(
+                                    initialValue: _username,
+                                    helperText: context.$.username,
+                                    onSaved: (newValue) => _username = newValue!,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                );
-              },
+                ),
+                Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      spacing: 16.0,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 16.0,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                spacing: 16.0,
+                                children: [
+                                  AppTextFormInput(
+                                    initialValue: _firstname,
+                                    helperText: context.$.firstName,
+                                    onSaved: (newValue) => _firstname = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _lastname,
+                                    helperText: context.$.lastName,
+                                    onSaved: (newValue) => _lastname = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _surname,
+                                    helperText: context.$.surName,
+                                    onSaved: (newValue) => _surname = newValue!,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                spacing: 16.0,
+                                children: [
+                                  AppTextFormInput(
+                                    initialValue: _email,
+                                    helperText: context.$.email,
+                                    onSaved: (newValue) => _email = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _phone,
+                                    helperText: context.$.phoneNumber,
+                                    onSaved: (newValue) => _phone = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    // initialValue: _password,
+                                    controller: _passwordController,
+                                    helperText: context.$.password,
+
+                                    onChanged: (value) => _passwordController.text = value,
+                                    obscureText: true,
+                                    maxLines: 1,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        AppTextFormInput(
+                          initialValue: _description,
+                          helperText: context.$.description,
+                          onSaved: (newValue) => _description = newValue!,
+                          maxLines: 2,
+                          minLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  void save() {
+  Future<void> save() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _userBloc.add(
-        UserEvent.createUser(
-          CreateUserParams(
-            username: _username,
-            firstName: _firstName,
-            lastName: _lastName,
-            email: _email,
-            password: _password,
+      final isOk = await showDialog<bool>(
+        context: context,
+        builder: (context) => AppModalDialog(
+          content: SizedBox(
+            width: 400,
+            child: AppTextFormInput(
+              controller: _repeatedPasswordController,
+              helperText: context.$.repeatPassword,
+              onChanged: (value) => _repeatedPasswordController.text = value,
+              obscureText: true,
+              maxLines: 1,
+              validator: (value) {
+                switch (value) {
+                  case _ when value!.isNotEmpty && value != _passwordController.text:
+                    return context.$.passwordsDoNotMatch;
+                  default:
+                    return null;
+                }
+              },
+            ),
           ),
+          onPressed: () {
+            if (_passwordController.text == _repeatedPasswordController.text) {
+              _repeatedPasswordController.clear();
+              context.pop(true);
+            }
+          },
+          onCancel: () => _repeatedPasswordController.clear(),
         ),
       );
+
+      if (isOk != null && isOk) {
+        final params = CreateUserParams(
+          username: _username,
+          firstName: _firstname,
+          lastName: _lastname,
+          email: _email,
+          password: _passwordController.text,
+        );
+        _userBloc.add(UserEvent.createUser(params));
+      }
     }
   }
 }
@@ -160,9 +266,7 @@ class CreateUserPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) {
-            return UserBloc(context.read<IUsersRepository>());
-          },
+          create: (context) => UserBloc(context.read<IUsersRepository>()),
         ),
       ],
       child: _CreateUserView(),
