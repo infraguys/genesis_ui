@@ -22,6 +22,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.d
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
@@ -120,205 +121,199 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
                   ],
                 ),
                 children: [
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(Icons.account_circle, size: 100),
-                              SizedBox(width: 32),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 16.0,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'ID: ',
-                                      children: [
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: SelectableText(
-                                            user.uuid.value,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: GoogleFonts.robotoMono().fontFamily,
-                                            ),
+                  FormCard(
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.account_circle, size: 100),
+                            SizedBox(width: 32),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 16.0,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'ID: ',
+                                    children: [
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: SelectableText(
+                                          user.uuid.value,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: GoogleFonts.robotoMono().fontFamily,
                                           ),
                                         ),
-                                        WidgetSpan(child: const SizedBox(width: 8)),
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: IconButton(
-                                            icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                                            onPressed: () {
-                                              Clipboard.setData(ClipboardData(text: user.uuid.value));
-                                              final msg = context.$.msgCopiedToClipboard(user.uuid.value);
-                                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
-                                            },
-                                          ),
+                                      ),
+                                      WidgetSpan(child: const SizedBox(width: 8)),
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: IconButton(
+                                          icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                                          onPressed: () {
+                                            Clipboard.setData(ClipboardData(text: user.uuid.value));
+                                            final msg = context.$.msgCopiedToClipboard(user.uuid.value);
+                                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
+                                          },
                                         ),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 500,
+                                  child: AppTextFormInput(
+                                    initialValue: _username,
+                                    helperText: context.$.username,
+                                    onSaved: (newValue) => _username = newValue!,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Table(
+                              defaultColumnWidth: FixedColumnWidth(150),
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.status),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 500,
-                                    child: AppTextFormInput(
-                                      initialValue: _username,
-                                      helperText: context.$.username,
-                                      onSaved: (newValue) => _username = newValue!,
-                                      validator: (value) => switch (value) {
-                                        _ when value!.isEmpty => context.$.requiredField,
-                                        _ => null,
-                                      },
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: UserStatusWidget(status: user.status),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Table(
-                                defaultColumnWidth: FixedColumnWidth(200),
-                                children: [
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.status),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: UserStatusWidget(status: user.status),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.verification),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: VerifiedLabel(isVerified: user.emailVerified),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.createdAt),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.createdAt)),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.updatedAt),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.updatedAt)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.verification),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: VerifiedLabel(isVerified: user.emailVerified),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.createdAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.createdAt)),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.updatedAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.updatedAt)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        spacing: 16.0,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 16.0,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  spacing: 16.0,
-                                  children: [
-                                    AppTextFormInput(
-                                      initialValue: _firstName,
-                                      helperText: context.$.firstName,
-                                      onSaved: (newValue) => _firstName = newValue!,
-                                    ),
-                                    AppTextFormInput(
-                                      initialValue: _lastName,
-                                      helperText: context.$.lastName,
-                                      onSaved: (newValue) => _lastName = newValue!,
-                                    ),
-                                    AppTextFormInput(
-                                      initialValue: _surname,
-                                      helperText: context.$.surName,
-                                      onSaved: (newValue) => _surname = newValue!,
-                                    ),
-                                  ],
-                                ),
+                  FormCard(
+                    child: Column(
+                      spacing: 16.0,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 16.0,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                spacing: 16.0,
+                                children: [
+                                  AppTextFormInput(
+                                    initialValue: _firstName,
+                                    helperText: context.$.firstName,
+                                    onSaved: (newValue) => _firstName = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _lastName,
+                                    helperText: context.$.lastName,
+                                    onSaved: (newValue) => _lastName = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _surname,
+                                    helperText: context.$.surName,
+                                    onSaved: (newValue) => _surname = newValue!,
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  spacing: 16.0,
-                                  children: [
-                                    AppTextFormInput(
-                                      initialValue: _email,
-                                      helperText: context.$.email,
-                                      onSaved: (newValue) => _email = newValue!,
-                                    ),
-                                    AppTextFormInput(
-                                      initialValue: _phone,
-                                      helperText: context.$.phoneNumber,
-                                      onSaved: (newValue) => _phone = newValue!,
-                                    ),
-                                    DropdownMenuFormField<bool>(
-                                      // menuStyle: MenuStyle(
-                                      //   fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
-                                      // ),
-                                      width: double.infinity,
-                                      initialSelection: false,
-                                      enabled: false,
-                                      helperText: context.$.otp,
-                                      requestFocusOnTap: false,
-                                      // onSaved: (newValue) => _nodeType = newValue!,
-                                      dropdownMenuEntries: [
-                                        DropdownMenuEntry(
-                                          value: true,
-                                          label: 'Otp enabled',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: false,
-                                          label: 'Otp disabled',
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                spacing: 16.0,
+                                children: [
+                                  AppTextFormInput(
+                                    initialValue: _email,
+                                    helperText: context.$.email,
+                                    onSaved: (newValue) => _email = newValue!,
+                                  ),
+                                  AppTextFormInput(
+                                    initialValue: _phone,
+                                    helperText: context.$.phoneNumber,
+                                    onSaved: (newValue) => _phone = newValue!,
+                                  ),
+                                  DropdownMenuFormField<bool>(
+                                    // menuStyle: MenuStyle(
+                                    //   fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
+                                    // ),
+                                    width: double.infinity,
+                                    initialSelection: false,
+                                    enabled: false,
+                                    helperText: context.$.otp,
+                                    requestFocusOnTap: false,
+                                    // onSaved: (newValue) => _nodeType = newValue!,
+                                    dropdownMenuEntries: [
+                                      DropdownMenuEntry(
+                                        value: true,
+                                        label: 'Otp enabled',
+                                      ),
+                                      DropdownMenuEntry(
+                                        value: false,
+                                        label: 'Otp disabled',
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          AppTextFormInput(
-                            initialValue: _description,
-                            helperText: context.$.description,
-                            onSaved: (newValue) => _description = newValue!,
-                            maxLines: 2,
-                            minLines: 2,
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        AppTextFormInput(
+                          initialValue: _description,
+                          helperText: context.$.description,
+                          onSaved: (newValue) => _description = newValue!,
+                          maxLines: 2,
+                          minLines: 2,
+                        ),
+                      ],
                     ),
                   ),
                   ListOfProjects(userUuid: user.uuid),
