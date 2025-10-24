@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Breadcrumbs extends StatelessWidget {
   const Breadcrumbs({required this.items, super.key});
@@ -7,18 +8,23 @@ class Breadcrumbs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: 6.0,
-      children: items
-          .map(
-            (it) => GestureDetector(
-              onTap: it.onTap,
-              child: Text(it.text.toLowerCase(), style: TextStyle(color: Colors.white54, fontSize: 12)),
-            ),
-          )
-          .wrapWithHoverable()
-          .intersperse(Text('›', style: TextStyle(color: Colors.white54, fontSize: 12)))
-          .toList(),
+    return SizedBox(
+      height: 40,
+      child: Row(
+        spacing: 6.0,
+        children: [
+          if (context.canPop()) BackButton(onPressed: context.pop),
+          ...items
+              .map(
+                (it) => GestureDetector(
+                  onTap: it.onTap,
+                  child: Text(it.text.toLowerCase(), style: TextStyle(color: Colors.white54, fontSize: 12)),
+                ),
+              )
+              .wrapWithHoverable()
+              .intersperse(Text('›', style: TextStyle(color: Colors.white54, fontSize: 12))),
+        ],
+      ),
     );
   }
 }
