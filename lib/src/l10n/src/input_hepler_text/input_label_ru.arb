@@ -1,0 +1,6 @@
+{
+  "@@locale": "ru",
+  "pgClusterName": "Имя кластера PostgreSQL",
+  "repeatPassword": "Повторите пароль",
+  "passwordsDoNotMatch": "Пароли не совпадают"
+}

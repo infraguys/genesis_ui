@@ -548,47 +548,11 @@ abstract class AppLocalizations {
   /// **'Change email'**
   String get changeEmail;
 
-  /// No description provided for @enterUsername.
+  /// No description provided for @pgClusterName.
   ///
   /// In en, this message translates to:
-  /// **'Enter username'**
-  String get enterUsername;
-
-  /// No description provided for @enterFirstName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter name'**
-  String get enterFirstName;
-
-  /// No description provided for @enterLastName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter last name'**
-  String get enterLastName;
-
-  /// No description provided for @enterSurName.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter surname'**
-  String get enterSurName;
-
-  /// No description provided for @enterPhoneNumber.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter phone number'**
-  String get enterPhoneNumber;
-
-  /// No description provided for @enterEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter email'**
-  String get enterEmail;
-
-  /// No description provided for @enterDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter description'**
-  String get enterDescription;
+  /// **'PostgreSQL cluster name'**
+  String get pgClusterName;
 
   /// No description provided for @repeatPassword.
   ///

@@ -1,0 +1,6 @@
+{
+  "@@locale": "en",
+  "pgClusterName": "PostgreSQL cluster name",
+  "repeatPassword": "Repeat password",
+  "passwordsDoNotMatch": "Passwords do not match"
+}
