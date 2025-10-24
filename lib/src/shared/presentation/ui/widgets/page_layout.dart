@@ -10,7 +10,7 @@ class PageLayout extends StatelessWidget {
     super.key,
   });
 
-  final Breadcrumbs breadcrumbs;
+  final List<BreadcrumbItem> breadcrumbs;
   final ButtonsBar buttonsBar;
   final List<Widget> children;
 
@@ -20,7 +20,7 @@ class PageLayout extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          breadcrumbs,
+          Breadcrumbs(items: breadcrumbs),
           Column(
             spacing: 16.0,
             children: [
