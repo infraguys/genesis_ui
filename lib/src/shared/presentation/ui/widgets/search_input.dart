@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_text_input.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_text_input.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class SearchInput extends StatelessWidget {

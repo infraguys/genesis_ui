@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/clusters_card.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/projects_summary_card.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/widgets/verified_users_card.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/active_users_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/active_users_card.dart';
 import 'package:genesis/src/shared/presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/scope.dart';
 

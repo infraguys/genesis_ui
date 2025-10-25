@@ -4,9 +4,9 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/add_project_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/add_project_card.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/project_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/project_card.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/features/extensions/presentation/widgets/extension_status_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

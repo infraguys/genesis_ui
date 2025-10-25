@@ -1,6 +1,8 @@
 {
   "@@locale": "en",
   "pgClusterName": "PostgreSQL cluster name",
+  "nodeNameHelperText": "Node name",
+  "orgNameHelperText": "Organization name",
   "ramLabelText": "Ram (MB)",
   "nodeCountHelperText": "Node count",
   "diskSize": "Disk size (GB)",

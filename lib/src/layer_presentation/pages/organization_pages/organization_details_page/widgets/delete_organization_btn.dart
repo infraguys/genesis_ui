@@ -16,7 +16,7 @@ class _DeleteOrganizationButton extends StatelessWidget {
         await showDialog<void>(
           context: context,
           builder: (_) => ConfirmationDialog(
-            message: context.$.deleteOrganizationConfirmation(organization.name),
+            message: context.$.deleteOrgConfirmation(organization.name),
             onDelete: () => organizationBloc.add(OrganizationEvent.delete(organization)),
           ),
         );

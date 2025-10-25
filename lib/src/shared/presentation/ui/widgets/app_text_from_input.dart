@@ -20,6 +20,23 @@ class AppTextFormInput extends StatelessWidget {
     this.forceErrorText,
   });
 
+  const AppTextFormInput.description({
+    this.labelText,
+    this.hintText,
+    super.key,
+    this.onSaved,
+    this.initialValue,
+    this.inputFormatters,
+    this.validator,
+    this.readOnly = false,
+    this.helperText,
+    this.obscureText = false,
+    this.onChanged,
+    this.controller,
+    this.forceErrorText,
+  }) : maxLines = 2,
+       minLines = 2;
+
   final void Function(String? value)? onSaved;
   final String? initialValue;
   final String? labelText;

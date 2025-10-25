@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_roles_dialog.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_roles_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class RolesActionPopupMenuButton extends StatelessWidget {

@@ -344,17 +344,17 @@ abstract class AppLocalizations {
   /// **'Delete selected({count}) clusters?'**
   String deleteClustersConfirmation(int count);
 
-  /// No description provided for @deleteOrganizationConfirmation.
+  /// No description provided for @deleteOrgConfirmation.
   ///
   /// In en, this message translates to:
   /// **'Delete organization {name}?'**
-  String deleteOrganizationConfirmation(String name);
+  String deleteOrgConfirmation(String name);
 
-  /// No description provided for @deleteOrganizationsConfirmation.
+  /// No description provided for @deleteOrgsConfirmation.
   ///
   /// In en, this message translates to:
   /// **'Delete selected({count}) organizations?'**
-  String deleteOrganizationsConfirmation(int count);
+  String deleteOrgsConfirmation(int count);
 
   /// No description provided for @deleteUser.
   ///
@@ -541,6 +541,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PostgreSQL cluster name'**
   String get pgClusterName;
+
+  /// No description provided for @nodeNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Node name'**
+  String get nodeNameHelperText;
+
+  /// No description provided for @orgNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization name'**
+  String get orgNameHelperText;
 
   /// No description provided for @ramLabelText.
   ///

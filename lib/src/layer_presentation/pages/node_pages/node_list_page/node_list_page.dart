@@ -6,12 +6,12 @@ import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart'
 import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/widgets/nodes_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
 part './widgets/delete_nodes_btn.dart';
 
@@ -20,39 +20,35 @@ class _NodeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 24.0,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Breadcrumbs(
-          items: [
-            BreadcrumbItem(text: context.$.nodes),
-          ],
-        ),
-        ButtonsBar(
-          children: [
-            _DeleteNodesButton(),
-            CreateIconButton(
-              onPressed: () async {
-                await showDialog<void>(
-                  context: context,
-                  builder: (context) => Dialog(child: CreateNodePage()),
-                );
-              },
-            ),
-          ],
-        ),
-        Expanded(
-          child: BlocConsumer<NodesBloc, NodesState>(
-            listenWhen: (_, current) => current is NodesLoadedState,
-            listener: (context, _) => context.read<NodesSelectionCubit>().onClear(),
-            builder: (_, state) => switch (state) {
-              NodesLoadedState(:final nodes) => NodesTable(nodes: nodes),
-              _ => AppProgressIndicator(),
+    return BlocListener<NodesBloc, NodesState>(
+      listenWhen: (_, current) => current is NodesLoadedState,
+      listener: (context, _) => context.read<NodesSelectionCubit>().onClear(),
+      child: PageLayout(
+        breadcrumbs: [
+          BreadcrumbItem(text: context.$.nodes),
+        ],
+        buttons: [
+          _DeleteNodesButton(),
+          CreateIconButton(
+            onPressed: () async {
+              await showDialog<void>(
+                context: context,
+                builder: (context) => Dialog(child: CreateNodePage()),
+              );
+            },
+          ),
+        ],
+        child: Expanded(
+          child: BlocBuilder<NodesBloc, NodesState>(
+            builder: (_, state) {
+              return switch (state) {
+                _ when state is! NodesLoadedState => AppProgressIndicator(),
+                _ => NodesTable(nodes: state.nodes),
+              };
             },
           ),
         ),
-      ],
+      ),
     );
   }
 }

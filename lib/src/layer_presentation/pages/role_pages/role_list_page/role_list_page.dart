@@ -10,7 +10,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 

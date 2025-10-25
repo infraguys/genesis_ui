@@ -5,7 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_selection_cubit/pg_instance_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';

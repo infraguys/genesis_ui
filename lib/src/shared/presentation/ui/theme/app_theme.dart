@@ -73,6 +73,7 @@ class AppTheme {
       drawerTheme: _drawerThemeData,
       cardTheme: CardThemeData(
         color: Palette.color333333,
+        margin: EdgeInsets.zero
       ),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,

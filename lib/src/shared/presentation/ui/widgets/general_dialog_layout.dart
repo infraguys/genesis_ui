@@ -15,7 +15,7 @@ class GeneralDialogLayout extends StatelessWidget {
     return ConstrainedBox(
       constraints: constraints,
       child: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(16.0),
         child: child,
       ),
     );

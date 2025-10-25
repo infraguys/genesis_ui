@@ -64,16 +64,16 @@
       }
     }
   },
-  "deleteOrganizationConfirmation": "Delete organization {name}?",
-  "@deleteOrganizationConfirmation": {
+  "deleteOrgConfirmation": "Delete organization {name}?",
+  "@deleteOrgConfirmation": {
     "placeholders": {
       "name": {
         "type": "String"
       }
     }
   },
-  "deleteOrganizationsConfirmation": "Delete selected({count}) organizations?",
-  "@deleteOrganizationsConfirmation": {
+  "deleteOrgsConfirmation": "Delete selected({count}) organizations?",
+  "@deleteOrgsConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"

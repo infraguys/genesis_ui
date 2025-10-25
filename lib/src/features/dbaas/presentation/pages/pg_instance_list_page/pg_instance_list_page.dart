@@ -6,14 +6,14 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_select
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/widgets/pg_instances_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
 part './widgets/delete_pg_instances_btn.dart';
 
@@ -36,41 +36,32 @@ class _PgInstanceListView extends StatelessWidget {
           default:
         }
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Breadcrumbs(
-            items: [
-              BreadcrumbItem(text: context.$.pgCluster),
-            ],
-          ),
-          const SizedBox(height: 24),
-          ButtonsBar(
-            children: [
-              _DeletePgInstancesButton(),
-              CreateIconButton(
-                onPressed: () async {
-                  await showDialog<void>(
-                    context: context,
-                    builder: (context) => Dialog(child: CreatePgInstancePage()),
-                  );
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: BlocBuilder<PgInstancesBloc, PgInstancesState>(
-              buildWhen: (_, current) => current.shouldBuild,
-              builder: (_, state) {
-                if (state is! PgInstancesLoadedState) {
-                  return AppProgressIndicator();
-                }
-                return PgInstancesTable(instances: state.instances);
-              },
-            ),
+      child: PageLayout(
+        breadcrumbs: [
+          BreadcrumbItem(text: context.$.pgCluster),
+        ],
+        buttons: [
+          _DeletePgInstancesButton(),
+          CreateIconButton(
+            onPressed: () async {
+              await showDialog<void>(
+                context: context,
+                builder: (context) => Dialog(child: CreatePgInstancePage()),
+              );
+            },
           ),
         ],
+        child: Expanded(
+          child: BlocBuilder<PgInstancesBloc, PgInstancesState>(
+            buildWhen: (_, current) => current is PgInstancesLoadingState || current is PgInstancesLoadedState,
+            builder: (_, state) {
+              return switch (state) {
+                _ when state is! PgInstancesLoadedState => AppProgressIndicator(),
+                _ => PgInstancesTable(instances: state.instances),
+              };
+            },
+          ),
+        ),
       ),
     );
   }

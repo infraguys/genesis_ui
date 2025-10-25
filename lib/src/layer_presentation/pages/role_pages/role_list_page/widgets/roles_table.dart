@@ -6,7 +6,7 @@ import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/widgets/roles_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/app_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/role_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';

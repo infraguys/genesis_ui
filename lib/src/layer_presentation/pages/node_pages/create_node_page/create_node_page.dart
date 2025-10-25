@@ -26,7 +26,7 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
 
   late final NodeBloc _nodeBloc;
 
-  var _name = '';
+  var _nodeName = '';
   var _description = '';
   var _cores = 1;
   var _ram = 1024;
@@ -75,9 +75,9 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
                   SizedBox(
                     width: 500,
                     child: AppTextFormInput(
-                      initialValue: _name,
-                      helperText: context.$.name,
-                      onSaved: (newValue) => _name = newValue!,
+                      initialValue: _nodeName,
+                      helperText: context.$.nodeNameHelperText,
+                      onSaved: (newValue) => _nodeName = newValue!,
                       validator: (value) => switch (value) {
                         _ when value!.isEmpty => context.$.requiredField,
                         _ => null,
@@ -204,7 +204,7 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = CreateNodeParams(
-        name: _name,
+        name: _nodeName,
         description: _description,
         cores: _cores,
         ram: _ram,

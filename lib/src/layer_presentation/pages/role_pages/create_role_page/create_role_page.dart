@@ -14,7 +14,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicato
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/permissions_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/permissions_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/search_input.dart';
 import 'package:go_router/go_router.dart';

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 
 class OrganizationsActionPopupMenuButton extends StatelessWidget {
   const OrganizationsActionPopupMenuButton({
@@ -25,7 +25,7 @@ class OrganizationsActionPopupMenuButton extends StatelessWidget {
           final organizations = List.generate(1, (_) => organization);
           final child = switch (value) {
             _PopupBtnValue.deleteOrganization => ConfirmationDialog(
-              message: context.$.deleteOrganizationConfirmation(organizations.single.name),
+              message: context.$.deleteOrgConfirmation(organizations.single.name),
               onDelete: () {
                 context.read<OrganizationsBloc>().add(OrganizationsEvent.deleteOrganizations(organizations));
               },

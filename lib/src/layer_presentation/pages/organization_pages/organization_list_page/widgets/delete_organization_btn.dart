@@ -8,8 +8,8 @@ class _DeleteOrganizationButton extends StatelessWidget {
     return BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
       builder: (_, state) {
         final message = switch (state.length) {
-          1 => context.$.deleteOrganizationConfirmation(state.single.name),
-          final len => context.$.deleteOrganizationsConfirmation(len),
+          1 => context.$.deleteOrgConfirmation(state.single.name),
+          final len => context.$.deleteOrgsConfirmation(len),
         };
 
         return DeleteElevatedButton(

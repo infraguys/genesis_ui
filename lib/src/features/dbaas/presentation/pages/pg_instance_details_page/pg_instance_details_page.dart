@@ -9,19 +9,18 @@ import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_re
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/id_widget.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/metadata_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 part './widgets/delete_pg_instance_btn.dart';
 
@@ -42,7 +41,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
 
   late final PgInstanceBloc _pgInstanceBloc;
 
-  late String _name;
+  late String _clusterName;
   String? _description;
   late int _cores;
   late int _ram;
@@ -67,12 +66,14 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    const gapWidth = 16.0;
+
     return BlocListener<PgInstanceBloc, PgInstanceState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
         switch (state) {
           case PgInstanceLoadedState(:final instance):
-            _name = instance.name;
+            _clusterName = instance.name;
             _description = instance.description;
             _cores = instance.cores;
             _ram = instance.ram;
@@ -99,119 +100,50 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
             return AppProgressIndicator();
           }
           final PgInstanceLoadedState(:instance) = state;
-          return SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: PageLayout(
-                breadcrumbs: [
-                  BreadcrumbItem(text: context.$.pgCluster),
-                  BreadcrumbItem(text: instance.name),
-                ],
-                buttonsBar: ButtonsBar(
-                  children: [
-                    _DeletePgInstanceButton(instance: instance),
-                    SaveIconButton(onPressed: save),
-                  ],
-                ),
+          return Form(
+            key: _formKey,
+            child: PageLayout(
+              breadcrumbs: [
+                BreadcrumbItem(text: context.$.pgCluster),
+                BreadcrumbItem(text: instance.name),
+              ],
+              buttons: [
+                _DeletePgInstanceButton(instance: instance),
+                SaveIconButton(onPressed: save),
+              ],
+              child: Column(
+                spacing: gapWidth,
                 children: [
                   FormCard(
-                    child: Column(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        Icon(Icons.storage_rounded, size: 100),
+                        SizedBox(width: 32),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: gapWidth,
                           children: [
-                            Icon(Icons.storage_rounded, size: 100),
-                            SizedBox(width: 32),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 16.0,
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'ID: ',
-                                    children: [
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.middle,
-                                        child: SelectableText(
-                                          instance.id.raw,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: GoogleFonts.robotoMono().fontFamily,
-                                          ),
-                                        ),
-                                      ),
-                                      WidgetSpan(child: const SizedBox(width: 8)),
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.middle,
-                                        child: IconButton(
-                                          icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                                          onPressed: () {
-                                            Clipboard.setData(ClipboardData(text: instance.id.raw));
-                                            final msg = context.$.msgCopiedToClipboard(instance.id.raw);
-                                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 500,
-                                  child: AppTextFormInput(
-                                    initialValue: _name,
-                                    helperText: context.$.username,
-                                    onSaved: (newValue) => _name = newValue!,
-                                    validator: (value) => switch (value) {
-                                      _ when value!.isEmpty => context.$.requiredField,
-                                      _ => null,
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Table(
-                              defaultColumnWidth: FixedColumnWidth(140),
-                              children: [
-                                TableRow(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(context.$.status),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: PgInstanceStatusWidget(status: instance.status),
-                                    ),
-                                  ],
-                                ),
-                                TableRow(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(context.$.createdAt),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(instance.createdAt)),
-                                    ),
-                                  ],
-                                ),
-                                TableRow(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(context.$.updatedAt),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(instance.updatedAt)),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            IdWidget(id: instance.id.raw),
+                            SizedBox(
+                              width: 500,
+                              child: AppTextFormInput(
+                                initialValue: _clusterName,
+                                helperText: context.$.pgClusterName,
+                                onSaved: (newValue) => _clusterName = newValue!,
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
                             ),
                           ],
+                        ),
+                        Spacer(),
+                        MetadataTable(
+                          statusWidget: PgInstanceStatusWidget(status: instance.status),
+                          createdAt: instance.createdAt,
+                          updatedAt: instance.updatedAt,
                         ),
                       ],
                     ),
@@ -219,7 +151,6 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                   FormCard(
                     child: LayoutBuilder(
                       builder: (context, constraints) {
-                        const gapWidth = 16.0;
                         final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
                         return Column(
                           spacing: gapWidth,
@@ -318,11 +249,9 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
                                 _ => null,
                               },
                             ),
-                            AppTextFormInput(
+                            AppTextFormInput.description(
                               initialValue: _description,
                               helperText: context.$.description,
-                              maxLines: 2,
-                              minLines: 2,
                               onSaved: (newValue) => _description = newValue!,
                             ),
                           ],
@@ -344,7 +273,7 @@ class __PgInstanceDetailsPageState extends State<_PgInstanceDetailsPage> {
       _formKey.currentState!.save();
       final params = UpdatePgInstanceParams(
         id: widget.id,
-        name: _name,
+        name: _clusterName,
         description: _description,
         cores: _cores,
         ram: _ram,

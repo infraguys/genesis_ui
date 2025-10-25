@@ -9,7 +9,6 @@ import 'package:genesis/src/shared/presentation/ui/widgets/app_modal_dialog.dart
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
@@ -80,122 +79,122 @@ class _CreateUserViewState extends State<_CreateUserView> {
                 BreadcrumbItem(text: context.$.users),
                 BreadcrumbItem(text: context.$.create),
               ],
-              buttonsBar: ButtonsBar(
+              buttons: [
+                SaveIconButton(onPressed: save),
+              ],
+              child: Column(
                 children: [
-                  SaveIconButton(onPressed: save),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.account_circle, size: 100),
+                              SizedBox(width: 32),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 16.0,
+                                children: [
+                                  SizedBox(
+                                    width: 500,
+                                    child: AppTextFormInput(
+                                      initialValue: _username,
+                                      helperText: context.$.username,
+                                      onSaved: (newValue) => _username = newValue!,
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        spacing: 16.0,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 16.0,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  spacing: 16.0,
+                                  children: [
+                                    AppTextFormInput(
+                                      initialValue: _firstname,
+                                      helperText: context.$.firstName,
+                                      onSaved: (newValue) => _firstname = newValue!,
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _lastname,
+                                      helperText: context.$.lastName,
+                                      onSaved: (newValue) => _lastname = newValue!,
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _surname,
+                                      helperText: context.$.surName,
+                                      onSaved: (newValue) => _surname = newValue!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  spacing: 16.0,
+                                  children: [
+                                    AppTextFormInput(
+                                      initialValue: _email,
+                                      helperText: context.$.email,
+                                      onSaved: (newValue) => _email = newValue!,
+                                    ),
+                                    AppTextFormInput(
+                                      initialValue: _phone,
+                                      helperText: context.$.phoneNumber,
+                                      onSaved: (newValue) => _phone = newValue!,
+                                    ),
+                                    AppTextFormInput(
+                                      // initialValue: _password,
+                                      controller: _passwordController,
+                                      helperText: context.$.password,
+
+                                      onChanged: (value) => _passwordController.text = value,
+                                      obscureText: true,
+                                      maxLines: 1,
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          AppTextFormInput(
+                            initialValue: _description,
+                            helperText: context.$.description,
+                            onSaved: (newValue) => _description = newValue!,
+                            maxLines: 2,
+                            minLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.account_circle, size: 100),
-                            SizedBox(width: 32),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 16.0,
-                              children: [
-                                SizedBox(
-                                  width: 500,
-                                  child: AppTextFormInput(
-                                    initialValue: _username,
-                                    helperText: context.$.username,
-                                    onSaved: (newValue) => _username = newValue!,
-                                    validator: (value) => switch (value) {
-                                      _ when value!.isEmpty => context.$.requiredField,
-                                      _ => null,
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      spacing: 16.0,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 16.0,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                spacing: 16.0,
-                                children: [
-                                  AppTextFormInput(
-                                    initialValue: _firstname,
-                                    helperText: context.$.firstName,
-                                    onSaved: (newValue) => _firstname = newValue!,
-                                  ),
-                                  AppTextFormInput(
-                                    initialValue: _lastname,
-                                    helperText: context.$.lastName,
-                                    onSaved: (newValue) => _lastname = newValue!,
-                                  ),
-                                  AppTextFormInput(
-                                    initialValue: _surname,
-                                    helperText: context.$.surName,
-                                    onSaved: (newValue) => _surname = newValue!,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                spacing: 16.0,
-                                children: [
-                                  AppTextFormInput(
-                                    initialValue: _email,
-                                    helperText: context.$.email,
-                                    onSaved: (newValue) => _email = newValue!,
-                                  ),
-                                  AppTextFormInput(
-                                    initialValue: _phone,
-                                    helperText: context.$.phoneNumber,
-                                    onSaved: (newValue) => _phone = newValue!,
-                                  ),
-                                  AppTextFormInput(
-                                    // initialValue: _password,
-                                    controller: _passwordController,
-                                    helperText: context.$.password,
-
-                                    onChanged: (value) => _passwordController.text = value,
-                                    obscureText: true,
-                                    maxLines: 1,
-                                    validator: (value) => switch (value) {
-                                      _ when value!.isEmpty => context.$.requiredField,
-                                      _ => null,
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        AppTextFormInput(
-                          initialValue: _description,
-                          helperText: context.$.description,
-                          onSaved: (newValue) => _description = newValue!,
-                          maxLines: 2,
-                          minLines: 2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
             ),
           ),
         ),

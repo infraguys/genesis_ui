@@ -1,6 +1,8 @@
 {
   "@@locale": "ru",
-  "pgClusterName": "Имя кластера PostgreSQL",
+  "pgClusterName": "Название кластера PostgreSQL",
+  "nodeNameHelperText": "Название ноды",
+  "orgNameHelperText": "Название организации",
   "ramLabelText": "ОЗУ (МБ)",
   "diskSize": "Размер диска (GB)",
   "nodeCountHelperText": "Количество нод",
