@@ -47,8 +47,8 @@ class _CreateUserViewState extends State<_CreateUserView> {
 
   @override
   void dispose() {
-    // _passwordController.dispose();
-    // _repeatedPasswordController.dispose();
+    _passwordController.dispose();
+    _repeatedPasswordController.dispose();
     super.dispose();
   }
 
@@ -76,12 +76,10 @@ class _CreateUserViewState extends State<_CreateUserView> {
           child: Form(
             key: _formKey,
             child: PageLayout(
-              breadcrumbs: Breadcrumbs(
-                items: [
-                  BreadcrumbItem(text: context.$.users),
-                  BreadcrumbItem(text: context.$.create),
-                ],
-              ),
+              breadcrumbs: [
+                BreadcrumbItem(text: context.$.users),
+                BreadcrumbItem(text: context.$.create),
+              ],
               buttonsBar: ButtonsBar(
                 children: [
                   SaveIconButton(onPressed: save),
