@@ -101,12 +101,10 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
           }
           final NodeLoadedState(:node) = state;
           return PageLayout(
-            breadcrumbs: Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.nodes),
-                BreadcrumbItem(text: node.name),
-              ],
-            ),
+            breadcrumbs: [
+              BreadcrumbItem(text: context.$.nodes),
+              BreadcrumbItem(text: node.name),
+            ],
             buttonsBar: ButtonsBar(
               children: [
                 _DeleteNodeButton(node: node),
@@ -287,7 +285,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                               children: [
                                 AppTextFormInput(
                                   initialValue: _rootDiskSize.toString(),
-                                  helperText: context.$.rootDiskSize,
+                                  helperText: context.$.diskSize,
                                   onSaved: (newValue) => _rootDiskSize = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
@@ -296,7 +294,7 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                                 ),
                                 AppTextFormInput(
                                   initialValue: _ram.toString(),
-                                  helperText: context.$.ramHelperText,
+                                  helperText: context.$.ramLabelText,
                                   onSaved: (newValue) => _ram = int.parse(newValue!),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
