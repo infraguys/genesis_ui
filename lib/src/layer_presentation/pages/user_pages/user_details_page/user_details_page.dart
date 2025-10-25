@@ -107,12 +107,10 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
             return Form(
               key: _formKey,
               child: PageLayout(
-                breadcrumbs: Breadcrumbs(
-                  items: [
-                    BreadcrumbItem(text: context.$.users),
-                    BreadcrumbItem(text: user.username),
-                  ],
-                ),
+                breadcrumbs: [
+                  BreadcrumbItem(text: context.$.users),
+                  BreadcrumbItem(text: user.username),
+                ],
                 buttonsBar: ButtonsBar(
                   children: [
                     _DeleteUserButton(user: user),
