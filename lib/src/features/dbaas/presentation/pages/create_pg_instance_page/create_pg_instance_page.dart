@@ -43,11 +43,6 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     const gapWidth = 16.0;
 
@@ -74,31 +69,21 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
             mainAxisSize: MainAxisSize.min,
             spacing: gapWidth,
             children: [
-              Column(
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.storage_rounded, size: 100),
-                      SizedBox(width: 32),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: gapWidth,
-                        children: [
-                          SizedBox(
-                            width: 500,
-                            child: AppTextFormInput(
-                              initialValue: _clusterName,
-                              helperText: context.$.pgClusterName,
-                              onSaved: (newValue) => _clusterName = newValue!,
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Icon(Icons.storage_rounded, size: 100),
+                  SizedBox(width: 32),
+                  SizedBox(
+                    width: 500,
+                    child: AppTextFormInput(
+                      initialValue: _clusterName,
+                      helperText: context.$.pgClusterName,
+                      onSaved: (newValue) => _clusterName = newValue!,
+                      validator: (value) => switch (value) {
+                        _ when value!.isEmpty => context.$.requiredField,
+                        _ => null,
+                      },
+                    ),
                   ),
                 ],
               ),
