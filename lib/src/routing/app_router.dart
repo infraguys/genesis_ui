@@ -18,7 +18,6 @@ import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sig
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_list_page/extension_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/create_node_page/create_node_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/create_organization_page/create_organization_page.dart';
@@ -290,9 +289,7 @@ GoRouter createRouter(BuildContext context) {
                   GoRoute(
                     name: AppRoutes.createNode.name,
                     path: 'create',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreateNodePage(),
-                    ),
+                    pageBuilder: (_, _) => throw UnimplementedError(),
                   ),
                   GoRoute(
                     name: AppRoutes.node.name,
@@ -400,4 +397,18 @@ class _GoRouterConfigListenable extends ChangeNotifier {
     _subscription.cancel();
     super.dispose();
   }
+}
+
+class DialogPage extends CustomTransitionPage<void> {
+  DialogPage({required WidgetBuilder builder})
+      : super(
+    child: Builder(builder: builder),
+    barrierColor: Colors.black54,
+    barrierDismissible: true,
+    opaque: false,
+    transitionsBuilder: (_, anim, __, child) => FadeTransition(
+      opacity: anim,
+      child: child,
+    ),
+  );
 }
