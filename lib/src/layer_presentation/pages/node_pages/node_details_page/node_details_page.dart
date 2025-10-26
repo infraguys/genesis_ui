@@ -157,7 +157,6 @@ class _NodeDetailsViewState extends State<_NodeDetailsView> {
                           spacing: gapWidth,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: gapWidth,
                               children: [

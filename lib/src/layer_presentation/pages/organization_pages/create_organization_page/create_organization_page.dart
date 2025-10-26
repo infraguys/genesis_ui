@@ -5,10 +5,10 @@ import 'package:genesis/src/features/organizations/domain/params/create_organiza
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,7 +26,7 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
 
   late final OrganizationBloc _organizationBloc;
 
-  var _name = '';
+  var _orgName = '';
   var _description = '';
 
   @override
@@ -37,6 +37,8 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
 
   @override
   Widget build(BuildContext context) {
+    const gapWidth = 16.0;
+
     return BlocListener<OrganizationBloc, OrganizationState>(
       listenWhen: (_, current) => switch (current) {
         _ when current is! OrganizationLoadingState => true,
@@ -59,55 +61,55 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
           default:
         }
       },
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Breadcrumbs(
-              items: [
-                BreadcrumbItem(text: context.$.organizations),
-                BreadcrumbItem(text: context.$.create),
-              ],
-            ),
-            ButtonsBar(
-              children: [
-                _CreateOrganizationButton(onPressed: save),
-              ],
-            ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SizedBox(
-                  width: constraints.maxWidth * 0.4,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
-                      children: [
-                        AppTextFormInput(
-                          initialValue: _name,
-                          helperText: context.$.projectName,
-                          onSaved: (newValue) => _name = newValue!,
-                          validator: (value) => switch (value) {
-                            _ when value!.isEmpty => context.$.requiredField,
-                            _ => null,
-                          },
-                        ),
-                        AppTextFormInput(
-                          initialValue: _description,
-                          helperText: context.$.description,
-                          onSaved: (newValue) => _description = newValue!,
-                          minLines: 3,
-                          maxLines: 3,
-                        ),
-                      ],
+      child: GeneralDialogLayout(
+        constraints: BoxConstraints(maxWidth: 900),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            spacing: gapWidth,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.business_sharp, size: 100),
+                  SizedBox(width: 32),
+                  SizedBox(
+                    width: 500,
+                    child: AppTextFormInput(
+                      initialValue: _orgName,
+                      helperText: context.$.orgNameHelperText,
+                      onSaved: (newValue) => _orgName = newValue!,
+                      validator: (value) => switch (value) {
+                        _ when value!.isEmpty => context.$.requiredField,
+                        _ => null,
+                      },
                     ),
                   ),
-                );
-              },
-            ),
-          ],
+                ],
+              ),
+              Divider(color: Palette.color1B1B1D),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                  return SizedBox(
+                    width: constraints.maxWidth,
+                    child: AppTextFormInput.description(
+                      initialValue: _description,
+                      helperText: context.$.description,
+                      onSaved: (newValue) => _description = newValue!,
+                    ),
+                  );
+                },
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  SaveIconButton(onPressed: save),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -118,7 +120,7 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
       _formKey.currentState!.save();
       _organizationBloc.add(
         OrganizationEvent.create(
-          CreateOrganizationParams(name: _name, description: _description),
+          CreateOrganizationParams(name: _orgName, description: _description),
         ),
       );
     }

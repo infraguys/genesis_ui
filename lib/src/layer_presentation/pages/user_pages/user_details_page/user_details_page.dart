@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
@@ -21,15 +20,14 @@ import 'package:genesis/src/shared/presentation/ui/widgets/confirm_email_icon_bu
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/id_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 part './widgets/confirm_email_btn.dart';
-
 part './widgets/delete_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
@@ -58,12 +56,9 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    const gapWidth = 16.0;
+
     return BlocListener<UserBloc, UserState>(
       listenWhen: (_, current) => current.shouldListen,
       listener: (context, state) {
@@ -95,230 +90,212 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
           default:
         }
       },
-      child: Scaffold(
-        body: BlocBuilder<UserBloc, UserState>(
-          buildWhen: (_, current) => current.shouldBuild,
-          builder: (context, state) {
-            if (state is! UserLoadedState) {
-              return AppProgressIndicator();
-            }
-            final UserLoadedState(:user) = state;
-            return Form(
-              key: _formKey,
-              child: PageLayout(
-                breadcrumbs: [
-                  BreadcrumbItem(text: context.$.users),
-                  BreadcrumbItem(text: user.username),
-                ],
-                buttons: [
-                  _DeleteUserButton(user: user),
-                  _ConfirmEmailButton(user: user),
-                  SaveIconButton(onPressed: () => save(user.uuid)),
-                ],
-                child: Column(
-                  children: [
-                    FormCard(
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(Icons.account_circle, size: 100),
-                              SizedBox(width: 32),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 16.0,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'ID: ',
-                                      children: [
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: SelectableText(
-                                            user.uuid.value,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: GoogleFonts.robotoMono().fontFamily,
-                                            ),
-                                          ),
-                                        ),
-                                        WidgetSpan(child: const SizedBox(width: 8)),
-                                        WidgetSpan(
-                                          alignment: PlaceholderAlignment.middle,
-                                          child: IconButton(
-                                            icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                                            onPressed: () {
-                                              Clipboard.setData(ClipboardData(text: user.uuid.value));
-                                              final msg = context.$.msgCopiedToClipboard(user.uuid.value);
-                                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.success(msg));
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+      child: BlocBuilder<UserBloc, UserState>(
+        buildWhen: (_, current) => current.shouldBuild,
+        builder: (context, state) {
+          if (state is! UserLoadedState) {
+            return AppProgressIndicator();
+          }
+          final UserLoadedState(:user) = state;
+          return Form(
+            key: _formKey,
+            child: PageLayout(
+              breadcrumbs: [
+                BreadcrumbItem(text: context.$.users),
+                BreadcrumbItem(text: user.username),
+              ],
+              buttons: [
+                _DeleteUserButton(user: user),
+                _ConfirmEmailButton(user: user),
+                SaveIconButton(onPressed: () => save(user.uuid)),
+              ],
+              child: Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    spacing: gapWidth,
+                    children: [
+                      FormCard(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.account_circle, size: 100),
+                            SizedBox(width: 32),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: gapWidth,
+                              children: [
+                                IdWidget(id: user.uuid.value),
+                                SizedBox(
+                                  width: 500,
+                                  child: AppTextFormInput(
+                                    initialValue: _username,
+                                    helperText: context.$.username,
+                                    onSaved: (newValue) => _username = newValue!,
+                                    validator: (value) => switch (value) {
+                                      _ when value!.isEmpty => context.$.requiredField,
+                                      _ => null,
+                                    },
                                   ),
-                                  SizedBox(
-                                    width: 500,
-                                    child: AppTextFormInput(
-                                      initialValue: _username,
-                                      helperText: context.$.username,
-                                      onSaved: (newValue) => _username = newValue!,
-                                      validator: (value) => switch (value) {
-                                        _ when value!.isEmpty => context.$.requiredField,
-                                        _ => null,
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Table(
-                                defaultColumnWidth: FixedColumnWidth(150),
-                                children: [
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.status),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: UserStatusWidget(status: user.status),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.verification),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: VerifiedLabel(isVerified: user.emailVerified),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.createdAt),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.createdAt)),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(context.$.updatedAt),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.updatedAt)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    FormCard(
-                      child: Column(
-                        spacing: 16.0,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 16.0,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  spacing: 16.0,
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Table(
+                              defaultColumnWidth: FixedColumnWidth(150),
+                              children: [
+                                TableRow(
                                   children: [
-                                    AppTextFormInput(
-                                      initialValue: _firstName,
-                                      helperText: context.$.firstName,
-                                      onSaved: (newValue) => _firstName = newValue!,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.status),
                                     ),
-                                    AppTextFormInput(
-                                      initialValue: _lastName,
-                                      helperText: context.$.lastName,
-                                      onSaved: (newValue) => _lastName = newValue!,
-                                    ),
-                                    AppTextFormInput(
-                                      initialValue: _surname,
-                                      helperText: context.$.surName,
-                                      onSaved: (newValue) => _surname = newValue!,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: UserStatusWidget(status: user.status),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  spacing: 16.0,
+                                TableRow(
                                   children: [
-                                    AppTextFormInput(
-                                      initialValue: _email,
-                                      helperText: context.$.email,
-                                      onSaved: (newValue) => _email = newValue!,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.verification),
                                     ),
-                                    AppTextFormInput(
-                                      initialValue: _phone,
-                                      helperText: context.$.phoneNumber,
-                                      onSaved: (newValue) => _phone = newValue!,
-                                    ),
-                                    DropdownMenuFormField<bool>(
-                                      // menuStyle: MenuStyle(
-                                      //   fixedSize: WidgetStatePropertyAll(Size.fromWidth(constraints.maxWidth * 0.4)),
-                                      // ),
-                                      width: double.infinity,
-                                      initialSelection: false,
-                                      enabled: false,
-                                      helperText: context.$.otp,
-                                      requestFocusOnTap: false,
-                                      // onSaved: (newValue) => _nodeType = newValue!,
-                                      dropdownMenuEntries: [
-                                        DropdownMenuEntry(
-                                          value: true,
-                                          label: 'Otp enabled',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: false,
-                                          label: 'Otp disabled',
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: VerifiedLabel(isVerified: user.emailVerified),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          AppTextFormInput(
-                            initialValue: _description,
-                            helperText: context.$.description,
-                            onSaved: (newValue) => _description = newValue!,
-                            maxLines: 2,
-                            minLines: 2,
-                          ),
-                        ],
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.createdAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.createdAt)),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(context.$.updatedAt),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(DateFormat('dd.MM.yyyy HH:mm').format(user.updatedAt)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    ListOfProjects(userUuid: user.uuid),
-                  ],
+                      FormCard(
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                            return Column(
+                              spacing: gapWidth,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: gapWidth,
+                                  children: [
+                                    SizedBox(
+                                      width: columnWidth,
+                                      child: AppTextFormInput(
+                                        initialValue: _firstName,
+                                        helperText: context.$.firstName,
+                                        onSaved: (newValue) => _firstName = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: columnWidth,
+                                      child: AppTextFormInput(
+                                        initialValue: _lastName,
+                                        helperText: context.$.lastName,
+                                        onSaved: (newValue) => _lastName = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: columnWidth,
+                                      child: AppTextFormInput(
+                                        initialValue: _surname,
+                                        helperText: context.$.surName,
+                                        onSaved: (newValue) => _surname = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: columnWidth,
+                                      child: DropdownMenuFormField<bool>(
+                                        menuStyle: MenuStyle(
+                                          fixedSize: WidgetStatePropertyAll(Size.fromWidth(columnWidth)),
+                                        ),
+                                        width: double.infinity,
+                                        initialSelection: false,
+                                        enabled: false,
+                                        helperText: context.$.otp,
+                                        requestFocusOnTap: false,
+                                        // onSaved: (newValue) => _nodeType = newValue!,
+                                        dropdownMenuEntries: [
+                                          DropdownMenuEntry(
+                                            value: true,
+                                            label: 'Otp enabled',
+                                          ),
+                                          DropdownMenuEntry(
+                                            value: false,
+                                            label: 'Otp disabled',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  spacing: gapWidth,
+                                  children: [
+                                    SizedBox(
+                                      width: columnWidth * 2 + gapWidth,
+                                      child: AppTextFormInput(
+                                        initialValue: _email,
+                                        helperText: context.$.email,
+                                        onSaved: (newValue) => _email = newValue!,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: columnWidth * 2 + gapWidth,
+                                      child: AppTextFormInput(
+                                        initialValue: _phone,
+                                        helperText: context.$.phoneNumber,
+                                        onSaved: (newValue) => _phone = newValue!,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                AppTextFormInput.description(
+                                  initialValue: _description,
+                                  helperText: context.$.description,
+                                  onSaved: (newValue) => _description = newValue!,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      ListOfProjects(userUuid: user.uuid),
+                    ],
+                  ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
