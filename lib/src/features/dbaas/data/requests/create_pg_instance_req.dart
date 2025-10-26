@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
-import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
 
 final class CreatePgInstanceReq {
   CreatePgInstanceReq(this._params);
