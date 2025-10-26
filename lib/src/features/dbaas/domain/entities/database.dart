@@ -27,13 +27,13 @@ class Database {
 
   final DatabaseID id;
   final String name;
-  final String? description;
   final DateTime createdAt;
   final DateTime updatedAt;
   final ProjectID projectId;
   final String instance;
-  final String status;
+  final DatabaseStatus status;
   final String owner;
+  final String? description;
 }
 
 extension type DatabaseID(String raw) {}
