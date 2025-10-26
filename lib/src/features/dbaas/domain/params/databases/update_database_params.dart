@@ -1,5 +1,5 @@
-final class DeleteDatabaseParams {
-  DeleteDatabaseParams({
+final class UpdateDatabaseParams {
+  UpdateDatabaseParams({
     required this.instanceId,
     required this.databaseId,
     required this.name,
