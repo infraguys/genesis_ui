@@ -1,8 +1,8 @@
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
-final class DeleteDatabaseParams {
-  DeleteDatabaseParams({
+final class DatabaseParams {
+  DatabaseParams({
     required this.instanceId,
     required this.databaseId,
   });

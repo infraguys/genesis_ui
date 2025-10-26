@@ -1,8 +1,8 @@
-import 'package:genesis/src/features/dbaas/data/requests/create_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/delete_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/get_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/get_pg_instances_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/update_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/create_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/delete_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instances_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/update_pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';

@@ -1,15 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
-import 'package:genesis/src/features/dbaas/data/dtos/pg_instance_dto.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/create_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/delete_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instances_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/update_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/dtos/database_dto.dart';
+import 'package:genesis/src/features/dbaas/data/requests/database_requests/create_database_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/database_requests/database_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/database_requests/get_databases_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/database_requests/update_database_req.dart';
 
-final class PgInstancesApi {
-  PgInstancesApi(this._client);
+final class DatabasesApi {
+  DatabasesApi(this._client);
 
   final RestClient _client;
 
@@ -17,18 +16,18 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<PgInstanceDto> getPgInstance(GetPgInstanceReq req) async {
+  Future<DatabaseDto> getDatabase(DatabaseReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      return PgInstanceDto.fromJson(data!);
+      return DatabaseDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
   }
 
-  Future<void> deletePgInstance(DeletePgInstanceReq req) async {
+  Future<void> deleteDatabase(DatabaseReq req) async {
     try {
       await _client.delete<void>(
         req.toPath(),
@@ -38,25 +37,25 @@ final class PgInstancesApi {
     }
   }
 
-  Future<PgInstanceDto> createPgInstance(CreatePgInstanceReq req) async {
+  Future<DatabaseDto> createDatabase(CreateDatabaseReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      return PgInstanceDto.fromJson(data!);
+      return DatabaseDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
   }
 
-  Future<PgInstanceDto> updatePgInstance(UpdatePgInstanceReq req) async {
+  Future<DatabaseDto> updateDatabase(UpdateDatabaseReq req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      return PgInstanceDto.fromJson(data!);
+      return DatabaseDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -66,7 +65,7 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с несколькими экземплярами
 
-  Future<List<PgInstanceDto>> getPgInstances(GetPgInstancesReq req) async {
+  Future<List<DatabaseDto>> getDatabases(GetDatabasesReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),
@@ -76,7 +75,7 @@ final class PgInstancesApi {
         return List.empty();
       }
       final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-      return castedData.map((it) => PgInstanceDto.fromJson(it)).toList();
+      return castedData.map((it) => DatabaseDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

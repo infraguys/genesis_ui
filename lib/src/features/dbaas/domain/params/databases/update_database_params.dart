@@ -1,3 +1,6 @@
+import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+
 final class UpdateDatabaseParams {
   UpdateDatabaseParams({
     required this.instanceId,
@@ -7,8 +10,8 @@ final class UpdateDatabaseParams {
     this.description,
   });
 
-  final String instanceId;
-  final String databaseId;
+  final PgInstanceID instanceId;
+  final DatabaseID databaseId;
   final String name;
   final String owner;
   final String? description;

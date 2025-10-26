@@ -3,8 +3,8 @@ import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
 abstract class DatabasesEndpoints {
-  static Endpoint items() {
-    return Endpoint.withDbaasPrefix('/types/postgres/instances/databases/');
+  static Endpoint items(PgInstanceID pgInstanceId) {
+    return Endpoint.withDbaasPrefix('/types/postgres/instances/databases/$pgInstanceId');
   }
 
   static Endpoint item(PgInstanceID pgInstanceId, DatabaseID dbId) {
