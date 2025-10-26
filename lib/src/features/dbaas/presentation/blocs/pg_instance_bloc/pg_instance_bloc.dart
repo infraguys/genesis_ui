@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
-import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/update_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_usecase.dart';
 import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instance_usecase.dart';
@@ -41,8 +41,8 @@ class PgInstanceBloc extends Bloc<PgInstanceEvent, PgInstanceState> with Polling
     try {
       final instance = await useCase(event.params);
       emit(PgInstanceCreatedState(instance));
-    } on PermissionException catch (e) {
-      print(e);
+    } on PermissionException catch (_) {
+      // TODO(Koretsky): implement permission failure state
       // emit(NodePermissionFailureState(e.message));
     } on ApiException catch (e) {
       emit(PgInstanceFailureState(e.message));
