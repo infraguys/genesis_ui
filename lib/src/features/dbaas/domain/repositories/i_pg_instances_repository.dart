@@ -1,9 +1,7 @@
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
-import 'package:genesis/src/features/dbaas/domain/params/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/delete_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/get_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/get_pg_instances_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/update_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/get_pg_instances_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_instances/update_pg_instance_params.dart';
 
 abstract interface class IPgInstancesRepository {
   Future<List<PgInstance>> getPgInstances(GetPgInstancesParams params);
