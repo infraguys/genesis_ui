@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pg_instance_dto.g.dart';
 
 @JsonSerializable(constructor: '_', explicitToJson: true)
-class PgInstanceDto implements IDto<PgInstance> {
+final class PgInstanceDto implements IDto<PgInstance> {
   PgInstanceDto._({
     required this.id,
     required this.name,
