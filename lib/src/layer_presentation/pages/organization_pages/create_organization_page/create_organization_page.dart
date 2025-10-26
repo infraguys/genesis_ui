@@ -12,8 +12,6 @@ import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/create_organization_btn.dart';
-
 class _CreateOrganizationView extends StatefulWidget {
   const _CreateOrganizationView();
 
