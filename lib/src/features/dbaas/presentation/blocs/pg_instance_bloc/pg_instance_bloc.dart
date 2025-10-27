@@ -6,10 +6,10 @@ import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_instances/update_pg_instance_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/create_pg_instance_usecase.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instance_usecase.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instance_usecase.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/update_pg_instance_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/create_pg_instance_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/delete_pg_instance_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/get_pg_instance_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/update_pg_instance_usecase.dart';
 import 'package:genesis/src/shared/presentation/polling_bloc_mixin.dart';
 
 part 'pg_instance_event.dart';

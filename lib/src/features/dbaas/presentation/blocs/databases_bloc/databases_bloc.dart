@@ -3,8 +3,8 @@ import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/create_database_usecase.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/get_databases_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/database_usecases/create_database_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/database_usecases/get_databases_usecase.dart';
 
 part 'databases_event.dart';
 

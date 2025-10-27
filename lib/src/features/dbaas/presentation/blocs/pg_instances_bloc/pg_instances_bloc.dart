@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_instances/get_pg_instances_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/delete_pg_instances_usecase.dart';
-import 'package:genesis/src/features/dbaas/domain/use_cases/get_pg_instances_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/delete_pg_instances_usecase.dart';
+import 'package:genesis/src/features/dbaas/domain/use_cases/pg_instance_usecases/get_pg_instances_usecase.dart';
 import 'package:genesis/src/shared/presentation/polling_bloc_mixin.dart';
 
 part 'pg_instances_event.dart';
