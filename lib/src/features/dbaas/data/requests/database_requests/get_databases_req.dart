@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
 import 'package:genesis/src/core/interfaces/query_encodable.dart';
-import 'package:genesis/src/core/network/endpoints/databases_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/database_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 
 final class GetDatabasesReq implements PathEncodable, QueryEncodable {
@@ -15,6 +15,6 @@ final class GetDatabasesReq implements PathEncodable, QueryEncodable {
 
   @override
   String toPath() {
-    return DatabasesEndpoints.items(_params.instanceId).fullPath;
+    return DatabaseEndpoints.items(_params.instanceId).fullPath;
   }
 }

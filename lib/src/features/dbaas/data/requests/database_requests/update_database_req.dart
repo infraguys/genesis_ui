@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/json_encodable.dart';
 import 'package:genesis/src/core/interfaces/path_encodable.dart';
-import 'package:genesis/src/core/network/endpoints/databases_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/database_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/update_database_params.dart';
 
 final class UpdateDatabaseReq implements JsonEncodable, PathEncodable {
@@ -19,6 +19,6 @@ final class UpdateDatabaseReq implements JsonEncodable, PathEncodable {
 
   @override
   String toPath() {
-    return DatabasesEndpoints.item(_params.instanceId, _params.databaseId).fullPath;
+    return DatabaseEndpoints.item(_params.instanceId, _params.databaseId).fullPath;
   }
 }
