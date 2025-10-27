@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_instances/update_pg_instance_params.dart';
@@ -14,6 +15,7 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/create_database_modal.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/database_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -278,17 +280,26 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                           },
                         ),
                       ),
-                      BlocBuilder<DatabasesBloc, DatabasesState>(
-                        builder: (context, state) {
-                          if (state is! DatabasesLoadedState) {
-                            return AppProgressIndicator();
-                          }
-                          final DatabasesLoadedState(:databases) = state;
-                          return SizedBox(
-                            height: 400,
-                            child: DatabaseTable(databases: databases),
-                          );
-                        },
+                      SizedBox(
+                        height: 400,
+                        child: DatabaseTable(
+                          databases: List.generate(
+                            30,
+                            (index) {
+                              return Database(
+                                id: DatabaseID('db-$index'),
+                                name: 'database_$index',
+                                status: DatabaseStatus.active,
+                                createdAt: DateTime.now(),
+                                updatedAt: DateTime.now(),
+                                description: 'Sample database $index',
+                                projectId: ProjectID('cewecw'),
+                                instance: 'erce',
+                                owner: 'wecwe',
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
