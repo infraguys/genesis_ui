@@ -4,7 +4,7 @@ import 'package:genesis/src/features/dbaas/domain/params/pg_users/get_pg_users_p
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/update_pg_users_params.dart';
 
-abstract interface class IPgUserRepository {
+abstract interface class IPgUsersRepository {
   Future<PgUser> getPgUser(PgUserParams params);
 
   Future<List<PgUser>> getPgUsers(GetPgUsersParams params);
