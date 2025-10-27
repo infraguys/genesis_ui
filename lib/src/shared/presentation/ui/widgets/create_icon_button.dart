@@ -4,9 +4,10 @@ import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class CreateIconButton extends StatelessWidget {
-  const CreateIconButton({required this.onPressed, super.key});
+  const CreateIconButton({required this.onPressed, super.key, this.label});
 
   final VoidCallback? onPressed;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CreateIconButton extends StatelessWidget {
         backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
         padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
       ),
-      label: Text(context.$.create, style: textTheme.labelLarge!.w700 + Palette.color1B1B1D),
+      label: Text(label ?? context.$.create, style: textTheme.labelLarge!.w700 + Palette.color1B1B1D),
       icon: Icon(Icons.add, color: Palette.color1B1B1D),
       onPressed: onPressed,
     );

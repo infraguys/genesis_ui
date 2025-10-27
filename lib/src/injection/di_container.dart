@@ -5,9 +5,13 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/databases_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/databases_api.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/extensions/data/repositories/extensions_repository.dart';
 import 'package:genesis/src/features/extensions/data/source/extensions_api.dart';
@@ -146,6 +150,12 @@ class DiContainer extends StatelessWidget {
               return PgInstancesRepository(nodesApi);
             },
           ),
+          RepositoryProvider<IDatabaseRepository>(
+            create: (context) {
+              final databasesApi = DatabasesApi(context.read<RestClient>());
+              return DatabasesRepository(databasesApi);
+            },
+          ),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -210,6 +220,11 @@ class DiContainer extends StatelessWidget {
                 return PgInstancesBloc(context.read<IPgInstancesRepository>())..add(
                   PgInstancesEvent.getInstances(),
                 );
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                return DatabasesBloc(context.read<IDatabaseRepository>());
               },
             ),
             Provider(

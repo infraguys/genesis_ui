@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class AddCardButton extends StatelessWidget {
   const AddCardButton({
-    required this.child,
     super.key,
+    this.onTap,
     this.iconData = Icons.add,
   });
 
-  final Widget child;
   final IconData? iconData;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,8 @@ class AddCardButton extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () {
-            showDialog<void>(
-              context: context,
-              builder: (context) => child,
-            );
-          },
-          child: Center(child: Icon(iconData)),
+          onTap: onTap,
+          child: Center(child: Icon(iconData, size: 32)),
         ),
       ),
     );

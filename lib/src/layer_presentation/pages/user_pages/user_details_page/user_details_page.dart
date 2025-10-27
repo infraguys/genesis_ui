@@ -28,6 +28,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 part './widgets/confirm_email_btn.dart';
+
 part './widgets/delete_user_btn.dart';
 
 class _UserDetailsView extends StatefulWidget {
@@ -319,9 +320,9 @@ class _UserDetailsViewState extends State<_UserDetailsView> {
 }
 
 class UserDetailsPage extends StatelessWidget {
-  const UserDetailsPage({required this.userUUID, super.key});
+  const UserDetailsPage({required this.userID, super.key});
 
-  final UserUUID userUUID;
+  final UserUUID userID;
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +330,7 @@ class UserDetailsPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) {
-            return UserBloc(context.read<IUsersRepository>())..add(UserEvent.getUser(userUUID));
+            return UserBloc(context.read<IUsersRepository>())..add(UserEvent.getUser(userID));
           },
         ),
         BlocProvider(
@@ -338,7 +339,7 @@ class UserDetailsPage extends StatelessWidget {
               projectsRepository: context.read<IProjectsRepository>(),
               roleBindingsRepository: context.read<IRoleBindingsRepository>(),
               rolesRepository: context.read<IRolesRepository>(),
-            )..add(UserProjectsEvent.getProjects(userUUID));
+            )..add(UserProjectsEvent.getProjects(userID));
           },
         ),
       ],
