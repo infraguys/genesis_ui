@@ -13,8 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-class PgInstancesTable extends StatelessWidget {
-  const PgInstancesTable({
+class PgClusterTable extends StatelessWidget {
+  const PgClusterTable({
     required this.instances,
     this.allowMultiSelect = true,
     super.key,
@@ -58,7 +58,7 @@ class PgInstancesTable extends StatelessWidget {
               );
             },
           ),
-          Text(context.$.user, style: TextStyle(color: Colors.white)),
+          Text(context.$.pgCluster, style: TextStyle(color: Colors.white)),
           Text(context.$.status, style: TextStyle(color: Colors.white)),
           Text(context.$.uuid, style: TextStyle(color: Colors.white)),
           Text(context.$.createdAt, style: TextStyle(color: Colors.white)),

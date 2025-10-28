@@ -57,7 +57,7 @@ class _PgInstanceListView extends StatelessWidget {
             builder: (_, state) {
               return switch (state) {
                 _ when state is! PgInstancesLoadedState => AppProgressIndicator(),
-                _ => PgInstancesTable(instances: state.instances),
+                _ => PgClusterTable(instances: state.instances),
               };
             },
           ),
