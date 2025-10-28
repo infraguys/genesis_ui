@@ -1,4 +1,3 @@
-import 'package:genesis/src/features/dbaas/data/requests/clusters_requests/cluster_req.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/clusters_api.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
