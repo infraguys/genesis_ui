@@ -1,5 +1,5 @@
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class UpdateDatabaseParams {
   UpdateDatabaseParams({
@@ -10,7 +10,7 @@ final class UpdateDatabaseParams {
     this.description,
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
   final DatabaseID databaseId;
   final String name;
   // final String owner;

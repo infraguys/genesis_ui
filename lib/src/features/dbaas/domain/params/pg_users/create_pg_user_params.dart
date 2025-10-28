@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class CreatePgUserParams {
   CreatePgUserParams({
@@ -8,7 +8,7 @@ final class CreatePgUserParams {
     this.description,
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
   final String name;
   final String password;
   final String? description;

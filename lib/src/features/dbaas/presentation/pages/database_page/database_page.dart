@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/update_database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
+import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -28,7 +28,7 @@ class _DatabaseView extends StatefulWidget {
   });
 
   final DatabaseID databaseId;
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
 
   @override
   State<_DatabaseView> createState() => _DatabaseViewState();
@@ -96,7 +96,8 @@ class _DatabaseViewState extends State<_DatabaseView> {
             key: _formKey,
             child: PageLayout(
               breadcrumbs: [
-                BreadcrumbItem(text: context.$.pgCluster),
+                BreadcrumbItem(text: context.$.clusters),
+                BreadcrumbItem(text: 'username'.hardcoded), // TODO: get instance name
                 BreadcrumbItem(text: database.name),
               ],
               buttons: [
@@ -136,7 +137,7 @@ class _DatabaseViewState extends State<_DatabaseView> {
                             ),
                             Spacer(),
                             MetadataTable(
-                              statusWidget: PgInstanceStatusWidget(status: PgInstanceStatus.active),
+                              statusWidget: ClusterStatusWidget(status: ClusterStatus.active),
                               createdAt: database.createdAt,
                               updatedAt: database.updatedAt,
                             ),
@@ -210,7 +211,7 @@ class DatabasePage extends StatelessWidget {
     super.key,
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
   final DatabaseID databaseId;
 
   @override

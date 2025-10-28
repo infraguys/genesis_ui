@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/pg_instance_details_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/pg_instance_list_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/cluster_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/cluster_list_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
@@ -140,7 +140,7 @@ GoRouter createRouter(BuildContext context) {
                   return NoTransitionPage(child: MainPage());
                 },
                 onExit: (context, _) {
-                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
                   return true;
                 },
               ),
@@ -311,20 +311,20 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 // TODO(Koretsky): возможно придется переименовать
                 onExit: (context, state) {
-                  context.read<PgInstancesBloc>().add(PgInstancesEvent.stopPollingInstances());
+                  context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
                   return true;
                 },
                 name: AppRoutes.instances.name,
                 path: '/instances',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: PgInstancesListPage(),
+                  child: ClustersListPage(),
                 ),
                 routes: [
                   GoRoute(
                     name: AppRoutes.instance.name,
                     path: ':id',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: PgInstanceDetailsPage(id: PgInstanceID(state.pathParameters['id']!)),
+                      child: PgInstanceDetailsPage(id: ClusterID(state.pathParameters['id']!)),
                     ),
                     routes: [
                       GoRoute(
@@ -332,7 +332,7 @@ GoRouter createRouter(BuildContext context) {
                         path: 'pg_users/:pg_user_id',
                         pageBuilder: (context, state) => NoTransitionPage(
                           child: PgUserPage(
-                            pgInstanceId: PgInstanceID(GoRouter.of(context).state.pathParameters['id']!),
+                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
                             pgUserId: PgUserID(state.pathParameters['pg_user_id']!),
                           ),
                         ),
@@ -342,7 +342,7 @@ GoRouter createRouter(BuildContext context) {
                         path: 'databases/:db_id',
                         pageBuilder: (context, state) => NoTransitionPage(
                           child: DatabasePage(
-                            pgInstanceId: PgInstanceID(GoRouter.of(context).state.pathParameters['id']!),
+                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
                             databaseId: DatabaseID(state.pathParameters['db_id']!),
                           ),
                         ),

@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 
 final class PgUserParams {
@@ -7,6 +7,6 @@ final class PgUserParams {
     required this.pgUserId,
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
   final PgUserID pgUserId;
 }

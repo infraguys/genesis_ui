@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class PgClustersCard extends StatelessWidget {
@@ -17,16 +17,16 @@ class PgClustersCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('PG clusters', style: textTheme.titleMedium),
-            BlocBuilder<PgInstancesBloc, PgInstancesState>(
+            BlocBuilder<ClustersBloc, ClustersState>(
               builder: (context, state) {
-                if (state is! PgInstancesLoadedState) {
+                if (state is! ClustersLoadedState) {
                   return Text(
                     'Loading...',
                     style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
                   );
                 }
 
-                final clusters = state.instances;
+                final clusters = state.clusters;
                 return Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [

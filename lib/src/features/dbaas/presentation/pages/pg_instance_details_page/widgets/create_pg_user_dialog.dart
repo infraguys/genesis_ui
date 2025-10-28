@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/create_pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/get_pg_users_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
@@ -20,7 +20,7 @@ class _CreatePgUserDialogView extends StatefulWidget {
     super.key, // ignore: unused_element_parameter
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
 
   @override
   State<_CreatePgUserDialogView> createState() => _CreatePgUserDialogViewState();
@@ -151,7 +151,7 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
 class CreatePgUserDialog extends StatelessWidget {
   const CreatePgUserDialog({required this.instanceID, super.key});
 
-  final PgInstanceID instanceID;
+  final ClusterID instanceID;
 
   @override
   Widget build(BuildContext context) {

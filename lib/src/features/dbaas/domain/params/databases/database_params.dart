@@ -1,5 +1,5 @@
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class DatabaseParams {
   DatabaseParams({
@@ -7,6 +7,6 @@ final class DatabaseParams {
     required this.databaseId,
   });
 
-  final PgInstanceID instanceId;
+  final ClusterID instanceId;
   final DatabaseID databaseId;
 }

@@ -3,20 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/update_pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_user_bloc/pg_user_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/create_database_dialog.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/database_table.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
+import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -37,7 +37,7 @@ class _PgUserView extends StatefulWidget {
   });
 
   final PgUserID pgUserId;
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
 
   @override
   State<_PgUserView> createState() => _PgUserViewState();
@@ -83,11 +83,11 @@ class _PgUserViewState extends State<_PgUserView> {
 
           case PgUserUpdatedState(:final pgUser):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
 
           case PgUserDeletedState(:final pgUser):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
             context.pop();
           default:
         }
@@ -101,7 +101,7 @@ class _PgUserViewState extends State<_PgUserView> {
           final PgUserLoadedState(:pgUser) = state;
           return PageLayout(
             breadcrumbs: [
-              BreadcrumbItem(text: context.$.pgCluster),
+              BreadcrumbItem(text: context.$.clusters),
               BreadcrumbItem(text: pgUser.name),
             ],
             buttons: [
@@ -155,7 +155,7 @@ class _PgUserViewState extends State<_PgUserView> {
                                 ),
                                 Spacer(),
                                 MetadataTable(
-                                  statusWidget: PgInstanceStatusWidget(status: PgInstanceStatus.active),
+                                  statusWidget: ClusterStatusWidget(status: ClusterStatus.active),
                                   createdAt: pgUser.createdAt,
                                   updatedAt: pgUser.updatedAt,
                                 ),
@@ -255,7 +255,7 @@ class PgUserPage extends StatelessWidget {
   });
 
   final PgUserID pgUserId;
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
 
   @override
   Widget build(BuildContext context) {

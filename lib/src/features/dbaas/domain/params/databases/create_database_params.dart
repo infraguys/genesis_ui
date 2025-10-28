@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 
 final class CreateDatabaseParams {
@@ -9,7 +9,7 @@ final class CreateDatabaseParams {
     required this.description,
   });
 
-  final PgInstanceID instanceId;
+  final ClusterID instanceId;
   final PgUserID pgUserId;
   final String name;
   final String? description;

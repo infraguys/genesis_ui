@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -22,7 +22,7 @@ class _CreateDatabaseView extends StatefulWidget {
     super.key, // ignore: unused_element_parameter
   });
 
-  final PgInstanceID instanceId;
+  final ClusterID instanceId;
   final PgUserID pgUserId;
 
   @override
@@ -54,7 +54,7 @@ class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
         switch (state) {
           case DatabaseCreatedState(:final database):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
             context.pop();
           // case PgInstanceFailureState(:final message):
           //   messenger.showSnackBar(AppSnackBar.failure(message));
@@ -154,7 +154,7 @@ class CreateDatabaseDialog extends StatelessWidget {
     super.key,
   });
 
-  final PgInstanceID instanceID;
+  final ClusterID instanceID;
   final PgUserID pgUserId;
 
   @override

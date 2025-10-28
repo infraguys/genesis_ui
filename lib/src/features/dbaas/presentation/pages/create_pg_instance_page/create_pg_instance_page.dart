@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/domain/params/clusters_params/create_cluster_params.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_bloc/cluster_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -14,17 +14,17 @@ import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _CreatePgInstanceView extends StatefulWidget {
-  const _CreatePgInstanceView({super.key}); // ignore: unused_element_parameter
+class _View extends StatefulWidget {
+  const _View({super.key}); // ignore: unused_element_parameter
 
   @override
-  State<_CreatePgInstanceView> createState() => _CreatePgInstanceViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
-  late final PgInstanceBloc _pgInstanceBloc;
+  late final ClusterBloc _pgInstanceBloc;
 
   var _clusterName = '';
   String? _description;
@@ -38,7 +38,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
 
   @override
   void initState() {
-    _pgInstanceBloc = context.read<PgInstanceBloc>();
+    _pgInstanceBloc = context.read<ClusterBloc>();
     super.initState();
   }
 
@@ -46,16 +46,16 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
   Widget build(BuildContext context) {
     const gapWidth = 16.0;
 
-    return BlocListener<PgInstanceBloc, PgInstanceState>(
+    return BlocListener<ClusterBloc, ClusterState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case PgInstanceCreatedState(:final instance):
+          case ClusterCreatedState(cluster: final instance):
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterCreated(instance.name)));
-            context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
+            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
             context.pop();
-          case PgInstanceFailureState(:final message):
+          case ClusterFailureState(:final message):
             messenger.showSnackBar(AppSnackBar.failure(message));
           default:
         }
@@ -77,8 +77,8 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                     width: 500,
                     child: AppTextFormInput(
                       initialValue: _clusterName,
-                      helperText: context.$.pgClusterName,
-                      onSaved: (newValue) => _clusterName = newValue!,
+                      helperText: context.$.clusterNameHelperText,
+                      onSaved: (value) => _clusterName = value!,
                       validator: (value) => switch (value) {
                         _ when value!.isEmpty => context.$.requiredField,
                         _ => null,
@@ -103,7 +103,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                               initialValue: _cores.toString(),
                               helperText: context.$.cores,
                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              onSaved: (newValue) => _cores = int.parse(newValue!),
+                              onSaved: (value) => _cores = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -117,7 +117,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                               helperText: context.$.diskSize,
                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                               // TODO(Koretsky): Проверить локализацию
-                              onSaved: (newValue) => _diskSize = int.parse(newValue!),
+                              onSaved: (value) => _diskSize = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -130,7 +130,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                               initialValue: _nodesNumber.toString(),
                               helperText: context.$.nodeCountHelperText,
                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
+                              onSaved: (value) => _nodesNumber = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -142,7 +142,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                             child: AppTextFormInput(
                               initialValue: _syncReplicaNumber.toString(),
                               helperText: 'Sync replica number'.hardcoded,
-                              onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
+                              onSaved: (value) => _syncReplicaNumber = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -160,7 +160,7 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                               initialValue: _ram.toString(),
                               helperText: context.$.ramLabelText,
                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              onSaved: (newValue) => _ram = int.parse(newValue!),
+                              onSaved: (value) => _ram = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
                                 _ => null,
@@ -182,18 +182,16 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
                       AppTextFormInput(
                         initialValue: _versionLink,
                         helperText: context.$.versionHelperText,
-                        onSaved: (newValue) => _versionLink = newValue!,
+                        onSaved: (value) => _versionLink = value!,
                         validator: (value) => switch (value) {
                           _ when value!.isEmpty => context.$.requiredField,
                           _ => null,
                         },
                       ),
-                      AppTextFormInput(
+                      AppTextFormInput.description(
                         initialValue: _description,
                         helperText: context.$.description,
-                        maxLines: 2,
-                        minLines: 2,
-                        onSaved: (newValue) => _description = newValue!,
+                        onSaved: (value) => _description = value!,
                       ),
                     ],
                   );
@@ -215,33 +213,30 @@ class _CreatePgInstanceViewState extends State<_CreatePgInstanceView> {
   void save() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _pgInstanceBloc.add(
-        PgInstanceEvent.createInstance(
-          CreatePgInstanceParams(
-            name: _clusterName,
-            description: _description,
-            cores: _cores,
-            ram: _ram,
-            diskSize: _diskSize,
-            nodesNumber: _nodesNumber,
-            syncReplicaNumber: _syncReplicaNumber,
-            ipsv4: _ipsv4List,
-            versionLink: _versionLink,
-          ),
-        ),
+      final params = CreateClusterParams(
+        name: _clusterName,
+        description: _description,
+        cores: _cores,
+        ram: _ram,
+        diskSize: _diskSize,
+        nodesNumber: _nodesNumber,
+        syncReplicaNumber: _syncReplicaNumber,
+        ipsv4: _ipsv4List,
+        versionLink: _versionLink,
       );
+      _pgInstanceBloc.add(ClusterEvent.create(params));
     }
   }
 }
 
-class CreatePgInstancePage extends StatelessWidget {
-  const CreatePgInstancePage({super.key});
+class CreateClusterDialog extends StatelessWidget {
+  const CreateClusterDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PgInstanceBloc(context.read<IPgInstancesRepository>()),
-      child: _CreatePgInstanceView(key: key),
+      create: (context) => ClusterBloc(context.read<IClustersRepository>()),
+      child: _View(key: key),
     );
   }
 }

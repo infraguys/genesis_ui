@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get name;
 
+  /// No description provided for @projectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Project name'**
+  String get projectName;
+
   /// No description provided for @username.
   ///
   /// In en, this message translates to:
@@ -284,89 +290,11 @@ abstract class AppLocalizations {
   /// **'Core'**
   String get core;
 
-  /// No description provided for @projectName.
-  ///
-  /// In en, this message translates to:
-  /// **'Project name'**
-  String get projectName;
-
   /// No description provided for @otp.
   ///
   /// In en, this message translates to:
   /// **'Two-factor authentication'**
   String get otp;
-
-  /// No description provided for @deleteRole.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete role {name}?'**
-  String deleteRole(String name);
-
-  /// No description provided for @deleteRoles.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected({count}) roles?'**
-  String deleteRoles(int count);
-
-  /// No description provided for @deleteProjectConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete project {name}?'**
-  String deleteProjectConfirmation(String name);
-
-  /// No description provided for @deleteProjectsConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected({count}) projects?'**
-  String deleteProjectsConfirmation(int count);
-
-  /// No description provided for @deleteNodeConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete node {name}?'**
-  String deleteNodeConfirmation(String name);
-
-  /// No description provided for @deleteNodesConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected({count}) nodes?'**
-  String deleteNodesConfirmation(int count);
-
-  /// No description provided for @deletePgClusterConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete cluster {name}?'**
-  String deletePgClusterConfirmation(String name);
-
-  /// No description provided for @deleteClustersConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected({count}) clusters?'**
-  String deleteClustersConfirmation(int count);
-
-  /// No description provided for @deleteOrgConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete organization {name}?'**
-  String deleteOrgConfirmation(String name);
-
-  /// No description provided for @deleteOrgsConfirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected({count}) organizations?'**
-  String deleteOrgsConfirmation(int count);
-
-  /// No description provided for @deleteUser.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete user {name}?'**
-  String deleteUser(String name);
-
-  /// No description provided for @deleteUsers.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete selected ({count}) users?'**
-  String deleteUsers(int count);
 
   /// No description provided for @uuid.
   ///
@@ -470,11 +398,143 @@ abstract class AppLocalizations {
   /// **'DBaaS'**
   String get dbaas;
 
-  /// No description provided for @pgCluster.
+  /// No description provided for @cluster.
   ///
   /// In en, this message translates to:
-  /// **'PG Cluster'**
-  String get pgCluster;
+  /// **'Cluster'**
+  String get cluster;
+
+  /// No description provided for @clusters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clusters'**
+  String get clusters;
+
+  /// No description provided for @clusterNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL cluster name'**
+  String get clusterNameHelperText;
+
+  /// No description provided for @nodeNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Node name'**
+  String get nodeNameHelperText;
+
+  /// No description provided for @orgNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization name'**
+  String get orgNameHelperText;
+
+  /// No description provided for @ramLabelText.
+  ///
+  /// In en, this message translates to:
+  /// **'Ram (MB)'**
+  String get ramLabelText;
+
+  /// No description provided for @nodeCountHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Node count'**
+  String get nodeCountHelperText;
+
+  /// No description provided for @diskSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Disk size (GB)'**
+  String get diskSize;
+
+  /// No description provided for @versionHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Link to PostgreSQL version'**
+  String get versionHelperText;
+
+  /// No description provided for @repeatPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat password'**
+  String get repeatPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @deleteRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete role {name}?'**
+  String deleteRole(String name);
+
+  /// No description provided for @deleteRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) roles?'**
+  String deleteRoles(int count);
+
+  /// No description provided for @deleteProjectConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete project {name}?'**
+  String deleteProjectConfirmation(String name);
+
+  /// No description provided for @deleteProjectsConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) projects?'**
+  String deleteProjectsConfirmation(int count);
+
+  /// No description provided for @deleteNodeConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete node {name}?'**
+  String deleteNodeConfirmation(String name);
+
+  /// No description provided for @deleteNodesConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) nodes?'**
+  String deleteNodesConfirmation(int count);
+
+  /// No description provided for @deletePgClusterConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete cluster {name}?'**
+  String deletePgClusterConfirmation(String name);
+
+  /// No description provided for @deleteClustersConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) clusters?'**
+  String deleteClustersConfirmation(int count);
+
+  /// No description provided for @deleteOrgConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete organization {name}?'**
+  String deleteOrgConfirmation(String name);
+
+  /// No description provided for @deleteOrgsConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected({count}) organizations?'**
+  String deleteOrgsConfirmation(int count);
+
+  /// No description provided for @deleteUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete user {name}?'**
+  String deleteUser(String name);
+
+  /// No description provided for @deleteUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) users?'**
+  String deleteUsers(int count);
 
   /// No description provided for @iam.
   ///
@@ -535,60 +595,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change email'**
   String get changeEmail;
-
-  /// No description provided for @pgClusterName.
-  ///
-  /// In en, this message translates to:
-  /// **'PostgreSQL cluster name'**
-  String get pgClusterName;
-
-  /// No description provided for @nodeNameHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Node name'**
-  String get nodeNameHelperText;
-
-  /// No description provided for @orgNameHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Organization name'**
-  String get orgNameHelperText;
-
-  /// No description provided for @ramLabelText.
-  ///
-  /// In en, this message translates to:
-  /// **'Ram (MB)'**
-  String get ramLabelText;
-
-  /// No description provided for @nodeCountHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Node count'**
-  String get nodeCountHelperText;
-
-  /// No description provided for @diskSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Disk size (GB)'**
-  String get diskSize;
-
-  /// No description provided for @versionHelperText.
-  ///
-  /// In en, this message translates to:
-  /// **'Link to PostgreSQL version'**
-  String get versionHelperText;
-
-  /// No description provided for @repeatPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Repeat password'**
-  String get repeatPassword;
-
-  /// No description provided for @passwordsDoNotMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Passwords do not match'**
-  String get passwordsDoNotMatch;
 
   /// No description provided for @msgCopiedToClipboard.
   ///
@@ -749,7 +755,7 @@ abstract class AppLocalizations {
   /// No description provided for @inProgress.
   ///
   /// In en, this message translates to:
-  /// **'In Progress'**
+  /// **'In progress'**
   String get inProgress;
 
   /// No description provided for @scheduled.

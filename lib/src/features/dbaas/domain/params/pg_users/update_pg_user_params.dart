@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 
 final class UpdatePgUserParams {
@@ -9,7 +9,7 @@ final class UpdatePgUserParams {
     this.password,
   });
 
-  final PgInstanceID pgInstanceId;
+  final ClusterID pgInstanceId;
   final PgUserID pgUserId;
   final String? description;
   final String? password;

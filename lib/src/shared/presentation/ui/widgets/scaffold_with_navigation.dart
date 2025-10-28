@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
@@ -53,7 +53,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         title: Text(context.$.main),
                         onTap: () {
                           _goBranch(BranchIndex.main.index);
-                          context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
+                          context.read<ClustersBloc>().add(ClustersEvent.startPolling());
                         },
                       ),
                       if (context.permissionNames.users.canListAll)
@@ -112,7 +112,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         title: Text(context.$.dbaas),
                         onTap: () {
                           _goBranch(BranchIndex.dbaas.index);
-                          context.read<PgInstancesBloc>().add(PgInstancesEvent.startPollingInstances());
+                          context.read<ClustersBloc>().add(ClustersEvent.startPolling());
                         },
                       ),
                       const SizedBox(height: 20.0),

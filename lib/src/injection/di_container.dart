@@ -5,16 +5,16 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/clusters_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_database_repository.dart';
-import 'package:genesis/src/features/dbaas/data/repositories/pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_users_repository.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/clusters_api.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/databases_api.dart';
-import 'package:genesis/src/features/dbaas/data/source/remote/pg_instances_api.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_users_api.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
-import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/extensions/data/repositories/extensions_repository.dart';
 import 'package:genesis/src/features/extensions/data/source/extensions_api.dart';
 import 'package:genesis/src/features/extensions/domain/repositories/i_extensions_repository.dart';
@@ -146,10 +146,10 @@ class DiContainer extends StatelessWidget {
               return NodesRepository(nodesApi);
             },
           ),
-          RepositoryProvider<IPgInstancesRepository>(
+          RepositoryProvider<IClustersRepository>(
             create: (context) {
-              final nodesApi = PgInstancesApi(context.read<RestClient>());
-              return PgInstancesRepository(nodesApi);
+              final nodesApi = ClustersApi(context.read<RestClient>());
+              return ClustersRepository(nodesApi);
             },
           ),
           RepositoryProvider<IPgUsersRepository>(
@@ -225,8 +225,8 @@ class DiContainer extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) {
-                return PgInstancesBloc(context.read<IPgInstancesRepository>())..add(
-                  PgInstancesEvent.getInstances(),
+                return ClustersBloc(context.read<IClustersRepository>())..add(
+                  ClustersEvent.getClusters(),
                 );
               },
             ),
