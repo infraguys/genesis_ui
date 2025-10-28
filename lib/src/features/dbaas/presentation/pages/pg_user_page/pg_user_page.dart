@@ -99,129 +99,132 @@ class _PgUserViewState extends State<_PgUserView> {
             return AppProgressIndicator();
           }
           final PgUserLoadedState(:pgUser) = state;
-          return Form(
-            key: _formKey,
-            child: PageLayout(
-              breadcrumbs: [
-                BreadcrumbItem(text: context.$.pgCluster),
-                BreadcrumbItem(text: pgUser.name),
-              ],
-              buttons: [
-                // _DeletePgInstanceButton(instance: instance),
-                SaveIconButton(onPressed: save),
-                CreateIconButton(
-                  label: 'Create database'.hardcoded,
-                  onPressed: () async {
-                    await showDialog<PgUser>(
-                      context: context,
-                      builder: (context) => Dialog(
-                        child: CreateDatabaseDialog(
-                          instanceID: widget.pgInstanceId,
-                          pgUserId: widget.pgUserId,
-                        ),
+          return PageLayout(
+            breadcrumbs: [
+              BreadcrumbItem(text: context.$.pgCluster),
+              BreadcrumbItem(text: pgUser.name),
+            ],
+            buttons: [
+              // _DeletePgInstanceButton(instance: instance),
+              SaveIconButton(onPressed: save),
+              CreateIconButton(
+                label: 'Create db'.hardcoded,
+                onPressed: () async {
+                  await showDialog<PgUser>(
+                    context: context,
+                    builder: (context) => Dialog(
+                      child: CreateDatabaseDialog(
+                        instanceID: widget.pgInstanceId,
+                        pgUserId: widget.pgUserId,
                       ),
-                    );
-                  },
-                ),
-              ],
-              child: Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: gapWidth,
-                    children: [
-                      FormCard(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(Icons.storage_rounded, size: 100),
-                            SizedBox(width: 32),
-                            Column(
+                    ),
+                  );
+                },
+              ),
+            ],
+            child: Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: gapWidth,
+                  children: [
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          FormCard(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: gapWidth,
                               children: [
-                                IdWidget(id: pgUser.id.raw),
-                                SizedBox(
-                                  width: 500,
-                                  child: AppTextFormInput(
-                                    initialValue: _pgUserName,
-                                    helperText: 'PG user name'.hardcoded,
-                                    readOnly: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            MetadataTable(
-                              statusWidget: PgInstanceStatusWidget(status: PgInstanceStatus.active),
-                              createdAt: pgUser.createdAt,
-                              updatedAt: pgUser.updatedAt,
-                            ),
-                          ],
-                        ),
-                      ),
-                      FormCard(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
-                            return Column(
-                              spacing: gapWidth,
-                              children: [
-                                Row(
+                                Icon(Icons.storage_rounded, size: 100),
+                                SizedBox(width: 32),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   spacing: gapWidth,
                                   children: [
+                                    IdWidget(id: pgUser.id.raw),
                                     SizedBox(
-                                      width: columnWidth,
+                                      width: 500,
                                       child: AppTextFormInput(
-                                        initialValue: _password,
-                                        helperText: context.$.password,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                        onSaved: (value) => _password = value!,
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: (columnWidth * 3) + (gapWidth * 2),
-                                      child: AppTextFormInput(
-                                        initialValue: _instance,
-                                        helperText: context.$.diskSize,
-                                        // TODO(Koretsky): Проверить локализацию
-                                        onSaved: (value) => _instance = value!,
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
+                                        initialValue: _pgUserName,
+                                        helperText: 'PG user name'.hardcoded,
+                                        readOnly: true,
                                       ),
                                     ),
                                   ],
                                 ),
-                                AppTextFormInput.description(
-                                  initialValue: _description,
-                                  helperText: context.$.description,
-                                  onSaved: (value) => _description = value!,
+                                Spacer(),
+                                MetadataTable(
+                                  statusWidget: PgInstanceStatusWidget(status: PgInstanceStatus.active),
+                                  createdAt: pgUser.createdAt,
+                                  updatedAt: pgUser.updatedAt,
                                 ),
                               ],
-                            );
-                          },
-                        ),
+                            ),
+                          ),
+                          FormCard(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                                return Column(
+                                  spacing: gapWidth,
+                                  children: [
+                                    Row(
+                                      spacing: gapWidth,
+                                      children: [
+                                        SizedBox(
+                                          width: columnWidth,
+                                          child: AppTextFormInput(
+                                            initialValue: _password,
+                                            helperText: context.$.password,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            onSaved: (value) => _password = value!,
+                                            validator: (value) => switch (value) {
+                                              _ when value!.isEmpty => context.$.requiredField,
+                                              _ => null,
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: (columnWidth * 3) + (gapWidth * 2),
+                                          child: AppTextFormInput(
+                                            initialValue: _instance,
+                                            helperText: context.$.diskSize,
+                                            // TODO(Koretsky): Проверить локализацию
+                                            onSaved: (value) => _instance = value!,
+                                            validator: (value) => switch (value) {
+                                              _ when value!.isEmpty => context.$.requiredField,
+                                              _ => null,
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    AppTextFormInput.description(
+                                      initialValue: _description,
+                                      helperText: context.$.description,
+                                      onSaved: (value) => _description = value!,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 400,
-                        child: BlocBuilder<DatabasesBloc, DatabasesState>(
-                          builder: (context, state) {
-                            if (state is! DatabasesLoadedState) {
-                              return AppProgressIndicator();
-                            }
-                            final DatabasesLoadedState(:databases) = state;
-                            return DatabaseTable(databases: databases);
-                          },
-                        ),
+                    ),
+                    SizedBox(
+                      height: 400,
+                      child: BlocBuilder<DatabasesBloc, DatabasesState>(
+                        builder: (_, state) {
+                          return switch (state) {
+                            _ when state is! DatabasesLoadedState => AppProgressIndicator(),
+                            _ => DatabaseTable(databases: state.databases),
+                          };
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -4,13 +4,13 @@ import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 
 final class PgDatabasesRepository implements IDatabaseRepository {
-  PgDatabasesRepository(this._databasesApi);
+  PgDatabasesRepository(this._api);
 
-  final PgDatabasesApi _databasesApi;
+  final PgDatabasesApi _api;
 
   @override
   Future<Database> createDatabase(params) async {
-    final dto = await _databasesApi.createDatabase(params);
+    final dto = await _api.createDatabase(params);
     return dto.toEntity();
   }
 
@@ -21,14 +21,14 @@ final class PgDatabasesRepository implements IDatabaseRepository {
   }
 
   @override
-  Future<Database> getDatabase(params) {
-    // TODO: implement getDatabase
-    throw UnimplementedError();
+  Future<Database> getDatabase(params) async {
+    final dto = await _api.getDatabase(params);
+    return dto.toEntity();
   }
 
   @override
   Future<List<Database>> getDatabases(params) async {
-    final dtos = await _databasesApi.getDatabases(GetPgDatabasesReq(params));
+    final dtos = await _api.getDatabases(GetPgDatabasesReq(params));
     return dtos.map((it) => it.toEntity()).toList();
   }
 

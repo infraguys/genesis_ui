@@ -3,9 +3,17 @@ part of 'database_bloc.dart';
 sealed class DatabaseEvent {
   DatabaseEvent();
 
-  factory DatabaseEvent.createDatabase(CreateDatabaseParams params) = _CreateDatabase;
+  factory DatabaseEvent.get(DatabaseParams params) = _GetDatabase;
+
+  factory DatabaseEvent.create(CreateDatabaseParams params) = _CreateDatabase;
 
   factory DatabaseEvent.update(UpdateDatabaseParams params) = _UpdateDatabase;
+}
+
+final class _GetDatabase extends DatabaseEvent {
+  _GetDatabase(this.params);
+
+  final DatabaseParams params;
 }
 
 final class _CreateDatabase extends DatabaseEvent {

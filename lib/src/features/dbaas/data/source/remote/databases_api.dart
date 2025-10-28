@@ -7,6 +7,7 @@ import 'package:genesis/src/features/dbaas/data/requests/database_requests/get_p
 import 'package:genesis/src/features/dbaas/data/requests/database_requests/pg_database_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/database_requests/update_pg_database_req.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/databases/database_params.dart';
 
 final class PgDatabasesApi {
   PgDatabasesApi(this._client);
@@ -17,7 +18,7 @@ final class PgDatabasesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<DatabaseDto> getDatabase(PgDatabaseReq req) async {
+  Future<DatabaseDto> getDatabase(DatabaseParams req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
@@ -28,7 +29,7 @@ final class PgDatabasesApi {
     }
   }
 
-  Future<void> deleteDatabase(PgDatabaseReq req) async {
+  Future<void> deleteDatabase(DatabaseParams req) async {
     try {
       await _client.delete<void>(
         req.toPath(),

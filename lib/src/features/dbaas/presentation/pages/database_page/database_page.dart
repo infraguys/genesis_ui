@@ -4,14 +4,11 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
-import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/databases/database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/update_database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_user_bloc/pg_user_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/database_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -65,9 +62,10 @@ class _DatabaseViewState extends State<_DatabaseView> {
     const gapWidth = 16.0;
 
     return BlocListener<DatabaseBloc, DatabaseState>(
-      listenWhen: (_, current) => current is! PgUserLoadingState,
+      listenWhen: (_, current) => current is! DatabaseLoadingState,
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
+
         switch (state) {
           case DatabaseLoadedState(:final database):
             _dbName = database.name;
@@ -76,9 +74,9 @@ class _DatabaseViewState extends State<_DatabaseView> {
 
           case DatabaseUpdatedState(:final database):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<DatabasesBloc>().add(
-              DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: widget.pgInstanceId)),
-            );
+          // context.read<DatabasesBloc>().add(
+          //   DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: widget.pgInstanceId)),
+          // );
           //
           // case PgUserDeletedState(:final pgUser):
           //   messenger.showSnackBar(AppSnackBar.success(context.$.success));
@@ -156,7 +154,7 @@ class _DatabaseViewState extends State<_DatabaseView> {
                                   spacing: gapWidth,
                                   children: [
                                     SizedBox(
-                                      width: columnWidth,
+                                      width: constraints.maxWidth,
                                       child: AppTextFormInput(
                                         initialValue: _instance,
                                         helperText: 'Instance'.hardcoded,
@@ -176,18 +174,6 @@ class _DatabaseViewState extends State<_DatabaseView> {
                                 ),
                               ],
                             );
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 400,
-                        child: BlocBuilder<DatabasesBloc, DatabasesState>(
-                          builder: (context, state) {
-                            if (state is! DatabasesLoadedState) {
-                              return AppProgressIndicator();
-                            }
-                            final DatabasesLoadedState(:databases) = state;
-                            return DatabaseTable(databases: databases);
                           },
                         ),
                       ),
@@ -231,32 +217,16 @@ class DatabasePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (context) => PgUserBloc(context.read<IPgUsersRepository>())
-        //     ..add(
-        //       PgUserEvent.get(
-        //         PgUserParams(pgInstanceId: pgInstanceId, pgUserId: pgUserId),
-        //       ),
-        //     ),
-        // ),
         BlocProvider(
-          create: (context) => DatabaseBloc(context.read<IDatabaseRepository>()),
-        ),
-        BlocProvider(
-          create: (context) {
-            return DatabasesBloc(context.read<IDatabaseRepository>())..add(
-              DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: pgInstanceId)),
-            );
-          },
+          create: (context) => DatabaseBloc(
+            context.read<IDatabaseRepository>(),
+          )..add(DatabaseEvent.get(DatabaseParams(databaseId: databaseId, instanceId: pgInstanceId))),
         ),
         BlocProvider(
           create: (context) => DatabasesSelectionCubit(),
         ),
       ],
-      child: _DatabaseView(
-        databaseId: databaseId,
-        pgInstanceId: pgInstanceId,
-      ),
+      child: _DatabaseView(databaseId: databaseId, pgInstanceId: pgInstanceId),
     );
   }
 }

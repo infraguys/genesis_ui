@@ -142,7 +142,7 @@ class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
         description: _description,
       );
 
-      _databaseBloc.add(DatabaseEvent.createDatabase(params));
+      _databaseBloc.add(DatabaseEvent.create(params));
     }
   }
 }
