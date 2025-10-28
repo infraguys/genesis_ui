@@ -1,8 +1,8 @@
 import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 
-final class DeletePgInstanceReq {
-  DeletePgInstanceReq(this.id);
+final class PgInstanceReq {
+  PgInstanceReq(this.id);
 
   final PgInstanceID id;
 

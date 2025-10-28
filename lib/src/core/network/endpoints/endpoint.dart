@@ -18,7 +18,7 @@ final class Endpoint {
   final String _path;
   final String _apiPrefix;
 
-  String get relativePath => '/${Env.versionApi}/$_path';
+  String get relativePath => '/${Env.versionApi}$_path';
 
   String get fullPath => '$_apiPrefix$relativePath';
 }

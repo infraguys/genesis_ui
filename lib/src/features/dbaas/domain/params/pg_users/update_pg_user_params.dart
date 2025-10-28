@@ -1,16 +1,16 @@
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 
-final class CreateDatabaseParams {
-  CreateDatabaseParams({
-    required this.instanceId,
-    required this.name,
+final class UpdatePgUserParams {
+  UpdatePgUserParams({
+    required this.pgInstanceId,
     required this.pgUserId,
-    required this.description,
+    this.description,
+    this.password,
   });
 
-  final PgInstanceID instanceId;
+  final PgInstanceID pgInstanceId;
   final PgUserID pgUserId;
-  final String name;
   final String? description;
+  final String? password;
 }

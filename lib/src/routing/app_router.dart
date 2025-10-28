@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/pg_instance_details_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/pg_instance_list_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
@@ -20,7 +23,6 @@ import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_li
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
-import 'package:genesis/src/layer_presentation/pages/organization_pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
@@ -254,13 +256,13 @@ GoRouter createRouter(BuildContext context) {
                   child: OrganizationListPage(),
                 ),
                 routes: [
-                  GoRoute(
-                    name: AppRoutes.createOrganization.name,
-                    path: 'create',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreateOrganizationPage(),
-                    ),
-                  ),
+                  // GoRoute(
+                  //   name: AppRoutes.createOrganization.name,
+                  //   path: 'create',
+                  //   pageBuilder: (_, _) => NoTransitionPage(
+                  //     child: CreateOrganizationPage(),
+                  //   ),
+                  // ),
                   GoRoute(
                     name: AppRoutes.organization.name,
                     path: ':uuid',
@@ -286,11 +288,11 @@ GoRouter createRouter(BuildContext context) {
                   child: NodeListPage(),
                 ),
                 routes: [
-                  GoRoute(
-                    name: AppRoutes.createNode.name,
-                    path: 'create',
-                    pageBuilder: (_, _) => throw UnimplementedError(),
-                  ),
+                  // GoRoute(
+                  //   name: AppRoutes.createNode.name,
+                  //   path: 'create',
+                  //   pageBuilder: (_, _) => throw UnimplementedError(),
+                  // ),
                   GoRoute(
                     name: AppRoutes.node.name,
                     path: ':uuid',
@@ -319,18 +321,33 @@ GoRouter createRouter(BuildContext context) {
                 ),
                 routes: [
                   GoRoute(
-                    name: AppRoutes.createInstance.name,
-                    path: 'create',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreatePgInstancePage(),
-                    ),
-                  ),
-                  GoRoute(
                     name: AppRoutes.instance.name,
                     path: ':id',
                     pageBuilder: (_, state) => NoTransitionPage(
                       child: PgInstanceDetailsPage(id: PgInstanceID(state.pathParameters['id']!)),
                     ),
+                    routes: [
+                      GoRoute(
+                        name: AppRoutes.pgUser.name,
+                        path: 'pg_users/:pg_user_id',
+                        pageBuilder: (context, state) => NoTransitionPage(
+                          child: PgUserPage(
+                            pgInstanceId: PgInstanceID(GoRouter.of(context).state.pathParameters['id']!),
+                            pgUserId: PgUserID(state.pathParameters['pg_user_id']!),
+                          ),
+                        ),
+                      ),
+                      GoRoute(
+                        name: AppRoutes.pgDb.name,
+                        path: 'databases/:db_id',
+                        pageBuilder: (context, state) => NoTransitionPage(
+                          child: DatabasePage(
+                            pgInstanceId: PgInstanceID(GoRouter.of(context).state.pathParameters['id']!),
+                            databaseId: DatabaseID(state.pathParameters['db_id']!),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -401,14 +418,14 @@ class _GoRouterConfigListenable extends ChangeNotifier {
 
 class DialogPage extends CustomTransitionPage<void> {
   DialogPage({required WidgetBuilder builder})
-      : super(
-    child: Builder(builder: builder),
-    barrierColor: Colors.black54,
-    barrierDismissible: true,
-    opaque: false,
-    transitionsBuilder: (_, anim, __, child) => FadeTransition(
-      opacity: anim,
-      child: child,
-    ),
-  );
+    : super(
+        child: Builder(builder: builder),
+        barrierColor: Colors.black54,
+        barrierDismissible: true,
+        opaque: false,
+        transitionsBuilder: (_, anim, __, child) => FadeTransition(
+          opacity: anim,
+          child: child,
+        ),
+      );
 }

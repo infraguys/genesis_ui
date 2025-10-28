@@ -47,4 +47,6 @@ enum AppRoutes {
   instances,
   instance,
   createInstance,
+  pgUser,
+  pgDb
 }

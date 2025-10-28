@@ -3,8 +3,7 @@ import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/dbaas/data/dtos/pg_instance_dto.dart';
 import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/create_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/delete_pg_instance_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instance_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/pg_instance_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/get_pg_instances_req.dart';
 import 'package:genesis/src/features/dbaas/data/requests/pg_instance_requests/update_pg_instance_req.dart';
 
@@ -17,7 +16,7 @@ final class PgInstancesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<PgInstanceDto> getPgInstance(GetPgInstanceReq req) async {
+  Future<PgInstanceDto> getPgInstance(PgInstanceReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
@@ -28,7 +27,7 @@ final class PgInstancesApi {
     }
   }
 
-  Future<void> deletePgInstance(DeletePgInstanceReq req) async {
+  Future<void> deletePgInstance(PgInstanceReq req) async {
     try {
       await _client.delete<void>(
         req.toPath(),

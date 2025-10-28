@@ -3,19 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
-import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_instances/update_pg_instance_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_users/get_pg_users_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/create_database_modal.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/database_table.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_bloc/pg_users_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/create_pg_user_dialog.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/pg_user_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/pg_instance_status_widget.dart';
-import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -120,11 +119,11 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                 SaveIconButton(onPressed: save),
                 SizedBox(width: 16),
                 CreateIconButton(
-                  label: 'Create DB'.hardcoded,
+                  label: 'Create PG user'.hardcoded,
                   onPressed: () async {
-                    await showDialog<void>(
+                    await showDialog<PgUser>(
                       context: context,
-                      builder: (context) => Dialog(child: CreateDatabaseDialog(instanceID: widget.id)),
+                      builder: (context) => Dialog(child: CreatePgUserDialog(instanceID: widget.id)),
                     );
                   },
                 ),
@@ -282,23 +281,13 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                       ),
                       SizedBox(
                         height: 400,
-                        child: DatabaseTable(
-                          databases: List.generate(
-                            30,
-                            (index) {
-                              return Database(
-                                id: DatabaseID('db-$index'),
-                                name: 'database_$index',
-                                status: DatabaseStatus.active,
-                                createdAt: DateTime.now(),
-                                updatedAt: DateTime.now(),
-                                description: 'Sample database $index',
-                                projectId: ProjectID('cewecw'),
-                                instance: 'erce',
-                                owner: 'wecwe',
-                              );
-                            },
-                          ),
+                        child: BlocBuilder<PgUsersBloc, PgUsersState>(
+                          builder: (context, state) {
+                            if (state is! PgUsersLoadedState) {
+                              return AppProgressIndicator();
+                            }
+                            return PgUsersTable(pgUsers: state.pgUsers);
+                          },
                         ),
                       ),
                     ],
@@ -339,7 +328,6 @@ class PgInstanceDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<DatabasesBloc>().add(DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: id)));
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -349,7 +337,10 @@ class PgInstanceDetailsPage extends StatelessWidget {
           child: _PgInstanceDetailsView(id: id),
         ),
         BlocProvider(
-          create: (context) => DatabasesSelectionCubit(),
+          create: (context) => PgUsersBloc(context.read<IPgUsersRepository>())
+            ..add(
+              PgUsersEvent.getPgUsers(GetPgUsersParams(pgInstanceId: id)),
+            ),
         ),
       ],
       child: _PgInstanceDetailsView(id: id),

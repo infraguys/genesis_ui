@@ -11,9 +11,3 @@ final class DatabasesLoadedState extends DatabasesState {
 
   final List<Database> databases;
 }
-
-final class DatabasesCreatedState extends DatabasesState {
-  DatabasesCreatedState(this.database);
-
-  final Database database;
-}

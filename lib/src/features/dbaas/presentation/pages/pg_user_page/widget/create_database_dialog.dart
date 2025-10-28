@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_instance.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
-import 'package:genesis/src/features/dbaas/domain/params/pg_instances/create_pg_instance_params.dart';
-import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_instances_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instance_bloc/pg_instance_bloc.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_instances_bloc/pg_instances_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -17,27 +15,31 @@ import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _CreateDatabaseDialogView extends StatefulWidget {
-  const _CreateDatabaseDialogView({required this.instanceId, super.key});
+class _CreateDatabaseView extends StatefulWidget {
+  const _CreateDatabaseView({
+    required this.instanceId,
+    required this.pgUserId,
+    super.key, // ignore: unused_element_parameter
+  });
 
-  final PgInstanceID instanceId; // ignore: unused_element_parameter
+  final PgInstanceID instanceId;
+  final PgUserID pgUserId;
 
   @override
-  State<_CreateDatabaseDialogView> createState() => _CreateDatabaseDialogViewState();
+  State<_CreateDatabaseView> createState() => _CreateDatabaseViewState();
 }
 
-class _CreateDatabaseDialogViewState extends State<_CreateDatabaseDialogView> {
+class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
   final _formKey = GlobalKey<FormState>();
 
-  late final DatabasesBloc _databasesBloc;
+  late final DatabaseBloc _databaseBloc;
 
   var _dbName = '';
-  var _owner = 'postgres';
   String? _description;
 
   @override
   void initState() {
-    _databasesBloc = context.read<DatabasesBloc>();
+    _databaseBloc = context.read<DatabaseBloc>();
     super.initState();
   }
 
@@ -45,12 +47,12 @@ class _CreateDatabaseDialogViewState extends State<_CreateDatabaseDialogView> {
   Widget build(BuildContext context) {
     const gapWidth = 16.0;
 
-    return BlocListener<DatabasesBloc, DatabasesState>(
+    return BlocListener<DatabaseBloc, DatabaseState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case DatabasesCreatedState(:final database):
+          case DatabaseCreatedState(:final database):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
             context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
             context.pop();
@@ -93,23 +95,19 @@ class _CreateDatabaseDialogViewState extends State<_CreateDatabaseDialogView> {
                   return Column(
                     spacing: gapWidth,
                     children: [
-                      Row(
-                        spacing: gapWidth,
-                        children: [
-                          SizedBox(
-                            width: columnWidth,
-                            child: AppTextFormInput(
-                              initialValue: _owner,
-                              helperText: 'Owner'.hardcoded,
-                              onSaved: (newValue) => _owner = newValue!,
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   spacing: gapWidth,
+                      //   children: [
+                      //     // SizedBox(
+                      //     //   width: columnWidth,
+                      //     //   child: AppTextFormInput(
+                      //     //     initialValue: Env.,
+                      //     //     helperText: 'Owner'.hardcoded,
+                      //     //     onSaved: (newValue) => _owner = newValue!,
+                      //     //   ),
+                      //     // ),
+                      //   ],
+                      // ),
                       AppTextFormInput(
                         initialValue: _description,
                         helperText: context.$.description,
@@ -140,26 +138,32 @@ class _CreateDatabaseDialogViewState extends State<_CreateDatabaseDialogView> {
       final params = CreateDatabaseParams(
         instanceId: widget.instanceId,
         name: _dbName,
-        owner: 'postgres'.hardcoded,
+        pgUserId: widget.pgUserId,
         description: _description,
       );
 
-      _databasesBloc.add(DatabasesEvent.createDatabase(params));
+      _databaseBloc.add(DatabaseEvent.createDatabase(params));
     }
   }
 }
 
 class CreateDatabaseDialog extends StatelessWidget {
-  const CreateDatabaseDialog({required this.instanceID, super.key});
+  const CreateDatabaseDialog({
+    required this.instanceID,
+    required this.pgUserId,
+    super.key,
+  });
 
   final PgInstanceID instanceID;
+  final PgUserID pgUserId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PgInstanceBloc(context.read<IPgInstancesRepository>()),
-      child: _CreateDatabaseDialogView(
+      create: (context) => DatabaseBloc(context.read<IDatabaseRepository>()),
+      child: _CreateDatabaseView(
         instanceId: instanceID,
+        pgUserId: pgUserId,
       ),
     );
   }

@@ -1,15 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
-import 'package:genesis/src/features/dbaas/data/dtos/database_dto.dart';
-import 'package:genesis/src/features/dbaas/data/requests/database_requests/create_database_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/database_requests/get_pg_databases_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/database_requests/pg_database_req.dart';
-import 'package:genesis/src/features/dbaas/data/requests/database_requests/update_pg_database_req.dart';
-import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
+import 'package:genesis/src/features/dbaas/data/dtos/pg_user_dto.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_users_requests/create_pg_user_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_users_requests/get_pg_users_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_users_requests/pg_user_req.dart';
+import 'package:genesis/src/features/dbaas/data/requests/pg_users_requests/update_pg_user_req.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_users/create_pg_user_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_users/get_pg_users_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/pg_users/update_pg_user_params.dart';
 
-final class PgDatabasesApi {
-  PgDatabasesApi(this._client);
+final class PgUsersApi {
+  PgUsersApi(this._client);
 
   final RestClient _client;
 
@@ -17,18 +20,18 @@ final class PgDatabasesApi {
   ///
   /// Методы для работы с одним экземпляром
 
-  Future<DatabaseDto> getDatabase(PgDatabaseReq req) async {
+  Future<PgUserDto> getPgUser(PgUserParams req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
         req.toPath(),
       );
-      return DatabaseDto.fromJson(data!);
+      return PgUserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
   }
 
-  Future<void> deleteDatabase(PgDatabaseReq req) async {
+  Future<void> deletePgUser(PgUserParams req) async {
     try {
       await _client.delete<void>(
         req.toPath(),
@@ -38,25 +41,25 @@ final class PgDatabasesApi {
     }
   }
 
-  Future<DatabaseDto> createDatabase(CreateDatabaseParams req) async {
+  Future<PgUserDto> createPgUser(CreatePgUserParams req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      return DatabaseDto.fromJson(data!);
+      return PgUserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
   }
 
-  Future<DatabaseDto> updateDatabase(UpdatePgDatabaseReq req) async {
+  Future<PgUserDto> updatePgUser(UpdatePgUserParams req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),
         data: req.toJson(),
       );
-      return DatabaseDto.fromJson(data!);
+      return PgUserDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }
@@ -66,7 +69,7 @@ final class PgDatabasesApi {
   ///
   /// Методы для работы с несколькими экземплярами
 
-  Future<List<DatabaseDto>> getDatabases(GetPgDatabasesReq req) async {
+  Future<List<PgUserDto>> getPgUsers(GetPgUsersParams req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
         req.toPath(),
@@ -76,7 +79,7 @@ final class PgDatabasesApi {
         return List.empty();
       }
       final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-      return castedData.map((it) => DatabaseDto.fromJson(it)).toList();
+      return castedData.map((it) => PgUserDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

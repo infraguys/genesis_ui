@@ -1,3 +1,4 @@
+import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -5,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pg_user_dto.g.dart';
 
 @JsonSerializable(constructor: '_', explicitToJson: true)
-final class PgUserDto {
+final class PgUserDto implements IDto<PgUser> {
   PgUserDto._({
     required this.id,
     required this.name,
@@ -16,8 +17,9 @@ final class PgUserDto {
     required this.instance,
     required this.status,
     required this.password,
-    required this.passwordHash,
   });
+
+  factory PgUserDto.fromJson(Map<String, dynamic> json) => _$PgUserDtoFromJson(json);
 
   @JsonKey(name: 'uuid', fromJson: _toID)
   final PgUserID id;
@@ -37,8 +39,6 @@ final class PgUserDto {
   final PgUserStatus status;
   @JsonKey(name: 'password')
   final String password;
-  @JsonKey(name: 'password_hash')
-  final String passwordHash;
 
   static PgUserID _toID(String id) => PgUserID(id);
 
@@ -51,4 +51,19 @@ final class PgUserDto {
     'ERROR' => PgUserStatus.error,
     _ => PgUserStatus.unknown,
   };
+
+  @override
+  PgUser toEntity() {
+    return PgUser(
+      id: id,
+      name: name,
+      description: description,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      projectId: projectId,
+      instance: instance,
+      status: status,
+      password: password,
+    );
+  }
 }
