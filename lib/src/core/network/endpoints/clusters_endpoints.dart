@@ -1,7 +1,7 @@
 import 'package:genesis/src/core/network/endpoints/endpoint.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
-abstract class PgInstancesEndpoints {
+abstract class ClustersEndpoints {
   static Endpoint items() {
     return Endpoint.withDbaasPrefix('/types/postgres/instances/');
   }

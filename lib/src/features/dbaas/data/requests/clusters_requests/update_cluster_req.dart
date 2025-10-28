@@ -1,4 +1,4 @@
-import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/clusters_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/params/clusters_params/update_cluster_params.dart';
 
 extension UpdatePgInstanceReq on UpdateClusterParams {
@@ -16,6 +16,6 @@ extension UpdatePgInstanceReq on UpdateClusterParams {
   }
 
   String toPath() {
-    return PgInstancesEndpoints.item(id).fullPath;
+    return ClustersEndpoints.item(id).fullPath;
   }
 }

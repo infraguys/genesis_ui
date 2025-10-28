@@ -1,4 +1,4 @@
-import 'package:genesis/src/core/network/endpoints/pg_instances_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/clusters_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/params/clusters_params/get_clusters_params.dart';
 
@@ -30,6 +30,6 @@ extension GetClustersReq on GetClustersParams {
   };
 
   String toPath() {
-    return PgInstancesEndpoints.items().fullPath;
+    return ClustersEndpoints.items().fullPath;
   }
 }
