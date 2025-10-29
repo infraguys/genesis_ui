@@ -416,11 +416,11 @@ abstract class AppLocalizations {
   /// **'PostgreSQL cluster name'**
   String get clusterNameHelperText;
 
-  /// No description provided for @pgUserNameHelperText.
+  /// No description provided for @pgUsernameHelperText.
   ///
   /// In en, this message translates to:
   /// **'PostgreSQL username'**
-  String get pgUserNameHelperText;
+  String get pgUsernameHelperText;
 
   /// No description provided for @pgUserPasswordHelperText.
   ///
@@ -463,6 +463,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Link to PostgreSQL version'**
   String get versionHelperText;
+
+  /// No description provided for @clusterLinkHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Link to PostgreSQL cluster'**
+  String get clusterLinkHelperText;
 
   /// No description provided for @repeatPassword.
   ///

@@ -45,7 +45,7 @@
   "cluster": "Cluster",
   "clusters": "Clusters",
   "clusterNameHelperText": "PostgreSQL cluster name",
-  "pgUserNameHelperText": "PostgreSQL username",
+  "pgUsernameHelperText": "PostgreSQL username",
   "pgUserPasswordHelperText": "PostgreSQL user password",
   "nodeNameHelperText": "Node name",
   "orgNameHelperText": "Organization name",
@@ -53,6 +53,7 @@
   "nodeCountHelperText": "Node count",
   "diskSize": "Disk size (GB)",
   "versionHelperText": "Link to PostgreSQL version",
+  "clusterLinkHelperText": "Link to PostgreSQL cluster",
   "repeatPassword": "Repeat password",
   "passwordsDoNotMatch": "Passwords do not match"
 }

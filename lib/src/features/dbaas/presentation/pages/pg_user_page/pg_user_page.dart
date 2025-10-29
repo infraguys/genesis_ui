@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
@@ -14,9 +13,9 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clus
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_user_bloc/pg_user_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_status_widget.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/create_database_dialog.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/database_table.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -29,15 +28,17 @@ import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
+part './widget/create_db_btn.dart';
+
 class _View extends StatefulWidget {
   const _View({
     required this.pgUserId,
-    required this.pgInstanceId,
+    required this.clusterId,
     super.key, // ignore: unused_element_parameter,
   });
 
   final PgUserID pgUserId;
-  final ClusterID pgInstanceId;
+  final ClusterID clusterId;
 
   @override
   State<_View> createState() => _ViewState();
@@ -102,26 +103,12 @@ class _ViewState extends State<_View> {
           return PageLayout(
             breadcrumbs: [
               BreadcrumbItem(text: context.$.clusters),
-              BreadcrumbItem(text: widget.pgInstanceId.raw),
+              BreadcrumbItem(text: widget.clusterId.raw),
               BreadcrumbItem(text: pgUser.name),
             ],
             buttons: [
               // _DeletePgInstanceButton(instance: instance),
               SaveIconButton(onPressed: save),
-              CreateIconButton(
-                label: 'Create db'.hardcoded,
-                onPressed: () async {
-                  await showDialog<PgUser>(
-                    context: context,
-                    builder: (context) => Dialog(
-                      child: CreateDatabaseDialog(
-                        instanceID: widget.pgInstanceId,
-                        pgUserId: widget.pgUserId,
-                      ),
-                    ),
-                  );
-                },
-              ),
             ],
             child: Expanded(
               child: SingleChildScrollView(
@@ -148,7 +135,7 @@ class _ViewState extends State<_View> {
                                       width: 500,
                                       child: AppTextFormInput(
                                         initialValue: _pgUserName,
-                                        helperText: 'PG user name'.hardcoded,
+                                        helperText: context.$.pgUsernameHelperText,
                                         readOnly: true,
                                       ),
                                     ),
@@ -156,7 +143,7 @@ class _ViewState extends State<_View> {
                                 ),
                                 Spacer(),
                                 MetadataTable(
-                                  statusWidget: ClusterStatusWidget(status: ClusterStatus.active),
+                                  statusWidget: PgUserStatusWidget(status: pgUser.status),
                                   createdAt: pgUser.createdAt,
                                   updatedAt: pgUser.updatedAt,
                                 ),
@@ -180,6 +167,8 @@ class _ViewState extends State<_View> {
                                             helperText: context.$.password,
                                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                             onSaved: (value) => _password = value!,
+                                            obscureText: true,
+                                            maxLines: 1,
                                             validator: (value) => switch (value) {
                                               _ when value!.isEmpty => context.$.requiredField,
                                               _ => null,
@@ -190,7 +179,7 @@ class _ViewState extends State<_View> {
                                           width: (columnWidth * 3) + (gapWidth * 2),
                                           child: AppTextFormInput(
                                             initialValue: _instance,
-                                            helperText: context.$.diskSize,
+                                            helperText: context.$.clusterLinkHelperText,
                                             // TODO(Koretsky): Проверить локализацию
                                             onSaved: (value) => _instance = value!,
                                             validator: (value) => switch (value) {
@@ -213,6 +202,12 @@ class _ViewState extends State<_View> {
                           ),
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _CreateDbButton(clusterId: widget.clusterId, pgUserId: widget.pgUserId),
+                      ],
                     ),
                     SizedBox(
                       height: 400,
@@ -239,7 +234,7 @@ class _ViewState extends State<_View> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = UpdatePgUserParams(
-        pgInstanceId: widget.pgInstanceId,
+        pgInstanceId: widget.clusterId,
         pgUserId: widget.pgUserId,
         description: _description,
       );
@@ -281,10 +276,7 @@ class PgUserPage extends StatelessWidget {
           create: (context) => DatabasesSelectionCubit(),
         ),
       ],
-      child: _View(
-        pgUserId: pgUserId,
-        pgInstanceId: clusterId,
-      ),
+      child: _View(pgUserId: pgUserId, clusterId: clusterId),
     );
   }
 }

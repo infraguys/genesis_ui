@@ -75,7 +75,7 @@ class _ViewState extends State<_View> {
                     width: 500,
                     child: AppTextFormInput(
                       initialValue: _pgUserName,
-                      helperText: context.$.pgUserNameHelperText,
+                      helperText: context.$.pgUsernameHelperText,
                       onSaved: (value) => _pgUserName = value!,
                       validator: (value) => switch (value) {
                         _ when value!.isEmpty => context.$.requiredField,

@@ -7,6 +7,7 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selectio
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/database_status_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -79,8 +80,7 @@ class DatabaseTable extends StatelessWidget {
               },
             ),
             Text(database.name, style: TextStyle(color: Colors.white)),
-            SizedBox.shrink(),
-            // PgInstanceStatusWidget(status: database.status),
+            DatabaseStatusWidget(status: database.status),
             RichText(
               text: TextSpan(
                 children: [
@@ -121,7 +121,7 @@ class DatabaseTable extends StatelessWidget {
           context.goNamed(
             AppRoutes.pgDb.name,
             pathParameters: {
-              'id': GoRouter.of(context).state.pathParameters['id']!,
+              'cluster_id': GoRouter.of(context).state.pathParameters['cluster_id']!,
               'db_id': db.id.raw,
             },
           );

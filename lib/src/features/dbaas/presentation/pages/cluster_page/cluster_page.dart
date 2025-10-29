@@ -15,7 +15,7 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_bloc/pg_u
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_selection_cubit/pg_users_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/create_pg_user_dialog.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_table.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';

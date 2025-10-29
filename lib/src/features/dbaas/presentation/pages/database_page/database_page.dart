@@ -9,7 +9,7 @@ import 'package:genesis/src/features/dbaas/domain/params/databases/update_databa
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
-import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';

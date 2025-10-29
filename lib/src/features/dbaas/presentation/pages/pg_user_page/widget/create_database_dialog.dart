@@ -5,9 +5,10 @@ import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/database_bloc/database_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -15,21 +16,21 @@ import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _CreateDatabaseView extends StatefulWidget {
-  const _CreateDatabaseView({
-    required this.instanceId,
+class _View extends StatefulWidget {
+  const _View({
+    required this.clusterId,
     required this.pgUserId,
     super.key, // ignore: unused_element_parameter
   });
 
-  final ClusterID instanceId;
+  final ClusterID clusterId;
   final PgUserID pgUserId;
 
   @override
-  State<_CreateDatabaseView> createState() => _CreateDatabaseViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
   late final DatabaseBloc _databaseBloc;
@@ -54,7 +55,11 @@ class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
         switch (state) {
           case DatabaseCreatedState(:final database):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+            context.read<DatabasesBloc>().add(
+              DatabasesEvent.getDatabases(
+                GetDatabasesParams(clusterId: widget.clusterId),
+              ),
+            );
             context.pop();
           // case PgInstanceFailureState(:final message):
           //   messenger.showSnackBar(AppSnackBar.failure(message));
@@ -136,7 +141,7 @@ class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = CreateDatabaseParams(
-        instanceId: widget.instanceId,
+        instanceId: widget.clusterId,
         name: _dbName,
         pgUserId: widget.pgUserId,
         description: _description,
@@ -149,20 +154,20 @@ class _CreateDatabaseViewState extends State<_CreateDatabaseView> {
 
 class CreateDatabaseDialog extends StatelessWidget {
   const CreateDatabaseDialog({
-    required this.instanceID,
+    required this.clusterId,
     required this.pgUserId,
     super.key,
   });
 
-  final ClusterID instanceID;
+  final ClusterID clusterId;
   final PgUserID pgUserId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DatabaseBloc(context.read<IDatabaseRepository>()),
-      child: _CreateDatabaseView(
-        instanceId: instanceID,
+      child: _View(
+        clusterId: clusterId,
         pgUserId: pgUserId,
       ),
     );
