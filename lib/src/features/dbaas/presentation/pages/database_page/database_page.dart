@@ -158,7 +158,7 @@ class _DatabaseViewState extends State<_DatabaseView> {
                                       width: constraints.maxWidth,
                                       child: AppTextFormInput(
                                         initialValue: _instance,
-                                        helperText: 'Instance'.hardcoded,
+                                        helperText: context.$.clusterLinkHelperText,
                                         onSaved: (value) => _instance = value!,
                                         validator: (value) => switch (value) {
                                           _ when value!.isEmpty => context.$.requiredField,
