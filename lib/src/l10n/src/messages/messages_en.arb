@@ -167,5 +167,13 @@
         "type": "int"
       }
     }
+  },
+  "msgPgUserCreated": "PostgreSQL user {name} has been created",
+  "@msgPgUserCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

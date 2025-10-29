@@ -12,9 +12,11 @@ import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_reposit
 import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_bloc/cluster_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_bloc/pg_users_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/create_pg_user_dialog.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/widgets/pg_user_table.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_selection_cubit/pg_users_selection_cubit.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/create_pg_user_dialog.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_table.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -29,24 +31,28 @@ import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-part './widgets/delete_pg_instance_btn.dart';
+part './widgets/create_pg_user_btn.dart';
 
-class _PgInstanceDetailsView extends StatefulWidget {
-  const _PgInstanceDetailsView({
-    required this.id,
+part './widgets/delete_cluster_btn.dart';
+
+part './widgets/delete_pg_user_btn.dart';
+
+class _View extends StatefulWidget {
+  const _View({
+    required this.clusterId,
     super.key, // ignore: unused_element_parameter
   });
 
-  final ClusterID id;
+  final ClusterID clusterId;
 
   @override
-  State<_PgInstanceDetailsView> createState() => _PgInstanceDetailsViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
-  late final ClusterBloc _pgInstanceBloc;
+  late final ClusterBloc _clusterBloc;
 
   late String _clusterName;
   String? _description;
@@ -60,53 +66,64 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
 
   @override
   void initState() {
-    _pgInstanceBloc = context.read<ClusterBloc>();
-    _pgInstanceBloc.add(ClusterEvent.startPolling(widget.id));
+    _clusterBloc = context.read<ClusterBloc>();
+    _clusterBloc.add(ClusterEvent.startPolling(widget.clusterId));
     super.initState();
   }
 
   @override
   void dispose() {
-    _pgInstanceBloc.add(ClusterEvent.stopPolling());
+    _clusterBloc.add(ClusterEvent.stopPolling());
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    const gapWidth = 16.0;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ClusterBloc, ClusterState>(
+          listenWhen: (_, current) => current.shouldListen,
+          listener: (context, state) {
+            final messenger = ScaffoldMessenger.of(context);
 
-    return BlocListener<ClusterBloc, ClusterState>(
-      listener: (context, state) {
-        final messenger = ScaffoldMessenger.of(context);
-        switch (state) {
-          case ClusterLoadedState(cluster:final instance):
-            _clusterName = instance.name;
-            _description = instance.description;
-            _cores = instance.cores;
-            _ram = instance.ram;
-            _diskSize = instance.diskSize;
-            _nodesNumber = instance.nodesNumber;
-            _ipsv4List = instance.ipsv4;
-            _syncReplicaNumber = instance.syncReplicaNumber;
-            _versionLink = instance.version;
-          case ClusterUpdatedState(cluster:final instance):
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
-            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+            switch (state) {
+              case ClusterLoadedState(cluster: final instance):
+                _clusterName = instance.name;
+                _description = instance.description;
+                _cores = instance.cores;
+                _ram = instance.ram;
+                _diskSize = instance.diskSize;
+                _nodesNumber = instance.nodesNumber;
+                _ipsv4List = instance.ipsv4;
+                _syncReplicaNumber = instance.syncReplicaNumber;
+                _versionLink = instance.version;
 
-          case ClusterDeletedState(cluster:final instance):
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instance.name)));
-            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
-            context.pop();
-          default:
-        }
-      },
+              case ClusterUpdatedState(cluster: final instance):
+                messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
+                context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+
+              case ClusterDeletedState(cluster: final instance):
+                messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instance.name)));
+                context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+                context.pop();
+
+              default:
+            }
+          },
+        ),
+        BlocListener<PgUsersBloc, PgUsersState>(
+          listenWhen: (_, current) => current is PgUsersDeletedState,
+          listener: (context, _) => context.read<PgUsersSelectionCubit>().onClear(),
+        ),
+      ],
       child: BlocBuilder<ClusterBloc, ClusterState>(
         buildWhen: (_, current) => current is ClusterLoadingState || current is ClusterLoadedState,
         builder: (context, state) {
           if (state is! ClusterLoadedState) {
             return AppProgressIndicator();
           }
-          final ClusterLoadedState(cluster:instance) = state;
+          final ClusterLoadedState(cluster: instance) = state;
+
           return Form(
             key: _formKey,
             child: PageLayout(
@@ -115,24 +132,14 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                 BreadcrumbItem(text: instance.name),
               ],
               buttons: [
-                _DeletePgInstanceButton(instance: instance),
+                _DeleteClusterButton(instance: instance),
                 SaveIconButton(onPressed: save),
-                SizedBox(width: 16),
-                CreateIconButton(
-                  label: 'Create PG user'.hardcoded,
-                  onPressed: () async {
-                    await showDialog<PgUser>(
-                      context: context,
-                      builder: (context) => Dialog(child: CreatePgUserDialog(instanceID: widget.id)),
-                    );
-                  },
-                ),
               ],
               child: Expanded(
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: gapWidth,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    spacing: Spacing.s16,
                     children: [
                       FormCard(
                         child: Row(
@@ -142,7 +149,7 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                             SizedBox(width: 32),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: gapWidth,
+                              spacing: Spacing.s16,
                               children: [
                                 IdWidget(id: instance.id.raw),
                                 SizedBox(
@@ -171,12 +178,12 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                       FormCard(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                            final columnWidth = (constraints.maxWidth - 3 * Spacing.s16) / 4;
                             return Column(
-                              spacing: gapWidth,
+                              spacing: Spacing.s16,
                               children: [
                                 Row(
-                                  spacing: gapWidth,
+                                  spacing: Spacing.s16,
                                   children: [
                                     SizedBox(
                                       width: columnWidth,
@@ -233,7 +240,7 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                                   ],
                                 ),
                                 Row(
-                                  spacing: gapWidth,
+                                  spacing: Spacing.s16,
                                   children: [
                                     SizedBox(
                                       width: columnWidth,
@@ -249,7 +256,7 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: (columnWidth * 3) + (gapWidth * 2),
+                                      width: (columnWidth * 3) + (Spacing.s16 * 2),
                                       child: AppTextFormInput(
                                         readOnly: true,
                                         initialValue: _ipsv4List.join(', '),
@@ -279,6 +286,14 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
                           },
                         ),
                       ),
+                      Row(
+                        spacing: Spacing.s4,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _DeletePgUsersButton(clusterId: widget.clusterId),
+                          _CreatePgUserButton(id: widget.clusterId),
+                        ],
+                      ),
                       SizedBox(
                         height: 400,
                         child: BlocBuilder<PgUsersBloc, PgUsersState>(
@@ -305,7 +320,7 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = UpdateClusterParams(
-        id: widget.id,
+        id: widget.clusterId,
         name: _clusterName,
         description: _description,
         cores: _cores,
@@ -316,13 +331,16 @@ class _PgInstanceDetailsViewState extends State<_PgInstanceDetailsView> {
         syncReplicaNumber: _syncReplicaNumber,
         // ipv4: _ipv4List,
       );
-      _pgInstanceBloc.add(ClusterEvent.update(params));
+      _clusterBloc.add(ClusterEvent.update(params));
     }
   }
 }
 
-class PgInstanceDetailsPage extends StatelessWidget {
-  const PgInstanceDetailsPage({required this.id, super.key});
+class ClusterPage extends StatelessWidget {
+  const ClusterPage({
+    required this.id,
+    super.key,
+  });
 
   final ClusterID id;
 
@@ -331,19 +349,23 @@ class PgInstanceDetailsPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ClusterBloc(
-            context.read<IClustersRepository>(),
-          )..add(ClusterEvent.get(id)),
-          child: _PgInstanceDetailsView(id: id),
+          create: (context) {
+            final repository = context.read<IClustersRepository>();
+            return ClusterBloc(repository)..add(ClusterEvent.get(id));
+          },
         ),
         BlocProvider(
-          create: (context) => PgUsersBloc(context.read<IPgUsersRepository>())
-            ..add(
-              PgUsersEvent.getPgUsers(GetPgUsersParams(pgInstanceId: id)),
-            ),
+          create: (context) {
+            final repository = context.read<IPgUsersRepository>();
+            final params = GetPgUsersParams(clusterId: id);
+            return PgUsersBloc(repository)..add(PgUsersEvent.getUsers(params));
+          },
+        ),
+        BlocProvider(
+          create: (context) => PgUsersSelectionCubit(),
         ),
       ],
-      child: _PgInstanceDetailsView(id: id),
+      child: _View(clusterId: id),
     );
   }
 }

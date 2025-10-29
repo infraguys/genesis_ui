@@ -8,30 +8,31 @@ import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_reposit
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_user_bloc/pg_user_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_bloc/pg_users_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _CreatePgUserDialogView extends StatefulWidget {
-  const _CreatePgUserDialogView({
-    required this.pgInstanceId,
+class _View extends StatefulWidget {
+  const _View({
+    required this.clusterId,
     super.key, // ignore: unused_element_parameter
   });
 
-  final ClusterID pgInstanceId;
+  final ClusterID clusterId;
 
   @override
-  State<_CreatePgUserDialogView> createState() => _CreatePgUserDialogViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
   late final PgUserBloc _pgUserBloc;
 
-  var _name = '';
+  var _pgUserName = '';
   var _password = '';
   String? _description;
 
@@ -43,18 +44,14 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
 
   @override
   Widget build(BuildContext context) {
-    const gapWidth = 16.0;
-
     return BlocListener<PgUserBloc, PgUserState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
           case PgUserCreatedState(:final pgUser):
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<PgUsersBloc>().add(
-              PgUsersEvent.getPgUsers(GetPgUsersParams(pgInstanceId: widget.pgInstanceId)),
-            );
+            messenger.showSnackBar(AppSnackBar.success(context.$.msgPgUserCreated(pgUser.name)));
+            context.read<PgUsersBloc>().add(PgUsersEvent.getUsers(GetPgUsersParams(clusterId: widget.clusterId)));
             context.pop();
           // case PgInstanceFailureState(:final message):
           //   messenger.showSnackBar(AppSnackBar.failure(message));
@@ -68,7 +65,7 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            spacing: gapWidth,
+            spacing: Spacing.s16,
             children: [
               Row(
                 children: [
@@ -77,9 +74,9 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
                   SizedBox(
                     width: 500,
                     child: AppTextFormInput(
-                      initialValue: _name,
-                      helperText: context.$.name,
-                      onSaved: (newValue) => _name = newValue!,
+                      initialValue: _pgUserName,
+                      helperText: context.$.pgUserNameHelperText,
+                      onSaved: (value) => _pgUserName = value!,
                       validator: (value) => switch (value) {
                         _ when value!.isEmpty => context.$.requiredField,
                         _ => null,
@@ -91,9 +88,9 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
               Divider(color: Palette.color1B1B1D),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                  final columnWidth = (constraints.maxWidth - 3 * Spacing.s16) / 4;
                   return Column(
-                    spacing: gapWidth,
+                    spacing: Spacing.s16,
                     children: [
                       SizedBox(
                         width: constraints.maxWidth,
@@ -109,12 +106,10 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
                           },
                         ),
                       ),
-                      AppTextFormInput(
+                      AppTextFormInput.description(
                         initialValue: _description,
                         helperText: context.$.description,
-                        maxLines: 2,
-                        minLines: 2,
-                        onSaved: (newValue) => _description = newValue!,
+                        onSaved: (value) => _description = value!,
                       ),
                     ],
                   );
@@ -137,9 +132,9 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = CreatePgUserParams(
-        pgInstanceId: widget.pgInstanceId,
-        name: _name,
-        password: "$_password",
+        pgInstanceId: widget.clusterId,
+        name: _pgUserName,
+        password: _password,
         description: _description,
       );
 
@@ -149,15 +144,15 @@ class _CreatePgUserDialogViewState extends State<_CreatePgUserDialogView> {
 }
 
 class CreatePgUserDialog extends StatelessWidget {
-  const CreatePgUserDialog({required this.instanceID, super.key});
+  const CreatePgUserDialog({required this.clusterID, super.key});
 
-  final ClusterID instanceID;
+  final ClusterID clusterID;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PgUserBloc(context.read<IPgUsersRepository>()),
-      child: _CreatePgUserDialogView(pgInstanceId: instanceID),
+      child: _View(clusterId: clusterID),
     );
   }
 }

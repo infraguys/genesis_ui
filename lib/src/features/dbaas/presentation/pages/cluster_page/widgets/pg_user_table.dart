@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_selection_cubit/pg_users_selection_cubit.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
@@ -33,21 +35,24 @@ class PgUsersTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        Checkbox(
-          tristate: true,
-          onChanged: (_) {
-            // if (allowMultiSelect) {
-            //   context.read<NodesSelectionCubit>().onToggleAll(pgUsers);
-            // }
+        BlocBuilder<PgUsersSelectionCubit, List<PgUser>>(
+          builder: (context, state) {
+            return Checkbox(
+              tristate: true,
+              onChanged: (_) {
+                if (allowMultiSelect) {
+                  context.read<PgUsersSelectionCubit>().onToggleAll(pgUsers);
+                }
+              },
+              value: switch (state.length) {
+                0 => false,
+                final len when len == pgUsers.length => true,
+                _ => null,
+              },
+            );
           },
-          value: false,
-          // value: switch (state.length) {
-          //   0 => false,
-          //   final len when len == pgUsers.length => true,
-          //   _ => null,
-          // },
         ),
-        Text('Nodes'.hardcoded, style: TextStyle(color: Colors.white)),
+        Text(context.$.user, style: TextStyle(color: Colors.white)),
         Text(context.$.status, style: TextStyle(color: Colors.white)),
         Text(context.$.uuid, style: TextStyle(color: Colors.white)),
         Text(context.$.createdAt, style: TextStyle(color: Colors.white)),
@@ -56,18 +61,21 @@ class PgUsersTable extends StatelessWidget {
       cellsBuilder: (index) {
         final pgUser = pgUsers[index];
         return [
-          Checkbox(
-            value: false,
-            onChanged: (_) {
-              // if (!allowMultiSelect) {
-              //   context.read<NodesSelectionCubit>().onClear();
-              // }
-              // context.read<NodesSelectionCubit>().onToggle(pgUser);
+          BlocBuilder<PgUsersSelectionCubit, List<PgUser>>(
+            builder: (context, state) {
+              return Checkbox(
+                value: state.contains(pgUser),
+                onChanged: (_) {
+                  if (!allowMultiSelect) {
+                    context.read<PgUsersSelectionCubit>().onClear();
+                  }
+                  context.read<PgUsersSelectionCubit>().onToggle(pgUser);
+                },
+              );
             },
           ),
           Text(pgUser.name, style: TextStyle(color: Colors.white)),
-          SizedBox.shrink(),
-          // NodeStatusWidget(status: pgUser.status),
+          PgUserStatusWidget(status: pgUser.status),
           RichText(
             text: TextSpan(
               children: [
@@ -85,7 +93,7 @@ class PgUsersTable extends StatelessWidget {
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: pgUser.id.raw));
-                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${pgUser.id}');
+                      final snack = AppSnackBar.success(context.$.msgCopiedToClipboard(pgUser.id.raw));
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
                   ),
@@ -102,12 +110,11 @@ class PgUsersTable extends StatelessWidget {
         ];
       },
       onTap: (index) {
-        final pgUser = pgUsers[index];
         context.goNamed(
           AppRoutes.pgUser.name,
           pathParameters: {
-            'id': GoRouter.of(context).state.pathParameters['id']!,
-            'pg_user_id': pgUser.id.raw,
+            'cluster_id': GoRouter.of(context).state.pathParameters['cluster_id']!,
+            'pg_user_id': pgUsers[index].id.raw,
           },
         );
       },

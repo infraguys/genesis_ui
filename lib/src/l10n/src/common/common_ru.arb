@@ -42,6 +42,8 @@
   "clusters": "Кластеры",
   "clusterNameHelperText": "Название кластера PostgreSQL",
   "nodeNameHelperText": "Название ноды",
+  "pgUserNameHelperText": "Имя пользователя PostgreSQL",
+  "pgUserPasswordHelperText": "Пароль пользователя PostgreSQL",
   "orgNameHelperText": "Название организации",
   "ramLabelText": "ОЗУ (МБ)",
   "diskSize": "Размер диска (GB)",

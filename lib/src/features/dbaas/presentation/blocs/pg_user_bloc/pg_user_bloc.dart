@@ -23,7 +23,6 @@ class PgUserBloc extends Bloc<PgUserEvent, PgUserState> {
 
   Future<void> _onCreatePgUser(_CreatePgUser event, Emitter<PgUserState> emit) async {
     final useCase = CreatePgUserUseCase(_repository);
-    emit(PgUserLoadingState());
     final pgUser = await useCase(event.params);
     emit(PgUserCreatedState(pgUser));
   }

@@ -24,7 +24,7 @@ class _View extends StatefulWidget {
 class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
-  late final ClusterBloc _pgInstanceBloc;
+  late final ClusterBloc _clusterBloc;
 
   var _clusterName = '';
   String? _description;
@@ -38,7 +38,7 @@ class _ViewState extends State<_View> {
 
   @override
   void initState() {
-    _pgInstanceBloc = context.read<ClusterBloc>();
+    _clusterBloc = context.read<ClusterBloc>();
     super.initState();
   }
 
@@ -224,7 +224,7 @@ class _ViewState extends State<_View> {
         ipsv4: _ipsv4List,
         versionLink: _versionLink,
       );
-      _pgInstanceBloc.add(ClusterEvent.create(params));
+      _clusterBloc.add(ClusterEvent.create(params));
     }
   }
 }

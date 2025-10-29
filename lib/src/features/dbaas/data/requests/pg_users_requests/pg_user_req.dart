@@ -3,6 +3,6 @@ import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params
 
 extension PgUserReq on PgUserParams {
   String toPath() {
-    return DatabaseUserEndpoints.item(pgInstanceId, pgUserId).fullPath;
+    return DatabaseUserEndpoints.item(clusterId, pgUserId).fullPath;
   }
 }

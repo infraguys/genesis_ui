@@ -6,8 +6,8 @@ import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/cluster_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_details_page/cluster_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/cluster_list_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
@@ -314,26 +314,26 @@ GoRouter createRouter(BuildContext context) {
                   context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
                   return true;
                 },
-                name: AppRoutes.instances.name,
-                path: '/instances',
+                name: AppRoutes.clusters.name,
+                path: '/clusters',
                 pageBuilder: (_, _) => NoTransitionPage(
                   child: ClustersListPage(),
                 ),
                 routes: [
                   GoRoute(
-                    name: AppRoutes.instance.name,
-                    path: ':id',
+                    name: AppRoutes.cluster.name,
+                    path: ':cluster_id',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: PgInstanceDetailsPage(id: ClusterID(state.pathParameters['id']!)),
+                      child: ClusterPage(id: ClusterID(state.pathParameters['cluster_id']!)),
                     ),
                     routes: [
                       GoRoute(
                         name: AppRoutes.pgUser.name,
-                        path: 'pg_users/:pg_user_id',
+                        path: 'users/:user_id',
                         pageBuilder: (context, state) => NoTransitionPage(
                           child: PgUserPage(
-                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
-                            pgUserId: PgUserID(state.pathParameters['pg_user_id']!),
+                            clusterId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
+                            pgUserId: PgUserID(state.pathParameters['user_id']!),
                           ),
                         ),
                       ),
@@ -342,7 +342,7 @@ GoRouter createRouter(BuildContext context) {
                         path: 'databases/:db_id',
                         pageBuilder: (context, state) => NoTransitionPage(
                           child: DatabasePage(
-                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
+                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
                             databaseId: DatabaseID(state.pathParameters['db_id']!),
                           ),
                         ),

@@ -29,8 +29,8 @@ import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _PgUserView extends StatefulWidget {
-  const _PgUserView({
+class _View extends StatefulWidget {
+  const _View({
     required this.pgUserId,
     required this.pgInstanceId,
     super.key, // ignore: unused_element_parameter,
@@ -40,10 +40,10 @@ class _PgUserView extends StatefulWidget {
   final ClusterID pgInstanceId;
 
   @override
-  State<_PgUserView> createState() => _PgUserViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _PgUserViewState extends State<_PgUserView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
   late final PgUserBloc _pgUserBloc;
@@ -102,6 +102,7 @@ class _PgUserViewState extends State<_PgUserView> {
           return PageLayout(
             breadcrumbs: [
               BreadcrumbItem(text: context.$.clusters),
+              BreadcrumbItem(text: widget.pgInstanceId.raw),
               BreadcrumbItem(text: pgUser.name),
             ],
             buttons: [
@@ -250,12 +251,12 @@ class _PgUserViewState extends State<_PgUserView> {
 class PgUserPage extends StatelessWidget {
   const PgUserPage({
     required this.pgUserId,
-    required this.pgInstanceId,
+    required this.clusterId,
     super.key,
   });
 
   final PgUserID pgUserId;
-  final ClusterID pgInstanceId;
+  final ClusterID clusterId;
 
   @override
   Widget build(BuildContext context) {
@@ -265,14 +266,14 @@ class PgUserPage extends StatelessWidget {
           create: (context) => PgUserBloc(context.read<IPgUsersRepository>())
             ..add(
               PgUserEvent.get(
-                PgUserParams(pgInstanceId: pgInstanceId, pgUserId: pgUserId),
+                PgUserParams(clusterId: clusterId, pgUserId: pgUserId),
               ),
             ),
         ),
         BlocProvider(
           create: (context) {
             return DatabasesBloc(context.read<IDatabaseRepository>())..add(
-              DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: pgInstanceId)),
+              DatabasesEvent.getDatabases(GetDatabasesParams(clusterId: clusterId)),
             );
           },
         ),
@@ -280,9 +281,9 @@ class PgUserPage extends StatelessWidget {
           create: (context) => DatabasesSelectionCubit(),
         ),
       ],
-      child: _PgUserView(
+      child: _View(
         pgUserId: pgUserId,
-        pgInstanceId: pgInstanceId,
+        pgInstanceId: clusterId,
       ),
     );
   }

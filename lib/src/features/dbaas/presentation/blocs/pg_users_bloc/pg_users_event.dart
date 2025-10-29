@@ -3,19 +3,20 @@ part of 'pg_users_bloc.dart';
 sealed class PgUsersEvent {
   PgUsersEvent();
 
-  factory PgUsersEvent.getPgUsers(GetPgUsersParams params) = _GetPgUsers;
+  factory PgUsersEvent.getUsers(GetPgUsersParams params) = _GetUsers;
 
-  factory PgUsersEvent.addPgUsers(PgUser pgUser) = _AddPgUser;
+  factory PgUsersEvent.deleteUsers({required List<PgUser> pgUsers, required ClusterID clusterId}) = _DeletePgUsers;
 }
 
-final class _GetPgUsers extends PgUsersEvent {
-  _GetPgUsers(this.params);
+final class _GetUsers extends PgUsersEvent {
+  _GetUsers(this.params);
 
   final GetPgUsersParams params;
 }
 
-final class _AddPgUser extends PgUsersEvent {
-  _AddPgUser(this.pgUser);
+final class _DeletePgUsers extends PgUsersEvent {
+  _DeletePgUsers({required this.pgUsers, required this.clusterId});
 
-  final PgUser pgUser;
+  final List<PgUser> pgUsers;
+  final ClusterID clusterId;
 }

@@ -17,3 +17,9 @@ final class PgUsersCreatedState extends PgUsersState {
 
   final PgUser pgUser;
 }
+
+final class PgUsersDeletedState extends PgUsersState {
+  PgUsersDeletedState(this.pgUsers);
+
+  final List<PgUser> pgUsers;
+}

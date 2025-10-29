@@ -416,6 +416,18 @@ abstract class AppLocalizations {
   /// **'PostgreSQL cluster name'**
   String get clusterNameHelperText;
 
+  /// No description provided for @pgUserNameHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL username'**
+  String get pgUserNameHelperText;
+
+  /// No description provided for @pgUserPasswordHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL user password'**
+  String get pgUserPasswordHelperText;
+
   /// No description provided for @nodeNameHelperText.
   ///
   /// In en, this message translates to:
@@ -721,6 +733,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clusters({count}) have been deleted'**
   String msgClustersDeleted(int count);
+
+  /// No description provided for @msgPgUserCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL user {name} has been created'**
+  String msgPgUserCreated(String name);
 
   /// No description provided for @status.
   ///

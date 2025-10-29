@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_selection_cubit/cluster_selection_cubit.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/widgets/clusters_table.dart';

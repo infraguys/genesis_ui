@@ -15,6 +15,6 @@ final class GetPgDatabasesReq implements PathEncodable, QueryEncodable {
 
   @override
   String toPath() {
-    return DatabaseEndpoints.items(_params.instanceId).fullPath;
+    return DatabaseEndpoints.items(_params.clusterId).fullPath;
   }
 }

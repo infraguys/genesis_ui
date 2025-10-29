@@ -159,5 +159,13 @@
         "type": "String"
       }
     }
+  },
+  "msgPgUserCreated": "Пользователь PostgreSQL {name} создан",
+  "@msgPgUserCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

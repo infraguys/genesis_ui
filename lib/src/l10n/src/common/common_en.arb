@@ -45,6 +45,8 @@
   "cluster": "Cluster",
   "clusters": "Clusters",
   "clusterNameHelperText": "PostgreSQL cluster name",
+  "pgUserNameHelperText": "PostgreSQL username",
+  "pgUserPasswordHelperText": "PostgreSQL user password",
   "nodeNameHelperText": "Node name",
   "orgNameHelperText": "Organization name",
   "ramLabelText": "Ram (MB)",

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_selection_cubit/cluster_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
@@ -115,10 +115,9 @@ class ClustersTable extends StatelessWidget {
           ];
         },
         onTap: (index) {
-          final instance = clusters[index];
           context.goNamed(
-            AppRoutes.instance.name,
-            pathParameters: {'id': instance.id.raw},
+            AppRoutes.cluster.name,
+            pathParameters: {'cluster_id': clusters[index].id.raw},
           );
         },
       ),

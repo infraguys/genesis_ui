@@ -1,7 +1,7 @@
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class GetPgUsersParams {
-  GetPgUsersParams({required this.pgInstanceId});
+  GetPgUsersParams({required this.clusterId});
 
-  final ClusterID pgInstanceId;
+  final ClusterID clusterId;
 }

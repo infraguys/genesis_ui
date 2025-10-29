@@ -14,9 +14,8 @@ final class PgUsersRepository implements IPgUsersRepository {
   }
 
   @override
-  Future<void> deletePgUser(params) {
-    // TODO: implement deletePgUser
-    throw UnimplementedError();
+  Future<void> deletePgUser(params) async {
+    await _api.deletePgUser(params);
   }
 
   @override

@@ -44,8 +44,8 @@ enum AppRoutes {
   allExtensions,
 
   /// DBaaS
-  instances,
-  instance,
+  clusters,
+  cluster,
   createInstance,
   pgUser,
   pgDb

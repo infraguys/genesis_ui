@@ -7,6 +7,6 @@ extension GetPgUsersReq on GetPgUsersParams {
   }
 
   String toPath() {
-    return DatabaseUserEndpoints.items(pgInstanceId).fullPath;
+    return DatabaseUserEndpoints.items(clusterId).fullPath;
   }
 }

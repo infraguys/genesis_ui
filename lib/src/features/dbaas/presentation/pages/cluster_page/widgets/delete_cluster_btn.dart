@@ -1,7 +1,7 @@
 part of '../cluster_page.dart';
 
-class _DeletePgInstanceButton extends StatelessWidget {
-  const _DeletePgInstanceButton({required this.instance, super.key}); // ignore: unused_element_parameter
+class _DeleteClusterButton extends StatelessWidget {
+  const _DeleteClusterButton({required this.instance, super.key}); // ignore: unused_element_parameter
 
   final Cluster instance;
 

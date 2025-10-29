@@ -2,8 +2,8 @@ import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class GetDatabasesParams {
   GetDatabasesParams({
-    required this.instanceId,
+    required this.clusterId,
   });
 
-  final ClusterID instanceId;
+  final ClusterID clusterId;
 }

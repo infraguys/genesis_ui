@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/typedefs/status_view_params.dart';
-import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/base_status_widget.dart';
 
-class NodeStatusWidget extends StatelessWidget {
-  const NodeStatusWidget({
-    required NodeStatus status,
+class PgUserStatusWidget extends StatelessWidget {
+  const PgUserStatusWidget({
+    required PgUserStatus status,
     super.key,
   }) : _status = status;
 
-  final NodeStatus _status;
+  final PgUserStatus _status;
 
   @override
   Widget build(BuildContext context) {
@@ -26,43 +26,32 @@ class NodeStatusWidget extends StatelessWidget {
 
   StatusViewParams _getStatusParams(BuildContext context) {
     switch (_status) {
-      case NodeStatus.newStatus:
+      case PgUserStatus.newStatus:
         return (
           text: context.$.newStatus,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.started:
-        return (
-          text: context.$.started,
-          color: Palette.color6DCF91,
-          labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
-        );
-      case NodeStatus.active:
+      case PgUserStatus.active:
         return (
           text: context.$.active,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.inProgress:
+      case PgUserStatus.inProgress:
         return (
           text: context.$.inProgress,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.scheduled:
-        return (
-          text: context.$.scheduled,
-          color: Palette.color6DCF91,
-          labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
-        );
-      case NodeStatus.error:
+
+      case PgUserStatus.error:
         return (
           text: context.$.error,
           color: Palette.colorF04C4C,
           labelColor: Palette.colorF04C4C.withValues(alpha: 0.10),
         );
-      case NodeStatus.unknown:
+      case PgUserStatus.unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,
