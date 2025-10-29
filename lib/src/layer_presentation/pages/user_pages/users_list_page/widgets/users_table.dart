@@ -26,96 +26,104 @@ class UsersTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppTable(
-      length: users.length,
-      columnSpans: [
-        TableSpan(extent: FixedSpanExtent(40.0)),
-        TableSpan(extent: FractionalSpanExtent(2 / 10)),
-        TableSpan(extent: FractionalSpanExtent(2 / 10)),
-        TableSpan(extent: FractionalSpanExtent(4 / 10)),
-        TableSpan(extent: FractionalSpanExtent(2 / 10)),
-        TableSpan(extent: FixedSpanExtent(56.0)),
-      ],
-      headerCells: [
-        BlocBuilder<UsersSelectionCubit, List<User>>(
-          builder: (context, state) {
-            return Checkbox(
-              tristate: true,
-              onChanged: (_) {
-                if (allowMultiSelect) {
-                  context.read<UsersSelectionCubit>().onToggleAll(users);
-                }
-              },
-              value: switch (state.length) {
-                0 => false,
-                final len when len == users.length => true,
-                _ => null,
-              },
-            );
-          },
-        ),
-        Text(context.$.username, style: TextStyle(color: Colors.white)),
-        Text(context.$.status, style: TextStyle(color: Colors.white)),
-        Text(context.$.uuid, style: TextStyle(color: Colors.white)),
-        Text(context.$.verification, style: TextStyle(color: Colors.white)),
-      ],
-      cellsBuilder: (index) {
-        final user = users[index];
-        return [
+    return BlocListener<UsersBloc, UsersState>(
+      listenWhen: (_, current) => current is UsersDeletedState,
+      listener: (context, state) {
+        context.read<UsersSelectionCubit>().onClear();
+      },
+      child: AppTable(
+        length: users.length,
+        columnSpans: [
+          TableSpan(extent: FixedSpanExtent(40.0)),
+          TableSpan(extent: FractionalSpanExtent(2 / 10)),
+          TableSpan(extent: FractionalSpanExtent(2 / 10)),
+          TableSpan(extent: FractionalSpanExtent(4 / 10)),
+          TableSpan(extent: FractionalSpanExtent(2 / 10)),
+          TableSpan(extent: FixedSpanExtent(56.0)),
+        ],
+        headerCells: [
           BlocBuilder<UsersSelectionCubit, List<User>>(
             builder: (context, state) {
               return Checkbox(
-                value: state.contains(user),
+                tristate: true,
                 onChanged: (_) {
-                  if (!allowMultiSelect) {
-                    context.read<UsersSelectionCubit>().onClear();
+                  if (allowMultiSelect) {
+                    context.read<UsersSelectionCubit>().onToggleAll(users);
                   }
-                  context.read<UsersSelectionCubit>().onToggle(user);
+                },
+                value: switch (state.length) {
+                  0 => false,
+                  final len when len == users.length => true,
+                  _ => null,
                 },
               );
             },
           ),
-          Text(user.username, style: TextStyle(color: Colors.white)),
-          UserStatusWidget(status: user.status),
-          RichText(
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: SelectableText(
-                    user.uuid.value,
-                    style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
-                  ),
-                ),
-                WidgetSpan(child: const SizedBox(width: 8)),
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: IconButton(
-                    icon: Icon(Icons.copy, color: Colors.white, size: 18),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: user.uuid.value));
-                      final snack = SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Скопировано в буфер обмена: ${user.uuid.value}'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    },
-                  ),
-                ),
-              ],
+          Text(context.$.username, style: TextStyle(color: Colors.white)),
+          Text(context.$.status, style: TextStyle(color: Colors.white)),
+          Text(context.$.uuid, style: TextStyle(color: Colors.white)),
+          Text(context.$.verification, style: TextStyle(color: Colors.white)),
+        ],
+        cellsBuilder: (index) {
+          final user = users[index];
+          return [
+            BlocBuilder<UsersSelectionCubit, List<User>>(
+              builder: (context, state) {
+                return Checkbox(
+                  value: state.contains(user),
+                  onChanged: (_) {
+                    if (!allowMultiSelect) {
+                      context.read<UsersSelectionCubit>().onClear();
+                    }
+                    context.read<UsersSelectionCubit>().onToggle(user);
+                  },
+                );
+              },
             ),
-          ),
-          VerifiedLabel(isVerified: users[index].emailVerified),
-          UsersActionsPopupMenuButton(user: user),
-        ];
-      },
-      onTap: (index) {
-        final user = users[index];
-        context.goNamed(
-          AppRoutes.user.name,
-          pathParameters: {'uuid': user.uuid.value},
-        );
-      },
+            Text(user.username, style: TextStyle(color: Colors.white)),
+            UserStatusWidget(status: user.status),
+            RichText(
+              text: TextSpan(
+                children: [
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: SelectableText(
+                      user.uuid.value,
+                      style: TextStyle(color: Colors.white, fontFamily: GoogleFonts
+                          .robotoMono()
+                          .fontFamily),
+                    ),
+                  ),
+                  WidgetSpan(child: const SizedBox(width: 8)),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: IconButton(
+                      icon: Icon(Icons.copy, color: Colors.white, size: 18),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: user.uuid.value));
+                        final snack = SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Скопировано в буфер обмена: ${user.uuid.value}'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snack);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            VerifiedLabel(isVerified: users[index].emailVerified),
+            UsersActionsPopupMenuButton(user: user),
+          ];
+        },
+        onTap: (index) {
+          final user = users[index];
+          context.goNamed(
+            AppRoutes.user.name,
+            pathParameters: {'uuid': user.uuid.value},
+          );
+        },
+      ),
     );
   }
 }

@@ -160,7 +160,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.createUser.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreateUserPage(),
+                      child: CreateUserDialog(),
                     ),
                   ),
                   GoRoute(

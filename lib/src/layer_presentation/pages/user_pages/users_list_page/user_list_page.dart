@@ -15,6 +15,8 @@ import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_butto
 import 'package:genesis/src/shared/presentation/ui/widgets/delete_users_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
+part './widgets/create_user_btn.dart';
+
 part './widgets/confirm_email_btn.dart';
 
 part './widgets/delete_user_btn.dart';
@@ -31,14 +33,7 @@ class _UserListView extends StatelessWidget {
       buttons: [
         _DeleteUserButton(),
         _ConfirmEmailButton(),
-        CreateIconButton(
-          onPressed: () async {
-            await showDialog<void>(
-              context: context,
-              builder: (context) => Dialog(child: CreateUserPage()),
-            );
-          },
-        ),
+        _CreateUserButton(),
       ],
       child: Expanded(
         child: BlocConsumer<UsersBloc, UsersState>(
@@ -48,12 +43,9 @@ class _UserListView extends StatelessWidget {
 
             switch (state) {
               case UsersDeletedState(:final users) when users.length == 1:
-                context.read<UsersSelectionCubit>().onClear();
-                final msg = switch (users.length) {
-                  1 => context.$.msgUserDeleted(users.single.username),
-                  _ => context.$.msgUsersDeleted(users.length),
-                };
-                messenger.showSnackBar(AppSnackBar.success(msg));
+                messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(users.single.username)));
+              case UsersDeletedState(:final users) when users.length > 1:
+                messenger.showSnackBar(AppSnackBar.success(context.$.msgUsersDeleted(users.length)));
 
               case UsersPermissionFailureState(:final message):
                 messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
