@@ -14,14 +14,14 @@ import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
-class _CreateNodeView extends StatefulWidget {
-  const _CreateNodeView({super.key}); // ignore: unused_element_parameter
+class _View extends StatefulWidget {
+  const _View({super.key}); // ignore: unused_element_parameter
 
   @override
-  State<_CreateNodeView> createState() => _CreateNodeViewState();
+  State<_View> createState() => _ViewState();
 }
 
-class _CreateNodeViewState extends State<_CreateNodeView> {
+class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
 
   late final NodeBloc _nodeBloc;
@@ -217,14 +217,14 @@ class _CreateNodeViewState extends State<_CreateNodeView> {
   }
 }
 
-class CreateNodePage extends StatelessWidget {
-  const CreateNodePage({super.key});
+class CreateNodeDialog extends StatelessWidget {
+  const CreateNodeDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NodeBloc(context.read<INodesRepository>()),
-      child: _CreateNodeView(),
+      child: _View(),
     );
   }
 }

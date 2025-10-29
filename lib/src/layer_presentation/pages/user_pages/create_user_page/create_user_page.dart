@@ -36,9 +36,6 @@ class _ViewState extends State<_View> {
   var _phone = '';
   var _description = '';
 
-  // var _password = '';
-  // var _repeatedPassword = '';
-
   @override
   void initState() {
     _userBloc = context.read<UserBloc>();

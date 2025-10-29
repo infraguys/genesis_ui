@@ -33,7 +33,7 @@ class _NodeListView extends StatelessWidget {
             onPressed: () async {
               await showDialog<void>(
                 context: context,
-                builder: (context) => Dialog(child: CreateNodePage()),
+                builder: (context) => Dialog(child: CreateNodeDialog()),
               );
             },
           ),
