@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/permission.dart';
-import 'package:genesis/src/layer_domain/entities/permission_binding.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
+import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
 
 part 'permissions_selection_event.dart';
 
@@ -34,7 +34,7 @@ class PermissionsSelectionBloc extends Bloc<PermissionsSelectionEvent, List<Perm
   void _onSetCheckedFromResponse(_SetCheckedFromResponse event, Emitter<List<Permission>> emit) {
     final permissions = <Permission>[];
     for (var binding in event.bindings) {
-      final permission = event.allPermissions.singleWhere((it) => it.uuid.isEqualTo(binding.permissionUUID));
+      final permission = event.allPermissions.singleWhere((it) => it.id.isEqualTo(binding.permissionId));
       permissions.add(permission);
     }
     emit(permissions);

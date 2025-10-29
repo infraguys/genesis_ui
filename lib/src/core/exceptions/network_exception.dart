@@ -1,34 +1,39 @@
 import 'package:dio/dio.dart';
+import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 
-class NetworkException implements Exception {
-  factory NetworkException(DioException exception) {
-    final statusCode = exception.response?.statusCode!;
-    final data = exception.response?.data;
-
-    late final String? message;
-    if (data case {'type': String _, 'code': int _, 'message': String msg}) {
-      message = msg;
-    } else {
-      message = null;
-    }
-
-    final errorMessage = switch (exception.type) {
-      DioExceptionType.connectionError => message ?? 'Connection error',
-      DioExceptionType.cancel => message ?? 'Request to API server was cancelled',
-      DioExceptionType.connectionTimeout => message ?? 'Connection timeout with API server',
-      DioExceptionType.unknown => message ?? 'Connection to API server failed due to internet connection',
-      DioExceptionType.receiveTimeout => message ?? 'Receive timeout in connection with API server',
-      DioExceptionType.sendTimeout => message ?? 'Send timeout in connection with API server',
-      DioExceptionType.badResponse when statusCode == 400 => message ?? 'Bad request',
-      DioExceptionType.badResponse when statusCode == 404 => message ?? 'The requested resource was not found',
-      DioExceptionType.badResponse when statusCode == 500 => message ?? 'Internal server error',
-      _ => 'Something went wrong',
-    };
-
-    return NetworkException._(errorMessage);
-  }
-
+base class NetworkException implements BaseNetworkException {
   NetworkException._(this.message);
 
+  factory NetworkException.from(DioException exception) {
+    final message = switch (exception.response?.data) {
+      {'message': String msg} => msg,
+      _ => null,
+    };
+
+    return switch (exception.type) {
+      DioExceptionType.connectionError => ConnectionException(message ?? 'Connection error'),
+      DioExceptionType.connectionTimeout => TimeoutException(message ?? 'Connection timeout'),
+      DioExceptionType.sendTimeout || DioExceptionType.receiveTimeout => TimeoutException(message ?? 'Timeout error'),
+      DioExceptionType.cancel => RequestCancelledException(message ?? 'Request was cancelled'),
+      _ => NetworkException._(message ?? 'Unknown network error'),
+    };
+  }
+
   final String message;
+}
+
+final class ConnectionException extends NetworkException {
+  ConnectionException(super.message) : super._();
+}
+
+final class TimeoutException extends NetworkException {
+  TimeoutException(super.message) : super._();
+}
+
+final class RequestCancelledException extends NetworkException {
+  RequestCancelledException(super.message) : super._();
+}
+
+final class UnknownNetworkException extends NetworkException {
+  UnknownNetworkException(super.message) : super._();
 }

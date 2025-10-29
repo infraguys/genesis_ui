@@ -1,41 +1,32 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
-part 'organizations_selection_event.dart';
+class OrganizationsSelectionBloc extends Cubit<List<Organization>> {
+  OrganizationsSelectionBloc() : super(List.empty());
 
-class OrganizationsSelectionBloc extends Bloc<OrganizationsSelectionEvent, List<Organization>> {
-  OrganizationsSelectionBloc() : super(List.empty()) {
-    on(_onToggle);
-    on(_onToggleAll);
-    on(_onSetCheckedFromResponse);
-    on(_onClear);
-  }
-
-  void _onToggle(_Toggle event, Emitter<List<Organization>> emit) {
+  void onToggle(Organization organization) {
     final updatedOrganizations = List.of(state);
-    if (updatedOrganizations.contains(event.organization)) {
-      updatedOrganizations.remove(event.organization);
+    if (updatedOrganizations.contains(organization)) {
+      updatedOrganizations.remove(organization);
     } else {
-      updatedOrganizations.add(event.organization);
+      updatedOrganizations.add(organization);
     }
     emit(updatedOrganizations);
   }
 
-  void _onToggleAll(_ToggleAll event, Emitter<List<Organization>> emit) {
-    if (state.length == event.organizations.length) {
+  void onToggleAll(List<Organization> organizations) {
+    if (state.length == organizations.length) {
       emit(List.empty());
     } else {
-      emit(event.organizations);
+      emit(organizations);
     }
   }
 
-  void _onSetCheckedFromResponse(_SetCheckedFromResponse event, Emitter<List<Organization>> emit) {
-    final organizations = event.organizations.where((it) => it.uuid.isEqualTo(event.project.organizationUUID));
-    emit(organizations.toList());
+  void onSetCheckedFromResponse({required Project project, required List<Organization> organizations}) {
+    final filteredOrganizations = organizations.where((it) => it.id.isEqualTo(project.organizationId));
+    emit(filteredOrganizations.toList());
   }
 
-  void _onClear(_Clear _, Emitter<List<Organization>> emit) {
-    emit(List.empty());
-  }
+  void onClear() => emit(List.empty());
 }

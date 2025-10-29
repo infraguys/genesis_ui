@@ -1,6 +1,9 @@
 part of 'app_router.dart';
 
 enum AppRoutes {
+  splash,
+  domainSetup,
+
   /// auth
   signIn,
   signUp,
@@ -30,4 +33,20 @@ enum AppRoutes {
   main,
   monitoring,
   vpn,
+
+  /// nodes
+  nodes,
+  node,
+  createNode,
+
+  /// elements
+  installedExtensions,
+  allExtensions,
+
+  /// DBaaS
+  clusters,
+  cluster,
+  createInstance,
+  pgUser,
+  pgDb
 }

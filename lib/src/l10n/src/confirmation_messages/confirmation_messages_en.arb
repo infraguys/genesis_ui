@@ -1,0 +1,99 @@
+{
+  "@@locale" : "en",
+  "deleteRole": "Delete role {name}?",
+  "@deleteRole": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRoles": "Delete selected({count}) roles?",
+  "@deleteRoles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteProjectConfirmation": "Delete project {name}?",
+  "@deleteProjectConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProjectsConfirmation": "Delete selected({count}) projects?",
+  "@deleteProjectsConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteNodeConfirmation": "Delete node {name}?",
+  "@deleteNodeConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteNodesConfirmation": "Delete selected({count}) nodes?",
+  "@deleteNodesConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletePgClusterConfirmation": "Delete cluster {name}?",
+  "@deletePgClusterConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteClustersConfirmation": "Delete selected({count}) clusters?",
+  "@deleteClustersConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteOrgConfirmation": "Delete organization {name}?",
+  "@deleteOrgConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteOrgsConfirmation": "Delete selected({count}) organizations?",
+  "@deleteOrgsConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteUser": "Delete user {name}?",
+  "@deleteUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteUsers": "Delete selected ({count}) users?",
+  "@deleteUsers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

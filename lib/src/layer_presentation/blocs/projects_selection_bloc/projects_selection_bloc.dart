@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
 part 'projects_selection_event.dart';
 

@@ -24,7 +24,7 @@ INSTALL_PATH="/opt/"
 WORK_DIR="/opt/genesis_ui"
 WEB_DIR="/var/www/html"
 FLUTTER_SDK_PATH="/opt/flutter"
-FLUTTER_SDK_VERSION=3.35.2
+FLUTTER_SDK_VERSION=3.35.6
 
 apt update
 apt install -y nginx
@@ -47,7 +47,15 @@ make ci
 
 rm -fv "$WEB_DIR/index.nginx-debian.html"
 find "build/web/" -maxdepth 1 -type f -exec mv -t "$WEB_DIR/" {} +
-cp -r "build/web/assets" "$WEB_DIR/"
+cp -r "build/web/assets" "$WEB_DIR"
+
+# Publish the static files to the repository
+cd "$WEB_DIR/.."
+tar -czf html.tgz html
+curl -X PUT --upload-file html.tgz \
+    "${REPO_ENDPOINT_PUT}/${PROJECT_NAME}/${GENESIS_UI_APP_VERSION}/html.tgz"
+rm -f html.tgz
+cd -
 
 # Configure Nginx for single page application
 cp genesis/images/nginx.conf /etc/nginx/sites-available/default

@@ -2,12 +2,19 @@ name: build & deploy
 
 on:
   push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
 
 env:
   REPO_ENDPOINT: http://10.20.0.1:8081
   CORE_ENDPOINT: http://10.20.0.2:11010
   NODE_UUID: 624cd1a1-3e9f-4d00-82a3-46daa01a7401
   PROJECT_ID: d4ef38ee-2667-4931-90fd-c858d4bc5f1c
+  REPO_ENDPOINT_PUT: http://10.20.0.1:8082
+  PROJECT_NAME: genesis_ui
   # All vars you need to pass to build the flutter app goes here with prefix "UI_BUILD_ENV_".
   # There is a build python script `make_ui_build_env.py` that handles these variables and
   # form a json file. For instance, if you need to pass `api_url="https://console.genesis-core.tech/api"`
@@ -15,7 +22,6 @@ env:
   # {
   #   "api_url": "https://console.genesis-core.tech/api"
   # }
-  UI_BUILD_ENV_api_url: https://console.genesis-core.tech/api/v1
   UI_BUILD_ENV_scope: ""
 
 jobs:
@@ -45,14 +51,14 @@ jobs:
 
           echo "${DEV_KEYS}" > dev-keys.txt
 
-          genesis build $(pwd) -i dev-keys.txt
-
           # Temporary upload step is done in the build script
           VERSION="$(genesis get-version .)"
           echo "${VERSION}" > version.txt
           ELEMENT_PATH="/var/lib/repository/genesis_ui"
+          export GENESIS_UI_APP_VERSION="$(cat version.txt)"
 
-          rm -fr "${ELEMENT_PATH}/${VERSION}"
+          genesis build $(pwd) -i dev-keys.txt
+
           mkdir -p "${ELEMENT_PATH}/${VERSION}"
           mv output/genesis-ui.raw.gz "${ELEMENT_PATH}/${VERSION}/"
           cd ${ELEMENT_PATH}/${VERSION}/ && \

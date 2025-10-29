@@ -1,12 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/use_cases/projects/delete_projects_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/projects/get_projects_usecase.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/projects/domain/params/get_projects_params.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/projects/domain/usecases/delete_projects_usecase.dart';
+import 'package:genesis/src/features/projects/domain/usecases/get_projects_usecase.dart';
 
 part 'projects_event.dart';
-
 part 'projects_state.dart';
 
 class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {

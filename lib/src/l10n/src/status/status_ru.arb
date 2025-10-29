@@ -1,0 +1,16 @@
+{
+  "@@locale" : "ru",
+  "status": "Статус",
+  "newStatus": "Новый",
+  "active": "Активный",
+  "inactive": "Неактивный",
+  "error": "Ошибка",
+  "inProgress": "В процессе",
+  "scheduled": "Запланировано",
+  "started": "Начато",
+  "verified": "Подтвержден",
+  "unverified": "Не подтвержден",
+  "loading": "Загрузка",
+  "success": "Успешно",
+  "unknown": "Неизвестно"
+}

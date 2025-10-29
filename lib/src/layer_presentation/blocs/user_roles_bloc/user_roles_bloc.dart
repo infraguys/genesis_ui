@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/use_cases/roles/get_roles_by_user_uuid_usecase.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_roles_by_user_uuid_usecase.dart';
 
 part 'user_roles_event.dart';
 

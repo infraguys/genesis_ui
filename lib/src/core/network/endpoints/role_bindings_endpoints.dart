@@ -1,19 +1,12 @@
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
+import 'package:genesis/src/features/roles/domain/entities/role_binding.dart';
+
 abstract class RoleBindingsEndpoints {
-  static const _roleBindings = '/iam/role_bindings/';
-  static const _roleBinding = '/iam/role_bindings/:uuid';
+  static Endpoint items() {
+    return Endpoint.withCorePrefix('/iam/role_bindings/');
+  }
 
-  static String getRoleBindings() => _roleBindings;
-
-  static String createRoleBinding() => _roleBindings;
-
-  static String getRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
-
-  static String updateRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
-
-  static String deleteRoleBinding(String uuid) => _roleBinding.fillUuid(uuid);
-}
-
-// ignore: camel_case_extensions
-extension _ on String {
-  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
+  static Endpoint item(RoleBindingUUID id) {
+    return Endpoint.withCorePrefix('/iam/role_bindings/$id');
+  }
 }

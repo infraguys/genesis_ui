@@ -2,71 +2,114 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/organization.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/cluster_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/cluster_list_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
+import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/attach_project_page/attach_project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/attach_roles_page/attach_roles_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_organization_page/create_organization_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_project_page/create_project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/create_role_page/create_role_page.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_list_page/extension_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
-import 'package:genesis/src/layer_presentation/pages/organization_page/organization_page.dart';
-import 'package:genesis/src/layer_presentation/pages/organizations_page/organizations_page.dart';
-import 'package:genesis/src/layer_presentation/pages/project_page/project_page.dart';
-import 'package:genesis/src/layer_presentation/pages/projects_page/projects_page.dart';
-import 'package:genesis/src/layer_presentation/pages/role_page/role_page.dart';
-import 'package:genesis/src/layer_presentation/pages/roles_page/roles_page.dart';
-import 'package:genesis/src/layer_presentation/pages/sign_in_page/sign_in_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/sign_up_page/sign_up_screen.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/create_project_page/create_project_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_details_page/project_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/project_pages/project_list_page/project_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/attach_roles_page/attach_roles_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/create_role_page/create_role_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/role_details_page/role_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/role_list_page.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/domain_setup_page.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/users/create_user_page/create_user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/users/user_page/user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/users/users_page/users_page.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/page_not_found.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/scaffold_with_navigation.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/create_user_page/create_user_page.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/user_details_page.dart';
+import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/user_list_page.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/page_not_found.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.dart';
 
-final _authRoutes = [
-  '/sign_in',
-  '/sign_up',
-];
+final RouteObserver<PageRoute<dynamic>> instancesObserver = RouteObserver<PageRoute<dynamic>>();
 
 GoRouter createRouter(BuildContext context) {
   print('router');
-  final authBloc = context.read<AuthBloc>();
-
   final rootNavKey = GlobalKey<NavigatorState>();
   final mainNavKey = GlobalKey<NavigatorState>();
   final usersNavKey = GlobalKey<NavigatorState>();
   final projectsNavKey = GlobalKey<NavigatorState>();
   final rolesNavKey = GlobalKey<NavigatorState>();
   final organizationsNavKey = GlobalKey<NavigatorState>();
+  final nodesNavKey = GlobalKey<NavigatorState>();
+  final extensionsNavKey = GlobalKey<NavigatorState>();
+  final dbaasNavKey = GlobalKey<NavigatorState>();
 
   return GoRouter(
     debugLogDiagnostics: true,
-    refreshListenable: _GoRouterRefreshStream(authBloc.stream),
+    initialLocation: '/splash',
+    refreshListenable: Listenable.merge(
+      [
+        _GoRouterAuthListenable(context),
+        _GoRouterConfigListenable(context),
+      ],
+    ),
     errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
     navigatorKey: rootNavKey,
     redirect: (context, state) {
-      final bloc = context.read<AuthBloc>();
-      final isAuthRoute = _authRoutes.contains(state.matchedLocation);
+      final GoRouterState(:matchedLocation) = state;
 
-      return switch (bloc.state) {
-        AuthenticatedAuthState() when isAuthRoute => '/',
-        UnauthenticatedAuthState() when !isAuthRoute => '/sign_in',
-        _ => null,
-      };
+      final authState = context.read<AuthBloc>().state;
+      final domainCubitState = context.read<DomainSetupCubit>().state;
+
+      if (domainCubitState is DomainSetupInitialState) {
+        return '/splash';
+      }
+
+      /// Если domain ещё не установлен -> на страницу ввода
+      if (domainCubitState is DomainSetupEmptyState) {
+        return '/domain_setup';
+      }
+
+      switch (authState) {
+        case AuthStateLoading():
+          return '/splash';
+        case AuthenticatedAuthState() when matchedLocation == '/sign_in':
+        case AuthenticatedAuthState() when matchedLocation == '/sign_up':
+        case AuthenticatedAuthState() when matchedLocation == '/splash':
+        case AuthenticatedAuthState() when matchedLocation == '/domain_setup':
+          return '/';
+        case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
+        case UnauthenticatedAuthState() when matchedLocation != '/sign_up':
+          return '/sign_in';
+        default:
+          return null;
+      }
     },
     routes: [
       GoRoute(
-        name: 'splash',
+        name: AppRoutes.splash.name,
         path: '/splash',
         pageBuilder: (_, _) => NoTransitionPage(child: const SplashScreen()),
+      ),
+      GoRoute(
+        name: AppRoutes.domainSetup.name,
+        path: '/domain_setup',
+        pageBuilder: (_, _) => NoTransitionPage(child: const DomainSetupPage()),
       ),
       GoRoute(
         name: AppRoutes.signIn.name,
@@ -83,7 +126,7 @@ GoRouter createRouter(BuildContext context) {
         },
       ),
       StatefulShellRoute.indexedStack(
-        pageBuilder: (_, _, navigationShell) {
+        pageBuilder: (context, _, navigationShell) {
           return NoTransitionPage(child: ScaffoldWithNavigation(navigationShell: navigationShell));
         },
         branches: [
@@ -93,8 +136,12 @@ GoRouter createRouter(BuildContext context) {
               GoRoute(
                 name: AppRoutes.main.name,
                 path: '/',
-                pageBuilder: (_, _) {
-                  return NoTransitionPage(child: DashboardPage());
+                pageBuilder: (context, _) {
+                  return NoTransitionPage(child: MainPage());
+                },
+                onExit: (context, _) {
+                  context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
+                  return true;
                 },
               ),
             ],
@@ -106,21 +153,21 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.users.name,
                 path: '/users',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: UsersPage(),
+                  child: UserListPage(),
                 ),
                 routes: [
                   GoRoute(
                     name: AppRoutes.createUser.name,
                     path: 'create',
                     pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreateUserPage(),
+                      child: CreateUserDialog(),
                     ),
                   ),
                   GoRoute(
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: UserPage(userUUID: UserUUID(state.pathParameters['uuid']!)),
+                      child: UserDetailsPage(userID: UserUUID(state.pathParameters['uuid']!)),
                     ),
                     routes: [
                       GoRoute(
@@ -134,7 +181,7 @@ GoRouter createRouter(BuildContext context) {
                         name: AppRoutes.attachRoles.name,
                         path: 'attach/project/:projectUuid/attach_roles',
                         pageBuilder: (_, state) => NoTransitionPage(
-                          child: AttachRolesPage(projectUUID: ProjectUUID(state.pathParameters['projectUuid']!)),
+                          child: AttachRolesPage(projectUUID: ProjectID(state.pathParameters['projectUuid']!)),
                         ),
                       ),
                     ],
@@ -150,7 +197,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.projects.name,
                 path: '/projects',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: ProjectsPage(),
+                  child: ProjectListPage(),
                 ),
                 routes: [
                   GoRoute(
@@ -164,7 +211,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.project.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: ProjectPage(uuid: ProjectUUID(state.pathParameters['uuid']!)),
+                      child: ProjectDetailsPage(uuid: ProjectID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],
@@ -178,7 +225,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.roles.name,
                 path: '/roles',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: RolesPage(),
+                  child: RoleListPage(),
                 ),
                 routes: [
                   GoRoute(
@@ -192,7 +239,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.role.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: RolePage(uuid: RoleUUID(state.pathParameters['uuid']!)),
+                      child: RoleDetailsPage(uuid: RoleUUID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],
@@ -206,21 +253,121 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.organizations.name,
                 path: '/organizations',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: OrganizationsPage(),
+                  child: OrganizationListPage(),
                 ),
                 routes: [
-                  GoRoute(
-                    name: AppRoutes.createOrganization.name,
-                    path: 'create',
-                    pageBuilder: (_, _) => NoTransitionPage(
-                      child: CreateOrganizationPage(),
-                    ),
-                  ),
+                  // GoRoute(
+                  //   name: AppRoutes.createOrganization.name,
+                  //   path: 'create',
+                  //   pageBuilder: (_, _) => NoTransitionPage(
+                  //     child: CreateOrganizationPage(),
+                  //   ),
+                  // ),
                   GoRoute(
                     name: AppRoutes.organization.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: OrganizationPage(uuid: OrganizationUUID(state.pathParameters['uuid']!)),
+                      child: OrganizationDetailsPage(id: OrganizationID(state.pathParameters['uuid']!)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: nodesNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.nodes.name,
+                path: '/nodes',
+                onExit: (context, state) {
+                  context.read<NodesBloc>().add(NodesEvent.stopPollingInstances());
+                  return true;
+                },
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: NodeListPage(),
+                ),
+                routes: [
+                  // GoRoute(
+                  //   name: AppRoutes.createNode.name,
+                  //   path: 'create',
+                  //   pageBuilder: (_, _) => throw UnimplementedError(),
+                  // ),
+                  GoRoute(
+                    name: AppRoutes.node.name,
+                    path: ':uuid',
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: NodeDetailsPage(id: NodeID(state.pathParameters['uuid']!)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: dbaasNavKey,
+            observers: [instancesObserver],
+            routes: [
+              GoRoute(
+                // TODO(Koretsky): возможно придется переименовать
+                onExit: (context, state) {
+                  context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
+                  return true;
+                },
+                name: AppRoutes.clusters.name,
+                path: '/clusters',
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: ClustersListPage(),
+                ),
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.cluster.name,
+                    path: ':cluster_id',
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: ClusterPage(id: ClusterID(state.pathParameters['cluster_id']!)),
+                    ),
+                    routes: [
+                      GoRoute(
+                        name: AppRoutes.pgUser.name,
+                        path: 'users/:user_id',
+                        pageBuilder: (context, state) => NoTransitionPage(
+                          child: PgUserPage(
+                            clusterId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
+                            pgUserId: PgUserID(state.pathParameters['user_id']!),
+                          ),
+                        ),
+                      ),
+                      GoRoute(
+                        name: AppRoutes.pgDb.name,
+                        path: 'databases/:db_id',
+                        pageBuilder: (context, state) => NoTransitionPage(
+                          child: DatabasePage(
+                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
+                            databaseId: DatabaseID(state.pathParameters['db_id']!),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: extensionsNavKey,
+            routes: [
+              GoRoute(
+                name: AppRoutes.allExtensions.name,
+                path: '/extensions',
+                pageBuilder: (_, _) => NoTransitionPage(
+                  child: ExtensionListPage(),
+                ),
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.installedExtensions.name,
+                    path: 'installed',
+                    pageBuilder: (_, state) => NoTransitionPage(
+                      child: Placeholder(),
                     ),
                   ),
                 ],
@@ -233,12 +380,13 @@ GoRouter createRouter(BuildContext context) {
   );
 }
 
-class _GoRouterRefreshStream extends ChangeNotifier {
-  _GoRouterRefreshStream(Stream<AuthState> stream) {
+class _GoRouterAuthListenable extends ChangeNotifier {
+  _GoRouterAuthListenable(BuildContext context) {
+    final bloc = context.read<AuthBloc>();
     notifyListeners();
-    _subscription = stream.listen((state) {
-      notifyListeners();
-    });
+    _subscription = bloc.stream
+        .distinct((prev, next) => prev.runtimeType == next.runtimeType)
+        .listen((state) => notifyListeners());
   }
 
   late final StreamSubscription<AuthState> _subscription;
@@ -248,4 +396,36 @@ class _GoRouterRefreshStream extends ChangeNotifier {
     _subscription.cancel();
     super.dispose();
   }
+}
+
+class _GoRouterConfigListenable extends ChangeNotifier {
+  _GoRouterConfigListenable(BuildContext context) {
+    final cubit = context.read<DomainSetupCubit>();
+    _subscription = cubit.stream
+        .where((evt) => evt is DomainSetupReadState || evt is DomainSetupEmptyState || evt is DomainSetupWrittenState)
+        .distinct((prev, next) => prev.runtimeType == next.runtimeType)
+        .listen((state) => notifyListeners());
+  }
+
+  late final StreamSubscription<DomainSetupState> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+class DialogPage extends CustomTransitionPage<void> {
+  DialogPage({required WidgetBuilder builder})
+    : super(
+        child: Builder(builder: builder),
+        barrierColor: Colors.black54,
+        barrierDismissible: true,
+        opaque: false,
+        transitionsBuilder: (_, anim, __, child) => FadeTransition(
+          opacity: anim,
+          child: child,
+        ),
+      );
 }

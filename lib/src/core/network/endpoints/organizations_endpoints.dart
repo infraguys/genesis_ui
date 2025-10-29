@@ -1,19 +1,12 @@
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
+import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
+
 abstract class OrganizationsEndpoints {
-  static const _organizations = '/iam/organizations/';
-  static const _organization = '/iam/organizations/:uuid';
+  static Endpoint items() {
+    return Endpoint.withCorePrefix('/iam/organizations/');
+  }
 
-  static String getOrganizations() => _organizations;
-
-  static String createOrganization() => _organizations;
-
-  static String getOrganization(String uuid) => _organization.fillUuid(uuid);
-
-  static String updateOrganization(String uuid) => _organization.fillUuid(uuid);
-
-  static String deleteOrganization(String uuid) => _organization.fillUuid(uuid);
-}
-
-// ignore: camel_case_extensions
-extension _ on String {
-  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
+  static Endpoint item(OrganizationID id) {
+    return Endpoint.withCorePrefix('/iam/organizations/$id');
+  }
 }

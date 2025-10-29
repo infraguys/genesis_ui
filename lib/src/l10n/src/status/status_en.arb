@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "status": "Status",
+  "newStatus": "New",
+  "active": "Active",
+  "inactive": "Inactive",
+  "error": "Error",
+  "inProgress": "In progress",
+  "scheduled": "Scheduled",
+  "started": "Started",
+  "verified": "Verified",
+  "unverified": "Unverified",
+  "loading": "Loading",
+  "success": "Success",
+  "unknown": "Unknown"
+}

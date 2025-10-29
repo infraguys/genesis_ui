@@ -1,25 +1,24 @@
+import 'package:genesis/src/core/network/endpoints/endpoint.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
+
 abstract class UsersEndpoints {
-  static const _users = '/iam/users/';
-  static const _user = '/iam/users/:uuid';
+  static Endpoint items() {
+    return Endpoint.withCorePrefix('/iam/users/');
+  }
 
-  static String getUsers() => _users;
+  static Endpoint item(UserUUID id) {
+    return Endpoint.withCorePrefix('/iam/users/$id');
+  }
 
-  static String createUser() => _users;
+  static Endpoint changeUserPassword(UserUUID id) {
+    return Endpoint.withCorePrefix('/iam/users/$id/actions/change_password/invoke');
+  }
 
-  static String getUser(String uuid) => _user.fillUuid(uuid);
+  static Endpoint confirmUserEmail(UserUUID id) {
+    return Endpoint.withCorePrefix('/iam/users/$id/actions/confirm_email/invoke');
+  }
 
-  static String updateUser(String uuid) => _user.fillUuid(uuid);
-
-  static String deleteUser(String uuid) => _user.fillUuid(uuid);
-
-  static String changeUserPassword(String uuid) => '$_user/actions/change_password/invoke'.fillUuid(uuid);
-
-  static String confirmUserEmail(String uuid) => '$_user/actions/confirm_email/invoke'.fillUuid(uuid);
-
-  static String forceConfirmUserEmail(String uuid) => '$_user/actions/force_confirm_email/invoke'.fillUuid(uuid);
-}
-
-// ignore: camel_case_extensions
-extension _ on String {
-  String fillUuid(String uuid) => replaceFirst(':uuid', uuid);
+  static Endpoint forceConfirmUserEmail(UserUUID id) {
+    return Endpoint.withCorePrefix('/iam/users/$id/actions/force_confirm_email/invoke');
+  }
 }

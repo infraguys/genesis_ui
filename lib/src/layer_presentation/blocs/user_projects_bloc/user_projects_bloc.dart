@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/project.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/entities/user.dart';
-import 'package:genesis/src/layer_domain/params/projects/get_projects_params.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/use_cases/projects/get_project_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/roles/get_role_usecase.dart';
+import 'package:genesis/src/core/exceptions/api_exception.dart';
+import 'package:genesis/src/features/projects/domain/entities/project.dart';
+import 'package:genesis/src/features/projects/domain/params/get_projects_params.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/projects/domain/usecases/get_project_usecase.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/roles/domain/params/get_role_bindings_params.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_usecase.dart';
+import 'package:genesis/src/features/users/domain/entities/user.dart';
 
 part 'user_projects_event.dart';
 
@@ -35,27 +36,32 @@ class UserProjectsBloc extends Bloc<UserProjectsEvent, UserProjectsState> {
     final getRoleBindingsUseCase = GetRoleBindingsUseCase(_roleBindingsRepository);
     final getProjectUseCase = GetProjectUseCase(_projectsRepository);
     final getRoleUseCase = GetRoleUseCase(_rolesRepository);
+
     emit(UserProjectsState.loading());
 
     final Set<({Project project, List<Role> roles})> result = {};
-    var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUUID: event.userUuid));
-    bindings = bindings.where((it) => it.projectUUID != null).toList();
 
-    final projectUUIDs = bindings.map((b) => b.projectUUID!).toSet().toList();
+    try {
+      var bindings = await getRoleBindingsUseCase(GetRoleBindingsParams(userUUID: event.userUuid));
+      bindings = bindings.where((it) => it.projectId != null).toList();
 
-    final projects = await Future.wait(
-      projectUUIDs.map((uuid) => getProjectUseCase(uuid)),
-    );
+      final projectUUIDs = bindings.map((b) => b.projectId!).toSet().toList();
 
-    // todo: ипсравить projectUUID
-    for (final project in projects) {
-      final projectsBindings = bindings.where((binding) => binding.projectUUID == project.uuid).toList();
-      final roles = await Future.wait(
-        projectsBindings.map((binding) => getRoleUseCase(binding.roleUUID)),
+      final projects = await Future.wait(
+        projectUUIDs.map((uuid) => getProjectUseCase(uuid)),
       );
-      result.add((project: project, roles: roles));
-    }
 
-    emit(UserProjectsState.loaded(result.toList()));
+      // todo: ипсравить projectUUID
+      for (final project in projects) {
+        final projectsBindings = bindings.where((binding) => binding.projectId == project.id).toList();
+        final roles = await Future.wait(
+          projectsBindings.map((binding) => getRoleUseCase(binding.roleId)),
+        );
+        result.add((project: project, roles: roles));
+      }
+      emit(UserProjectsState.loaded(result.toList()));
+    } on PermissionException catch (e) {
+      emit(UserProjectsState.permissionFailure(e.message));
+    }
   }
 }

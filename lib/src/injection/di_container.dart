@@ -5,39 +5,57 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
-import 'package:genesis/src/layer_data/repositories/auth_repository.dart';
-import 'package:genesis/src/layer_data/repositories/organizations_repository.dart';
-import 'package:genesis/src/layer_data/repositories/permission_bindings_repository.dart';
-import 'package:genesis/src/layer_data/repositories/permissions_repository.dart';
-import 'package:genesis/src/layer_data/repositories/projects_repository.dart';
-import 'package:genesis/src/layer_data/repositories/role_bindings_repository.dart';
-import 'package:genesis/src/layer_data/repositories/roles_repository.dart';
-import 'package:genesis/src/layer_data/repositories/users_repository.dart';
-import 'package:genesis/src/layer_data/source/local/token_dao.dart';
-import 'package:genesis/src/layer_data/source/remote/organizations_api.dart';
-import 'package:genesis/src/layer_data/source/remote/permission_binding_api.dart';
-import 'package:genesis/src/layer_data/source/remote/permissions_api.dart';
-import 'package:genesis/src/layer_data/source/remote/projects_api.dart';
-import 'package:genesis/src/layer_data/source/remote/remote_iam_client_api.dart';
-import 'package:genesis/src/layer_data/source/remote/role_bindings_api.dart';
-import 'package:genesis/src/layer_data/source/remote/roles_api.dart';
-import 'package:genesis/src/layer_data/source/remote/users_api.dart';
-import 'package:genesis/src/layer_domain/repositories/i_auth_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permissions_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_presentation/blocs/app_bloc/app_bloc.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/clusters_repository.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/pg_database_repository.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/pg_users_repository.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/clusters_api.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/databases_api.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/pg_users_api.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/extensions/data/repositories/extensions_repository.dart';
+import 'package:genesis/src/features/extensions/data/source/extensions_api.dart';
+import 'package:genesis/src/features/extensions/domain/repositories/i_extensions_repository.dart';
+import 'package:genesis/src/features/iam_client/data/repositories/auth_repository.dart';
+import 'package:genesis/src/features/iam_client/domain/repositories/i_auth_repository.dart';
+import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
+import 'package:genesis/src/features/iam_client/sources/remote_iam_client_api.dart';
+import 'package:genesis/src/features/iam_client/sources/token_dao.dart';
+import 'package:genesis/src/features/nodes/data/repositories/nodes_repository.dart';
+import 'package:genesis/src/features/nodes/data/sources/nodes_api.dart';
+import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/organizations/data/repositories/organizations_repository.dart';
+import 'package:genesis/src/features/organizations/data/sources/organizations_api.dart';
+import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
+import 'package:genesis/src/features/permissions/data/repositories/permission_bindings_repository.dart';
+import 'package:genesis/src/features/permissions/data/repositories/permissions_repository.dart';
+import 'package:genesis/src/features/permissions/data/sources/permission_binding_api.dart';
+import 'package:genesis/src/features/permissions/data/sources/permissions_api.dart';
+import 'package:genesis/src/features/permissions/domain/repositories/i_permission_bindings_repository.dart';
+import 'package:genesis/src/features/permissions/domain/repositories/i_permissions_repository.dart';
+import 'package:genesis/src/features/projects/data/repositories/projects_repository.dart';
+import 'package:genesis/src/features/projects/data/sources/projects_api.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
+import 'package:genesis/src/features/roles/data/repositories/role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/data/repositories/roles_repository.dart';
+import 'package:genesis/src/features/roles/data/sources/role_bindings_api.dart';
+import 'package:genesis/src/features/roles/data/sources/roles_api.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
+import 'package:genesis/src/features/users/data/sources/users_api.dart';
+import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -53,20 +71,25 @@ class DiContainer extends StatelessWidget {
         Provider<ISimpleStorageClient>(
           create: (_) => SharedPrefStorage(),
         ),
-        Provider<SecureStorageClient>(
+        Provider<ISecureStorageClient>(
           create: (_) => FlutterSecureStorageClient(),
         ),
         Provider<RestClient>(
-          create: (context) => RestClient(context.read<SecureStorageClient>()),
+          create: (context) => RestClient(context.read<ISecureStorageClient>()),
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<IAuthRepository>(
             create: (context) {
-              final tokenDao = TokenDao(context.read<SecureStorageClient>());
+              final tokenDao = TokenDao(context.read<ISecureStorageClient>());
               final iamApi = RemoteIamClientApi(context.read<RestClient>());
-              return AuthRepository(iamApi: iamApi, tokenDao: tokenDao);
+              final projectsApi = ProjectsApi(context.read<RestClient>());
+              return AuthRepository(
+                iamApi: iamApi,
+                tokenDao: tokenDao,
+                projectApi: projectsApi,
+              );
             },
           ),
           RepositoryProvider<IUsersRepository>(
@@ -78,9 +101,7 @@ class DiContainer extends StatelessWidget {
           RepositoryProvider<IProjectsRepository>(
             create: (context) {
               final projectsApi = ProjectsApi(context.read<RestClient>());
-              final roleBindingApi = RoleBindingsApi(context.read<RestClient>());
-              final roleApi = RolesApi(context.read<RestClient>());
-              return ProjectsRepository(projectsApi, roleBindingApi, roleApi);
+              return ProjectsRepository(projectsApi);
             },
           ),
           RepositoryProvider<IRolesRepository>(
@@ -113,17 +134,48 @@ class DiContainer extends StatelessWidget {
               return PermissionBindingsRepository(permissionBindingsApi);
             },
           ),
+          RepositoryProvider<IExtensionsRepository>(
+            create: (context) {
+              final extensionApi = ExtensionsApi(context.read<RestClient>());
+              return ExtensionsRepository(extensionApi);
+            },
+          ),
+          RepositoryProvider<INodesRepository>(
+            create: (context) {
+              final nodesApi = NodesApi(context.read<RestClient>());
+              return NodesRepository(nodesApi);
+            },
+          ),
+          RepositoryProvider<IClustersRepository>(
+            create: (context) {
+              final nodesApi = ClustersApi(context.read<RestClient>());
+              return ClustersRepository(nodesApi);
+            },
+          ),
+          RepositoryProvider<IPgUsersRepository>(
+            create: (context) {
+              final pgUsersApi = PgUsersApi(context.read<RestClient>());
+              return PgUsersRepository(pgUsersApi);
+            },
+          ),
+          RepositoryProvider<IDatabaseRepository>(
+            create: (context) {
+              final databasesApi = PgDatabasesApi(context.read<RestClient>());
+              return PgDatabasesRepository(databasesApi);
+            },
+          ),
         ],
-        child: MultiProvider(
+        child: MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) {
-                return AppBloc(context.read<RestClient>())..add(AppEvent.loading());
+                final dao = ApiUrlDao(context.read<ISimpleStorageClient>());
+                return DomainSetupCubit(dao)..readApiUrl();
               },
             ),
             BlocProvider(
               create: (context) {
-                return AuthBloc(context.read<IAuthRepository>())..add(AuthEvent.restoreSession());
+                return AuthBloc(context.read<IAuthRepository>());
               },
             ),
             BlocProvider(
@@ -163,6 +215,19 @@ class DiContainer extends StatelessWidget {
               create: (context) {
                 final repository = context.read<IRoleBindingsRepository>();
                 return RoleBindingsBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                final repository = context.read<INodesRepository>();
+                return NodesBloc(repository);
+              },
+            ),
+            BlocProvider(
+              create: (context) {
+                return ClustersBloc(context.read<IClustersRepository>())..add(
+                  ClustersEvent.getClusters(),
+                );
               },
             ),
             Provider(

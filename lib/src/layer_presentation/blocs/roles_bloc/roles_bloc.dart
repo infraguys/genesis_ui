@@ -1,17 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_domain/entities/role.dart';
-import 'package:genesis/src/layer_domain/params/permission_bindings_params/get_permission_bindings_params.dart';
-import 'package:genesis/src/layer_domain/params/role_bindings/get_role_bindings_params.dart';
-import 'package:genesis/src/layer_domain/params/roles/get_roles_params.dart';
-import 'package:genesis/src/layer_domain/repositories/i_permission_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_role_bindings_repository.dart';
-import 'package:genesis/src/layer_domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/delete_permission_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/permission_bindings_usecases/get_permission_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/delete_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/role_bindings/get_role_bindings_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/roles/delete_roles_usecase.dart';
-import 'package:genesis/src/layer_domain/use_cases/roles/get_roles.dart';
+import 'package:genesis/src/features/roles/domain/entities/role.dart';
+import 'package:genesis/src/features/permissions/domain/params/get_permission_bindings_params.dart';
+import 'package:genesis/src/features/roles/domain/params/get_role_bindings_params.dart';
+import 'package:genesis/src/features/roles/domain/params/get_roles_params.dart';
+import 'package:genesis/src/features/permissions/domain/repositories/i_permission_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/permissions/domain/usecases/delete_permission_bindings_usecase.dart';
+import 'package:genesis/src/features/permissions/domain/usecases/get_permission_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/delete_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_role_bindings_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/delete_roles_usecase.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_roles.dart';
 
 part 'roles_event.dart';
 

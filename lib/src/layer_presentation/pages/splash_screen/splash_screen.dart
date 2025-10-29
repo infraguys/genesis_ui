@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:genesis/src/layer_presentation/blocs/app_bloc/app_bloc.dart';
-import 'package:genesis/src/routing/app_router.dart';
-import 'package:go_router/go_router.dart';
+import 'package:genesis/src/core/network/rest_client/rest_client.dart';
+import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class _SplashScreenView extends StatelessWidget {
+  const _SplashScreenView({super.key});  // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<AppBloc, AppState>(
-        listenWhen: (previous, current) => current is AppInitializedState,
-        listener: (context, state) {
-          context.goNamed(AppRoutes.main.name);
-        },
-        child: Center(
+    return BlocListener<DomainSetupCubit, DomainSetupState>(
+      listenWhen: (_, current) => current is DomainSetupReadState,
+      listener: (context, state) {
+        if (state is DomainSetupReadState) {
+          context.read<RestClient>().setBaseUrl(state.apiUrl);
+          // context.read<RestClient>().setBaseUrl('http://localhost:20000');
+          context.read<AuthBloc>().add(AuthEvent.restoreSession());
+        }
+      },
+      child: Scaffold(
+        body: Center(
           child: SvgPicture.asset(
             'assets/images/logo.svg',
             width: 250,
@@ -25,5 +29,14 @@ class SplashScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _SplashScreenView();
   }
 }

@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
+
+class PgClustersCard extends StatelessWidget {
+  const PgClustersCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = TextTheme.of(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('PG clusters', style: textTheme.titleMedium),
+            BlocBuilder<ClustersBloc, ClustersState>(
+              builder: (context, state) {
+                if (state is! ClustersLoadedState) {
+                  return Text(
+                    'Loading...',
+                    style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+                  );
+                }
+
+                final clusters = state.clusters;
+                return Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            context.$.newStatus,
+                            style: textTheme.titleSmall!,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            state.newCount.toString(),
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            context.$.active,
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            state.activeCount.toString(),
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0, bottom: 16.0, left: 4.0, right: 4.0),
+                          child: Text(
+                            context.$.inProgress,
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0, bottom: 16.0, left: 4.0, right: 4.0),
+                          child: Text(
+                            state.inProgressCount.toString(),
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: Palette.color1B1B1D),
+                        ),
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0, bottom: 4.0, left: 4.0, right: 4.0),
+                          child: Text(
+                            context.$.total,
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0, bottom: 4.0, left: 4.0, right: 4.0),
+                          child: Text(
+                            clusters.length.toString(),
+                            style: textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
