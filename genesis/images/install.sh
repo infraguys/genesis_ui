@@ -49,5 +49,11 @@ rm -fv "$WEB_DIR/index.nginx-debian.html"
 find "build/web/" -maxdepth 1 -type f -exec mv -t "$WEB_DIR/" {} +
 cp -r "build/web/assets" "$WEB_DIR/"
 
+# Publish the static files to the repository
+tar -czf html.tgz "$WEB_DIR"
+curl -X PUT --upload-file html.tgz \
+    "${REPO_ENDPOINT_PUT}/${PROJECT_NAME}/${GENESIS_UI_APP_VERSION}/html.tgz"
+rm -f html.tgz
+
 # Configure Nginx for single page application
 cp genesis/images/nginx.conf /etc/nginx/sites-available/default

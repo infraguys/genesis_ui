@@ -13,6 +13,8 @@ env:
   CORE_ENDPOINT: http://10.20.0.2:11010
   NODE_UUID: 624cd1a1-3e9f-4d00-82a3-46daa01a7401
   PROJECT_ID: d4ef38ee-2667-4931-90fd-c858d4bc5f1c
+  REPO_ENDPOINT_PUT: http://10.20.0.1:8082
+  PROJECT_NAME: genesis_ui
   # All vars you need to pass to build the flutter app goes here with prefix "UI_BUILD_ENV_".
   # There is a build python script `make_ui_build_env.py` that handles these variables and
   # form a json file. For instance, if you need to pass `api_url="https://console.genesis-core.tech/api"`
@@ -53,6 +55,7 @@ jobs:
 
           # Temporary upload step is done in the build script
           VERSION="$(genesis get-version .)"
+          export GENESIS_UI_APP_VERSION="${VERSION}"
           echo "${VERSION}" > version.txt
           ELEMENT_PATH="/var/lib/repository/genesis_ui"
 
