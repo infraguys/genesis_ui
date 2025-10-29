@@ -114,7 +114,7 @@ class PgUsersTable extends StatelessWidget {
           AppRoutes.pgUser.name,
           pathParameters: {
             'cluster_id': GoRouter.of(context).state.pathParameters['cluster_id']!,
-            'pg_user_id': pgUsers[index].id.raw,
+            'user_id': pgUsers[index].id.raw,
           },
         );
       },
