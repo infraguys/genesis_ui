@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/users_selection_bloc/users_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/widgets/users_actions_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
@@ -36,13 +37,13 @@ class UsersTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        BlocBuilder<UsersSelectionBloc, List<User>>(
+        BlocBuilder<UsersSelectionCubit, List<User>>(
           builder: (context, state) {
             return Checkbox(
               tristate: true,
               onChanged: (_) {
                 if (allowMultiSelect) {
-                  context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggleAll(users));
+                  context.read<UsersSelectionCubit>().onToggleAll(users);
                 }
               },
               value: switch (state.length) {
@@ -61,15 +62,15 @@ class UsersTable extends StatelessWidget {
       cellsBuilder: (index) {
         final user = users[index];
         return [
-          BlocBuilder<UsersSelectionBloc, List<User>>(
+          BlocBuilder<UsersSelectionCubit, List<User>>(
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(user),
                 onChanged: (_) {
                   if (!allowMultiSelect) {
-                    context.read<UsersSelectionBloc>().add(UsersSelectionEvent.clear());
+                    context.read<UsersSelectionCubit>().onClear();
                   }
-                  context.read<UsersSelectionBloc>().add(UsersSelectionEvent.toggle(user));
+                  context.read<UsersSelectionCubit>().onToggle(user);
                 },
               );
             },

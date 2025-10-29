@@ -37,5 +37,5 @@ base class _FailureState implements UsersState {
 }
 
 extension UsersStateX on UsersState {
-  bool get shouldListen => this is! UsersLoadingState || this is! _InitialState;
+  bool get shouldListen => this is! UsersLoadingState && this is! _InitialState;
 }

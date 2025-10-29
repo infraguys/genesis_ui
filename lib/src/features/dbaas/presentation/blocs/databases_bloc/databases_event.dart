@@ -5,7 +5,10 @@ sealed class DatabasesEvent {
 
   factory DatabasesEvent.getDatabases(GetDatabasesParams params) = _GetDatabases;
 
-  factory DatabasesEvent.deleteDatabases(List<Database> databases) = _DeleteDatabases;
+  factory DatabasesEvent.deleteDatabases({
+    required List<Database> databases,
+    required ClusterID clusterId,
+  }) = _DeleteDatabases;
 }
 
 final class _GetDatabases extends DatabasesEvent {
@@ -15,7 +18,8 @@ final class _GetDatabases extends DatabasesEvent {
 }
 
 final class _DeleteDatabases extends DatabasesEvent {
-  _DeleteDatabases(this.databases);
+  _DeleteDatabases({required this.databases, required this.clusterId});
 
   final List<Database> databases;
+  final ClusterID clusterId;
 }

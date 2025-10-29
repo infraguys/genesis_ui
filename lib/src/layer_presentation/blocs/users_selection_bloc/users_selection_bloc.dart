@@ -1,34 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 
-part 'users_selection_event.dart';
+class UsersSelectionCubit extends Cubit<List<User>> {
+  UsersSelectionCubit() : super(List.empty());
 
-class UsersSelectionBloc extends Bloc<UsersSelectionEvent, List<User>> {
-  UsersSelectionBloc() : super(List.empty()) {
-    on(_onToggle);
-    on(_onToggleAll);
-    on(_onClear);
-  }
-
-  void _onToggle(_Toggle event, Emitter<List<User>> emit) {
-    final updatedUsers = List.of(state);
-    if (updatedUsers.contains(event.user)) {
-      updatedUsers.remove(event.user);
+  void onToggle(User user) {
+    final copiedUsers = List.of(state);
+    if (copiedUsers.contains(user)) {
+      copiedUsers.remove(user);
     } else {
-      updatedUsers.add(event.user);
+      copiedUsers.add(user);
     }
-    emit(updatedUsers);
+    emit(copiedUsers);
   }
 
-  void _onToggleAll(_ToggleAll event, Emitter<List<User>> emit) {
-    if (state.length == event.users.length) {
+  void onToggleAll(List<User> users) {
+    if (state.length == users.length) {
       emit(List.empty());
     } else {
-      emit(event.users);
+      emit(users);
     }
   }
 
-  void _onClear(_Clear event, Emitter<List<User>> emit) {
+  void onClear() {
     emit(List.empty());
   }
 }

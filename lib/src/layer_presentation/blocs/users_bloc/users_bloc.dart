@@ -30,15 +30,15 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   Future<void> _onDeleteUsers(_DeleteUsers event, Emitter<UsersState> emit) async {
     final useCase = DeleteUsersUseCase(_usersRepository);
-
     final previousState = state;
 
-    // todo: Подумать что сделать с запросом
-    emit(UsersLoadingState());
     try {
-      await useCase(event.users.map((it) => it.uuid).toList());
+      await useCase(event.users);
+      final newListOfUsers = List.of((state as UsersLoadedState).users)
+        ..removeWhere((user) => event.users.contains(user));
+
       emit(UsersDeletedState(event.users));
-      add(UsersEvent.getUsers());
+      emit(UsersLoadedState(newListOfUsers));
     } on PermissionException catch (e) {
       emit(UsersPermissionFailureState(e.message));
       emit(previousState);

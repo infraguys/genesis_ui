@@ -74,11 +74,11 @@ class _DatabaseViewState extends State<_DatabaseView> {
 
           case DatabaseUpdatedState(:final database):
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
-          // context.read<DatabasesBloc>().add(
-          //   DatabasesEvent.getDatabases(GetDatabasesParams(instanceId: widget.pgInstanceId)),
+          // context.read<DatabaseBloc>().add(
+          //   DatabaseEvent.getDatabases(GetDatabaseParams(instanceId: widget.pgInstanceId)),
           // );
-          //
-          // case PgUserDeletedState(:final pgUser):
+
+          // case DatabaseDeletedState(:final pgUser):
           //   messenger.showSnackBar(AppSnackBar.success(context.$.success));
           //   context.read<PgInstancesBloc>().add(PgInstancesEvent.getInstances());
           //   context.pop();
@@ -221,7 +221,7 @@ class DatabasePage extends StatelessWidget {
         BlocProvider(
           create: (context) => DatabaseBloc(
             context.read<IDatabaseRepository>(),
-          )..add(DatabaseEvent.get(DatabaseParams(databaseId: databaseId, instanceId: pgInstanceId))),
+          )..add(DatabaseEvent.get(DatabaseParams(databaseId: databaseId, clusterId: pgInstanceId))),
         ),
         BlocProvider(
           create: (context) => DatabasesSelectionCubit(),

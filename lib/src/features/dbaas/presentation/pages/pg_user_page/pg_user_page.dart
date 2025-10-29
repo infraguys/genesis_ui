@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params.dart';
@@ -16,11 +17,14 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/pg_user_bloc/pg_us
 import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_status_widget.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/create_database_dialog.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/widget/database_table.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/id_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/metadata_table.dart';
@@ -29,6 +33,8 @@ import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart
 import 'package:go_router/go_router.dart';
 
 part './widget/create_db_btn.dart';
+
+part './widget/delete_databases_btn.dart';
 
 class _View extends StatefulWidget {
   const _View({
@@ -69,30 +75,32 @@ class _ViewState extends State<_View> {
 
   @override
   Widget build(BuildContext context) {
-    const gapWidth = 16.0;
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PgUserBloc, PgUserState>(
+          listenWhen: (_, current) => current is! PgUserLoadingState,
+          listener: (context, state) {
+            final messenger = ScaffoldMessenger.of(context);
+            switch (state) {
+              case PgUserLoadedState(:final pgUser):
+                _pgUserName = pgUser.name;
+                _password = pgUser.password;
+                _instance = pgUser.instance;
+                _description = pgUser.description;
 
-    return BlocListener<PgUserBloc, PgUserState>(
-      listenWhen: (_, current) => current is! PgUserLoadingState,
-      listener: (context, state) {
-        final messenger = ScaffoldMessenger.of(context);
-        switch (state) {
-          case PgUserLoadedState(:final pgUser):
-            _pgUserName = pgUser.name;
-            _password = pgUser.password;
-            _instance = pgUser.instance;
-            _description = pgUser.description;
+              case PgUserUpdatedState(:final pgUser):
+                messenger.showSnackBar(AppSnackBar.success(context.$.success));
+                context.read<ClustersBloc>().add(ClustersEvent.getClusters());
 
-          case PgUserUpdatedState(:final pgUser):
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
-
-          case PgUserDeletedState(:final pgUser):
-            messenger.showSnackBar(AppSnackBar.success(context.$.success));
-            context.read<ClustersBloc>().add(ClustersEvent.getClusters());
-            context.pop();
-          default:
-        }
-      },
+              case PgUserDeletedState(:final pgUser):
+                messenger.showSnackBar(AppSnackBar.success(context.$.success));
+                context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+                context.pop();
+              default:
+            }
+          },
+        ),
+      ],
       child: BlocBuilder<PgUserBloc, PgUserState>(
         buildWhen: (_, current) => current is PgUserLoadingState || current is PgUserLoadedState,
         builder: (context, state) {
@@ -114,11 +122,12 @@ class _ViewState extends State<_View> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: gapWidth,
+                  spacing: Spacing.s16,
                   children: [
                     Form(
                       key: _formKey,
                       child: Column(
+                        spacing: Spacing.s16,
                         children: [
                           FormCard(
                             child: Row(
@@ -128,7 +137,7 @@ class _ViewState extends State<_View> {
                                 SizedBox(width: 32),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: gapWidth,
+                                  spacing: Spacing.s16,
                                   children: [
                                     IdWidget(id: pgUser.id.raw),
                                     SizedBox(
@@ -153,6 +162,7 @@ class _ViewState extends State<_View> {
                           FormCard(
                             child: LayoutBuilder(
                               builder: (context, constraints) {
+                                const gapWidth = Spacing.s16;
                                 final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
                                 return Column(
                                   spacing: gapWidth,
@@ -206,6 +216,7 @@ class _ViewState extends State<_View> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        _DeleteDatabasesButton(clusterId: widget.clusterId),
                         _CreateDbButton(clusterId: widget.clusterId, pgUserId: widget.pgUserId),
                       ],
                     ),

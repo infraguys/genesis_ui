@@ -35,7 +35,7 @@ part './widgets/create_pg_user_btn.dart';
 
 part './widgets/delete_cluster_btn.dart';
 
-part './widgets/delete_pg_user_btn.dart';
+part './widgets/delete_pg_users_btn.dart';
 
 class _View extends StatefulWidget {
   const _View({
@@ -110,10 +110,6 @@ class _ViewState extends State<_View> {
               default:
             }
           },
-        ),
-        BlocListener<PgUsersBloc, PgUsersState>(
-          listenWhen: (_, current) => current is PgUsersDeletedState,
-          listener: (context, _) => context.read<PgUsersSelectionCubit>().onClear(),
         ),
       ],
       child: BlocBuilder<ClusterBloc, ClusterState>(

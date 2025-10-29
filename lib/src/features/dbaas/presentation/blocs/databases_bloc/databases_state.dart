@@ -11,3 +11,9 @@ final class DatabasesLoadedState extends DatabasesState {
 
   final List<Database> databases;
 }
+
+final class DatabasesDeletedState extends DatabasesState {
+  DatabasesDeletedState(this.databases);
+
+  final List<Database> databases;
+}

@@ -15,9 +15,8 @@ final class PgDatabasesRepository implements IDatabaseRepository {
   }
 
   @override
-  Future<void> deleteDatabase(params) {
-    // TODO: implement deleteDatabase
-    throw UnimplementedError();
+  Future<void> deleteDatabase(params) async {
+    await _api.deleteDatabase(params);
   }
 
   @override

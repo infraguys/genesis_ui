@@ -16,6 +16,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/delete_users_dialog.d
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
 part './widgets/confirm_email_btn.dart';
+
 part './widgets/delete_user_btn.dart';
 
 class _UserListView extends StatelessWidget {
@@ -23,48 +24,49 @@ class _UserListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UsersBloc, UsersState>(
-      listenWhen: (_, current) => current.shouldListen,
-      listener: (context, state) {
-        final messenger = ScaffoldMessenger.of(context);
+    return PageLayout(
+      breadcrumbs: [
+        BreadcrumbItem(text: context.$.users),
+      ],
+      buttons: [
+        _DeleteUserButton(),
+        _ConfirmEmailButton(),
+        CreateIconButton(
+          onPressed: () async {
+            await showDialog<void>(
+              context: context,
+              builder: (context) => Dialog(child: CreateUserPage()),
+            );
+          },
+        ),
+      ],
+      child: Expanded(
+        child: BlocConsumer<UsersBloc, UsersState>(
+          listenWhen: (_, current) => current.shouldListen,
+          listener: (context, state) {
+            final messenger = ScaffoldMessenger.of(context);
 
-        switch (state) {
-          case UsersDeletedState(:final users) when users.length == 1:
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgUserDeleted(users.single.username)));
-          case UsersDeletedState(:final users) when users.length > 1:
-            messenger.showSnackBar(AppSnackBar.success(context.$.msgUsersDeleted(users.length)));
+            switch (state) {
+              case UsersDeletedState(:final users) when users.length == 1:
+                context.read<UsersSelectionCubit>().onClear();
+                final msg = switch (users.length) {
+                  1 => context.$.msgUserDeleted(users.single.username),
+                  _ => context.$.msgUsersDeleted(users.length),
+                };
+                messenger.showSnackBar(AppSnackBar.success(msg));
 
-          case UsersPermissionFailureState(:final message):
-            messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
-          default:
-        }
-      },
-      child: PageLayout(
-        breadcrumbs: [
-          BreadcrumbItem(text: context.$.users),
-        ],
-        buttons: [
-          _DeleteUserButton(),
-          _ConfirmEmailButton(),
-          CreateIconButton(
-            onPressed: () async {
-              await showDialog<void>(
-                context: context,
-                builder: (context) => Dialog(child: CreateUserPage()),
-              );
-            },
-          ),
-        ],
-        child: Expanded(
-          child: BlocBuilder<UsersBloc, UsersState>(
-            buildWhen: (_, current) => current is UsersLoadingState || current is UsersLoadedState,
-            builder: (_, state) {
-              return switch (state) {
-                _ when state is! UsersLoadedState => AppProgressIndicator(),
-                _ => UsersTable(users: state.users),
-              };
-            },
-          ),
+              case UsersPermissionFailureState(:final message):
+                messenger.showSnackBar(AppSnackBar.failure(context.$.msgPermissionDenied(message)));
+              default:
+            }
+          },
+          buildWhen: (_, current) => current is UsersLoadingState || current is UsersLoadedState,
+          builder: (_, state) {
+            return switch (state) {
+              _ when state is! UsersLoadedState => AppProgressIndicator(),
+              _ => UsersTable(users: state.users),
+            };
+          },
         ),
       ),
     );
@@ -77,7 +79,7 @@ class UserListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UsersSelectionBloc(),
+      create: (_) => UsersSelectionCubit(),
       child: _UserListView(),
     );
   }

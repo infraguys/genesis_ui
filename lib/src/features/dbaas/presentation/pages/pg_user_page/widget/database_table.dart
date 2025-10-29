@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/databases_bloc/databases_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/databases_selection_cubit/databases_selection_cubit.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/database_status_widget.dart';
@@ -25,11 +25,9 @@ class DatabaseTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DatabasesSelectionCubit, List<Database>>(
-      // listenWhen: (_, current) => current is PgInstancesDeletedState,
-      listener: (context, state) {
-        context.read<ClusterSelectionCubit>().onClear();
-      },
+    return BlocListener<DatabasesBloc, DatabasesState>(
+      listenWhen: (_, current) => current is DatabasesDeletedState,
+      listener: (context, state) => context.read<DatabasesSelectionCubit>().onClear(),
       child: AppTable(
         length: databases.length,
         columnSpans: [
@@ -72,7 +70,7 @@ class DatabaseTable extends StatelessWidget {
                   value: state.contains(database),
                   onChanged: (_) {
                     if (!allowMultiSelect) {
-                      context.read<ClusterSelectionCubit>().onClear();
+                      context.read<DatabasesSelectionCubit>().onClear();
                     }
                     context.read<DatabasesSelectionCubit>().onToggle(database);
                   },

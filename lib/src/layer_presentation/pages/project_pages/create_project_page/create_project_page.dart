@@ -169,7 +169,7 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
           name: _name,
           description: _description,
           organizationID: context.read<OrganizationsSelectionBloc>().state.first.id,
-          userID: context.read<UsersSelectionBloc>().state.firstOrNull?.uuid,
+          userID: context.read<UsersSelectionCubit>().state.firstOrNull?.uuid,
           roles: context.read<RolesSelectionBloc>().state,
         ),
       );
@@ -194,7 +194,7 @@ class CreateProjectPage extends StatelessWidget {
           create: (_) => OrganizationsSelectionBloc(),
         ),
         BlocProvider(
-          create: (_) => UsersSelectionBloc(),
+          create: (_) => UsersSelectionCubit(),
         ),
         BlocProvider(
           create: (_) => RolesSelectionBloc(),

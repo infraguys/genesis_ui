@@ -3,6 +3,6 @@ import 'package:genesis/src/features/dbaas/domain/params/databases/database_para
 
 extension PgDatabaseReq on DatabaseParams {
   String toPath() {
-    return DatabaseEndpoints.item(instanceId, databaseId).fullPath;
+    return DatabaseEndpoints.item(clusterId, databaseId).fullPath;
   }
 }

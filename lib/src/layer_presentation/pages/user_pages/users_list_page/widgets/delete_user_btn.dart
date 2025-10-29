@@ -5,7 +5,7 @@ class _DeleteUserButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UsersSelectionBloc, List<User>>(
+    return BlocBuilder<UsersSelectionCubit, List<User>>(
       builder: (context, state) {
         if (state.isEmpty) {
           return const SizedBox.shrink();

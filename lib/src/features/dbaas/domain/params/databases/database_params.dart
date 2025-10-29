@@ -3,10 +3,10 @@ import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class DatabaseParams {
   DatabaseParams({
-    required this.instanceId,
+    required this.clusterId,
     required this.databaseId,
   });
 
-  final ClusterID instanceId;
+  final ClusterID clusterId;
   final DatabaseID databaseId;
 }
