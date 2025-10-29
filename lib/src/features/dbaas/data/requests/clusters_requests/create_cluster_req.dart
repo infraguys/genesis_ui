@@ -6,7 +6,6 @@ extension CreateClusterReq on CreateClusterParams {
     return {
       'name': name,
       'description': description,
-      'ipsv4': ipsv4,
       'cpu': cores,
       'ram': ram,
       'disk_size': diskSize,

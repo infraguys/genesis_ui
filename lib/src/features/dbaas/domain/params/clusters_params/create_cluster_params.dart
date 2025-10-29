@@ -6,14 +6,12 @@ final class CreateClusterParams {
     required this.diskSize,
     required this.nodesNumber,
     required this.syncReplicaNumber,
-    required this.ipsv4,
     required this.versionLink,
     this.description,
   });
 
   final String name;
   final String? description;
-  final List<String> ipsv4;
   final int cores;
   final int ram;
   final int diskSize;

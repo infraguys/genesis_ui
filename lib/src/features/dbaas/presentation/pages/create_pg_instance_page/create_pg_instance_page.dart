@@ -8,6 +8,7 @@ import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_reposi
 import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_bloc/cluster_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout.dart';
@@ -44,8 +45,6 @@ class _ViewState extends State<_View> {
 
   @override
   Widget build(BuildContext context) {
-    const gapWidth = 16.0;
-
     return BlocListener<ClusterBloc, ClusterState>(
       listener: (context, state) {
         final messenger = ScaffoldMessenger.of(context);
@@ -65,9 +64,9 @@ class _ViewState extends State<_View> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
-            spacing: gapWidth,
+            spacing: Spacing.s16,
             children: [
               Row(
                 children: [
@@ -90,12 +89,13 @@ class _ViewState extends State<_View> {
               Divider(color: Palette.color1B1B1D),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                  final columnWidth = (constraints.maxWidth - 3 * Spacing.s16) / 4;
                   return Column(
-                    spacing: gapWidth,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    spacing: Spacing.s16,
                     children: [
                       Row(
-                        spacing: gapWidth,
+                        spacing: Spacing.s16,
                         children: [
                           SizedBox(
                             width: columnWidth,
@@ -152,7 +152,7 @@ class _ViewState extends State<_View> {
                         ],
                       ),
                       Row(
-                        spacing: gapWidth,
+                        spacing: Spacing.s16,
                         children: [
                           SizedBox(
                             width: columnWidth,
@@ -168,25 +168,18 @@ class _ViewState extends State<_View> {
                             ),
                           ),
                           SizedBox(
-                            width: (columnWidth * 3) + (gapWidth * 2),
+                            width: (columnWidth * 3) + (Spacing.s16 * 2),
                             child: AppTextFormInput(
-                              readOnly: true,
-                              initialValue: _ipsv4List.join(', '),
-                              helperText: 'Ipsv4'.hardcoded,
-                              maxLines: 3,
-                              minLines: 1,
+                              initialValue: _versionLink,
+                              helperText: context.$.versionHelperText,
+                              onSaved: (value) => _versionLink = value!,
+                              validator: (value) => switch (value) {
+                                _ when value!.isEmpty => context.$.requiredField,
+                                _ => null,
+                              },
                             ),
                           ),
                         ],
-                      ),
-                      AppTextFormInput(
-                        initialValue: _versionLink,
-                        helperText: context.$.versionHelperText,
-                        onSaved: (value) => _versionLink = value!,
-                        validator: (value) => switch (value) {
-                          _ when value!.isEmpty => context.$.requiredField,
-                          _ => null,
-                        },
                       ),
                       AppTextFormInput.description(
                         initialValue: _description,
@@ -197,12 +190,7 @@ class _ViewState extends State<_View> {
                   );
                 },
               ),
-              Row(
-                children: [
-                  Spacer(),
-                  SaveIconButton(onPressed: save),
-                ],
-              ),
+              SaveIconButton(onPressed: save),
             ],
           ),
         ),
@@ -221,7 +209,6 @@ class _ViewState extends State<_View> {
         diskSize: _diskSize,
         nodesNumber: _nodesNumber,
         syncReplicaNumber: _syncReplicaNumber,
-        ipsv4: _ipsv4List,
         versionLink: _versionLink,
       );
       _clusterBloc.add(ClusterEvent.create(params));
