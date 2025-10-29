@@ -22,7 +22,7 @@ class PageLayout extends StatelessWidget {
         Breadcrumbs(items: breadcrumbs),
         ButtonsBar(children: buttons),
         SizedBox(height: 16.0),
-        child,
+        Expanded(child: child),
       ],
     );
   }

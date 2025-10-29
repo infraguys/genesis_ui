@@ -28,12 +28,12 @@ class PgUsersBloc extends Bloc<PgUsersEvent, PgUsersState> {
 
   Future<void> _onDeletePgUsers(_DeletePgUsers event, Emitter<PgUsersState> emit) async {
     final useCase = DeletePgUsersUseCase(_repository);
-    emit(PgUsersLoadingState());
-    final listOfParams = event.pgUsers.map((it) {
-      return PgUserParams(pgUserId: it.id, clusterId: event.clusterId);
-    }).toList();
+    final listOfParams = event.pgUsers.map((it) => PgUserParams(pgUserId: it.id, clusterId: event.clusterId)).toList();
     await useCase(listOfParams);
+
+    final newListOfPgUsers = List.of((state as PgUsersLoadedState).pgUsers)
+      ..removeWhere((user) => event.pgUsers.contains(user));
     emit(PgUsersDeletedState(event.pgUsers));
-    add(PgUsersEvent.getUsers(GetPgUsersParams(clusterId: event.clusterId)));
+    emit(PgUsersLoadedState(newListOfPgUsers));
   }
 }

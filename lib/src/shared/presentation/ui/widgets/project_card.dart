@@ -19,7 +19,7 @@ class ProjectCard extends StatelessWidget {
 
   final Project project;
   final List<Role>? roles;
-  final UserUUID userUUID;
+  final UserID userUUID;
 
   @override
   Widget build(BuildContext context) {

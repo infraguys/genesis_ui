@@ -12,7 +12,7 @@ final class UpdateUserParams {
     this.email,
   });
 
-  final UserUUID id;
+  final UserID id;
   final String? username;
   final String? description;
   final String? firstName;

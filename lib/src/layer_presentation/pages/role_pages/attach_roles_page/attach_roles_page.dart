@@ -59,7 +59,7 @@ class _AttachRolesView extends StatelessWidget {
                     final listOfParams = context.read<RolesSelectionBloc>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
-                          userUUID: UserUUID(GoRouterState.of(context).pathParameters['uuid']!),
+                          userUUID: UserID(GoRouterState.of(context).pathParameters['uuid']!),
                           roleUUID: role.uuid,
                           projectUUID: projectUUID,
                         );

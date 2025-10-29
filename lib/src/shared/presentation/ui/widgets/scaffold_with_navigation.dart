@@ -6,16 +6,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/routing/branch_index.dart';
 import 'package:genesis/src/shared/presentation/extensions/permission_names_ext.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
+import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/me_appbar_widget.dart';
 import 'package:go_router/go_router.dart';
 
@@ -210,7 +212,13 @@ class _Header extends StatelessWidget {
         spacing: 16.0,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset('assets/images/purple_logo.svg'),
+          Row(
+            spacing: Spacing.s16,
+            children: [
+              SvgPicture.asset('assets/images/purple_logo.svg'),
+              Text('Genesis Core'.hardcoded, style: TextStyle(fontSize: 20).w700),
+            ],
+          ),
           LayoutBuilder(
             builder: (context, constraints) {
               return BlocBuilder<ProjectsBloc, ProjectsState>(

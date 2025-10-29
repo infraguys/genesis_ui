@@ -48,8 +48,8 @@
       }
     }
   },
-  "deletePgClusterConfirmation": "Delete cluster {name}?",
-  "@deletePgClusterConfirmation": {
+  "deleteClusterConfirmation": "Delete cluster {name}?",
+  "@deleteClusterConfirmation": {
     "placeholders": {
       "name": {
         "type": "String"
@@ -90,6 +90,38 @@
   },
   "deleteUsers": "Delete selected ({count}) users?",
   "@deleteUsers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletePgUserConfirmation": "Delete PG user {name}?",
+  "@deletePgUserConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePgUsersConfirmation": "Delete selected ({count}) PG users?",
+  "@deletePgUsersConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteDatabaseConfirmation": "Delete database {name}?",
+  "@deleteDatabaseConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteDatabasesConfirmation": "Delete selected ({count}) databases?",
+  "@deleteDatabasesConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"

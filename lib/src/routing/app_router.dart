@@ -16,13 +16,13 @@ import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/elements_pages/extension_list_page/extension_list_page.dart';
-import 'package:genesis/src/layer_presentation/pages/main_page/main_page.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/node_details_page/node_details_page.dart';
-import 'package:genesis/src/layer_presentation/pages/node_pages/node_list_page/node_list_page.dart';
+import 'package:genesis/src/features/extensions/presentation/pages/extension_list_page/extension_list_page.dart';
+import 'package:genesis/src/features/extensions/presentation/pages/main_page/main_page.dart';
+import 'package:genesis/src/features/nodes/presentation/pages/node_page/node_page.dart';
+import 'package:genesis/src/features/nodes/presentation/pages/node_list_page/node_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
@@ -36,9 +36,9 @@ import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/r
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/domain_setup_page.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/user_pages/create_user_page/create_user_page.dart';
-import 'package:genesis/src/layer_presentation/pages/user_pages/user_details_page/user_details_page.dart';
-import 'package:genesis/src/layer_presentation/pages/user_pages/users_list_page/user_list_page.dart';
+import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
+import 'package:genesis/src/features/users/presentation/pages/user_page/user_page.dart';
+import 'package:genesis/src/features/users/presentation/pages/user_list_page/user_list_page.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
@@ -167,7 +167,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.user.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: UserDetailsPage(userID: UserUUID(state.pathParameters['uuid']!)),
+                      child: UserDetailsPage(userID: UserID(state.pathParameters['uuid']!)),
                     ),
                     routes: [
                       GoRoute(
@@ -297,7 +297,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.node.name,
                     path: ':uuid',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: NodeDetailsPage(id: NodeID(state.pathParameters['uuid']!)),
+                      child: NodePage(id: NodeID(state.pathParameters['uuid']!)),
                     ),
                   ),
                 ],

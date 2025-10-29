@@ -215,6 +215,7 @@ class _ViewState extends State<_View> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      spacing: Spacing.s4,
                       children: [
                         _DeleteDatabasesButton(clusterId: widget.clusterId),
                         _CreateDbButton(clusterId: widget.clusterId, pgUserId: widget.pgUserId),
@@ -222,7 +223,9 @@ class _ViewState extends State<_View> {
                     ),
                     SizedBox(
                       height: 400,
-                      child: BlocBuilder<DatabasesBloc, DatabasesState>(
+                      child: BlocConsumer<DatabasesBloc, DatabasesState>(
+                        listenWhen: (_, current) => current is DatabasesDeletedState,
+                        listener: (context, state) => context.read<DatabasesSelectionCubit>().onClear(),
                         builder: (_, state) {
                           return switch (state) {
                             _ when state is! DatabasesLoadedState => AppProgressIndicator(),

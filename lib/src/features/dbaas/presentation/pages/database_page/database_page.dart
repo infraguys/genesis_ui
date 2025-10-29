@@ -193,7 +193,7 @@ class _DatabaseViewState extends State<_DatabaseView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final params = UpdateDatabaseParams(
-        pgInstanceId: widget.pgInstanceId,
+        clusterId: widget.pgInstanceId,
         databaseId: widget.databaseId,
         description: _description,
         name: _dbName,

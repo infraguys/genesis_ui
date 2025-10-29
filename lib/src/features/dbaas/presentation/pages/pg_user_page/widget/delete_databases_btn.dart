@@ -17,8 +17,8 @@ class _DeleteDatabasesButton extends StatelessWidget {
         }
 
         final message = switch (state.length) {
-          1 => context.$.deletePgClusterConfirmation(state.single.name),
-          final len => context.$.deleteClustersConfirmation(len),
+          1 => context.$.deleteDatabaseConfirmation(state.single.name),
+          final len => context.$.deleteDatabasesConfirmation(len),
         };
 
         return DeleteElevatedButton(

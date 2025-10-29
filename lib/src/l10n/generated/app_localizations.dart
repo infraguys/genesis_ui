@@ -482,6 +482,12 @@ abstract class AppLocalizations {
   /// **'Passwords do not match'**
   String get passwordsDoNotMatch;
 
+  /// No description provided for @errorMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter at least {min} characters'**
+  String errorMinLength(int min);
+
   /// No description provided for @deleteRole.
   ///
   /// In en, this message translates to:
@@ -518,11 +524,11 @@ abstract class AppLocalizations {
   /// **'Delete selected({count}) nodes?'**
   String deleteNodesConfirmation(int count);
 
-  /// No description provided for @deletePgClusterConfirmation.
+  /// No description provided for @deleteClusterConfirmation.
   ///
   /// In en, this message translates to:
   /// **'Delete cluster {name}?'**
-  String deletePgClusterConfirmation(String name);
+  String deleteClusterConfirmation(String name);
 
   /// No description provided for @deleteClustersConfirmation.
   ///
@@ -553,6 +559,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete selected ({count}) users?'**
   String deleteUsers(int count);
+
+  /// No description provided for @deletePgUserConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete PG user {name}?'**
+  String deletePgUserConfirmation(String name);
+
+  /// No description provided for @deletePgUsersConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) PG users?'**
+  String deletePgUsersConfirmation(int count);
+
+  /// No description provided for @deleteDatabaseConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete database {name}?'**
+  String deleteDatabaseConfirmation(String name);
+
+  /// No description provided for @deleteDatabasesConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete selected ({count}) databases?'**
+  String deleteDatabasesConfirmation(int count);
 
   /// No description provided for @iam.
   ///

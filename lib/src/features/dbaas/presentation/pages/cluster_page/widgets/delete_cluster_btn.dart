@@ -10,7 +10,7 @@ class _DeleteClusterButton extends StatelessWidget {
     return DeleteElevatedButton(
       onPressed: () async {
         final pgInstanceBloc = context.read<ClusterBloc>();
-        final message = context.$.deleteNodeConfirmation(instance.name);
+        final message = context.$.deleteClusterConfirmation(instance.name);
         await showDialog<void>(
           context: context,
           builder: (_) => ConfirmationDialog(

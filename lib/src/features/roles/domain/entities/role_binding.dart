@@ -14,7 +14,7 @@ class RoleBinding extends Equatable {
     required this.roleLink,
   });
 
-  UserUUID get userId => UserUUID(userLink.split('/').last);
+  UserID get userId => UserID(userLink.split('/').last);
 
   RoleUUID get roleId => RoleUUID(roleLink.split('/').last);
 

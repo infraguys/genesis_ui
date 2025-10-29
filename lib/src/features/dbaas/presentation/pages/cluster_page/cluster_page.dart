@@ -113,196 +113,201 @@ class _ViewState extends State<_View> {
         ),
       ],
       child: BlocBuilder<ClusterBloc, ClusterState>(
-        buildWhen: (_, current) => current is ClusterLoadingState || current is ClusterLoadedState,
+        buildWhen: (previous, current) {
+          return previous != current;
+        },
         builder: (context, state) {
           if (state is! ClusterLoadedState) {
             return AppProgressIndicator();
           }
-          final ClusterLoadedState(cluster: instance) = state;
+          final ClusterLoadedState(:cluster) = state;
 
-          return Form(
-            key: _formKey,
-            child: PageLayout(
-              breadcrumbs: [
-                BreadcrumbItem(text: context.$.clusters),
-                BreadcrumbItem(text: instance.name),
-              ],
-              buttons: [
-                _DeleteClusterButton(instance: instance),
-                SaveIconButton(onPressed: save),
-              ],
-              child: Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    spacing: Spacing.s16,
-                    children: [
-                      FormCard(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(Icons.storage_rounded, size: 100),
-                            SizedBox(width: 32),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: Spacing.s16,
-                              children: [
-                                IdWidget(id: instance.id.raw),
-                                SizedBox(
-                                  width: 500,
-                                  child: AppTextFormInput(
-                                    initialValue: _clusterName,
-                                    helperText: context.$.clusterNameHelperText,
-                                    onSaved: (newValue) => _clusterName = newValue!,
-                                    validator: (value) => switch (value) {
-                                      _ when value!.isEmpty => context.$.requiredField,
-                                      _ => null,
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            MetadataTable(
-                              statusWidget: ClusterStatusWidget(status: instance.status),
-                              createdAt: instance.createdAt,
-                              updatedAt: instance.updatedAt,
-                            ),
-                          ],
-                        ),
-                      ),
-                      FormCard(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final columnWidth = (constraints.maxWidth - 3 * Spacing.s16) / 4;
-                            return Column(
-                              spacing: Spacing.s16,
-                              children: [
-                                Row(
-                                  spacing: Spacing.s16,
-                                  children: [
-                                    SizedBox(
-                                      width: columnWidth,
-                                      child: AppTextFormInput(
-                                        initialValue: _cores.toString(),
-                                        helperText: context.$.cores,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                        onSaved: (newValue) => _cores = int.parse(newValue!),
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: columnWidth,
-                                      child: AppTextFormInput(
-                                        initialValue: _diskSize.toString(),
-                                        helperText: context.$.diskSize,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                        // TODO(Koretsky): Проверить локализацию
-                                        onSaved: (newValue) => _diskSize = int.parse(newValue!),
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: columnWidth,
-                                      child: AppTextFormInput(
-                                        initialValue: _nodesNumber.toString(),
-                                        helperText: context.$.nodeCountHelperText,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                        onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: columnWidth,
-                                      child: AppTextFormInput(
-                                        initialValue: _syncReplicaNumber.toString(),
-                                        helperText: 'Sync replica number'.hardcoded,
-                                        onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  spacing: Spacing.s16,
-                                  children: [
-                                    SizedBox(
-                                      width: columnWidth,
-                                      child: AppTextFormInput(
-                                        initialValue: _ram.toString(),
-                                        helperText: context.$.ramLabelText,
-                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                        onSaved: (newValue) => _ram = int.parse(newValue!),
-                                        validator: (value) => switch (value) {
-                                          _ when value!.isEmpty => context.$.requiredField,
-                                          _ => null,
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: (columnWidth * 3) + (Spacing.s16 * 2),
-                                      child: AppTextFormInput(
-                                        readOnly: true,
-                                        initialValue: _ipsv4List.join(', '),
-                                        helperText: 'Ipsv4'.hardcoded,
-                                        maxLines: 3,
-                                        minLines: 1,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                AppTextFormInput(
-                                  initialValue: _versionLink,
-                                  helperText: context.$.versionHelperText,
-                                  onSaved: (newValue) => _versionLink = newValue!,
+          return PageLayout(
+            breadcrumbs: [
+              BreadcrumbItem(text: context.$.clusters),
+              BreadcrumbItem(text: cluster.name),
+            ],
+            buttons: [
+              _DeleteClusterButton(instance: cluster),
+              SaveIconButton(onPressed: save),
+            ],
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: Spacing.s16,
+                  children: [
+                    FormCard(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.storage_rounded, size: 100),
+                          SizedBox(width: 32),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: Spacing.s16,
+                            children: [
+                              IdWidget(id: cluster.id.raw),
+                              SizedBox(
+                                width: 500,
+                                child: AppTextFormInput(
+                                  initialValue: _clusterName,
+                                  helperText: context.$.clusterNameHelperText,
+                                  onSaved: (newValue) => _clusterName = newValue!,
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
                                   },
                                 ),
-                                AppTextFormInput.description(
-                                  initialValue: _description,
-                                  helperText: context.$.description,
-                                  onSaved: (newValue) => _description = newValue!,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      Row(
-                        spacing: Spacing.s4,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          _DeletePgUsersButton(clusterId: widget.clusterId),
-                          _CreatePgUserButton(id: widget.clusterId),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          MetadataTable(
+                            statusWidget: ClusterStatusWidget(status: cluster.status),
+                            createdAt: cluster.createdAt,
+                            updatedAt: cluster.updatedAt,
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 400,
-                        child: BlocBuilder<PgUsersBloc, PgUsersState>(
-                          builder: (context, state) {
-                            if (state is! PgUsersLoadedState) {
-                              return AppProgressIndicator();
-                            }
-                            return PgUsersTable(pgUsers: state.pgUsers);
-                          },
-                        ),
+                    ),
+                    FormCard(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final columnWidth = (constraints.maxWidth - 3 * Spacing.s16) / 4;
+                          return Column(
+                            spacing: Spacing.s16,
+                            children: [
+                              Row(
+                                spacing: Spacing.s16,
+                                children: [
+                                  SizedBox(
+                                    width: columnWidth,
+                                    child: AppTextFormInput(
+                                      initialValue: _cores.toString(),
+                                      helperText: context.$.cores,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      onSaved: (newValue) => _cores = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: columnWidth,
+                                    child: AppTextFormInput(
+                                      initialValue: _diskSize.toString(),
+                                      helperText: context.$.diskSize,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      // TODO(Koretsky): Проверить локализацию
+                                      onSaved: (newValue) => _diskSize = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: columnWidth,
+                                    child: AppTextFormInput(
+                                      initialValue: _nodesNumber.toString(),
+                                      helperText: context.$.nodeCountHelperText,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: columnWidth,
+                                    child: AppTextFormInput(
+                                      initialValue: _syncReplicaNumber.toString(),
+                                      helperText: 'Sync replica number'.hardcoded,
+                                      onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                spacing: Spacing.s16,
+                                children: [
+                                  SizedBox(
+                                    width: columnWidth,
+                                    child: AppTextFormInput(
+                                      initialValue: _ram.toString(),
+                                      helperText: context.$.ramLabelText,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      onSaved: (newValue) => _ram = int.parse(newValue!),
+                                      validator: (value) => switch (value) {
+                                        _ when value!.isEmpty => context.$.requiredField,
+                                        _ => null,
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: (columnWidth * 3) + (Spacing.s16 * 2),
+                                    child: AppTextFormInput(
+                                      readOnly: true,
+                                      initialValue: _ipsv4List.join(', '),
+                                      helperText: 'Ipsv4'.hardcoded,
+                                      maxLines: 3,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              AppTextFormInput(
+                                initialValue: _versionLink,
+                                helperText: context.$.versionHelperText,
+                                onSaved: (newValue) => _versionLink = newValue!,
+                                validator: (value) => switch (value) {
+                                  _ when value!.isEmpty => context.$.requiredField,
+                                  _ => null,
+                                },
+                              ),
+                              AppTextFormInput.description(
+                                initialValue: _description,
+                                helperText: context.$.description,
+                                onSaved: (newValue) => _description = newValue!,
+                              ),
+                            ],
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      spacing: Spacing.s4,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _DeletePgUsersButton(clusterId: widget.clusterId),
+                        _CreatePgUserButton(id: widget.clusterId),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 400,
+                      child: BlocConsumer<PgUsersBloc, PgUsersState>(
+                        listenWhen: (_, current) => current is PgUsersDeletedState,
+                        listener: (context, state) {
+                          context.read<PgUsersSelectionCubit>().onClear();
+                        },
+                        buildWhen: (_, current) => current is PgUsersLoadingState || current is PgUsersLoadedState,
+                        builder: (context, state) {
+                          return switch (state) {
+                            _ when state is! PgUsersLoadedState => AppProgressIndicator(),
+                            _ => PgUsersTable(pgUsers: state.pgUsers),
+                          };
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -321,7 +326,6 @@ class _ViewState extends State<_View> {
         description: _description,
         cores: _cores,
         ram: _ram,
-        ipsv4: null,
         diskSize: _diskSize,
         nodesNumber: _nodesNumber,
         syncReplicaNumber: _syncReplicaNumber,

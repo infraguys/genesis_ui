@@ -11,7 +11,7 @@ final class GetRoleBindingsParams {
     this.updatedAt,
   });
 
-  final UserUUID? userUUID;
+  final UserID? userUUID;
   final ProjectID? projectUUID;
   final RoleUUID? roleUUID;
   final DateTime? createdAt;

@@ -49,9 +49,13 @@ class AppTheme {
       ),
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Palette.color7C7774),
           borderRadius: BorderRadius.circular(4.0),
         ),
+        side: WidgetStateBorderSide.fromMap({
+          WidgetState.hovered: BorderSide(color: Colors.green),
+          WidgetState.selected: BorderSide(color: Palette.colorFF8900),
+          WidgetState.any: BorderSide(color: Palette.color7C7774),
+        }),
         checkColor: WidgetStateColor.fromMap({
           WidgetState.selected: Palette.color1B1B1D,
           WidgetState.any: Colors.transparent,
@@ -71,10 +75,7 @@ class AppTheme {
       scaffoldBackgroundColor: Palette.color1B1B1D,
       appBarTheme: _appbarThemeData,
       drawerTheme: _drawerThemeData,
-      cardTheme: CardThemeData(
-        color: Palette.color333333,
-        margin: EdgeInsets.zero
-      ),
+      cardTheme: CardThemeData(color: Palette.color333333, margin: EdgeInsets.zero),
       inputDecorationTheme: _inputDecorationThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
       dropdownMenuTheme: DropdownMenuThemeData(
@@ -121,9 +122,13 @@ class AppTheme {
       ),
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Palette.color7C7774),
           borderRadius: BorderRadius.circular(4.0),
         ),
+        side: WidgetStateBorderSide.fromMap({
+          WidgetState.hovered: BorderSide(color: Palette.colorFF8900),
+          WidgetState.selected: BorderSide(color: Palette.colorFF8900),
+          WidgetState.any: BorderSide(color: Palette.color7C7774),
+        }),
         checkColor: WidgetStateColor.fromMap({
           WidgetState.selected: Palette.color1B1B1D,
           WidgetState.any: Colors.transparent,

@@ -8,6 +8,7 @@ import 'package:genesis/src/features/dbaas/data/requests/database_requests/pg_da
 import 'package:genesis/src/features/dbaas/data/requests/database_requests/update_pg_database_req.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/create_database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/database_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/databases/update_database_params.dart';
 
 final class PgDatabasesApi {
   PgDatabasesApi(this._client);
@@ -51,7 +52,7 @@ final class PgDatabasesApi {
     }
   }
 
-  Future<DatabaseDto> updateDatabase(UpdatePgDatabaseReq req) async {
+  Future<DatabaseDto> updateDatabase(UpdateDatabaseParams req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
         req.toPath(),

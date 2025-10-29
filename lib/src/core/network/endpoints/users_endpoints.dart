@@ -6,19 +6,19 @@ abstract class UsersEndpoints {
     return Endpoint.withCorePrefix('/iam/users/');
   }
 
-  static Endpoint item(UserUUID id) {
+  static Endpoint item(UserID id) {
     return Endpoint.withCorePrefix('/iam/users/$id');
   }
 
-  static Endpoint changeUserPassword(UserUUID id) {
+  static Endpoint changeUserPassword(UserID id) {
     return Endpoint.withCorePrefix('/iam/users/$id/actions/change_password/invoke');
   }
 
-  static Endpoint confirmUserEmail(UserUUID id) {
+  static Endpoint confirmUserEmail(UserID id) {
     return Endpoint.withCorePrefix('/iam/users/$id/actions/confirm_email/invoke');
   }
 
-  static Endpoint forceConfirmUserEmail(UserUUID id) {
+  static Endpoint forceConfirmUserEmail(UserID id) {
     return Endpoint.withCorePrefix('/iam/users/$id/actions/force_confirm_email/invoke');
   }
 }

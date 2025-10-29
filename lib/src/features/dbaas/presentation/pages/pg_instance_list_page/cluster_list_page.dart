@@ -16,6 +16,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_butto
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
 part 'widgets/delete_clusters_btn.dart';
+
 part 'widgets/create_cluster_btn.dart';
 
 class _View extends StatelessWidget {
@@ -31,9 +32,9 @@ class _View extends StatelessWidget {
         final messenger = ScaffoldMessenger.of(context);
 
         switch (state) {
-          case ClustersDeletedState(clusters:final instances) when instances.length == 1:
+          case ClustersDeletedState(clusters: final instances) when instances.length == 1:
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterDeleted(instances.single.name)));
-          case ClustersDeletedState(clusters:final instances) when instances.length > 1:
+          case ClustersDeletedState(clusters: final instances) when instances.length > 1:
             messenger.showSnackBar(AppSnackBar.success(context.$.msgClustersDeleted(instances.length)));
 
           default:
@@ -45,18 +46,16 @@ class _View extends StatelessWidget {
         ],
         buttons: [
           _DeleteClustersButton(),
-          _CreateClusterButton()
+          _CreateClusterButton(),
         ],
-        child: Expanded(
-          child: BlocBuilder<ClustersBloc, ClustersState>(
-            buildWhen: (_, current) => current is ClustersLoadingState || current is ClustersLoadedState,
-            builder: (_, state) {
-              return switch (state) {
-                _ when state is! ClustersLoadedState => AppProgressIndicator(),
-                _ => ClustersTable(clusters: state.clusters),
-              };
-            },
-          ),
+        child: BlocBuilder<ClustersBloc, ClustersState>(
+          buildWhen: (_, current) => current is ClustersLoadingState || current is ClustersLoadedState,
+          builder: (_, state) {
+            return switch (state) {
+              _ when state is! ClustersLoadedState => AppProgressIndicator(),
+              _ => ClustersTable(clusters: state.clusters),
+            };
+          },
         ),
       ),
     );

@@ -7,7 +7,7 @@ class DeleteUserUseCase {
 
   final IUsersRepository _repository;
 
-  Future<void> call(UserUUID id) async {
+  Future<void> call(UserID id) async {
     await _repository.deleteUser(DeleteUserParams(id));
   }
 }

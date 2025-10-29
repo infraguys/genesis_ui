@@ -7,7 +7,7 @@ class GetUserUseCase {
 
   final IUsersRepository _repository;
 
-  Future<User> call(UserUUID id) async {
+  Future<User> call(UserID id) async {
     return await _repository.getUser(GetUserParams(id));
   }
 }

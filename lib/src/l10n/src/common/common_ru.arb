@@ -51,5 +51,13 @@
   "versionHelperText": "Ссылка на версию PostgreSQL",
   "clusterLinkHelperText": "Ссылка на кластер PostgreSQL",
   "repeatPassword": "Повторите пароль",
-  "passwordsDoNotMatch": "Пароли не совпадают"
+  "passwordsDoNotMatch": "Пароли не совпадают",
+  "errorMinLength": "Введите не менее {min} символов",
+  "@errorMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  }
 }

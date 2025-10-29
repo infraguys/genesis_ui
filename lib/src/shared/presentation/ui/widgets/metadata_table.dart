@@ -7,10 +7,12 @@ class MetadataTable extends StatelessWidget {
     required this.statusWidget,
     required this.createdAt,
     required this.updatedAt,
+    this.verificationStatusWidget,
     super.key,
   });
 
   final Widget statusWidget;
+  final Widget? verificationStatusWidget;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -31,6 +33,19 @@ class MetadataTable extends StatelessWidget {
             ),
           ],
         ),
+        if (verificationStatusWidget != null)
+          TableRow(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(context.$.verification),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: verificationStatusWidget!,
+              ),
+            ],
+          ),
         TableRow(
           children: [
             Padding(

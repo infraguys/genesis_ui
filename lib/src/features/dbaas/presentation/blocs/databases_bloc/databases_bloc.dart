@@ -28,13 +28,14 @@ class DatabasesBloc extends Bloc<DatabasesEvent, DatabasesState> {
 
   Future<void> _onDeleteDatabases(_DeleteDatabases event, Emitter<DatabasesState> emit) async {
     final useCase = DeleteDatabasesUseCase(_repository);
-    emit(DatabasesLoadingState());
     final listOfParams = event.databases
         .map((it) => DatabaseParams(clusterId: event.clusterId, databaseId: it.id))
         .toList();
     await useCase(listOfParams);
+    final newListOfPgDatabases = List.of((state as DatabasesLoadedState).databases)
+      ..removeWhere((db) => event.databases.contains(db));
     emit(DatabasesDeletedState(event.databases));
-    add(DatabasesEvent.getDatabases(GetDatabasesParams(clusterId: event.clusterId)));
+    emit(DatabasesLoadedState(newListOfPgDatabases));
   }
 
   // Future<void> _onStartPolling(_StartPolling event, Emitter<NodesState> emit) async {

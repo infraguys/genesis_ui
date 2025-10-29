@@ -48,8 +48,8 @@
       }
     }
   },
-  "deletePgClusterConfirmation": "Удалить кластер {name}?",
-  "@deletePgClusterConfirmation": {
+  "deleteClusterConfirmation": "Удалить кластер {name}?",
+  "@deleteClusterConfirmation": {
     "placeholders": {
       "name": {
         "type": "String"
@@ -90,6 +90,38 @@
   },
   "deleteUsers": "Удалить выбранных({count}) пользователей?",
   "@deleteUsers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletePgUserConfirmation": "Удалить PG пользователя {name}?",
+  "@deletePgUserConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePgUsersConfirmation": "Удалить выбранных ({count}) PG пользователей?",
+  "@deletePgUsersConfirmation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteDatabaseConfirmation": "Удалить базу данных {name}?",
+  "@deleteDatabaseConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteDatabasesConfirmation": "Удалить выбранных ({count}) базы данных?",
+  "@deleteDatabasesConfirmation": {
     "placeholders": {
       "count": {
         "type": "int"

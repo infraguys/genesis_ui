@@ -22,7 +22,5 @@ class PgUsersSelectionCubit extends Cubit<List<PgUser>> {
     }
   }
 
-  void onClear() {
-    emit(List.empty());
-  }
+  void onClear() => emit(List.empty());
 }

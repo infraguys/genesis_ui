@@ -7,7 +7,7 @@ sealed class ProjectEvent {
     required String name,
     required String description,
     required OrganizationID organizationID,
-    required UserUUID? userID,
+    required UserID? userID,
     required List<Role> roles,
   }) = _Create;
 
@@ -28,7 +28,7 @@ final class _Create implements ProjectEvent {
   final String name;
   final String description;
   final OrganizationID organizationID;
-  final UserUUID? userID;
+  final UserID? userID;
   final List<Role> roles;
 }
 

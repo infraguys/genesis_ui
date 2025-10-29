@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 
 class ActiveUsersCard extends StatelessWidget {
   const ActiveUsersCard({

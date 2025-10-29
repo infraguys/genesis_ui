@@ -3,14 +3,14 @@ import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 
 final class UpdateDatabaseParams {
   UpdateDatabaseParams({
-    required this.pgInstanceId,
+    required this.clusterId,
     required this.databaseId,
     required this.name,
     // required this.owner,
     this.description,
   });
 
-  final ClusterID pgInstanceId;
+  final ClusterID clusterId;
   final DatabaseID databaseId;
   final String name;
   // final String owner;

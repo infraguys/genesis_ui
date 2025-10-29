@@ -25,7 +25,7 @@ class UserDto implements IDto<User> {
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 
   @JsonKey(name: 'uuid', fromJson: _toID)
-  final UserUUID id;
+  final UserID id;
   @JsonKey(name: 'description')
   final String description;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
@@ -72,7 +72,7 @@ class UserDto implements IDto<User> {
 
   static Object? _readUsername(Map<dynamic, dynamic> json, String _) => json['username'] ?? json['name'];
 
-  static UserUUID _toID(String json) => UserUUID(json);
+  static UserID _toID(String json) => UserID(json);
 
   static UserStatus _toStatusFromJson(String json) => switch (json) {
     'ACTIVE' => UserStatus.active,

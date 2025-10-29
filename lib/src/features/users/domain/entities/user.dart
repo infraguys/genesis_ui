@@ -17,7 +17,7 @@ class User extends Equatable {
     required this.otpEnabled,
   });
 
-  final UserUUID uuid;
+  final UserID uuid;
   final String username;
   final String description;
   final DateTime createdAt;
@@ -89,6 +89,6 @@ class User extends Equatable {
 //   }
 // }
 
-extension type UserUUID(String value) {}
+extension type UserID(String raw) {}
 
 enum UserStatus { active, unknown }

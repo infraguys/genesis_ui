@@ -9,7 +9,7 @@ final class CreateRoleBindingParams {
     this.projectUUID,
   });
 
-  final UserUUID userUUID;
+  final UserID userUUID;
   final RoleUUID roleUUID;
   final ProjectID? projectUUID;
 }

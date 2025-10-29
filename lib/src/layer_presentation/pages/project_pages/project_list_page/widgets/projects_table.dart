@@ -7,7 +7,7 @@ import 'package:genesis/src/layer_presentation/blocs/projects_selection_bloc/pro
 import 'package:genesis/src/layer_presentation/pages/project_pages/project_list_page/widgets/projects_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
-import 'package:genesis/src/layer_presentation/shared_widgets/status_widgets/project_status_widget.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/project_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';

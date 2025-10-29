@@ -7,7 +7,7 @@ final class ConfirmEmailsUseCase {
 
   final IUsersRepository _repository;
 
-  Future<List<User>> call(List<UserUUID> ids) async {
+  Future<List<User>> call(List<UserID> ids) async {
     return await Future.wait(
       ids.map((id) => _repository.confirmEmail(ConfirmEmailParams(id))),
     );

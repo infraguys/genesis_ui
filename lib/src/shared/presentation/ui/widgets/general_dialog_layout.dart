@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GeneralDialogLayout extends StatelessWidget {
   const GeneralDialogLayout({
     required this.child,
-    required this.constraints,
+    this.constraints = const BoxConstraints(maxWidth: 900),
     super.key,
   });
 

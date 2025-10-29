@@ -55,5 +55,13 @@
   "versionHelperText": "Link to PostgreSQL version",
   "clusterLinkHelperText": "Link to PostgreSQL cluster",
   "repeatPassword": "Repeat password",
-  "passwordsDoNotMatch": "Passwords do not match"
+  "passwordsDoNotMatch": "Passwords do not match",
+  "errorMinLength": "Enter at least {min} characters",
+  "@errorMinLength": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  }
 }

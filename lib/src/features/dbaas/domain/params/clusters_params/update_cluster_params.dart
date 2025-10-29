@@ -9,14 +9,12 @@ final class UpdateClusterParams {
     required this.diskSize,
     required this.nodesNumber,
     required this.syncReplicaNumber,
-    required this.ipsv4,
     this.description,
   });
 
   final ClusterID id;
   final String? name;
   final String? description;
-  final List<String>? ipsv4;
   final int? cores;
   final int? ram;
   final int? diskSize;

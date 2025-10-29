@@ -12,7 +12,7 @@ class _DeleteClustersButton extends StatelessWidget {
         }
 
         final message = switch (state.length) {
-          1 => context.$.deletePgClusterConfirmation(state.single.name),
+          1 => context.$.deleteClusterConfirmation(state.single.name),
           final len => context.$.deleteClustersConfirmation(len),
         };
 

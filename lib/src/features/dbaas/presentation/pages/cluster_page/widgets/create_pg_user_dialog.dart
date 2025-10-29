@@ -59,11 +59,10 @@ class _ViewState extends State<_View> {
         }
       },
       child: GeneralDialogLayout(
-        constraints: BoxConstraints(maxWidth: 900),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             spacing: Spacing.s16,
             children: [
@@ -102,6 +101,7 @@ class _ViewState extends State<_View> {
                           maxLines: 1,
                           validator: (value) => switch (value) {
                             _ when value!.isEmpty => context.$.requiredField,
+                            _ when value.length < 8 => context.$.errorMinLength(8),
                             _ => null,
                           },
                         ),
@@ -115,12 +115,7 @@ class _ViewState extends State<_View> {
                   );
                 },
               ),
-              Row(
-                children: [
-                  Spacer(),
-                  SaveIconButton(onPressed: save),
-                ],
-              ),
+              SaveIconButton(onPressed: save)
             ],
           ),
         ),

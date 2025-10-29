@@ -17,7 +17,7 @@ final class AuthenticatedAuthState implements AuthState {
       refreshToken = session.refreshToken,
       scope = session.scope;
 
-  bool isEqualUuid(UserUUID other) => user.uuid == other;
+  bool isEqualUuid(UserID other) => user.uuid == other;
 
   final User user;
   final PermissionNames permissionNames;

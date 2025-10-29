@@ -32,8 +32,8 @@ final class PgDatabasesRepository implements IDatabaseRepository {
   }
 
   @override
-  Future<Database> updateDatabase(params) {
-    // TODO: implement updateDatabase
-    throw UnimplementedError();
+  Future<Database> updateDatabase(params) async {
+    final dto = await _api.updateDatabase(params);
+    return dto.toEntity();
   }
 }

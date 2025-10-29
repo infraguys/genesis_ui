@@ -7,7 +7,7 @@ final class ChangeUserPasswordParams {
     required this.newPassword,
   });
 
-  final UserUUID id;
+  final UserID id;
   final String oldPassword;
   final String newPassword;
 }

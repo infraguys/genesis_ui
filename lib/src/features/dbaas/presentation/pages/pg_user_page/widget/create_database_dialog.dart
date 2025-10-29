@@ -71,7 +71,7 @@ class _ViewState extends State<_View> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             spacing: gapWidth,
             children: [
@@ -113,23 +113,16 @@ class _ViewState extends State<_View> {
                       //     // ),
                       //   ],
                       // ),
-                      AppTextFormInput(
+                      AppTextFormInput.description(
                         initialValue: _description,
                         helperText: context.$.description,
-                        maxLines: 2,
-                        minLines: 2,
                         onSaved: (newValue) => _description = newValue!,
                       ),
                     ],
                   );
                 },
               ),
-              Row(
-                children: [
-                  Spacer(),
-                  SaveIconButton(onPressed: save),
-                ],
-              ),
+              SaveIconButton(onPressed: save),
             ],
           ),
         ),
