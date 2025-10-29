@@ -17,6 +17,9 @@ build:
           format: gz
           envs:
             - UI_BUILD_ENV_*
+            - REPO_ENDPOINT_PUT
+            - PROJECT_NAME
+            - GENESIS_UI_APP_VERSION
 
           # OS profile for the image
           profile: genesis_base
