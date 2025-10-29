@@ -332,7 +332,7 @@ GoRouter createRouter(BuildContext context) {
                         path: 'users/:user_id',
                         pageBuilder: (context, state) => NoTransitionPage(
                           child: PgUserPage(
-                            clusterId: ClusterID(GoRouter.of(context).state.pathParameters['id']!),
+                            clusterId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
                             pgUserId: PgUserID(state.pathParameters['user_id']!),
                           ),
                         ),
