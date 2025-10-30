@@ -4,7 +4,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/organizations/domain/params/update_organization_params.dart';
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
-import 'package:genesis/src/features/organizations/presentation/widgets/organization_status_widget.dart';
 import 'package:genesis/src/layer_presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
@@ -16,11 +15,13 @@ import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_butto
 import 'package:genesis/src/shared/presentation/ui/widgets/form_card.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/id_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/metadata_table.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/organization_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
 import 'package:go_router/go_router.dart';
 
 part './widgets/delete_organization_btn.dart';
+
 part './widgets/save_organization_btn.dart';
 
 class _OrganizationDetailsView extends StatefulWidget {

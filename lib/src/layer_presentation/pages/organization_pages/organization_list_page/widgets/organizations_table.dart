@@ -6,8 +6,8 @@ import 'package:genesis/src/features/organizations/domain/entities/organization.
 import 'package:genesis/src/layer_presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/widgets/organizations_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
-import 'package:genesis/src/features/organizations/presentation/widgets/organization_status_widget.dart';
 import 'package:genesis/src/routing/app_router.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/organization_status_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
