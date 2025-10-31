@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/create_pg_instance_page/create_pg_instance_page.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/blocs/cluster_selection_cubit.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/widgets/clusters_table.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
@@ -13,11 +13,12 @@ import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/create_icon_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/delete_elevated_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/empty_state_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 
-part 'widgets/delete_clusters_btn.dart';
-
 part 'widgets/create_cluster_btn.dart';
+part 'widgets/delete_clusters_btn.dart';
+part 'widgets/no_clusters_widget.dart';
 
 class _View extends StatelessWidget {
   const _View({
@@ -53,6 +54,7 @@ class _View extends StatelessWidget {
           builder: (_, state) {
             return switch (state) {
               _ when state is! ClustersLoadedState => AppProgressIndicator(),
+              _ when state.clusters.isEmpty => _NoClustersWidget(),
               _ => ClustersTable(clusters: state.clusters),
             };
           },
@@ -73,7 +75,7 @@ class _ClustersListPageState extends State<ClustersListPage> with RouteAware {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    instancesObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+    clustersObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
   }
 
   // Экран стал видимым (вернулись назад / сняли перекрытие)
@@ -90,7 +92,7 @@ class _ClustersListPageState extends State<ClustersListPage> with RouteAware {
 
   @override
   void dispose() {
-    instancesObserver.unsubscribe(this);
+    clustersObserver.unsubscribe(this);
     context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
     super.dispose();
   }

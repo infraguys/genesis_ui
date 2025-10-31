@@ -20,8 +20,10 @@ class PageLayout extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Breadcrumbs(items: breadcrumbs),
-        ButtonsBar(children: buttons),
-        SizedBox(height: 16.0),
+        if (buttons.isNotEmpty) ...[
+          ButtonsBar(children: buttons),
+          SizedBox(height: 16.0),
+        ],
         Expanded(child: child),
       ],
     );

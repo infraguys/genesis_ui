@@ -5,7 +5,6 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
-import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/pg_users/update_pg_user_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
@@ -33,7 +32,6 @@ import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart
 import 'package:go_router/go_router.dart';
 
 part './widget/create_db_btn.dart';
-
 part './widget/delete_databases_btn.dart';
 
 class _View extends StatefulWidget {
@@ -281,9 +279,11 @@ class PgUserPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) {
-            return DatabasesBloc(context.read<IDatabaseRepository>())..add(
-              DatabasesEvent.getDatabases(GetDatabasesParams(clusterId: clusterId)),
-            );
+            return DatabasesBloc(context.read<IDatabaseRepository>())..add(DatabasesEvent.startPolling(clusterId));
+
+            //   ..add(
+            //   DatabasesEvent.getDatabases(GetDatabasesParams(clusterId: clusterId)),
+            // );
           },
         ),
         BlocProvider(

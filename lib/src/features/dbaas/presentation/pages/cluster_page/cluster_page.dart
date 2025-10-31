@@ -13,9 +13,10 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_bloc/clust
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_bloc/pg_users_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/pg_users_selection_cubit/pg_users_selection_cubit.dart';
+import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/cluster_status_widget.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/create_pg_user_dialog.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/pg_user_table.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/widgets/cluster_status_widget.dart';
+import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -32,9 +33,7 @@ import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart
 import 'package:go_router/go_router.dart';
 
 part './widgets/create_pg_user_btn.dart';
-
 part './widgets/delete_cluster_btn.dart';
-
 part './widgets/delete_pg_users_btn.dart';
 
 class _View extends StatefulWidget {
@@ -67,14 +66,7 @@ class _ViewState extends State<_View> {
   @override
   void initState() {
     _clusterBloc = context.read<ClusterBloc>();
-    _clusterBloc.add(ClusterEvent.startPolling(widget.clusterId));
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _clusterBloc.add(ClusterEvent.stopPolling());
-    super.dispose();
   }
 
   @override
@@ -336,13 +328,43 @@ class _ViewState extends State<_View> {
   }
 }
 
-class ClusterPage extends StatelessWidget {
+class ClusterPage extends StatefulWidget {
   const ClusterPage({
-    required this.id,
+    required this.clusterId,
     super.key,
   });
 
-  final ClusterID id;
+  final ClusterID clusterId;
+
+  @override
+  State<ClusterPage> createState() => _ClusterPageState();
+}
+
+class _ClusterPageState extends State<ClusterPage> with RouteAware {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    clusterObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  // Экран стал видимым (вернулись назад / сняли перекрытие)
+  @override
+  void didPopNext() {
+    context.read<ClusterBloc>().add(ClusterEvent.startPolling(widget.clusterId));
+  }
+
+  // Поверх запушили другой экран — можно приостановить
+  @override
+  void didPushNext() {
+    context.read<ClusterBloc>().add(ClusterEvent.stopPolling());
+  }
+
+  @override
+  void dispose() {
+    clusterObserver.unsubscribe(this);
+    context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -351,13 +373,13 @@ class ClusterPage extends StatelessWidget {
         BlocProvider(
           create: (context) {
             final repository = context.read<IClustersRepository>();
-            return ClusterBloc(repository)..add(ClusterEvent.get(id));
+            return ClusterBloc(repository)..add(ClusterEvent.startPolling(widget.clusterId));
           },
         ),
         BlocProvider(
           create: (context) {
             final repository = context.read<IPgUsersRepository>();
-            final params = GetPgUsersParams(clusterId: id);
+            final params = GetPgUsersParams(clusterId: widget.clusterId);
             return PgUsersBloc(repository)..add(PgUsersEvent.getUsers(params));
           },
         ),
@@ -365,7 +387,7 @@ class ClusterPage extends StatelessWidget {
           create: (context) => PgUsersSelectionCubit(),
         ),
       ],
-      child: _View(clusterId: id),
+      child: _View(clusterId: widget.clusterId),
     );
   }
 }
