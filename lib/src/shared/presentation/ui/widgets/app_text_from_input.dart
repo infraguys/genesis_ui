@@ -18,6 +18,9 @@ class AppTextFormInput extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.forceErrorText,
+    this.suffix,
+    this.suffixIcon,
+    this.prefixIcon,
   });
 
   const AppTextFormInput.description({
@@ -34,8 +37,31 @@ class AppTextFormInput extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.forceErrorText,
+    this.suffix,
+    this.suffixIcon,
+    this.prefixIcon,
   }) : maxLines = 2,
        minLines = 2;
+
+  const AppTextFormInput.password({
+    this.labelText,
+    this.hintText,
+    super.key,
+    this.onSaved,
+    this.initialValue,
+    this.inputFormatters,
+    this.validator,
+    this.readOnly = false,
+    this.helperText,
+    this.obscureText = false,
+    this.onChanged,
+    this.controller,
+    this.forceErrorText,
+    this.suffix,
+    this.suffixIcon,
+    this.prefixIcon,
+  }) : maxLines = 1,
+       minLines = 1;
 
   final void Function(String? value)? onSaved;
   final String? initialValue;
@@ -51,6 +77,9 @@ class AppTextFormInput extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final String? forceErrorText;
+  final Widget? suffix;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +124,9 @@ class AppTextFormInput extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         helperText: helperText,
+        suffix: suffix,
+        prefixIcon: prefixIcon,
+        suffixIcon: Padding(padding:  const EdgeInsets.only(right: 8.0), child: suffixIcon),
       ),
       onSaved: onSaved,
       inputFormatters: inputFormatters,
@@ -102,6 +134,7 @@ class AppTextFormInput extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       obscureText: obscureText,
+
       // style: WidgetStateTextStyle.resolveWith((states) {
       //   if (states.contains(WidgetState.disabled)) {
       //     return textTheme.bodyLarge!.copyWith(color: Colors.white);

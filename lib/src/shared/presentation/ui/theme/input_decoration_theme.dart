@@ -5,7 +5,7 @@ final _inputDecorationThemeData = InputDecorationThemeData(
   fillColor: Colors.white.withValues(alpha: 0.05),
   hintStyle: TextStyle(color: Colors.white24),
   prefixIconColor: Colors.white24,
-  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+  contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
   helperStyle: TextStyle(fontSize: 14, height: 14 / 14, color: Colors.white24),
   errorStyle: TextStyle(fontSize: 14, height: 14 / 14, color: Colors.red),
   labelStyle: TextStyle(fontSize: 16, color: Colors.white24),

@@ -5,7 +5,7 @@ final TextTheme _baseTextTheme = TextTheme(
   displayMedium: TextStyle(),
   displaySmall: TextStyle(),
   headlineLarge: TextStyle(fontSize: 32, height: 20 / 14, fontWeight: FontWeight.bold),
-  headlineMedium: TextStyle(),
+  headlineMedium: TextStyle(fontSize: 24, height: 24 / 24, fontWeight: FontWeight.bold),
   headlineSmall: TextStyle(fontSize: 14, height: 20 / 14, fontWeight: FontWeight.bold),
   labelLarge: TextStyle(fontSize: 14, height: 20 / 14),
   labelMedium: TextStyle(fontSize: 14, height: 20 / 14),
