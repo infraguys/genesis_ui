@@ -1,7 +1,7 @@
 part of 'databases_bloc.dart';
 
 sealed class DatabasesEvent {
-  DatabasesEvent();
+  const DatabasesEvent();
 
   factory DatabasesEvent.getDatabases(GetDatabasesParams params) = _GetDatabases;
 
@@ -9,6 +9,10 @@ sealed class DatabasesEvent {
     required List<Database> databases,
     required ClusterID clusterId,
   }) = _DeleteDatabases;
+
+  factory DatabasesEvent.startPolling(ClusterID clusterId) = _StartPolling;
+
+  factory DatabasesEvent.stopPolling() = _StopPolling;
 }
 
 final class _GetDatabases extends DatabasesEvent {
@@ -22,4 +26,18 @@ final class _DeleteDatabases extends DatabasesEvent {
 
   final List<Database> databases;
   final ClusterID clusterId;
+}
+
+final class _StartPolling extends DatabasesEvent {
+  _StartPolling(this.clusterId);
+
+  final ClusterID clusterId;
+}
+
+final class _StopPolling extends DatabasesEvent {}
+
+final class _Tick extends DatabasesEvent {
+  const _Tick(this.params);
+
+  final GetDatabasesParams params;
 }
