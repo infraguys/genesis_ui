@@ -7,9 +7,9 @@ sealed class NodesEvent {
 
   factory NodesEvent.failure(String message) = _Failure;
 
-  factory NodesEvent.startPollingInstances() = _StartPolling;
+  factory NodesEvent.startPolling() = _StartPolling;
 
-  factory NodesEvent.stopPollingInstances() = _StopPolling;
+  factory NodesEvent.stopPolling() = _StopPolling;
 }
 
 final class _GetNodes implements NodesEvent {

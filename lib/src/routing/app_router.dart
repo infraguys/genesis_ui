@@ -10,19 +10,22 @@ import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/clust
 import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/cluster_list_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
+import 'package:genesis/src/features/extensions/presentation/pages/extension_list_page/extension_list_page.dart';
+import 'package:genesis/src/features/extensions/presentation/pages/main_page/main_page.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/features/nodes/presentation/pages/node_list_page/node_list_page.dart';
+import 'package:genesis/src/features/nodes/presentation/pages/node_page/node_page.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
+import 'package:genesis/src/features/users/presentation/pages/user_list_page/user_list_page.dart';
+import 'package:genesis/src/features/users/presentation/pages/user_page/user_page.dart';
 import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
-import 'package:genesis/src/features/extensions/presentation/pages/extension_list_page/extension_list_page.dart';
-import 'package:genesis/src/features/extensions/presentation/pages/main_page/main_page.dart';
-import 'package:genesis/src/features/nodes/presentation/pages/node_page/node_page.dart';
-import 'package:genesis/src/features/nodes/presentation/pages/node_list_page/node_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
@@ -36,16 +39,14 @@ import 'package:genesis/src/layer_presentation/pages/role_pages/role_list_page/r
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/domain_setup_page.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen.dart';
-import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
-import 'package:genesis/src/features/users/presentation/pages/user_page/user_page.dart';
-import 'package:genesis/src/features/users/presentation/pages/user_list_page/user_list_page.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.dart';
 
-final RouteObserver<PageRoute<dynamic>> instancesObserver = RouteObserver<PageRoute<dynamic>>();
+final RouteObserver<PageRoute<dynamic>> clustersObserver = RouteObserver<PageRoute<dynamic>>();
+final RouteObserver<PageRoute<dynamic>> clusterObserver = RouteObserver<PageRoute<dynamic>>();
 
 GoRouter createRouter(BuildContext context) {
   print('router');
@@ -281,7 +282,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.nodes.name,
                 path: '/nodes',
                 onExit: (context, state) {
-                  context.read<NodesBloc>().add(NodesEvent.stopPollingInstances());
+                  context.read<NodesBloc>().add(NodesEvent.stopPolling());
                   return true;
                 },
                 pageBuilder: (_, _) => NoTransitionPage(
@@ -306,7 +307,7 @@ GoRouter createRouter(BuildContext context) {
           ),
           StatefulShellBranch(
             navigatorKey: dbaasNavKey,
-            observers: [instancesObserver],
+            observers: [clustersObserver, clusterObserver],
             routes: [
               GoRoute(
                 // TODO(Koretsky): возможно придется переименовать
@@ -324,7 +325,7 @@ GoRouter createRouter(BuildContext context) {
                     name: AppRoutes.cluster.name,
                     path: ':cluster_id',
                     pageBuilder: (_, state) => NoTransitionPage(
-                      child: ClusterPage(id: ClusterID(state.pathParameters['cluster_id']!)),
+                      child: ClusterPage(clusterId: ClusterID(state.pathParameters['cluster_id']!)),
                     ),
                     routes: [
                       GoRoute(
