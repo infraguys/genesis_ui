@@ -115,7 +115,7 @@ class DatabaseTable extends StatelessWidget {
         context.goNamed(
           AppRoutes.pgDb.name,
           pathParameters: {
-            'cluster_id': GoRouter.of(context).state.pathParameters['cluster_id']!,
+            ...GoRouter.of(context).state.pathParameters,
             'db_id': db.id.raw,
           },
         );
