@@ -33,6 +33,7 @@ import 'package:go_router/go_router.dart';
 
 part './widget/create_db_btn.dart';
 part './widget/delete_databases_btn.dart';
+part './widget/delete_pg_user_btn.dart';
 
 class _View extends StatefulWidget {
   const _View({
@@ -91,8 +92,7 @@ class _ViewState extends State<_View> {
                 context.read<ClustersBloc>().add(ClustersEvent.getClusters());
 
               case PgUserDeletedState(:final pgUser):
-                messenger.showSnackBar(AppSnackBar.success(context.$.success));
-                context.read<ClustersBloc>().add(ClustersEvent.getClusters());
+                messenger.showSnackBar(AppSnackBar.success(context.$.msgPgUserDeleted(pgUser.name)));
                 context.pop();
               default:
             }
@@ -113,7 +113,7 @@ class _ViewState extends State<_View> {
               BreadcrumbItem(text: pgUser.name),
             ],
             buttons: [
-              // _DeletePgInstanceButton(instance: instance),
+              _DeletePgUserButton(pgUser: pgUser, clusterId: widget.clusterId),
               SaveIconButton(onPressed: save),
             ],
             child: SingleChildScrollView(
