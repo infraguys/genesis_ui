@@ -7,7 +7,6 @@ import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_blo
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/app_modal_dialog.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/general_dialog_layout.dart';
@@ -25,8 +24,7 @@ class _ViewState extends State<_View> {
   final _formKey = GlobalKey<FormState>();
   late final UserBloc _userBloc;
 
-  final _passwordController = TextEditingController();
-  final _repeatedPasswordController = TextEditingController();
+  final ValueNotifier<bool> _isPasswordVisible = ValueNotifier<bool>(false);
 
   var _username = '';
   var _firstname = '';
@@ -35,18 +33,12 @@ class _ViewState extends State<_View> {
   var _email = '';
   var _phone = '';
   var _description = '';
+  var _password = '';
 
   @override
   void initState() {
     _userBloc = context.read<UserBloc>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    _repeatedPasswordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -163,17 +155,30 @@ class _ViewState extends State<_View> {
                           ),
                           SizedBox(
                             width: columnWidth * 2 + Spacing.s16,
-                            child: AppTextFormInput(
-                              // initialValue: _password,
-                              controller: _passwordController,
-                              helperText: context.$.password,
-
-                              onChanged: (value) => _passwordController.text = value,
-                              obscureText: true,
-                              maxLines: 1,
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
+                            child: ValueListenableBuilder(
+                              valueListenable: _isPasswordVisible,
+                              builder: (context, isVisible, _) {
+                                return AppTextFormInput.password(
+                                  helperText: context.$.password,
+                                  obscureText: !isVisible,
+                                  suffixIcon: GestureDetector(
+                                    child: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Icon(
+                                        applyTextScaling: true,
+                                        isVisible ? Icons.visibility : Icons.visibility_off,
+                                        color: Colors.white24,
+                                      ),
+                                    ),
+                                    onTap: () => _isPasswordVisible.value = !isVisible,
+                                  ),
+                                  onSaved: (newValue) => _password = newValue!,
+                                  validator: (value) => switch (value) {
+                                    _ when value!.isEmpty => context.$.requiredField,
+                                    _ when value.length < 8 => context.$.errorMinLength(8),
+                                    _ => null,
+                                  },
+                                );
                               },
                             ),
                           ),
@@ -200,43 +205,14 @@ class _ViewState extends State<_View> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final isOk = await showDialog<bool>(
-        context: context,
-        builder: (context) => AppModalDialog(
-          content: SizedBox(
-            width: 400,
-            child: AppTextFormInput(
-              controller: _repeatedPasswordController,
-              helperText: context.$.repeatPassword,
-              onChanged: (value) => _repeatedPasswordController.text = value,
-              obscureText: true,
-              maxLines: 1,
-              validator: (value) => switch (value) {
-                _ when value!.isNotEmpty && value != _passwordController.text => context.$.passwordsDoNotMatch,
-                _ => null,
-              },
-            ),
-          ),
-          onPressed: () {
-            if (_passwordController.text == _repeatedPasswordController.text) {
-              _repeatedPasswordController.clear();
-              context.pop(true);
-            }
-          },
-          onCancel: () => _repeatedPasswordController.clear(),
-        ),
+      final params = CreateUserParams(
+        username: _username,
+        firstName: _firstname,
+        lastName: _lastname,
+        email: _email,
+        password: _password,
       );
-
-      if (isOk != null && isOk) {
-        final params = CreateUserParams(
-          username: _username,
-          firstName: _firstname,
-          lastName: _lastname,
-          email: _email,
-          password: _passwordController.text,
-        );
-        _userBloc.add(UserEvent.createUser(params));
-      }
+      _userBloc.add(UserEvent.createUser(params));
     }
   }
 }
