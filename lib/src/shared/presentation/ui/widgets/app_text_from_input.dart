@@ -21,6 +21,7 @@ class AppTextFormInput extends StatelessWidget {
     this.suffix,
     this.suffixIcon,
     this.prefixIcon,
+    this.focusNode,
   });
 
   const AppTextFormInput.description({
@@ -40,6 +41,7 @@ class AppTextFormInput extends StatelessWidget {
     this.suffix,
     this.suffixIcon,
     this.prefixIcon,
+    this.focusNode,
   }) : maxLines = 2,
        minLines = 2;
 
@@ -60,6 +62,7 @@ class AppTextFormInput extends StatelessWidget {
     this.suffix,
     this.suffixIcon,
     this.prefixIcon,
+    this.focusNode,
   }) : maxLines = 1,
        minLines = 1;
 
@@ -80,6 +83,7 @@ class AppTextFormInput extends StatelessWidget {
   final Widget? suffix;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +138,7 @@ class AppTextFormInput extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       obscureText: obscureText,
+      focusNode: focusNode,
 
       // style: WidgetStateTextStyle.resolveWith((states) {
       //   if (states.contains(WidgetState.disabled)) {

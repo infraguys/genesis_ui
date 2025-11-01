@@ -1,18 +1,7 @@
-/*
-"uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "name": "kt2dZSLO0IEm6",
-  "description": "",
-  "created_at": "2025-10-07T08:36:29.345691Z",
-  "updated_at": "2025-10-07T08:36:29.345794Z",
-  "project_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "instance": "string",
-  "status": "ACTIVE",
-  "owner": "string"
-*/
-
+import 'package:equatable/equatable.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
-class Database {
+class Database extends Equatable{
   const Database({
     required this.id,
     required this.name,
@@ -34,6 +23,19 @@ class Database {
   final DatabaseStatus status;
   final String owner;
   final String? description;
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        description,
+        createdAt,
+        updatedAt,
+        projectId,
+        instance,
+        status,
+        owner,
+      ];
 }
 
 extension type DatabaseID(String raw) {}

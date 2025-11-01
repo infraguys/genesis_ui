@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/network/endpoints/clusters_endpoints.dart';
+import 'package:genesis/src/core/network/endpoints/db_versions_endpoints.dart';
 import 'package:genesis/src/features/dbaas/domain/params/clusters_params/create_cluster_params.dart';
 
 extension CreateClusterReq on CreateClusterParams {
@@ -11,7 +12,7 @@ extension CreateClusterReq on CreateClusterParams {
       'disk_size': diskSize,
       'nodes_number': nodesNumber,
       'sync_replica_number': syncReplicaNumber,
-      'version': versionLink,
+      'version': DbVersionsEndpoints.item(dbVersionId).relativePath,
     };
   }
 

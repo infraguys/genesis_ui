@@ -6,13 +6,16 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/clusters_repository.dart';
+import 'package:genesis/src/features/dbaas/data/repositories/db_versions_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_database_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_users_repository.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/clusters_api.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/databases_api.dart';
+import 'package:genesis/src/features/dbaas/data/source/remote/db_versions_api.dart';
 import 'package:genesis/src/features/dbaas/data/source/remote/pg_users_api.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_database_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_db_versions_repository.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_pg_user_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/extensions/data/repositories/extensions_repository.dart';
@@ -162,6 +165,12 @@ class DiContainer extends StatelessWidget {
             create: (context) {
               final databasesApi = PgDatabasesApi(context.read<RestClient>());
               return PgDatabasesRepository(databasesApi);
+            },
+          ),
+          RepositoryProvider<IDBVersionsRepository>(
+            create: (context) {
+              final dbVersionsApi = DbVersionsApi(context.read<RestClient>());
+              return DbVersionsRepository(dbVersionsApi);
             },
           ),
         ],

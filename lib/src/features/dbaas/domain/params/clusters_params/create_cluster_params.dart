@@ -1,3 +1,5 @@
+import 'package:genesis/src/features/dbaas/domain/entities/db_version.dart';
+
 final class CreateClusterParams {
   CreateClusterParams({
     required this.name,
@@ -6,7 +8,7 @@ final class CreateClusterParams {
     required this.diskSize,
     required this.nodesNumber,
     required this.syncReplicaNumber,
-    required this.versionLink,
+    required this.dbVersionId,
     this.description,
   });
 
@@ -17,5 +19,5 @@ final class CreateClusterParams {
   final int diskSize;
   final int nodesNumber;
   final int syncReplicaNumber;
-  final String versionLink;
+  final DbVersionID dbVersionId;
 }

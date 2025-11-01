@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
+import 'package:genesis/src/features/dbaas/domain/entities/db_version.dart';
 import 'package:genesis/src/features/dbaas/domain/params/clusters_params/create_cluster_params.dart';
+import 'package:genesis/src/features/dbaas/domain/params/db_versions_params/get_db_versions_params.dart';
 import 'package:genesis/src/features/dbaas/domain/repositories/i_clusters_repository.dart';
+import 'package:genesis/src/features/dbaas/domain/repositories/i_db_versions_repository.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/cluster_bloc/cluster_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/dbaas/presentation/blocs/db_versions_bloc/db_versions_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -33,9 +37,11 @@ class _ViewState extends State<_View> {
   var _ram = 512;
   var _diskSize = 10;
   var _nodesNumber = 1;
-  var _ipsv4List = <String>[];
   var _syncReplicaNumber = 1;
-  var _versionLink = '/v1/types/postgres/versions/26786c09-d175-44e5-9013-ac14c88acd1c';
+  late DbVersionID _dbVersionId;
+
+  final contoller = SearchController();
+  final _versionFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -116,7 +122,6 @@ class _ViewState extends State<_View> {
                               initialValue: _diskSize.toString(),
                               helperText: context.$.diskSize,
                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                              // TODO(Koretsky): Проверить локализацию
                               onSaved: (value) => _diskSize = int.parse(value!),
                               validator: (value) => switch (value) {
                                 _ when value!.isEmpty => context.$.requiredField,
@@ -169,13 +174,63 @@ class _ViewState extends State<_View> {
                           ),
                           SizedBox(
                             width: (columnWidth * 3) + (Spacing.s16 * 2),
-                            child: AppTextFormInput(
-                              initialValue: _versionLink,
-                              helperText: context.$.versionHelperText,
-                              onSaved: (value) => _versionLink = value!,
-                              validator: (value) => switch (value) {
-                                _ when value!.isEmpty => context.$.requiredField,
-                                _ => null,
+
+                            child: BlocBuilder<DbVersionsBloc, DbVersionsState>(
+                              builder: (context, state) {
+                                return RawAutocomplete<DbVersion>(
+                                  textEditingController: TextEditingController(),
+                                  focusNode: _versionFocusNode,
+                                  optionsBuilder: (textEditingValue) {
+                                    if (state is! DbVersionsLoadedState) {
+                                      return [];
+                                    }
+                                    return state.versions.where(
+                                      (version) =>
+                                          version.name.toLowerCase().contains(textEditingValue.text.toLowerCase()),
+                                    );
+                                  },
+                                  fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                                    return AppTextFormInput(
+                                      controller: controller,
+                                      focusNode: focusNode,
+                                      helperText: 'Database Version'.hardcoded,
+                                    );
+                                  },
+                                  displayStringForOption: (option) => option.name,
+                                  onSelected: (option) {
+                                    _dbVersionId = option.id;
+                                    _versionFocusNode.unfocus();
+                                  },
+                                  optionsViewBuilder: (context, onSelected, options) {
+                                    return Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Material(
+                                        color: Colors.grey[850],
+                                        elevation: 4,
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: ListView.separated(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.zero,
+                                          itemCount: options.length,
+                                          separatorBuilder: (_, __) => Divider(height: 1, color: Colors.grey[700]),
+                                          itemBuilder: (context, index) {
+                                            final option = options.elementAt(index);
+                                            return InkWell(
+                                              onTap: () => onSelected(option),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16),
+                                                child: Text(
+                                                  option.name,
+                                                  style: const TextStyle(color: Colors.white),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ),
@@ -209,7 +264,7 @@ class _ViewState extends State<_View> {
         diskSize: _diskSize,
         nodesNumber: _nodesNumber,
         syncReplicaNumber: _syncReplicaNumber,
-        versionLink: _versionLink,
+        dbVersionId: _dbVersionId,
       );
       _clusterBloc.add(ClusterEvent.create(params));
     }
@@ -221,9 +276,22 @@ class CreateClusterDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ClusterBloc(context.read<IClustersRepository>()),
-      child: _View(key: key),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ClusterBloc(context.read<IClustersRepository>()),
+          child: _View(key: key),
+        ),
+        BlocProvider(
+          create: (context) {
+            final repository = context.read<IDBVersionsRepository>();
+            return DbVersionsBloc(repository)..add(
+              DbVersionsEvent.getDbVersions(GetDbVersionsParams()),
+            );
+          },
+        ),
+      ],
+      child: _View(),
     );
   }
 }
