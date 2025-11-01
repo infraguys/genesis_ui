@@ -48,7 +48,33 @@ class _View extends StatefulWidget {
   State<_View> createState() => _ViewState();
 }
 
-class _ViewState extends State<_View> {
+class _ViewState extends State<_View> with RouteAware {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    clusterObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  // Экран стал видимым (вернулись назад / сняли перекрытие)
+  @override
+  void didPopNext() {
+    context.read<PgUsersBloc>().add(PgUsersEvent.getUsers(GetPgUsersParams(clusterId: widget.clusterId)));
+    // context.read<ClusterBloc>().add(ClusterEvent.startPolling(widget.clusterId));
+  }
+
+  // Поверх запушили другой экран — можно приостановить
+  @override
+  void didPushNext() {
+    context.read<ClusterBloc>().add(ClusterEvent.stopPolling());
+  }
+
+  @override
+  void dispose() {
+    clusterObserver.unsubscribe(this);
+    context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   late final ClusterBloc _clusterBloc;
@@ -328,7 +354,7 @@ class _ViewState extends State<_View> {
   }
 }
 
-class ClusterPage extends StatefulWidget {
+class ClusterPage extends StatelessWidget {
   const ClusterPage({
     required this.clusterId,
     super.key,
@@ -337,49 +363,19 @@ class ClusterPage extends StatefulWidget {
   final ClusterID clusterId;
 
   @override
-  State<ClusterPage> createState() => _ClusterPageState();
-}
-
-class _ClusterPageState extends State<ClusterPage> with RouteAware {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    clusterObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
-  }
-
-  // Экран стал видимым (вернулись назад / сняли перекрытие)
-  @override
-  void didPopNext() {
-    context.read<ClusterBloc>().add(ClusterEvent.startPolling(widget.clusterId));
-  }
-
-  // Поверх запушили другой экран — можно приостановить
-  @override
-  void didPushNext() {
-    context.read<ClusterBloc>().add(ClusterEvent.stopPolling());
-  }
-
-  @override
-  void dispose() {
-    clusterObserver.unsubscribe(this);
-    context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) {
             final repository = context.read<IClustersRepository>();
-            return ClusterBloc(repository)..add(ClusterEvent.startPolling(widget.clusterId));
+            return ClusterBloc(repository)..add(ClusterEvent.startPolling(clusterId));
           },
         ),
         BlocProvider(
           create: (context) {
             final repository = context.read<IPgUsersRepository>();
-            final params = GetPgUsersParams(clusterId: widget.clusterId);
+            final params = GetPgUsersParams(clusterId: clusterId);
             return PgUsersBloc(repository)..add(PgUsersEvent.getUsers(params));
           },
         ),
@@ -387,7 +383,7 @@ class _ClusterPageState extends State<ClusterPage> with RouteAware {
           create: (context) => PgUsersSelectionCubit(),
         ),
       ],
-      child: _View(clusterId: widget.clusterId),
+      child: _View(clusterId: clusterId),
     );
   }
 }
