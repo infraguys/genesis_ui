@@ -7,6 +7,8 @@ sealed class PgUserEvent {
 
   factory PgUserEvent.update(UpdatePgUserParams params) = _UpdatePgUser;
 
+  factory PgUserEvent.delete({required PgUser pgUser, required PgUserParams params}) = _DeletePgUser;
+
   factory PgUserEvent.get(PgUserParams params) = _GetPgUser;
 }
 
@@ -26,4 +28,14 @@ final class _GetPgUser extends PgUserEvent {
   _GetPgUser(this.params);
 
   final PgUserParams params;
+}
+
+final class _DeletePgUser extends PgUserEvent {
+  _DeletePgUser({
+    required this.params,
+    required this.pgUser,
+  });
+
+  final PgUserParams params;
+  final PgUser pgUser;
 }
