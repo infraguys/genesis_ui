@@ -337,16 +337,18 @@ GoRouter createRouter(BuildContext context) {
                             pgUserId: PgUserID(state.pathParameters['user_id']!),
                           ),
                         ),
-                      ),
-                      GoRoute(
-                        name: AppRoutes.pgDb.name,
-                        path: 'databases/:db_id',
-                        pageBuilder: (context, state) => NoTransitionPage(
-                          child: DatabasePage(
-                            pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
-                            databaseId: DatabaseID(state.pathParameters['db_id']!),
+                        routes: [
+                          GoRoute(
+                            name: AppRoutes.pgDb.name,
+                            path: 'databases/:db_id',
+                            pageBuilder: (context, state) => NoTransitionPage(
+                              child: DatabasePage(
+                                pgInstanceId: ClusterID(GoRouter.of(context).state.pathParameters['cluster_id']!),
+                                databaseId: DatabaseID(state.pathParameters['db_id']!),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
