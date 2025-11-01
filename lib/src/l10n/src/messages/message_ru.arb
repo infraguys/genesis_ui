@@ -160,6 +160,30 @@
       }
     }
   },
+  "msgClustersDeleted": "Кластеры({count}) удалены",
+  "@msgClustersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "msgPgUserDeleted": "PostgreSQL пользователь {name} удален",
+  "@msgPgUserDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgPgUsersDeleted": "PostgreSQL пользователи({count}) удалены",
+  "@msgPgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "msgPgUserCreated": "Пользователь PostgreSQL {name} создан",
   "@msgPgUserCreated": {
     "placeholders": {

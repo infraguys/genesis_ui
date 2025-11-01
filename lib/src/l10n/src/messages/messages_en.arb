@@ -168,6 +168,22 @@
       }
     }
   },
+  "msgPgUserDeleted": "PostgreSQL user {name} has been deleted",
+  "@msgPgUserDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "msgPgUsersDeleted": "PostgreSQL users({count}) have been deleted",
+  "@msgPgUsersDeleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "msgPgUserCreated": "PostgreSQL user {name} has been created",
   "@msgPgUserCreated": {
     "placeholders": {

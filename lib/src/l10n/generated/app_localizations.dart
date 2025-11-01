@@ -770,6 +770,18 @@ abstract class AppLocalizations {
   /// **'Clusters({count}) have been deleted'**
   String msgClustersDeleted(int count);
 
+  /// No description provided for @msgPgUserDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL user {name} has been deleted'**
+  String msgPgUserDeleted(String name);
+
+  /// No description provided for @msgPgUsersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'PostgreSQL users({count}) have been deleted'**
+  String msgPgUsersDeleted(int count);
+
   /// No description provided for @msgPgUserCreated.
   ///
   /// In en, this message translates to:
