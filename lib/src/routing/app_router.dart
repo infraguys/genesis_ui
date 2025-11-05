@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/auth/presentation/auth_page/sign_in_page.dart';
+import 'package:genesis/src/features/auth/presentation/auth_page/auth_page.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
@@ -113,7 +113,7 @@ GoRouter createRouter(BuildContext context) {
         name: AppRoutes.auth.name,
         path: '/sign_in',
         pageBuilder: (_, _) => NoTransitionPage(
-          child: SignInPage(),
+          child: AuthPage(),
         ),
       ),
       StatefulShellRoute.indexedStack(

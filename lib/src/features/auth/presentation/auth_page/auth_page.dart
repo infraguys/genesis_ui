@@ -10,21 +10,24 @@ import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 
-enum AuthMode { signIn, signUp }
+enum _AuthMode { signIn, signUp }
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<AuthPage> createState() => _AuthPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  AuthMode mode = AuthMode.signIn;
+class _AuthPageState extends State<AuthPage> {
+  final authNotifier = ValueNotifier<_AuthMode>(_AuthMode.signIn);
 
   void _toggle() {
     FocusScope.of(context).unfocus();
-    setState(() => mode = mode == AuthMode.signIn ? AuthMode.signUp : AuthMode.signIn);
+    authNotifier.value = switch (authNotifier.value) {
+      _AuthMode.signIn => _AuthMode.signUp,
+      _AuthMode.signUp => _AuthMode.signIn,
+    };
   }
 
   @override
@@ -70,25 +73,50 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 VerticalDivider(width: 2, thickness: 2, color: Palette.color333333, indent: 100, endIndent: 100),
-                Container(
-                  width: columnWidth - 2,
-                  color: Palette.color1B1B1D,
-                  child: Center(
-                    child: SizedBox(
-                      width: 400,
-                      child: PageTransitionSwitcher(
-                        transitionBuilder: (child, primary, secondary) => SharedAxisTransition(
-                          fillColor: Palette.color1B1B1D,
-                          transitionType: SharedAxisTransitionType.horizontal,
-                          animation: primary,
-                          secondaryAnimation: secondary,
-                          child: child,
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: 400,
+                          child: ValueListenableBuilder(
+                            valueListenable: authNotifier,
+                            builder: (context, value, child) {
+                              return PageTransitionSwitcher(
+                                transitionBuilder: (child, primary, secondary) => SharedAxisTransition(
+                                  fillColor: Palette.color1B1B1D,
+                                  transitionType: SharedAxisTransitionType.horizontal,
+                                  animation: primary,
+                                  secondaryAnimation: secondary,
+                                  child: child,
+                                ),
+                                child: switch (value) {
+                                  _AuthMode.signIn => SignInForm(key: const ValueKey('signIn'), onTap: _toggle),
+                                  _AuthMode.signUp => SignUpForm(key: const ValueKey('signUp'), onTap: _toggle),
+                                },
+                              );
+                            },
+                          ),
                         ),
-                        child: mode == AuthMode.signIn
-                            ? SignInForm(key: const ValueKey('signIn'), onTap: _toggle)
-                            : SignUpForm(key: const ValueKey('signUp'), onTap: _toggle),
                       ),
-                    ),
+                      Align(
+                        alignment: AlignmentGeometry.topRight,
+                        child: IconButton(
+                          onPressed: () async {
+                            // final url = await showDialog<String>(
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return Dialog(
+                            //       child: SetupDomainDialog(),
+                            //     );
+                            //   },
+                            // );
+                            // context.read<RestClient>().setBaseUrl(url ?? '');
+                          },
+                          icon: Icon(Icons.settings, color: Colors.white24),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
