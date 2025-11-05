@@ -110,7 +110,7 @@ GoRouter createRouter(BuildContext context) {
         pageBuilder: (_, _) => NoTransitionPage(child: const DomainSetupPage()),
       ),
       GoRoute(
-        name: AppRoutes.signIn.name,
+        name: AppRoutes.auth.name,
         path: '/sign_in',
         pageBuilder: (_, _) => NoTransitionPage(
           child: SignInPage(),

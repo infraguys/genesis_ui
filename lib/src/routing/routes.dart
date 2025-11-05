@@ -5,8 +5,7 @@ enum AppRoutes {
   domainSetup,
 
   /// auth
-  signIn,
-  signUp,
+  auth,
 
   /// iam
   users,
@@ -48,5 +47,5 @@ enum AppRoutes {
   cluster,
   createInstance,
   pgUser,
-  pgDb
+  pgDb,
 }
