@@ -65,7 +65,9 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         Text(
                           '${context.$.genesis} ${context.$.core}',
-                          style: textTheme.headlineLarge?.copyWith(color: Colors.white24),
+                          style: textTheme.headlineLarge?.copyWith(
+                            color: Colors.white24,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ],
