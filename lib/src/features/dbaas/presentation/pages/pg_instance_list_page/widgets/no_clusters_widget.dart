@@ -10,8 +10,7 @@ class _NoClustersWidget extends StatelessWidget {
     return EmptyStateWidget(
       icon: Icons.storage_rounded,
       title: 'Нет кластеров',
-      message: 'Создайте первый кластер, чтобы начать работу',
-      label: 'Создать кластер',
+      subtitle: 'Создайте первый кластер, чтобы начать работу',
       button: _CreateClusterButton.forEmptyState(),
     );
   }

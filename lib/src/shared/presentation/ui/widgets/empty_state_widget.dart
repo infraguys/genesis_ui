@@ -5,16 +5,14 @@ class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
     required this.icon,
     required this.title,
-    required this.message,
+    required this.subtitle,
     required this.button,
     super.key,
-    this.label,
   });
 
   final IconData icon;
   final String title;
-  final String message;
-  final String? label;
+  final String subtitle;
   final Widget button;
 
   @override
@@ -28,7 +26,7 @@ class EmptyStateWidget extends StatelessWidget {
           Icon(icon, size: 150, color: Colors.white24),
           Text(title, style: theme.textTheme.titleMedium! + Colors.white24),
           Text(
-            message,
+            subtitle,
             style: theme.textTheme.bodyMedium! + Colors.white24,
             textAlign: TextAlign.center,
           ),

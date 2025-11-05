@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/features/auth/presentation/auth_page/sign_in_page.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
@@ -23,9 +25,6 @@ import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/user_list_page.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_page/user_page.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_in_page/sign_in_screen.dart';
-import 'package:genesis/src/layer_presentation/pages/auth_pages/sign_up_page/sign_up_screen.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_details_page/organization_details_page.dart';
 import 'package:genesis/src/layer_presentation/pages/organization_pages/organization_list_page/organization_list_page.dart';
 import 'package:genesis/src/layer_presentation/pages/project_pages/attach_project_page/attach_project_page.dart';
@@ -90,12 +89,10 @@ GoRouter createRouter(BuildContext context) {
         case AuthStateLoading():
           return '/splash';
         case AuthenticatedAuthState() when matchedLocation == '/sign_in':
-        case AuthenticatedAuthState() when matchedLocation == '/sign_up':
         case AuthenticatedAuthState() when matchedLocation == '/splash':
         case AuthenticatedAuthState() when matchedLocation == '/domain_setup':
           return '/';
         case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
-        case UnauthenticatedAuthState() when matchedLocation != '/sign_up':
           return '/sign_in';
         default:
           return null;
@@ -115,16 +112,9 @@ GoRouter createRouter(BuildContext context) {
       GoRoute(
         name: AppRoutes.signIn.name,
         path: '/sign_in',
-        pageBuilder: (_, _) => NoTransitionPage(child: SignInScreen()),
-      ),
-      GoRoute(
-        name: AppRoutes.signUp.name,
-        path: '/sign_up',
-        pageBuilder: (_, _) {
-          return NoTransitionPage(
-            child: SignUpScreen(),
-          );
-        },
+        pageBuilder: (_, _) => NoTransitionPage(
+          child: SignInPage(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, _, navigationShell) {
@@ -310,7 +300,6 @@ GoRouter createRouter(BuildContext context) {
             observers: [clustersObserver, clusterObserver],
             routes: [
               GoRoute(
-                // TODO(Koretsky): возможно придется переименовать
                 onExit: (context, state) {
                   context.read<ClustersBloc>().add(ClustersEvent.stopPolling());
                   return true;

@@ -7,11 +7,11 @@ import 'package:genesis/main.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/routing/branch_index.dart';
@@ -166,7 +166,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 1.0),
                   child: AppBar(
                     actions: [
-                      const Icon(Icons.notifications_none_outlined, color: Palette.colorAFA8A4),
+                      const Icon(Icons.notifications_rounded, color: Palette.colorAFA8A4, size: 28),
                       const SizedBox(width: 16),
                       MeAppbarWidget(),
                     ],

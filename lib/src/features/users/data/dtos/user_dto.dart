@@ -27,7 +27,7 @@ class UserDto implements IDto<User> {
   @JsonKey(name: 'uuid', fromJson: _toID)
   final UserID id;
   @JsonKey(name: 'description')
-  final String description;
+  final String? description;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
@@ -37,11 +37,11 @@ class UserDto implements IDto<User> {
   @JsonKey(name: 'username', readValue: _readUsername)
   final String username;
   @JsonKey(name: 'first_name')
-  final String firstName;
+  final String? firstName;
   @JsonKey(name: 'last_name')
-  final String lastName;
+  final String? lastName;
   @JsonKey(name: 'surname')
-  final String surname;
+  final String? surname;
   @JsonKey(name: 'phone')
   final String? phone;
   @JsonKey(name: 'email')

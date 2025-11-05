@@ -5,6 +5,7 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/clusters_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/db_versions_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/pg_database_repository.dart';
@@ -29,6 +30,7 @@ import 'package:genesis/src/features/iam_client/sources/token_dao.dart';
 import 'package:genesis/src/features/nodes/data/repositories/nodes_repository.dart';
 import 'package:genesis/src/features/nodes/data/sources/nodes_api.dart';
 import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/features/organizations/data/repositories/organizations_repository.dart';
 import 'package:genesis/src/features/organizations/data/sources/organizations_api.dart';
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
@@ -50,14 +52,12 @@ import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositor
 import 'package:genesis/src/features/users/data/repositories/users_repository.dart';
 import 'package:genesis/src/features/users/data/sources/users_api.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
@@ -184,7 +184,7 @@ class DiContainer extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) {
-                return AuthBloc(context.read<IAuthRepository>());
+                return AuthBloc(context.read<IAuthRepository>(), context.read<IUsersRepository>());
               },
             ),
             BlocProvider(

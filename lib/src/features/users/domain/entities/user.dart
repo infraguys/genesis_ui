@@ -19,12 +19,12 @@ class User extends Equatable {
 
   final UserID uuid;
   final String username;
-  final String description;
+  final String? description;
   final DateTime createdAt;
   final DateTime updatedAt;
   final UserStatus status;
-  final String firstName;
-  final String lastName;
+  final String? firstName;
+  final String? lastName;
   final String? surname;
   final String? phone;
   final String email;

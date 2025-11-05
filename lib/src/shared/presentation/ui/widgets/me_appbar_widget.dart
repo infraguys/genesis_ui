@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class MeAppbarWidget extends StatelessWidget {
@@ -14,8 +14,8 @@ class MeAppbarWidget extends StatelessWidget {
           return SizedBox.shrink();
         }
         final user = authState.user;
-        final firstLetter = user.firstName.substring(0, 1).toUpperCase();
-        final secondLetter = user.lastName.substring(0, 1).toUpperCase();
+        // final firstLetter = user.username.substring(0, 1).toUpperCase();
+        // final secondLetter = user.username.substring(0, 1).toUpperCase();
         return TooltipVisibility(
           visible: false,
           child: PopupMenuButton<void>(
@@ -27,17 +27,10 @@ class MeAppbarWidget extends StatelessWidget {
             icon: Row(
               spacing: 10,
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 16,
-                  child: Text(
-                    '$firstLetter$secondLetter',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ),
+                Icon(Icons.account_circle, color: Palette.colorAFA8A4, size: 28),
                 // todo: вынести в стили
                 Text(
-                  '${user.firstName} ${user.lastName}',
+                  user.username,
                   style: TextStyle(color: Colors.white),
                 ),
               ],

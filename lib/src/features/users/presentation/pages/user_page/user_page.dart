@@ -8,10 +8,9 @@ import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/update_user_params.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_page/widgets/list_of_projects.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/user_status_widget.dart';
+import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -25,11 +24,11 @@ import 'package:genesis/src/shared/presentation/ui/widgets/id_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/metadata_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/page_layout.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/save_icon_button.dart';
+import 'package:genesis/src/shared/presentation/ui/widgets/user_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/verified_label.dart';
 import 'package:go_router/go_router.dart';
 
 part 'widgets/confirm_email_btn.dart';
-
 part 'widgets/delete_user_btn.dart';
 
 class _View extends StatefulWidget {
@@ -45,9 +44,9 @@ class _ViewState extends State<_View> {
   late final UserBloc _userBloc;
 
   late String _username;
-  late String _description;
-  late String _firstName;
-  late String _lastName;
+  late String? _description;
+  late String? _firstName;
+  late String? _lastName;
   late String? _surname;
   late String? _phone;
   late String _email;
