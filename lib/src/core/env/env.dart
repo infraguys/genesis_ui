@@ -12,6 +12,7 @@ abstract class Env {
   static const refreshTtl = int.fromEnvironment('refresh_ttl');
   static const scope = String.fromEnvironment('scope');
 
+  static String baseUrl = 'https://console.genesis-core.tech';
   static const apiPrefix = '/api';
   static const dbaasApiPrefix = '/dbaas-api';
 

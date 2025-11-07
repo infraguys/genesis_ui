@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 
-class _SplashScreenView extends StatelessWidget {
-  const _SplashScreenView({super.key});  // ignore: unused_element_parameter
+class _View extends StatelessWidget {
+  const _View({super.key}); // ignore: unused_element_parameter
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +13,6 @@ class _SplashScreenView extends StatelessWidget {
       listenWhen: (_, current) => current is DomainSetupReadState,
       listener: (context, state) {
         if (state is DomainSetupReadState) {
-          context.read<RestClient>().setBaseUrl(state.apiUrl);
-          // context.read<RestClient>().setBaseUrl('http://localhost:20000');
           context.read<AuthBloc>().add(AuthEvent.restoreSession());
         }
       },
@@ -37,6 +34,6 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _SplashScreenView();
+    return const _View();
   }
 }

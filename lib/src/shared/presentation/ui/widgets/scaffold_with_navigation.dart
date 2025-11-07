@@ -166,8 +166,8 @@ class ScaffoldWithNavigation extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 1.0),
                   child: AppBar(
                     actions: [
-                      const Icon(Icons.notifications_rounded, color: Palette.colorAFA8A4, size: 28),
-                      const SizedBox(width: 16),
+                      // const Icon(Icons.notifications_rounded, color: Palette.colorAFA8A4, size: 28),
+                      // const SizedBox(width: 16),
                       MeAppbarWidget(),
                     ],
                   ),

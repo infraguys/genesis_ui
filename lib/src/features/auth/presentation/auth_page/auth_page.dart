@@ -2,10 +2,13 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
+import 'package:genesis/src/features/auth/presentation/auth_page/widgets/set_domain_dialog.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/sign_in_form.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/sign_up_form.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -105,15 +108,19 @@ class _AuthPageState extends State<AuthPage> {
                         alignment: AlignmentGeometry.topRight,
                         child: IconButton(
                           onPressed: () async {
-                            // final url = await showDialog<String>(
-                            //   context: context,
-                            //   builder: (context) {
-                            //     return Dialog(
-                            //       child: SetupDomainDialog(),
-                            //     );
-                            //   },
-                            // );
-                            // context.read<RestClient>().setBaseUrl(url ?? '');
+                            // TODO(Koretsky): чуть переделать
+                            final domainSetupCubit = context.read<DomainSetupCubit>();
+                            final url = await showDialog<String>(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: SetDomainDialog(),
+                                );
+                              },
+                            );
+                            domainSetupCubit.writeApiUrl(url!);
+                            Env.baseUrl = url;
+                            // context.read<RestClient>().setBaseUrl(url);
                           },
                           icon: Icon(Icons.settings, color: Colors.white24),
                         ),

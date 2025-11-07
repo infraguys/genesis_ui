@@ -4,7 +4,7 @@ import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
 part './domain_setup_state.dart';
 
 class DomainSetupCubit extends Cubit<DomainSetupState> {
-  DomainSetupCubit(this._urlDao) : super(DomainSetupState.initial());
+  DomainSetupCubit(this._urlDao) : super(_InitialState());
 
   final ApiUrlDao _urlDao;
 
@@ -12,16 +12,16 @@ class DomainSetupCubit extends Cubit<DomainSetupState> {
     // await _urlDao.deleteApiUrl();
     final url = await _urlDao.readApiUrl();
     if (url != null) {
-      emit(DomainSetupState.read(url));
+      emit(DomainSetupReadState(url));
     } else {
-      emit(DomainSetupState.empty());
+      emit(DomainSetupEmptyState());
     }
   }
 
   Future<void> writeApiUrl(String value) async {
     final trimmedValue = value.trim();
-    emit(DomainSetupState.loading());
+    emit(DomainSetupLoadingState());
     await _urlDao.writeApiUrl(trimmedValue);
-    emit(DomainSetupState.written(trimmedValue));
+    emit(DomainSetupWrittenState(trimmedValue));
   }
 }

@@ -1,18 +1,8 @@
 part of './domain_setup_cubit.dart';
 
-sealed class DomainSetupState {
-  factory DomainSetupState.initial() = DomainSetupInitialState;
+sealed class DomainSetupState {}
 
-  factory DomainSetupState.loading() = DomainSetupLoadingState;
-
-  factory DomainSetupState.read(String apiUrl) = DomainSetupReadState;
-
-  factory DomainSetupState.written(String apiUrl) = DomainSetupWrittenState;
-
-  factory DomainSetupState.empty() = DomainSetupEmptyState;
-}
-
-final class DomainSetupInitialState implements DomainSetupState {}
+final class _InitialState implements DomainSetupState {}
 
 final class DomainSetupLoadingState implements DomainSetupState {}
 
