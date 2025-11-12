@@ -179,7 +179,7 @@ class DiContainer extends StatelessWidget {
             BlocProvider(
               create: (context) {
                 final dao = ApiUrlDao(context.read<ISimpleStorageClient>());
-                return DomainSetupCubit(dao)..readApiUrl();
+                return DomainSetupCubit(dao);
               },
             ),
             BlocProvider(
