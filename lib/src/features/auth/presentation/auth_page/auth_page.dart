@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/set_domain_dialog.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/sign_in_form.dart';
@@ -107,22 +106,16 @@ class _AuthPageState extends State<AuthPage> {
                       Align(
                         alignment: AlignmentGeometry.topRight,
                         child: IconButton(
+                          icon: Icon(Icons.settings, color: Colors.white24),
                           onPressed: () async {
-                            // TODO(Koretsky): чуть переделать
                             final domainSetupCubit = context.read<DomainSetupCubit>();
+
                             final url = await showDialog<String>(
                               context: context,
-                              builder: (context) {
-                                return Dialog(
-                                  child: SetDomainDialog(),
-                                );
-                              },
+                              builder: (context) => Dialog(child: SetDomainDialog()),
                             );
                             domainSetupCubit.writeApiUrl(url!);
-                            Env.baseUrl = url;
-                            // context.read<RestClient>().setBaseUrl(url);
                           },
-                          icon: Icon(Icons.settings, color: Colors.white24),
                         ),
                       ),
                     ],
