@@ -2,6 +2,7 @@ part of 'auth_bloc.dart';
 
 sealed class AuthState {}
 
+final class _InitialState implements AuthState {}
 final class AuthStateLoading implements AuthState {}
 
 final class AuthStateFailure implements AuthState {
