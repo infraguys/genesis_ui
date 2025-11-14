@@ -12,11 +12,11 @@ class ActiveUsersCard extends StatelessWidget {
     final textTheme = TextTheme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const .symmetric(horizontal: 16, vertical: 16),
         child: Row(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Text('Active Users', style: textTheme.titleMedium),
                 BlocBuilder<UsersBloc, UsersState>(

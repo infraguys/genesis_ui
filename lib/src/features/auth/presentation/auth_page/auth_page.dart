@@ -22,13 +22,13 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final authNotifier = ValueNotifier<_AuthMode>(_AuthMode.signIn);
+  final authNotifier = ValueNotifier<_AuthMode>(.signIn);
 
   void _toggle() {
     FocusScope.of(context).unfocus();
     authNotifier.value = switch (authNotifier.value) {
-      _AuthMode.signIn => _AuthMode.signUp,
-      _AuthMode.signUp => _AuthMode.signIn,
+      _AuthMode.signIn => .signUp,
+      _AuthMode.signUp => .signIn,
     };
   }
 
@@ -58,7 +58,7 @@ class _AuthPageState extends State<AuthPage> {
                   child: Center(
                     child: Column(
                       spacing: Spacing.s16,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         SvgPicture.asset(
                           'assets/images/logo.svg',
@@ -70,7 +70,7 @@ class _AuthPageState extends State<AuthPage> {
                           style: textTheme.headlineLarge?.copyWith(
                             color: Colors.white24,
                           ),
-                          textAlign: TextAlign.center,
+                          textAlign: .center,
                         ),
                       ],
                     ),
@@ -89,7 +89,7 @@ class _AuthPageState extends State<AuthPage> {
                               return PageTransitionSwitcher(
                                 transitionBuilder: (child, primary, secondary) => SharedAxisTransition(
                                   fillColor: Palette.color1B1B1D,
-                                  transitionType: SharedAxisTransitionType.horizontal,
+                                  transitionType: .horizontal,
                                   animation: primary,
                                   secondaryAnimation: secondary,
                                   child: child,
@@ -104,7 +104,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentGeometry.topRight,
+                        alignment: .topRight,
                         child: IconButton(
                           icon: Icon(Icons.settings, color: Colors.white24),
                           onPressed: () async {

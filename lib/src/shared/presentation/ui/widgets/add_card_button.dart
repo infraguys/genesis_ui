@@ -15,7 +15,7 @@ class AddCardButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Card(
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: .hardEdge,
         child: InkWell(
           onTap: onTap,
           child: Center(child: Icon(iconData, size: 32)),

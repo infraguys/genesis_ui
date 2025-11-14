@@ -11,7 +11,7 @@ class AddProjectCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Card(
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: .hardEdge,
         color: Palette.color333333,
         child: InkWell(
           onTap: onTap,

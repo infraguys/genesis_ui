@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -24,12 +25,12 @@ class _SetDomainDialogState extends State<SetDomainDialog> {
       child: SizedBox(
         width: 500,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: .end,
+          mainAxisSize: .min,
           children: [
             BlocBuilder<DomainSetupCubit, DomainSetupState>(
               builder: (context, state) {
-                _url = state is DomainSetupReadState ? state.apiUrl : '';
+                _url = state is DomainSetupReadState ? state.apiUrl : Env.baseUrl;
                 return Form(
                   key: _formKey,
                   child: AppTextFormInput(

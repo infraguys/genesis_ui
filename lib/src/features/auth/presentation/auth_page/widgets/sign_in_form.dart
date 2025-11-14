@@ -33,8 +33,8 @@ class _SignInFormState extends State<SignInForm> {
     final textTheme = TextTheme.of(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: .stretch,
+      mainAxisAlignment: .center,
       spacing: Spacing.s16,
       children: [
         Column(
@@ -51,7 +51,7 @@ class _SignInFormState extends State<SignInForm> {
           key: _formKey,
           child: Column(
             spacing: Spacing.s16,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               AppTextFormInput(
                 helperText: 'Login'.hardcoded,
@@ -93,7 +93,7 @@ class _SignInFormState extends State<SignInForm> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    context.read<AuthBloc>().add(AuthEvent.signIn(username: _username, password: _password));
+                    context.read<AuthBloc>().add(.signIn(username: _username, password: _password));
                   }
                 },
                 child: Text('Login'.toUpperCase().hardcoded),
@@ -102,7 +102,7 @@ class _SignInFormState extends State<SignInForm> {
           ),
         ),
         RichText(
-          textAlign: TextAlign.center,
+          textAlign: .center,
           text: TextSpan(
             style: textTheme.bodyMedium!.copyWith(color: Colors.white24),
             children: [

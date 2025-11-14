@@ -31,8 +31,8 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: .stretch,
+      mainAxisAlignment: .center,
       spacing: Spacing.s16,
       children: [
         Column(
@@ -49,7 +49,7 @@ class _SignUpFormState extends State<SignUpForm> {
           key: _formKey,
           child: Column(
             spacing: Spacing.s16,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: [
               AppTextFormInput(
                 helperText: 'Login'.hardcoded,
@@ -102,7 +102,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     context.read<AuthBloc>().add(
-                      AuthEvent.signUp(
+                      .signUp(
                         username: _username,
                         email: _email,
                         password: _password,
@@ -116,7 +116,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         ),
         RichText(
-          textAlign: TextAlign.center,
+          textAlign: .center,
           text: TextSpan(
             style: textTheme.bodyMedium!.copyWith(color: Colors.white24),
             children: [
