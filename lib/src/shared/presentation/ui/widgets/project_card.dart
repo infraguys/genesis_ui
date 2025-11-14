@@ -24,16 +24,16 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       color: Palette.color333333,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: .all(16.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   // todo: вынести в типографику
                   Text(project.name, style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -48,7 +48,7 @@ class ProjectCard extends StatelessWidget {
                             label: Text(it.name),
                             onDeleted: () {
                               context.read<RoleBindingsBloc>().add(
-                                RoleBindingsEvent.delete(
+                                .delete(
                                   userUUID: userUUID,
                                   roleUUID: it.uuid,
                                   projectUUID: project.id,

@@ -16,7 +16,9 @@ class SaveIconButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
-        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
+        padding: WidgetStatePropertyAll(
+          .symmetric(horizontal: 20, vertical: 20),
+        ),
       ),
       label: Text(label ?? context.$.save, style: textTheme.labelLarge!.w700 + Palette.color1B1B1D),
       icon: Icon(Icons.save_outlined, color: Palette.color1B1B1D),
