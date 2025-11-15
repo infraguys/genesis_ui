@@ -64,8 +64,8 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: .start,
+            mainAxisSize: .min,
             spacing: gapWidth,
             children: [
               Row(
@@ -117,7 +117,7 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _organizationBloc.add(
-        OrganizationEvent.create(
+        .create(
           CreateOrganizationParams(name: _orgName, description: _description),
         ),
       );
