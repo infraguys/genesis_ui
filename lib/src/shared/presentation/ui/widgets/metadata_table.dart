@@ -16,6 +16,10 @@ class MetadataTable extends StatelessWidget {
   final DateTime createdAt;
   final DateTime updatedAt;
 
+  String getFormattedDate(DateTime date) {
+    return DateFormat('dd.MM.yyyy HH:mm').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Table(
@@ -23,51 +27,27 @@ class MetadataTable extends StatelessWidget {
       children: [
         TableRow(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(context.$.status),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: statusWidget,
-            ),
+            Padding(padding: const .all(8.0), child: Text(context.$.status)),
+            Padding(padding: const .all(8.0), child: statusWidget),
           ],
         ),
         if (verificationStatusWidget != null)
           TableRow(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(context.$.verification),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: verificationStatusWidget!,
-              ),
+              Padding(padding: const .all(8.0), child: Text(context.$.verification)),
+              Padding(padding: const .all(8.0), child: verificationStatusWidget!),
             ],
           ),
         TableRow(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(context.$.createdAt),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(DateFormat('dd.MM.yyyy HH:mm').format(createdAt)),
-            ),
+            Padding(padding: const .all(8.0), child: Text(context.$.createdAt)),
+            Padding(padding: const .all(8.0), child: Text(getFormattedDate(createdAt))),
           ],
         ),
         TableRow(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(context.$.updatedAt),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(DateFormat('dd.MM.yyyy HH:mm').format(updatedAt)),
-            ),
+            Padding(padding: const .all(8.0), child: Text(context.$.updatedAt)),
+            Padding(padding: const .all(8.0), child: Text(getFormattedDate(updatedAt))),
           ],
         ),
       ],

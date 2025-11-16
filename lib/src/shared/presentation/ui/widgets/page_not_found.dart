@@ -8,16 +8,14 @@ class PageNotFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final $ = context.$;
-
     return Scaffold(
       backgroundColor: Color(0xFF191919).hardcoded,
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 340),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: .center,
+            crossAxisAlignment: .stretch,
             spacing: 34,
             children: [
               Text(
@@ -25,17 +23,17 @@ class PageNotFound extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 200,
                   color: Color(0XFFB3B2B0).hardcoded,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: .bold,
                   height: 0.8,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: .center,
               ),
               FittedBox(
-                fit: BoxFit.scaleDown,
+                fit: .scaleDown,
                 child: Text(
-                  $.pageNotFound,
+                  context.$.pageNotFound,
                   style: TextStyle(fontSize: 40, color: Color(0XFFB3B2B0).hardcoded),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
               ElevatedButton(
@@ -47,18 +45,16 @@ class PageNotFound extends StatelessWidget {
                     TextStyle(fontSize: 24),
                   ),
                   padding: WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(vertical: 18),
+                    .symmetric(vertical: 18),
                   ),
                   side: WidgetStatePropertyAll(
                     BorderSide(color: Color(0xFF2E2E2E).hardcoded),
                   ),
                   shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    RoundedRectangleBorder(borderRadius: .circular(16)),
                   ),
                 ),
-                child: Text($.goBack),
+                child: Text(context.$.goBack),
               ),
             ],
           ),

@@ -27,7 +27,7 @@ class VerifiedLabel extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: _labelStatusColor,
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: .circular(8.0),
         ),
         child: Center(
           child: Text(

@@ -26,13 +26,13 @@ class OrganizationStatusWidget extends StatelessWidget {
 
   StatusViewParams _getStatusParams(BuildContext context) {
     switch (_status) {
-      case OrganizationStatus.active:
+      case .active:
         return (
           text: context.$.active,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case OrganizationStatus.unknown:
+      case .unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,

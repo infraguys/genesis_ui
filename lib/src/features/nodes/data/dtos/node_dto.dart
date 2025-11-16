@@ -80,18 +80,18 @@ final class NodeDto implements IDto<Node> {
   }
 
   static NodeStatus _toStatusFromJson(String json) => switch (json) {
-    'NEW' => NodeStatus.newStatus,
-    'ACTIVE' => NodeStatus.active,
-    'IN_PROGRESS' => NodeStatus.inProgress,
-    'ERROR' => NodeStatus.error,
-    'SCHEDULED' => NodeStatus.scheduled,
-    'STARTED' => NodeStatus.started,
-    _ => NodeStatus.unknown,
+    'NEW' => .newStatus,
+    'ACTIVE' => .active,
+    'IN_PROGRESS' => .inProgress,
+    'ERROR' => .error,
+    'SCHEDULED' => .scheduled,
+    'STARTED' => .started,
+    _ => .unknown,
   };
 
   static NodeType _toNodeTypeFromJson(String json) => switch (json) {
-    'HW' => NodeType.hw,
-    'VM' => NodeType.vm,
-    _ => NodeType.unknown,
+    'HW' => .hw,
+    'VM' => .vm,
+    _ => .unknown,
   };
 }

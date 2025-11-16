@@ -16,7 +16,7 @@ class CreateIconButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Palette.colorFF8900),
-        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
+        padding: WidgetStatePropertyAll(.symmetric(horizontal: 20, vertical: 20)),
       ),
       label: Text(label ?? context.$.create, style: textTheme.labelLarge!.w700 + Palette.color1B1B1D),
       icon: Icon(Icons.add, color: Palette.color1B1B1D),

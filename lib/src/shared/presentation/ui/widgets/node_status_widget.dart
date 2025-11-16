@@ -26,43 +26,43 @@ class NodeStatusWidget extends StatelessWidget {
 
   StatusViewParams _getStatusParams(BuildContext context) {
     switch (_status) {
-      case NodeStatus.newStatus:
+      case .newStatus:
         return (
           text: context.$.newStatus,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.started:
+      case .started:
         return (
           text: context.$.started,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.active:
+      case .active:
         return (
           text: context.$.active,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.inProgress:
+      case .inProgress:
         return (
           text: context.$.inProgress,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.scheduled:
+      case .scheduled:
         return (
           text: context.$.scheduled,
           color: Palette.color6DCF91,
           labelColor: Palette.color6DCF91.withValues(alpha: 0.10),
         );
-      case NodeStatus.error:
+      case .error:
         return (
           text: context.$.error,
           color: Palette.colorF04C4C,
           labelColor: Palette.colorF04C4C.withValues(alpha: 0.10),
         );
-      case NodeStatus.unknown:
+      case .unknown:
         return (
           text: context.$.unknown,
           color: Palette.colorF04C4C,

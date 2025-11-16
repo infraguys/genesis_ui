@@ -16,7 +16,7 @@ class IdWidget extends StatelessWidget {
         text: 'ID: ',
         children: [
           WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
+            alignment: .middle,
             child: SelectableText(
               id,
               style: TextStyle(
@@ -27,7 +27,7 @@ class IdWidget extends StatelessWidget {
           ),
           WidgetSpan(child: const SizedBox(width: 8)),
           WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
+            alignment: .middle,
             child: IconButton(
               icon: Icon(Icons.copy, color: Colors.white, size: 18),
               onPressed: () {

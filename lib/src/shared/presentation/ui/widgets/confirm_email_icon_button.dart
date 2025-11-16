@@ -15,7 +15,7 @@ class ConfirmEmailElevatedButton extends StatelessWidget {
       icon: Icon(Icons.mark_email_read_outlined, color: Palette.color6DCF91),
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Palette.color333333),
-        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 20, vertical: 20)),
+        padding: WidgetStatePropertyAll(.symmetric(horizontal: 20, vertical: 20)),
       ),
       label: Text(
         context.$.confirmEmail,

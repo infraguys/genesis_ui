@@ -20,7 +20,7 @@ class MeAppbarWidget extends StatelessWidget {
           return TextButton.icon(
             style: ButtonStyle(
               textStyle: WidgetStatePropertyAll(TextStyle(height: 1.2)),
-              padding: WidgetStatePropertyAll(EdgeInsets.only(left: 8, right: 8)),
+              padding: WidgetStatePropertyAll(.only(left: 8, right: 8)),
               iconSize: WidgetStatePropertyAll(25),
             ),
             label: Text(user.username),

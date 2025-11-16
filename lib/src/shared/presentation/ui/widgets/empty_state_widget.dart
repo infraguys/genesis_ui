@@ -21,14 +21,14 @@ class EmptyStateWidget extends StatelessWidget {
 
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Icon(icon, size: 150, color: Colors.white24),
           Text(title, style: theme.textTheme.titleMedium! + Colors.white24),
           Text(
             subtitle,
             style: theme.textTheme.bodyMedium! + Colors.white24,
-            textAlign: TextAlign.center,
+            textAlign: .center,
           ),
           const SizedBox(height: 32),
           SizedBox(width: 200, child: button),

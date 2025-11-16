@@ -92,10 +92,10 @@ class AppTextFormInput extends StatelessWidget {
     if (labelText != null) {
       return Column(
         spacing: 4.0,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 18),
+            padding: const .only(left: 18),
             child: Text(
               labelText!,
               style: TextStyle(fontSize: 16, height: 16 / 16, color: Colors.white24),
@@ -103,7 +103,7 @@ class AppTextFormInput extends StatelessWidget {
           ),
           TextFormField(
             initialValue: initialValue,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: .onUserInteraction,
             readOnly: readOnly,
             decoration: InputDecoration(
               hintText: hintText,
@@ -122,7 +122,7 @@ class AppTextFormInput extends StatelessWidget {
     return TextFormField(
       controller: controller,
       initialValue: initialValue,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: .onUserInteraction,
       readOnly: readOnly,
       forceErrorText: forceErrorText,
       decoration: InputDecoration(
@@ -130,7 +130,7 @@ class AppTextFormInput extends StatelessWidget {
         helperText: helperText,
         suffix: suffix,
         prefixIcon: prefixIcon,
-        suffixIcon: Padding(padding:  const EdgeInsets.only(right: 8.0), child: suffixIcon),
+        suffixIcon: Padding(padding: const .only(right: 8.0), child: suffixIcon),
       ),
       onSaved: onSaved,
       inputFormatters: inputFormatters,

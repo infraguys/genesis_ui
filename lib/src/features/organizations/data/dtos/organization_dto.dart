@@ -48,7 +48,7 @@ class OrganizationDto implements IDto<Organization> {
   static OrganizationID _toID(String json) => OrganizationID(json);
 
   static OrganizationStatus _toStatusFromJson(String json) => switch (json) {
-    'ACTIVE' => OrganizationStatus.active,
-    _ => OrganizationStatus.unknown,
+    'ACTIVE' => .active,
+    _ => .unknown,
   };
 }
