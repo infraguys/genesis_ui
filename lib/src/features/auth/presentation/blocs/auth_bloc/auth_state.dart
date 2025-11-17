@@ -1,17 +1,22 @@
 part of 'auth_bloc.dart';
 
-sealed class AuthState {}
+sealed class AuthState {
+  bool get isInitial => this is _InitialState;
+}
 
-final class _InitialState implements AuthState {}
-final class AuthStateLoading implements AuthState {}
+final class _InitialState extends AuthState {}
 
-final class AuthStateFailure implements AuthState {
+final class AuthStateLoading extends AuthState {}
+
+final class AuthStateFailure extends AuthState {
   AuthStateFailure(this.message);
 
   final String message;
 }
 
-final class AuthenticatedAuthState implements AuthState {
+final class UnauthenticatedAuthState extends AuthState {}
+
+final class AuthenticatedAuthState extends AuthState {
   AuthenticatedAuthState(AuthSession session)
     : user = session.user,
       permissionNames = session.permissionNames,
@@ -25,5 +30,3 @@ final class AuthenticatedAuthState implements AuthState {
   final String refreshToken;
   final String scope;
 }
-
-final class UnauthenticatedAuthState implements AuthState {}

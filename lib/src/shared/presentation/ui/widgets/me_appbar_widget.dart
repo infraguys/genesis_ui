@@ -8,33 +8,38 @@ class MeAppbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.read<AuthBloc>().state as AuthenticatedAuthState;
-
-    final user = authState.user;
     // final firstLetter = user.username.substring(0, 1).toUpperCase();
     // final secondLetter = user.username.substring(0, 1).toUpperCase();
     return TooltipVisibility(
       visible: false,
-      child: MenuAnchor(
-        builder: (context, controller, _) {
-          return TextButton.icon(
-            style: ButtonStyle(
-              textStyle: WidgetStatePropertyAll(TextStyle(height: 1.2)),
-              padding: WidgetStatePropertyAll(.only(left: 8, right: 8)),
-              iconSize: WidgetStatePropertyAll(25),
-            ),
-            label: Text(user.username),
-            icon: Icon(Icons.account_circle),
-            onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is! AuthenticatedAuthState) {
+            return SizedBox.shrink();
+          }
+          final user = state.user;
+          return MenuAnchor(
+            builder: (context, controller, _) {
+              return TextButton.icon(
+                style: ButtonStyle(
+                  textStyle: WidgetStatePropertyAll(TextStyle(height: 1.2)),
+                  padding: WidgetStatePropertyAll(.only(left: 8, right: 8)),
+                  iconSize: WidgetStatePropertyAll(25),
+                ),
+                label: Text(user.username),
+                icon: Icon(Icons.account_circle),
+                onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+              );
+            },
+            menuChildren: [
+              MenuItemButton(
+                leadingIcon: Icon(Icons.logout, color: Colors.red),
+                child: Text(context.$.signOut),
+                onPressed: () => context.read<AuthBloc>().add(AuthEvent.signOut()),
+              ),
+            ],
           );
         },
-        menuChildren: [
-          MenuItemButton(
-            leadingIcon: Icon(Icons.logout, color: Colors.red),
-            child: Text(context.$.signOut),
-            onPressed: () => context.read<AuthBloc>().add(AuthEvent.signOut()),
-          ),
-        ],
       ),
       // child: PopupMenuButton<_MenuOptions>(
       //   clipBehavior: Clip.antiAlias,

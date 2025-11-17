@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/env/env.dart';
+import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
+import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/injection/di_container.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
@@ -14,7 +16,18 @@ void main() async {
   configureAppUrlStrategy();
   EquatableConfig.stringify = Env.mode.isDev;
 
-  runApp(const App());
+  final sharedPrefStorage = await SharedPrefStorage.init();
+  final secureStorageClient = FlutterSecureStorageClient.init();
+
+
+
+  runApp(
+    DiContainer(
+      simpleStorageClient: sharedPrefStorage,
+      secureStorageClient: secureStorageClient,
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {
@@ -40,20 +53,14 @@ class _MyAppState extends State<App> {
       builder: (context, value, child) {
         return KeyedSubtree(
           key: keyNotifier.value,
-          child: DiContainer(
-            child: Builder(
-              builder: (context) {
-                return MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  routerConfig: context.read<GoRouter>(),
-                  localizationsDelegates: AppLocalizations.localizationsDelegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  theme: AppTheme().light,
-                  darkTheme: AppTheme().dark,
-                  themeMode: ThemeMode.dark, // Change to ThemeMode.dark for dark mode
-                );
-              },
-            ),
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: context.read<GoRouter>(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: AppTheme().light,
+            darkTheme: AppTheme().dark,
+            themeMode: ThemeMode.dark, // Change to ThemeMode.dark for dark mode
           ),
         );
       },

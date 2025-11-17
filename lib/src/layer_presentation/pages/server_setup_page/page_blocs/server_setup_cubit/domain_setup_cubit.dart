@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
@@ -10,9 +11,8 @@ class DomainSetupCubit extends Cubit<DomainSetupState> {
   final ApiUrlDao _urlDao;
 
   Future<void> readApiUrl() async {
-    // await _urlDao.deleteApiUrl();
     final url = await _urlDao.readApiUrl();
-    if (url != null) {
+    if (url != null && url.isNotEmpty) {
       emit(DomainSetupReadState(url));
     } else {
       emit(DomainSetupEmptyState());

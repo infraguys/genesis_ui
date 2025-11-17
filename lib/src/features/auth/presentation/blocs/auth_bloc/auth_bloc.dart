@@ -27,6 +27,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on(_onSignOut);
     on(_onRestoreSession);
     on(_onRefreshToken);
+
+    add( AuthEvent.restoreSession());
   }
 
   final IAuthRepository _authRepository;

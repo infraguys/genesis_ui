@@ -16,7 +16,18 @@ class SetDomainDialog extends StatefulWidget {
 }
 
 class _SetDomainDialogState extends State<SetDomainDialog> {
-  var _url = '';
+  late final DomainSetupCubit _cubit;
+
+  @override
+  void initState() {
+    _cubit = context.read<DomainSetupCubit>();
+    final state = _cubit.state;
+    _url = state is DomainSetupReadState ? state.apiUrl : Env.baseUrl;
+
+    super.initState();
+  }
+
+  late String _url;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,24 +39,20 @@ class _SetDomainDialogState extends State<SetDomainDialog> {
           crossAxisAlignment: .end,
           mainAxisSize: .min,
           children: [
-            BlocBuilder<DomainSetupCubit, DomainSetupState>(
-              builder: (context, state) {
-                _url = state is DomainSetupReadState ? state.apiUrl : Env.baseUrl;
-                return Form(
-                  key: _formKey,
-                  child: AppTextFormInput(
-                    initialValue: _url,
-                    onSaved: (value) => _url = value!.trim(),
-                    helperText: 'Введите адрес вашего домена'.hardcoded,
-                  ),
-                );
-              },
+            Form(
+              key: _formKey,
+              child: AppTextFormInput(
+                initialValue: _url,
+                onSaved: (value) => _url = value!.trim(),
+                helperText: 'Введите адрес вашего домена'.hardcoded,
+              ),
             ),
             SaveIconButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  context.pop(_url);
+                  _cubit.writeApiUrl(_url);
+                  context.pop();
                 }
               },
             ),

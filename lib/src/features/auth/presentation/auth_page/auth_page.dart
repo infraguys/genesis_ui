@@ -33,6 +33,21 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final cubit = context.read<DomainSetupCubit>();
+
+      if (cubit.state is DomainSetupEmptyState) {
+        await showDialog<void>(
+          context: context,
+          builder: (context) => const Dialog(child: SetDomainDialog()),
+        );
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
 
@@ -108,13 +123,10 @@ class _AuthPageState extends State<AuthPage> {
                         child: IconButton(
                           icon: Icon(Icons.settings, color: Colors.white24),
                           onPressed: () async {
-                            final domainSetupCubit = context.read<DomainSetupCubit>();
-
-                            final url = await showDialog<String>(
+                            await showDialog<void>(
                               context: context,
                               builder: (context) => Dialog(child: SetDomainDialog()),
                             );
-                            domainSetupCubit.writeApiUrl(url!);
                           },
                         ),
                       ),

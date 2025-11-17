@@ -2,7 +2,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 
 class FlutterSecureStorageClient implements ISecureStorageClient {
-  final _storage = FlutterSecureStorage();
+  const FlutterSecureStorageClient._(this._storage);
+
+  final FlutterSecureStorage _storage;
+
+  static FlutterSecureStorageClient init() {
+    return FlutterSecureStorageClient._(FlutterSecureStorage());
+  }
 
   @override
   Future<void> deleteSecure(String key) async {

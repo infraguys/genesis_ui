@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
-import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
-import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/clusters_repository.dart';
 import 'package:genesis/src/features/dbaas/data/repositories/db_versions_repository.dart';
@@ -63,19 +61,26 @@ import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
 class DiContainer extends StatelessWidget {
-  const DiContainer({required this.child, super.key});
+  const DiContainer({
+    required this.simpleStorageClient,
+    required this.secureStorageClient,
+    required this.child,
+    super.key,
+  });
 
   final Widget child;
+  final ISimpleStorageClient simpleStorageClient;
+  final ISecureStorageClient secureStorageClient;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<ISimpleStorageClient>(
-          create: (_) => SharedPrefStorage(),
+        Provider<ISimpleStorageClient>.value(
+          value: simpleStorageClient,
         ),
-        Provider<ISecureStorageClient>(
-          create: (_) => FlutterSecureStorageClient(),
+        Provider<ISecureStorageClient>.value(
+          value: secureStorageClient,
         ),
         Provider<RestClient>(
           create: (context) => RestClient(context.read<ISecureStorageClient>()),
@@ -177,6 +182,7 @@ class DiContainer extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
+              lazy: false,
               create: (context) {
                 final dao = ApiUrlDao(context.read<ISimpleStorageClient>());
                 return DomainSetupCubit(dao);

@@ -61,7 +61,11 @@ GoRouter createRouter(BuildContext context) {
   return GoRouter(
     debugLogDiagnostics: true,
     initialLocation: '/splash',
-    refreshListenable: _GoRouterAuthListenable(context),
+    // refreshListenable: _GoRouterAuthListenable(context),
+    refreshListenable: Listenable.merge([
+      _GoRouterAuthListenable(context),
+      _GoRouterConfigListenable(context),
+    ]),
     errorPageBuilder: (_, _) => NoTransitionPage(child: const PageNotFound()),
     navigatorKey: rootNavKey,
     redirect: (context, state) {
@@ -70,7 +74,15 @@ GoRouter createRouter(BuildContext context) {
       final authState = context.read<AuthBloc>().state;
       final domainCubitState = context.read<DomainSetupCubit>().state;
 
-      // if (domainCubitState is DomainSetupInitialState) {
+      if (authState.isInitial && domainCubitState.isInitial) {
+        return '/splash';
+      }
+
+      // if (authState is UnauthenticatedAuthState && domainCubitState is DomainSetupEmptyState) {
+      //   return '/sign_in';
+      // }
+
+      // if (domainCubitState is DomainSetupLoadingState) {
       //   return '/splash';
       // }
       //
@@ -80,11 +92,10 @@ GoRouter createRouter(BuildContext context) {
       // }
 
       switch (authState) {
-        case AuthStateLoading():
-          return '/splash';
-        case AuthenticatedAuthState():
+        case AuthenticatedAuthState() when matchedLocation == '/sign_in':
           return '/';
-        // case AuthenticatedAuthState() when matchedLocation == '/splash':
+        case AuthenticatedAuthState() when matchedLocation == '/splash':
+          return '/';
         case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
           return '/sign_in';
         default:
@@ -376,23 +387,23 @@ class _GoRouterAuthListenable extends ChangeNotifier {
   }
 }
 
-// class _GoRouterConfigListenable extends ChangeNotifier {
-//   _GoRouterConfigListenable(BuildContext context) {
-//     final cubit = context.read<DomainSetupCubit>();
-//     _subscription = cubit.stream
-//         .where((evt) => evt is DomainSetupReadState || evt is DomainSetupEmptyState || evt is DomainSetupWrittenState)
-//         .distinct((prev, next) => prev.runtimeType == next.runtimeType)
-//         .listen((state) => notifyListeners());
-//   }
-//
-//   late final StreamSubscription<DomainSetupState> _subscription;
-//
-//   @override
-//   void dispose() {
-//     _subscription.cancel();
-//     super.dispose();
-//   }
-// }
+class _GoRouterConfigListenable extends ChangeNotifier {
+  _GoRouterConfigListenable(BuildContext context) {
+    final cubit = context.read<DomainSetupCubit>();
+    _subscription = cubit.stream
+        .where((evt) => evt is DomainSetupReadState || evt is DomainSetupEmptyState || evt is DomainSetupWrittenState)
+        .distinct((prev, next) => prev.runtimeType == next.runtimeType)
+        .listen((state) => notifyListeners());
+  }
+
+  late final StreamSubscription<DomainSetupState> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
 
 class DialogPage extends CustomTransitionPage<void> {
   DialogPage({required WidgetBuilder builder})

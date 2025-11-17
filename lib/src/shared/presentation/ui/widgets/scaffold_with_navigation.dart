@@ -37,13 +37,15 @@ class ScaffoldWithNavigation extends StatelessWidget {
         children: [
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, authState) {
-              authState as AuthenticatedAuthState;
+              if (authState is! AuthenticatedAuthState) {
+                return SizedBox.shrink();
+              }
               return Drawer(
                 backgroundColor: Palette.color333333,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                  padding: .symmetric(horizontal: 8.0, vertical: 12.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     spacing: 4.0,
                     children: [
                       _Header(scope: authState.scope),
@@ -104,7 +106,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         title: Text(context.$.nodes),
                         onTap: () {
                           _goBranch(BranchIndex.nodes.index);
-                          context.read<NodesBloc>().add(NodesEvent.startPolling());
+                          context.read<NodesBloc>().add(.startPolling());
                         },
                       ),
                       ListTile(
@@ -114,14 +116,14 @@ class ScaffoldWithNavigation extends StatelessWidget {
                         title: Text(context.$.dbaas),
                         onTap: () {
                           _goBranch(BranchIndex.dbaas.index);
-                          context.read<ClustersBloc>().add(ClustersEvent.startPolling());
+                          context.read<ClustersBloc>().add(.startPolling());
                         },
                       ),
                       const SizedBox(height: 20.0),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: .circular(8.0),
                         child: ExpansionTile(
-                          tilePadding: EdgeInsets.only(right: 8, left: 16.0),
+                          tilePadding: .only(right: 8, left: 16.0),
                           leading: Icon(Icons.extension),
                           title: Text(context.$.elements),
                           children: [
@@ -149,9 +151,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                       ListTile(
                         leading: Icon(CupertinoIcons.restart),
                         title: Text('Restart'.hardcoded),
-                        onTap: () {
-                          App.restartApplication(context);
-                        },
+                        onTap: () => App.restartApplication(context),
                       ),
                     ],
                   ),
@@ -163,7 +163,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 1.0),
+                  padding: const .only(left: 1.0),
                   child: AppBar(
                     actions: [
                       // const Icon(Icons.notifications_rounded, color: Palette.colorAFA8A4, size: 28),
@@ -174,7 +174,7 @@ class ScaffoldWithNavigation extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0, vertical: 8.0),
+                    padding: .symmetric(horizontal: 20.0, vertical: 8.0),
                     child: navigationShell,
                   ),
                 ),
@@ -206,11 +206,11 @@ class _Header extends StatelessWidget {
       },
       listener: (context, state) {
         App.restartApplication(context);
-        context.read<ProjectsBloc>().add(ProjectsEvent.getProjects());
+        context.read<ProjectsBloc>().add(.getProjects());
       },
       child: Column(
         spacing: 16.0,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
             spacing: Spacing.s16,
