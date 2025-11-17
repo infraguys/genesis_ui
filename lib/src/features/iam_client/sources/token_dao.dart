@@ -1,4 +1,7 @@
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
+import 'package:logging/logging.dart';
+
+final log = Logger('TokenDaoLogger');
 
 final class TokenDao {
   TokenDao(this._client);
@@ -17,12 +20,14 @@ final class TokenDao {
   }
 
   Future<void> writeToken(String value) async {
+    log.info('TokenDao/write token: value: $value');
     await _client.writeSecure(key: _tokenKey, value: value);
   }
 
   // Refresh token   ----------
 
   Future<void> writeRefreshToken(String value) async {
+    log.info('TokenDao/write refreshToken: value: $value');
     await _client.writeSecure(key: _refreshTokenKey, value: value);
   }
 
