@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/core/exceptions/network_exception.dart';
@@ -16,9 +17,12 @@ import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/domain/usecases/create_user_usecase.dart';
+import 'package:logging/logging.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
+
+final log = Logger('AuthBlocLogger');
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._authRepository, this._usersRepository) : super(_InitialState()) {
@@ -39,7 +43,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final authSession = await useCase(event.params);
+      log.fine('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
       emit(AuthenticatedAuthState(authSession));
+      log.fine('Emitted AuthenticatedAuthState');
     } on ApiException catch (e) {
       emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {

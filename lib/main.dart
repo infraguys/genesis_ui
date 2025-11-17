@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/env/env.dart';
@@ -9,6 +12,7 @@ import 'package:genesis/src/l10n/generated/app_localizations.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
 import 'package:genesis/src/shared/presentation/ui/theme/app_theme.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,17 +20,35 @@ void main() async {
   configureAppUrlStrategy();
   EquatableConfig.stringify = Env.mode.isDev;
 
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+
   final sharedPrefStorage = await SharedPrefStorage.init();
   final secureStorageClient = FlutterSecureStorageClient.init();
 
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    debugPrint('Flutter error: ${details.exception}\n');
+  };
 
+  PlatformDispatcher.instance.onError = (error, stack) {
+    debugPrint('Platform error: $error\n');
+    return true;
+  };
 
-  runApp(
-    DiContainer(
-      simpleStorageClient: sharedPrefStorage,
-      secureStorageClient: secureStorageClient,
-      child: const App(),
+  runZonedGuarded(
+    () => runApp(
+      DiContainer(
+        secureStorageClient: secureStorageClient,
+        simpleStorageClient: sharedPrefStorage,
+        child: const App(),
+      ),
     ),
+    (error, stack) {
+      debugPrint('Zone error: $error\n');
+    },
   );
 }
 

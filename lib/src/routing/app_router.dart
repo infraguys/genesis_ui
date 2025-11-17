@@ -40,8 +40,11 @@ import 'package:genesis/src/layer_presentation/pages/splash_screen/splash_screen
 import 'package:genesis/src/shared/presentation/ui/widgets/page_not_found.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/scaffold_with_navigation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
 part 'routes.dart';
+
+final log = Logger('AppRouterLogger');
 
 final RouteObserver<PageRoute<dynamic>> clustersObserver = RouteObserver<PageRoute<dynamic>>();
 final RouteObserver<PageRoute<dynamic>> clusterObserver = RouteObserver<PageRoute<dynamic>>();
@@ -75,8 +78,10 @@ GoRouter createRouter(BuildContext context) {
       final domainCubitState = context.read<DomainSetupCubit>().state;
 
       if (authState.isInitial && domainCubitState.isInitial) {
+        log.info('AuthState is Initial and DomainSetupState is Initial -> redirect to /splash');
         return '/splash';
       }
+
 
       // if (authState is UnauthenticatedAuthState && domainCubitState is DomainSetupEmptyState) {
       //   return '/sign_in';
@@ -92,13 +97,18 @@ GoRouter createRouter(BuildContext context) {
       // }
 
       switch (authState) {
+
         case AuthenticatedAuthState() when matchedLocation == '/sign_in':
+          log.info('AuthenticatedAuthState trying to access /sign_in -> redirect to /');
           return '/';
         case AuthenticatedAuthState() when matchedLocation == '/splash':
+          log.info('AuthenticatedAuthState trying to access /splash -> redirect to /');
           return '/';
         case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
+          log.info('UnauthenticatedAuthState trying to access $matchedLocation -> redirect to /sign_in');
           return '/sign_in';
         default:
+          log.info('Unknown auth state $authState, no redirect from $matchedLocation');
           return null;
       }
     },
