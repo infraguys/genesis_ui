@@ -47,7 +47,7 @@ void main() async {
       ),
     ),
     (error, stack) {
-      debugPrint('Zone error: $error\n');
+      debugPrint('Zone error: $error\n, ${stack.toString()}');
     },
   );
 }

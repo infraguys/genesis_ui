@@ -9,6 +9,9 @@ import 'package:genesis/src/features/permissions/permission_names/permission_nam
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
 import 'package:genesis/src/features/projects/data/sources/projects_api.dart';
 import 'package:genesis/src/features/users/data/dtos/user_dto.dart';
+import 'package:logging/logging.dart';
+
+final log = Logger('AuthRepoLogger');
 
 class AuthRepository implements IAuthRepository {
   AuthRepository({
@@ -27,9 +30,13 @@ class AuthRepository implements IAuthRepository {
   Future<AuthSession> getToken(params) async {
     late UserDto userDto;
 
+    log.info('params: ${params.username}');
     final tokenDto = await _iamApi.getToken(GetTokenReq(params));
+    log.info('token: is Success ${tokenDto.accessToken}');
     await _tokenDao.writeToken(tokenDto.accessToken);
+    log.info('1111');
     await _tokenDao.writeRefreshToken(tokenDto.refreshToken);
+    log.info('222222');
 
     userDto = await _iamApi.getCurrentUser();
 
