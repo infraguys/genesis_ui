@@ -8,6 +8,16 @@ on:
     branches:
       - dev
       - master
+  workflow_dispatch:
+    inputs:
+      build_target:
+        description: 'Build target'
+        required: true
+        default: 'ci_stage'
+        type: choice
+        options:
+        - ci_stage
+        - ci_prod
 
 env:
   REPO_ENDPOINT: http://10.20.0.1:8081
