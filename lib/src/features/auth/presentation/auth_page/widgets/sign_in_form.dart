@@ -93,7 +93,7 @@ class _SignInFormState extends State<SignInForm> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    context.read<AuthBloc>().add(.signIn(username: _username, password: _password));
+                    context.read<AuthBloc>().add(AuthEvent.signIn(username: _username, password: _password));
                   }
                 },
                 child: Text('Login'.toUpperCase().hardcoded),

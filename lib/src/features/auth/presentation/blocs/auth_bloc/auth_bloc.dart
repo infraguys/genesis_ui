@@ -22,8 +22,6 @@ import 'package:logging/logging.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-final log = Logger('AuthBlocLogger');
-
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._authRepository, this._usersRepository) : super(_InitialState()) {
     on(_onSignIn);
@@ -32,8 +30,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on(_onRestoreSession);
     on(_onRefreshToken);
 
-    add( AuthEvent.restoreSession());
+    add(AuthEvent.restoreSession());
   }
+
+  static final _log = Logger('AuthBlocLogger');
 
   final IAuthRepository _authRepository;
   final IUsersRepository _usersRepository;
@@ -43,9 +43,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final authSession = await useCase(event.params);
-      log.fine('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
+      _log.fine('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
       emit(AuthenticatedAuthState(authSession));
-      log.fine('Emitted AuthenticatedAuthState');
+      _log.fine('Emitted AuthenticatedAuthState');
     } on ApiException catch (e) {
       emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {

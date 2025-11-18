@@ -5,7 +5,7 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 
 class _View extends StatelessWidget {
-  const _View({super.key});
+  const _View({super.key}); //ignore: unused_element_parameter
 
   // ignore: unused_element_parameter
   @override

@@ -89,7 +89,7 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
               Divider(color: Palette.color1B1B1D),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
+                  // final columnWidth = (constraints.maxWidth - 3 * gapWidth) / 4;
                   return SizedBox(
                     width: constraints.maxWidth,
                     child: AppTextFormInput.description(
