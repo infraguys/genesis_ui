@@ -44,8 +44,6 @@ import 'package:logging/logging.dart';
 
 part 'routes.dart';
 
-final log = Logger('AppRouterLogger');
-
 final RouteObserver<PageRoute<dynamic>> clustersObserver = RouteObserver<PageRoute<dynamic>>();
 final RouteObserver<PageRoute<dynamic>> clusterObserver = RouteObserver<PageRoute<dynamic>>();
 
@@ -60,6 +58,8 @@ GoRouter createRouter(BuildContext context) {
   final nodesNavKey = GlobalKey<NavigatorState>();
   final extensionsNavKey = GlobalKey<NavigatorState>();
   final dbaasNavKey = GlobalKey<NavigatorState>();
+
+  final log = Logger('AppRouterLogger');
 
   return GoRouter(
     debugLogDiagnostics: true,

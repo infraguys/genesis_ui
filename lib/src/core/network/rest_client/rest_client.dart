@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
+import 'package:genesis/src/core/interfaces/i_base_storage_client.dart';
 
 /// [RestClient] is Singleton
 class RestClient {
-  factory RestClient(ISecureStorageClient secureStorage) => _instance ??= RestClient._(secureStorage);
+  factory RestClient(IBaseStorageClient secureStorage) => _instance ??= RestClient._(secureStorage);
 
-  RestClient._(ISecureStorageClient secureStorage) : _dio = _createDio(secureStorage);
+  RestClient._(IBaseStorageClient secureStorage) : _dio = _createDio(secureStorage);
 
   static RestClient? _instance;
 
@@ -87,7 +87,7 @@ class RestClient {
     );
   }
 
-  static Dio _createDio(ISecureStorageClient secureStorage) {
+  static Dio _createDio(IBaseStorageClient secureStorage) {
     String? token;
 
     return Dio()
@@ -104,7 +104,7 @@ class RestClient {
               //   token = await secureStorage.readSecure('access_token');
               // }
 
-              token = await secureStorage.readSecure('access_token');
+              token = await secureStorage.read('access_token');
 
               if (token != null) {
                 options.headers['Authorization'] = 'Bearer $token';
