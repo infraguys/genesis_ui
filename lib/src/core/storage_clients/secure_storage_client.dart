@@ -11,17 +11,17 @@ class FlutterSecureStorageClient implements ISecureStorageClient {
   }
 
   @override
-  Future<void> deleteSecure(String key) async {
+  Future<void> delete(String key) async {
     await _storage.delete(key: key);
   }
 
   @override
-  Future<String?> readSecure(String key) async {
+  Future<String?> read(String key) async {
     return await _storage.read(key: key);
   }
 
   @override
-  Future<void> writeSecure({required String key, required String value}) async {
+  Future<void> write({required String key, required String value}) async {
     await _storage.write(key: key, value: value);
   }
 }

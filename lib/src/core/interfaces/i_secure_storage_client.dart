@@ -1,7 +1,12 @@
-abstract interface class ISecureStorageClient {
-  Future<void> writeSecure({required String key, required String value});
+import 'package:genesis/src/core/interfaces/i_base_storage_client.dart';
 
-  Future<String?> readSecure(String key);
+abstract interface class ISecureStorageClient implements IBaseStorageClient {
+  @override
+  Future<void> write({required String key, required String value});
 
-  Future<void> deleteSecure(String key);
+  @override
+  Future<String?> read(String key);
+
+  @override
+  Future<void> delete(String key);
 }
