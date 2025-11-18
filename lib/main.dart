@@ -15,39 +15,41 @@ import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  configureAppUrlStrategy();
-  EquatableConfig.stringify = Env.mode.isDev;
-
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.time}: ${record.message}');
-  });
-
-  final sharedPrefStorage = await SharedPrefStorage.init();
-  final secureStorageClient = FlutterSecureStorageClient.init();
-
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    debugPrint('Flutter error: ${details.exception}\n');
-  };
-
-  PlatformDispatcher.instance.onError = (error, stack) {
-    debugPrint('Platform error: $error\n');
-    return true;
-  };
-
   runZonedGuarded(
-    () => runApp(
-      DiContainer(
-        secureStorageClient: secureStorageClient,
-        simpleStorageClient: sharedPrefStorage,
-        child: const App(),
-      ),
-    ),
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      configureAppUrlStrategy();
+      EquatableConfig.stringify = Env.mode.isDev;
+
+      Logger.root.level = Level.ALL;
+      Logger.root.onRecord.listen((record) {
+        print('${record.level.name}/${record.loggerName}/${record.time}: ${record.message}');
+      });
+
+      final sharedPrefStorage = await SharedPrefStorage.init();
+      final secureStorageClient = FlutterSecureStorageClient.init();
+
+      FlutterError.onError = (details) {
+        FlutterError.presentError(details);
+        debugPrint('Flutter error: ${details.exception}\n');
+      };
+
+      PlatformDispatcher.instance.onError = (error, stack) {
+        debugPrint('Platform error: $error\n');
+        return true;
+      };
+
+      runApp(
+        DiContainer(
+          secureStorageClient: secureStorageClient,
+          simpleStorageClient: sharedPrefStorage,
+          child: const App(),
+        ),
+      );
+    },
     (error, stack) {
-      debugPrint('Zone error: $error\n, ${stack.toString()}');
+      debugPrint('Zone error: $error\n');
     },
   );
 }
