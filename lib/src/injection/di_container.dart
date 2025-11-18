@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:genesis/src/core/interfaces/i_base_storage_client.dart';
 import 'package:genesis/src/core/interfaces/i_secure_storage_client.dart';
 import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
@@ -58,6 +60,7 @@ import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart'
 import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 class DiContainer extends StatelessWidget {
@@ -72,6 +75,8 @@ class DiContainer extends StatelessWidget {
   final ISimpleStorageClient simpleStorageClient;
   final ISecureStorageClient secureStorageClient;
 
+  static final _log = Logger('DiContainer');
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -83,14 +88,35 @@ class DiContainer extends StatelessWidget {
           value: secureStorageClient,
         ),
         Provider<RestClient>(
-          create: (context) => RestClient(context.read<ISecureStorageClient>()),
+          create: (context) {
+            IBaseStorageClient storage = context.read<ISecureStorageClient>();
+            if (kIsWeb) {
+              final uri = Uri.base;
+
+              final isHttp = uri.scheme == 'http';
+              if (isHttp) {
+                storage = context.read<ISimpleStorageClient>();
+              }
+            }
+            return RestClient(storage);
+          },
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<IAuthRepository>(
             create: (context) {
-              final tokenDao = TokenDao(context.read<ISecureStorageClient>());
+              var tokenDao = TokenDao(context.read<ISecureStorageClient>());
+              if (kIsWeb) {
+                final uri = Uri.base;
+
+                _log.info('Uri.base: $uri');
+
+                final isHttp = uri.scheme == 'http';
+                if (isHttp) {
+                  tokenDao = TokenDao(context.read<ISimpleStorageClient>());
+                }
+              }
               final iamApi = RemoteIamClientApi(context.read<RestClient>());
               final projectsApi = ProjectsApi(context.read<RestClient>());
               return AuthRepository(
