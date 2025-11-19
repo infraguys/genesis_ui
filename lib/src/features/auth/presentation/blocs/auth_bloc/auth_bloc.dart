@@ -43,9 +43,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final authSession = await useCase(event.params);
-      _log.fine('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
+      _log.info('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
       emit(AuthenticatedAuthState(authSession));
-      _log.fine('Emitted AuthenticatedAuthState');
+      _log.info('Emitted AuthenticatedAuthState');
     } on ApiException catch (e) {
       emit(AuthStateFailure(e.message));
     } on NetworkException catch (e) {

@@ -62,7 +62,7 @@ GoRouter createRouter(BuildContext context) {
   final log = Logger('AppRouterLogger');
 
   return GoRouter(
-    debugLogDiagnostics: true,
+    // debugLogDiagnostics: true,
     initialLocation: '/splash',
     // refreshListenable: _GoRouterAuthListenable(context),
     refreshListenable: Listenable.merge([
@@ -78,7 +78,7 @@ GoRouter createRouter(BuildContext context) {
       final domainCubitState = context.read<DomainSetupCubit>().state;
 
       if (authState.isInitial && domainCubitState.isInitial) {
-        log.info('AuthState is Initial and DomainSetupState is Initial -> redirect to /splash');
+        log.info('AuthState is Initial and DomainSetupState is Initial -> redirect to "/splash"');
         return '/splash';
       }
 
@@ -99,13 +99,13 @@ GoRouter createRouter(BuildContext context) {
       switch (authState) {
 
         case AuthenticatedAuthState() when matchedLocation == '/sign_in':
-          log.info('AuthenticatedAuthState trying to access /sign_in -> redirect to /');
+          log.info('AuthenticatedAuthState trying to access "/sign_in" -> redirect to "/"');
           return '/';
         case AuthenticatedAuthState() when matchedLocation == '/splash':
-          log.info('AuthenticatedAuthState trying to access /splash -> redirect to /');
+          log.info('AuthenticatedAuthState trying to access "/splash" -> redirect to "/"');
           return '/';
         case UnauthenticatedAuthState() when matchedLocation != '/sign_in':
-          log.info('UnauthenticatedAuthState trying to access $matchedLocation -> redirect to /sign_in');
+          log.info('UnauthenticatedAuthState trying to access "$matchedLocation" -> redirect to "/sign_in"');
           return '/sign_in';
         default:
           log.info('Unknown auth state $authState, no redirect from $matchedLocation');

@@ -110,7 +110,7 @@ class DiContainer extends StatelessWidget {
               if (kIsWeb) {
                 final uri = Uri.base;
 
-                _log.info('Uri.base: $uri');
+                _log.config('Uri.base: $uri');
 
                 final isHttp = uri.scheme == 'http';
                 if (isHttp) {
