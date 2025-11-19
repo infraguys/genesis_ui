@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 extension TextStyleExtension on TextStyle {
-  TextStyle get w700 => copyWith(fontWeight: FontWeight.w700);
+  TextStyle get w700 => copyWith(fontWeight: .w700);
 
-  TextStyle get w600 => copyWith(fontWeight: FontWeight.w600);
+  TextStyle get w600 => copyWith(fontWeight: .w600);
 
-  TextStyle get w500 => copyWith(fontWeight: FontWeight.w500);
+  TextStyle get w500 => copyWith(fontWeight: .w500);
 
-  TextStyle get w400 => copyWith(fontWeight: FontWeight.normal);
+  TextStyle get w400 => copyWith(fontWeight: .w400);
 
-  TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
+  TextStyle get italic => copyWith(fontStyle: .italic);
 
-  TextStyle get underline => copyWith(decoration: TextDecoration.underline);
+  TextStyle get underline => copyWith(decoration: .underline);
 
   TextStyle size(double size) => copyWith(fontSize: size);
 

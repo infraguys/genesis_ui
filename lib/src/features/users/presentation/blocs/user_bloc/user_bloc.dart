@@ -17,7 +17,23 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc(this._repository) : super(_InitialState()) {
+  UserBloc({
+    required GetUserUseCase getUserUseCase,
+    required CreateUserUseCase createUserUseCase,
+    required DeleteUserUseCase deleteUserUseCase,
+    required ChangeUserPasswordUseCase changeUserPasswordUseCase,
+    required UpdateUserUseCase updateUserUseCase,
+    required ConfirmEmailsUseCase confirmEmailsUseCase,
+    required ForceConfirmEmailUseCase forceConfirmEmailUseCase,
+  }) : _getUserUseCase = getUserUseCase,
+       _createUserUseCase = createUserUseCase,
+       _deleteUserUseCase = deleteUserUseCase,
+       _changeUserPasswordUseCase = changeUserPasswordUseCase,
+       _updateUserUseCase = updateUserUseCase,
+       _confirmEmailsUseCase = confirmEmailsUseCase,
+       _forceConfirmEmailUseCase = forceConfirmEmailUseCase,
+
+       super(_InitialState()) {
     on(_onGetUser);
     on(_onCreateUser);
     on(_onDeleteUser);
@@ -27,13 +43,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on(_onForceConfirmEmail);
   }
 
-  final IUsersRepository _repository;
+  final GetUserUseCase _getUserUseCase;
+  final CreateUserUseCase _createUserUseCase;
+  final DeleteUserUseCase _deleteUserUseCase;
+  final ChangeUserPasswordUseCase _changeUserPasswordUseCase;
+  final UpdateUserUseCase _updateUserUseCase;
+  final ConfirmEmailsUseCase _confirmEmailsUseCase;
+  final ForceConfirmEmailUseCase _forceConfirmEmailUseCase;
 
   Future<void> _onGetUser(_GetUser event, Emitter<UserState> emit) async {
-    final useCase = GetUserUseCase(_repository);
     emit(UserLoadingState());
     try {
-      final user = await useCase(event.uuid);
+      final user = await _getUserUseCase(event.uuid);
       emit(UserLoadedState(user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -43,10 +64,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onCreateUser(_CreateUser event, Emitter<UserState> emit) async {
-    final useCase = CreateUserUseCase(_repository);
     emit(UserLoadingState());
     try {
-      final createdUser = await useCase(event.params);
+      final createdUser = await _createUserUseCase(event.params);
       emit(UserCreatedState(createdUser));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -56,9 +76,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
-    final useCase = DeleteUserUseCase(_repository);
     try {
-      await useCase(event.user.uuid);
+      await _deleteUserUseCase(event.user.uuid);
       emit(UserDeletedState(event.user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -68,15 +87,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onChangeUserPassword(_ChangeUserPassword event, Emitter<UserState> emit) async {
-    final useCase = ChangeUserPasswordUseCase(_repository);
     emit(UserLoadingState());
-    useCase(event.params);
+    await _changeUserPasswordUseCase(event.params);
   }
 
   Future<void> _onUpdateUser(_UpdateUser event, Emitter<UserState> emit) async {
-    final useCase = UpdateUserUseCase(_repository);
     try {
-      final user = await useCase(event.params);
+      final user = await _updateUserUseCase(event.params);
       emit(UserUpdatedState(user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -87,15 +104,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
     emit(UserLoadingState());
-    final useCase = ConfirmEmailsUseCase(_repository);
-    await useCase(event.users.map((it) => it.uuid).toList());
+    await _confirmEmailsUseCase(event.users.map((it) => it.uuid).toList());
     emit(UserConfirmedState());
   }
 
   Future<void> _onForceConfirmEmail(_ForceConfirmEmail event, Emitter<UserState> emit) async {
-    final useCase = ForceConfirmEmailUseCase(_repository);
     try {
-      final user = await useCase(event.user.uuid);
+      final user = await _forceConfirmEmailUseCase(event.user.uuid);
       emit(UserLoadedState(user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));

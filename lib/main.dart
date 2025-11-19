@@ -8,7 +8,7 @@ import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/core/utils/ansi.dart';
-import 'package:genesis/src/injection/di_container.dart';
+import 'package:genesis/src/injection/root_di.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
 import 'package:genesis/src/shared/presentation/ui/theme/app_theme.dart';
@@ -53,7 +53,7 @@ void main() async {
       };
 
       runApp(
-        DiContainer(
+        RootDi(
           secureStorageClient: secureStorageClient,
           simpleStorageClient: sharedPrefStorage,
           child: const App(),
@@ -121,16 +121,11 @@ class _RestartWidgetState extends State<RestartWidget> {
   Key key = UniqueKey();
 
   void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
+    setState(() => key = UniqueKey());
   }
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: key,
-      child: widget.child,
-    );
+    return KeyedSubtree(key: key, child: widget.child);
   }
 }

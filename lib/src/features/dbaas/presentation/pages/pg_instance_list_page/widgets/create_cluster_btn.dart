@@ -3,9 +3,10 @@ part of '../cluster_list_page.dart';
 class _CreateClusterButton extends StatelessWidget {
   const _CreateClusterButton({super.key}) : _isEmptyState = false; // ignore: unused_element_parameter
 
-
   // todo(Koretsky): Подумать над унификацией с другими кнопками создания
-  const _CreateClusterButton.forEmptyState({super.key}) : _isEmptyState = true;
+  const _CreateClusterButton.forEmptyState({
+    super.key,
+  }) : _isEmptyState = true;
 
   final bool _isEmptyState;
 
