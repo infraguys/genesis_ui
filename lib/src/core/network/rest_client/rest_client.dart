@@ -97,7 +97,13 @@ class RestClient {
       )
       ..interceptors.addAll(
         [
-          LogInterceptor(request: false, requestHeader: false, responseHeader: false),
+          // LogInterceptor(
+          //   request: false,
+          //   requestHeader: false,
+          //   responseHeader: false,
+          //   responseBody: true,
+          //   requestBody: true,
+          // ),
           InterceptorsWrapper(
             onRequest: (options, handler) async {
               // if (token == null || (token != null && token!.isEmpty)) {
