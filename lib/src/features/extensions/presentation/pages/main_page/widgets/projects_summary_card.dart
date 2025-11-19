@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 
 class ProjectsSummaryCard extends StatelessWidget {
   const ProjectsSummaryCard({super.key});

@@ -10,7 +10,7 @@ import 'package:genesis/src/features/users/domain/repositories/i_users_repositor
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_page/widgets/list_of_projects.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/user_projects_bloc/user_projects_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';

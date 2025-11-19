@@ -7,11 +7,11 @@ import 'package:genesis/src/features/permissions/domain/repositories/i_permissio
 import 'package:genesis/src/features/permissions/domain/repositories/i_permissions_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
-import 'package:genesis/src/layer_presentation/blocs/permission_bindings_bloc/permission_bindings_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/permissions_bloc/permissions_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/role_bloc/role_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permission_bindings_bloc/permission_bindings_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/role_bloc/role_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
