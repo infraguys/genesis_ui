@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
+import 'package:genesis/src/core/utils/ansi.dart';
 import 'package:genesis/src/injection/di_container.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
 import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
@@ -22,9 +23,20 @@ void main() async {
       configureAppUrlStrategy();
       EquatableConfig.stringify = Env.mode.isDev;
 
-      Logger.root.level = Level.ALL;
+      Logger.root.level = Level.CONFIG;
       Logger.root.onRecord.listen((record) {
-        print('${record.level.name}/${record.loggerName}/${record.time}: ${record.message}');
+        final ansi = switch (record.level) {
+          .SEVERE || .SHOUT => Ansi.brightRed,
+          .WARNING => Ansi.yellow,
+          .INFO => Ansi.cyan,
+          .CONFIG => Ansi.white,
+          .FINE || .FINER || .FINEST => Ansi.green,
+          _ => Ansi.white,
+        };
+
+        final msg = '[${record.level.name}][${record.loggerName}][${record.time}]: ${record.message}';
+
+        debugPrint(ansi(msg));
       });
 
       final sharedPrefStorage = await SharedPrefStorage.init();
