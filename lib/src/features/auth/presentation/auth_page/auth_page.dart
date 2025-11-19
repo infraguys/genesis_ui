@@ -7,7 +7,7 @@ import 'package:genesis/src/features/auth/presentation/auth_page/widgets/set_dom
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/sign_in_form.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/widgets/sign_up_form.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
+import 'package:genesis/src/features/bootstrap/presentation/blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
