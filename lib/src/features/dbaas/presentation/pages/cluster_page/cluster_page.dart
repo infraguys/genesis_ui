@@ -79,15 +79,7 @@ class _ViewState extends State<_View> with RouteAware {
 
   late final ClusterBloc _clusterBloc;
 
-  late String _clusterName;
-  String? _description;
-  late int _cores;
-  late int _ram;
-  late int _diskSize;
-  late int _nodesNumber;
-  late List<String> _ipsv4List;
-  late int _syncReplicaNumber;
-  late String _versionLink;
+  late Cluster _cluster;
 
   @override
   void initState() {
@@ -106,15 +98,16 @@ class _ViewState extends State<_View> with RouteAware {
 
             switch (state) {
               case ClusterLoadedState(cluster: final instance):
-                _clusterName = instance.name;
-                _description = instance.description;
-                _cores = instance.cores;
-                _ram = instance.ram;
-                _diskSize = instance.diskSize;
-                _nodesNumber = instance.nodesNumber;
-                _ipsv4List = instance.ipsv4;
-                _syncReplicaNumber = instance.syncReplicaNumber;
-                _versionLink = instance.version;
+                _cluster = instance;
+              // _clusterName = instance.name;
+              // _description = instance.description;
+              // _cores = instance.cores;
+              // _ram = instance.ram;
+              // _diskSize = instance.diskSize;
+              // _nodesNumber = instance.nodesNumber;
+              // _ipsv4List = instance.ipsv4;
+              // _syncReplicaNumber = instance.syncReplicaNumber;
+              // _versionLink = instance.version;
 
               case ClusterUpdatedState(cluster: final instance):
                 messenger.showSnackBar(AppSnackBar.success(context.$.msgClusterUpdated(instance.name)));
@@ -170,9 +163,9 @@ class _ViewState extends State<_View> with RouteAware {
                               SizedBox(
                                 width: 500,
                                 child: AppTextFormInput(
-                                  initialValue: _clusterName,
+                                  initialValue: _cluster.name,
                                   helperText: context.$.clusterNameHelperText,
-                                  onSaved: (newValue) => _clusterName = newValue!,
+                                  onSaved: (newValue) => _cluster = _cluster.copyWith(name: newValue),
                                   validator: (value) => switch (value) {
                                     _ when value!.isEmpty => context.$.requiredField,
                                     _ => null,
@@ -203,10 +196,10 @@ class _ViewState extends State<_View> with RouteAware {
                                   SizedBox(
                                     width: columnWidth,
                                     child: AppTextFormInput(
-                                      initialValue: _cores.toString(),
+                                      initialValue: _cluster.cores.toString(),
                                       helperText: context.$.cores,
                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                      onSaved: (newValue) => _cores = int.parse(newValue!),
+                                      onSaved: (newValue) => _cluster = _cluster.copyWith(cores: int.parse(newValue!)),
                                       validator: (value) => switch (value) {
                                         _ when value!.isEmpty => context.$.requiredField,
                                         _ => null,
@@ -216,11 +209,12 @@ class _ViewState extends State<_View> with RouteAware {
                                   SizedBox(
                                     width: columnWidth,
                                     child: AppTextFormInput(
-                                      initialValue: _diskSize.toString(),
+                                      initialValue: _cluster.diskSize.toString(),
                                       helperText: context.$.diskSize,
                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                       // TODO(Koretsky): Проверить локализацию
-                                      onSaved: (newValue) => _diskSize = int.parse(newValue!),
+                                      onSaved: (newValue) =>
+                                          _cluster = _cluster.copyWith(diskSize: int.parse(newValue!)),
                                       validator: (value) => switch (value) {
                                         _ when value!.isEmpty => context.$.requiredField,
                                         _ => null,
@@ -230,10 +224,11 @@ class _ViewState extends State<_View> with RouteAware {
                                   SizedBox(
                                     width: columnWidth,
                                     child: AppTextFormInput(
-                                      initialValue: _nodesNumber.toString(),
+                                      initialValue: _cluster.nodesNumber.toString(),
                                       helperText: context.$.nodeCountHelperText,
                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                      onSaved: (newValue) => _nodesNumber = int.parse(newValue!),
+                                      onSaved: (newValue) =>
+                                          _cluster = _cluster.copyWith(nodesNumber: int.parse(newValue!)),
                                       validator: (value) => switch (value) {
                                         _ when value!.isEmpty => context.$.requiredField,
                                         _ => null,
@@ -243,9 +238,11 @@ class _ViewState extends State<_View> with RouteAware {
                                   SizedBox(
                                     width: columnWidth,
                                     child: AppTextFormInput(
-                                      initialValue: _syncReplicaNumber.toString(),
+                                      initialValue: _cluster.syncReplicaNumber.toString(),
                                       helperText: 'Sync replica number'.hardcoded,
-                                      onSaved: (newValue) => _syncReplicaNumber = int.parse(newValue!),
+                                      onSaved: (newValue) => _cluster = _cluster.copyWith(
+                                        syncReplicaNumber: int.parse(newValue!),
+                                      ),
                                       validator: (value) => switch (value) {
                                         _ when value!.isEmpty => context.$.requiredField,
                                         _ => null,
@@ -260,10 +257,12 @@ class _ViewState extends State<_View> with RouteAware {
                                   SizedBox(
                                     width: columnWidth,
                                     child: AppTextFormInput(
-                                      initialValue: _ram.toString(),
+                                      initialValue: _cluster.ram.toString(),
                                       helperText: context.$.ramLabelText,
                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                      onSaved: (newValue) => _ram = int.parse(newValue!),
+                                      onSaved: (newValue) => _cluster = _cluster.copyWith(
+                                        ram: int.parse(newValue!),
+                                      ),
                                       validator: (value) => switch (value) {
                                         _ when value!.isEmpty => context.$.requiredField,
                                         _ => null,
@@ -274,7 +273,7 @@ class _ViewState extends State<_View> with RouteAware {
                                     width: (columnWidth * 3) + (Spacing.s16 * 2),
                                     child: AppTextFormInput(
                                       readOnly: true,
-                                      initialValue: _ipsv4List.join(', '),
+                                      initialValue: _cluster.ipsv4.join(', '),
                                       helperText: 'Ipsv4'.hardcoded,
                                       maxLines: 3,
                                       minLines: 1,
@@ -283,18 +282,22 @@ class _ViewState extends State<_View> with RouteAware {
                                 ],
                               ),
                               AppTextFormInput(
-                                initialValue: _versionLink,
+                                initialValue: _cluster.version,
                                 helperText: context.$.versionHelperText,
-                                onSaved: (newValue) => _versionLink = newValue!,
+                                onSaved: (newValue) => _cluster = _cluster.copyWith(
+                                  version: newValue!,
+                                ),
                                 validator: (value) => switch (value) {
                                   _ when value!.isEmpty => context.$.requiredField,
                                   _ => null,
                                 },
                               ),
                               AppTextFormInput.description(
-                                initialValue: _description,
+                                initialValue: _cluster.description,
                                 helperText: context.$.description,
-                                onSaved: (newValue) => _description = newValue!,
+                                onSaved: (newValue) => _cluster = _cluster.copyWith(
+                                  description: newValue,
+                                ),
                               ),
                             ],
                           );
@@ -340,13 +343,13 @@ class _ViewState extends State<_View> with RouteAware {
       _formKey.currentState!.save();
       final params = UpdateClusterParams(
         id: widget.clusterId,
-        name: _clusterName,
-        description: _description,
-        cores: _cores,
-        ram: _ram,
-        diskSize: _diskSize,
-        nodesNumber: _nodesNumber,
-        syncReplicaNumber: _syncReplicaNumber,
+        name: _cluster.name,
+        description: _cluster.description,
+        cores: _cluster.cores,
+        ram: _cluster.ram,
+        diskSize: _cluster.diskSize,
+        nodesNumber: _cluster.nodesNumber,
+        syncReplicaNumber: _cluster.syncReplicaNumber,
         // ipv4: _ipv4List,
       );
       _clusterBloc.add(ClusterEvent.update(params));

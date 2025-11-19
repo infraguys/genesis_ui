@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
-import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/injection/di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -17,7 +17,7 @@ class _View extends StatefulWidget {
   const _View();
 
   @override
-  State<_View> createState() => _ViewState();
+State<_View> createState() => _ViewState();
 }
 
 class _ViewState extends State<_View> {
@@ -222,8 +222,9 @@ class CreateUserDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiFactory();
     return BlocProvider(
-      create: (context) => UserBloc(context.read<IUsersRepository>()),
+      create: (context) => diFactory.createUserBloc(context),
       child: _View(),
     );
   }

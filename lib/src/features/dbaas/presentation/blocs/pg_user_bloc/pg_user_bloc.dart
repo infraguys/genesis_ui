@@ -47,7 +47,7 @@ class PgUserBloc extends Bloc<PgUserEvent, PgUserState> {
     try {
       await useCase(event.params);
       emit(PgUserDeletedState(event.pgUser));
-    } on PermissionException catch (e) {
+    } on PermissionException catch (_) {
       // emit(NodePermissionFailureState(e.message));
     }
   }

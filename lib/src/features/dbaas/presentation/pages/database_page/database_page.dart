@@ -72,7 +72,7 @@ class _DatabaseViewState extends State<_DatabaseView> {
             _instance = database.instance;
             _description = database.description;
 
-          case DatabaseUpdatedState(:final database):
+          case DatabaseUpdatedState():
             messenger.showSnackBar(AppSnackBar.success(context.$.success));
           // context.read<DatabaseBloc>().add(
           //   DatabaseEvent.getDatabases(GetDatabaseParams(instanceId: widget.pgInstanceId)),

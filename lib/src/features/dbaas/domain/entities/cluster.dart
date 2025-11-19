@@ -51,6 +51,42 @@ class Cluster extends Equatable {
   ];
 }
 
+extension ClusterCopyWith on Cluster {
+  Cluster copyWith({
+    ClusterID? id,
+    String? name,
+    String? description,
+    String? projectId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    ClusterStatus? status,
+    List<String>? ipsv4,
+    int? cores,
+    int? ram,
+    int? diskSize,
+    int? nodesNumber,
+    int? syncReplicaNumber,
+    String? version,
+  }) {
+    return Cluster(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      projectId: projectId ?? this.projectId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      status: status ?? this.status,
+      ipsv4: ipsv4 ?? this.ipsv4,
+      cores: cores ?? this.cores,
+      ram: ram ?? this.ram,
+      diskSize: diskSize ?? this.diskSize,
+      nodesNumber: nodesNumber ?? this.nodesNumber,
+      syncReplicaNumber: syncReplicaNumber ?? this.syncReplicaNumber,
+      version: version ?? this.version,
+    );
+  }
+}
+
 extension type ClusterID(String raw) {}
 
 /// ACTIVE, ERROR, IN_PROGRESS, NEW
