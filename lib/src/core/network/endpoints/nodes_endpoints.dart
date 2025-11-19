@@ -5,7 +5,7 @@ abstract class NodesEndpoints {
   static Endpoint items() {
     return Endpoint.withCorePrefix('/nodes/');
   }
-/**/
+
   static Endpoint item(NodeID id) {
     return Endpoint.withCorePrefix('/nodes/$id');
   }
