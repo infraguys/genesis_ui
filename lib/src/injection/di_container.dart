@@ -58,7 +58,7 @@ import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/p
 import 'package:genesis/src/features/roles/presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
+import 'package:genesis/src/features/bootstrap/presentation/blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
