@@ -12,7 +12,7 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clus
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/routing/branch_index.dart';
 import 'package:genesis/src/shared/presentation/extensions/permission_names_ext.dart';

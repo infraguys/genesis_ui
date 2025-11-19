@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permission_status_widget.dart';
-import 'package:genesis/src/layer_presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:google_fonts/google_fonts.dart';
