@@ -53,11 +53,11 @@ import 'package:genesis/src/features/users/data/repositories/users_repository.da
 import 'package:genesis/src/features/users/data/sources/users_api.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/projects_bloc/projects_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/layer_presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 import 'package:genesis/src/layer_presentation/pages/server_setup_page/page_blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:logging/logging.dart';
