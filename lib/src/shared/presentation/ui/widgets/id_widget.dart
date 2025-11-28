@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/clipboard_copy_btn.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/id_text_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class IdWidget extends StatelessWidget {
   const IdWidget({required this.id, super.key});

@@ -10,7 +10,7 @@ import 'package:genesis/src/features/users/domain/params/update_user_params.dart
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_page/widgets/list_of_projects.dart';
-import 'package:genesis/src/injection/di_factory.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -279,11 +279,11 @@ class UserDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diFactory = DiFactory();
+    final diFactory = MainDiFactory();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => diFactory.createUserBloc(context)..add(UserEvent.getUser(userID)),
+          create: (context) => diFactory.users.createUserBloc(context)..add(UserEvent.getUser(userID)),
         ),
         BlocProvider(
           create: (context) => UserProjectsBloc(

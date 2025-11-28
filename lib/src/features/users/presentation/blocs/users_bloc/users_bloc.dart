@@ -12,32 +12,42 @@ part 'users_event.dart';
 part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
-  UsersBloc(this._usersRepository) : super(_InitialState()) {
+  UsersBloc(
+    GetUsersUseCase getUsersUseCase,
+    DeleteUsersUseCase deleteUsersUseCase,
+    ForceConfirmEmailsUseCase forceConfirmEmailsUseCase,
+  ) : _getUsersUseCase = getUsersUseCase,
+      _deleteUsersUseCase = deleteUsersUseCase,
+      _forceConfirmEmailsUseCase = forceConfirmEmailsUseCase,
+      super(_InitialState()) {
     on(_getUsers);
     on(_onDeleteUsers);
     on(_onForceConfirmEmails);
     add(UsersEvent.getUsers());
   }
 
-  final IUsersRepository _usersRepository;
+  final GetUsersUseCase _getUsersUseCase;
+  final DeleteUsersUseCase _deleteUsersUseCase;
+  final ForceConfirmEmailsUseCase _forceConfirmEmailsUseCase;
 
   Future<void> _getUsers(_GetUsers event, Emitter<UsersState> emit) async {
-    final useCase = GetUsersUseCase(_usersRepository);
     emit(UsersLoadingState());
-    final users = await useCase(GetUsersParams());
+    final users = await _getUsersUseCase(GetUsersParams());
     emit(UsersLoadedState(users));
   }
 
   Future<void> _onDeleteUsers(_DeleteUsers event, Emitter<UsersState> emit) async {
-    final useCase = DeleteUsersUseCase(_usersRepository);
     final previousState = state;
 
-    try {
-      await useCase(event.users);
-      final newListOfUsers = List.of((state as UsersLoadedState).users)
-        ..removeWhere((user) => event.users.contains(user));
+    final _DeleteUsers(:users) = event;
 
-      emit(UsersDeletedState(event.users));
+    try {
+      // TODO(Вынести в usecase)
+      await _deleteUsersUseCase(users);
+      final newListOfUsers = List.of((state as UsersLoadedState).users)
+        ..removeWhere((user) => users.contains(user));
+
+      emit(UsersDeletedState(users));
       emit(UsersLoadedState(newListOfUsers));
     } on PermissionException catch (e) {
       emit(UsersPermissionFailureState(e.message));
@@ -46,10 +56,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   }
 
   Future<void> _onForceConfirmEmails(_ForceConfirmEmails event, Emitter<UsersState> emit) async {
-    final useCase = ForceConfirmEmailsUseCase(_usersRepository);
-    final uuids = event.users.where((user) => !user.emailVerified).map((user) => user.uuid);
+    final _ForceConfirmEmails(:users) = event;
     emit(UsersLoadingState());
-    await useCase(uuids.toList());
+    await _forceConfirmEmailsUseCase(users);
     add(UsersEvent.getUsers());
   }
 }

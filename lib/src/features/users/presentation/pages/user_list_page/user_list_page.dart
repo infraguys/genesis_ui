@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
-import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_bloc.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_cubit.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/widgets/users_table.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -67,7 +68,9 @@ class UserListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UsersSelectionCubit(),
+      create: (_) {
+        return MainDiFactory().users.createUserSelectionCubit();
+      },
       child: _UserListView(),
     );
   }
