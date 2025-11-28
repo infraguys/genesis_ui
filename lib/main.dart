@@ -4,13 +4,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:genesis/src/core/env/env.dart';
 import 'package:genesis/src/core/storage_clients/secure_storage_client.dart';
 import 'package:genesis/src/core/storage_clients/shared_pref_storage.dart';
 import 'package:genesis/src/core/utils/ansi.dart';
 import 'package:genesis/src/injection/root_di.dart';
 import 'package:genesis/src/l10n/generated/app_localizations.dart';
-import 'package:genesis/src/routing/url_strategy/app_url_strategy.dart';
 import 'package:genesis/src/shared/presentation/ui/theme/app_theme.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
@@ -20,7 +20,8 @@ void main() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      configureAppUrlStrategy();
+      usePathUrlStrategy();
+
       EquatableConfig.stringify = Env.mode.isDev;
 
       Logger.root.level = Level.CONFIG;
