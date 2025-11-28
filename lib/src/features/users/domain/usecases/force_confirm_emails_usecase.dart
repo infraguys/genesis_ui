@@ -7,10 +7,12 @@ final class ForceConfirmEmailsUseCase {
 
   final IUsersRepository _repository;
 
-  Future<List<User>> call(List<UserID> ids) async {
+  Future<List<User>> call(List<User> users) async {
+    final unverifiedUsers = users.where((user) => !user.emailVerified);
+
     return await Future.wait(
-      ids.map(
-        (id) => _repository.forceConfirmEmail(ForceConfirmEmailParams(id)),
+      unverifiedUsers.map(
+        (user) => _repository.forceConfirmEmail(ForceConfirmEmailParams(user.uuid)),
       ),
     );
   }

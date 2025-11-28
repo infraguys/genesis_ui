@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
-import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_table.dart';
+import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
+import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
-import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_bloc.dart';
-import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_table.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_cubit.dart';
+import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/widgets/users_table.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -194,7 +195,7 @@ class CreateProjectPage extends StatelessWidget {
           create: (_) => OrganizationsSelectionBloc(),
         ),
         BlocProvider(
-          create: (_) => UsersSelectionCubit(),
+          create: (_) => MainDiFactory().users.createUserSelectionCubit(),
         ),
         BlocProvider(
           create: (_) => RolesSelectionBloc(),

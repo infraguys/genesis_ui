@@ -8,7 +8,6 @@ class ClipboardCopyButton extends StatelessWidget {
 
   final String value;
 
-
   @override
   Widget build(BuildContext context) {
     return IconButton(

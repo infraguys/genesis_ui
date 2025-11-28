@@ -3,14 +3,16 @@ import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/change_user_password_params.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
+import 'package:genesis/src/features/users/domain/params/delete_user_params.dart';
+import 'package:genesis/src/features/users/domain/params/get_user_params.dart';
 import 'package:genesis/src/features/users/domain/params/update_user_params.dart';
-import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/domain/usecases/change_user_password_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/confirm_emails_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/create_user_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/delete_user_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/force_confirm_email_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/get_user_usecase.dart';
+import 'package:genesis/src/features/users/domain/usecases/reset_password_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/update_user_usecase.dart';
 
 part 'user_event.dart';
@@ -25,6 +27,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     required UpdateUserUseCase updateUserUseCase,
     required ConfirmEmailsUseCase confirmEmailsUseCase,
     required ForceConfirmEmailUseCase forceConfirmEmailUseCase,
+    required ResetPasswordUsecase resetPasswordUsecase,
   }) : _getUserUseCase = getUserUseCase,
        _createUserUseCase = createUserUseCase,
        _deleteUserUseCase = deleteUserUseCase,
@@ -32,7 +35,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
        _updateUserUseCase = updateUserUseCase,
        _confirmEmailsUseCase = confirmEmailsUseCase,
        _forceConfirmEmailUseCase = forceConfirmEmailUseCase,
-
+       _resetPasswordUsecase = resetPasswordUsecase,
        super(_InitialState()) {
     on(_onGetUser);
     on(_onCreateUser);
@@ -41,6 +44,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on(_onUpdateUser);
     on(_onConfirmEmail);
     on(_onForceConfirmEmail);
+    on(_onResetPassword);
   }
 
   final GetUserUseCase _getUserUseCase;
@@ -50,11 +54,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UpdateUserUseCase _updateUserUseCase;
   final ConfirmEmailsUseCase _confirmEmailsUseCase;
   final ForceConfirmEmailUseCase _forceConfirmEmailUseCase;
+  final ResetPasswordUsecase _resetPasswordUsecase;
 
   Future<void> _onGetUser(_GetUser event, Emitter<UserState> emit) async {
     emit(UserLoadingState());
     try {
-      final user = await _getUserUseCase(event.uuid);
+      final user = await _getUserUseCase(GetUserParams(event.id));
       emit(UserLoadedState(user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
@@ -76,9 +81,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onDeleteUser(_DeleteUser event, Emitter<UserState> emit) async {
+    final _DeleteUser(:user) = event;
     try {
-      await _deleteUserUseCase(event.user.uuid);
-      emit(UserDeletedState(event.user));
+      await _deleteUserUseCase(DeleteUserParams(user.uuid));
+      emit(UserDeletedState(user));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {
@@ -103,15 +109,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> _onConfirmEmail(_ConfirmEmails event, Emitter<UserState> emit) async {
-    emit(UserLoadingState());
-    await _confirmEmailsUseCase(event.users.map((it) => it.uuid).toList());
-    emit(UserConfirmedState());
+    // emit(UserLoadingState());
+    // await _confirmEmailsUseCase(event.users.map((it) => it.uuid).toList());
+    // emit(UserConfirmedState());
   }
 
+  Future<void> _onResetPassword(_ResetUserPassword event, Emitter<UserState> emit) async {}
+
   Future<void> _onForceConfirmEmail(_ForceConfirmEmail event, Emitter<UserState> emit) async {
+    final _ForceConfirmEmail(:user) = event;
     try {
-      final user = await _forceConfirmEmailUseCase(event.user.uuid);
-      emit(UserLoadedState(user));
+      final confirmedUser = await _forceConfirmEmailUseCase(user);
+      emit(UserLoadedState(confirmedUser));
     } on PermissionException catch (e) {
       emit(UserPermissionFailureState(e.message));
     } on ApiException catch (e) {

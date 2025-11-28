@@ -75,7 +75,7 @@ class UserDto implements IDto<User> {
   static UserID _toID(String json) => UserID(json);
 
   static UserStatus _toStatusFromJson(String json) => switch (json) {
-    'ACTIVE' => UserStatus.active,
-    _ => UserStatus.unknown,
+    'ACTIVE' => .active,
+    _ => .unknown,
   };
 }

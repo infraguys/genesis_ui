@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
+import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_cubit.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
-import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/widgets/users_actions_popup_menu_button.dart';
+import 'package:genesis/src/routing/app_router.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/user_status_widget.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/verified_label.dart';
-import 'package:genesis/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
@@ -120,6 +120,7 @@ class UsersTable extends StatelessWidget {
           final user = users[index];
           context.goNamed(
             AppRoutes.user.name,
+            //todo: change to id when route updated
             pathParameters: {'uuid': user.uuid.raw},
           );
         },

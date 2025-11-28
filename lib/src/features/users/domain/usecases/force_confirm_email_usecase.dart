@@ -7,7 +7,7 @@ final class ForceConfirmEmailUseCase {
 
   final IUsersRepository _repository;
 
-  Future<User> call(UserID id) async {
-    return await _repository.forceConfirmEmail(ForceConfirmEmailParams(id));
+  Future<User> call(User user) async {
+    return await _repository.forceConfirmEmail(ForceConfirmEmailParams(user.uuid));
   }
 }
