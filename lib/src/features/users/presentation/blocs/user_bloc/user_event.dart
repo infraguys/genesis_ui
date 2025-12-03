@@ -1,67 +1,60 @@
 part of 'user_bloc.dart';
 
 sealed class UserEvent {
-  factory UserEvent.getUser(UserID id) = _GetUser;
-
-  factory UserEvent.deleteUser(User user) = _DeleteUser;
-
-  factory UserEvent.createUser(CreateUserParams params) = _CreateUser;
-
-  factory UserEvent.update(UpdateUserParams params) = _UpdateUser;
-
-  factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
-
-  // factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
-
-  // factory UserEvent.confirmEmails(List<User> users) = _ConfirmEmails;
-
-  factory UserEvent.forceConfirmEmail(User user) = _ForceConfirmEmail;
+  const factory UserEvent.getUser(UserID id) = _GetUser;
+  const factory UserEvent.deleteUser(User user) = _DeleteUser;
+  const factory UserEvent.createUser(CreateUserParams params) = _CreateUser;
+  const factory UserEvent.update(UpdateUserParams params) = _UpdateUser;
+  const factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
+  const factory UserEvent.forceConfirmEmail(User user) = _ForceConfirmEmail;
+  // const factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
+  // const factory UserEvent.confirmEmails(List<User> users) = _ConfirmEmails;
 }
 
 final class _GetUser implements UserEvent {
-  _GetUser(this.id);
+  const _GetUser(this.id);
 
   final UserID id;
 }
 
 final class _CreateUser implements UserEvent {
-  _CreateUser(this.params);
+  const _CreateUser(this.params);
 
   final CreateUserParams params;
 }
 
 final class _DeleteUser implements UserEvent {
-  _DeleteUser(this.user);
+  const _DeleteUser(this.user);
 
   final User user;
 }
 
 final class _UpdateUser implements UserEvent {
-  _UpdateUser(this.params);
+  const _UpdateUser(this.params);
 
   final UpdateUserParams params;
 }
 
 final class _ChangeUserPassword implements UserEvent {
-  _ChangeUserPassword(this.params);
+  const _ChangeUserPassword(this.params);
 
   final ChangeUserPasswordParams params;
 }
 
 final class _ResetUserPassword implements UserEvent {
-  _ResetUserPassword(this.userUuid);
+  const _ResetUserPassword(this.userUuid);
 
   final String userUuid;
 }
 
 final class _ConfirmEmails implements UserEvent {
-  _ConfirmEmails(this.users);
+  const _ConfirmEmails(this.users);
 
   final List<User> users;
 }
 
 final class _ForceConfirmEmail implements UserEvent {
-  _ForceConfirmEmail(this.user);
+  const _ForceConfirmEmail(this.user);
 
   final User user;
 }
