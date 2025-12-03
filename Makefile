@@ -1,5 +1,5 @@
 # Declare all targets as phony (not representing files)
-.PHONY: help clean format gen loc dev-web prod-web ci
+.PHONY: help clean format gen loc test dev-web prod-web ci
 
 #------------------------------------------------------
 # Development Commands
@@ -12,6 +12,7 @@ help:
 	@printf "  %-20s - 🖌️  %s\n" "format" "Format Dart code"
 	@printf "  %-20s - 🛠  %s\n" "gen" "Generating code with build_runner…"
 	@printf "  %-20s - 🌎  %s\n" "loc" "Project localization"
+	@printf "  %-20s - 🧪  %s\n" "test" "Run Flutter tests"
 	@printf "  %-20s - 🌐  %s\n" "dev-web" "Run dev web app"
 	@printf "  %-20s - 🚀  %s\n" "prod-web" "Run prod web app"
 	@printf "  %-20s - 🤖  %s\n" "ci" "Run CI/CD pipeline (cleaning, localization, generation)"
@@ -54,6 +55,12 @@ loc:
 		--format
 	@echo "✅ localization completed successfully!"
 
+# Run Flutter tests
+test:
+	@echo "🧪 Running Flutter tests..."
+	flutter test
+	@echo "📈 Test completed successfully!"
+
 # Run dev web app
 dev-web:
 	@echo "🌐 Running development debug web app..."
@@ -69,5 +76,6 @@ ci:
 	$(MAKE) clean
 	$(MAKE) loc
 	$(MAKE) gen
+	$(MAKE) test
 	$(MAKE) prod-web
 	@echo "✅ All development tasks completed!"
