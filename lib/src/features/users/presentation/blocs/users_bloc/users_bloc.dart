@@ -2,13 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/exceptions/api_exception.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/get_users_params.dart';
-import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/domain/usecases/delete_users_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/force_confirm_emails_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/get_users_usecase.dart';
 
 part 'users_event.dart';
-
 part 'users_state.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
@@ -37,19 +35,16 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   }
 
   Future<void> _onDeleteUsers(_DeleteUsers event, Emitter<UsersState> emit) async {
-    final previousState = state;
-
-    final _DeleteUsers(:users) = event;
+    final _DeleteUsers(:ids) = event;
 
     try {
-      // TODO(Вынести в usecase)
-      await _deleteUsersUseCase(users);
-      final newListOfUsers = List.of((state as UsersLoadedState).users)
-        ..removeWhere((user) => users.contains(user));
+      final currentUsers = (state as UsersLoadedState).users;
+      final result = await _deleteUsersUseCase(ids: ids, currentUsers: currentUsers);
 
-      emit(UsersDeletedState(users));
-      emit(UsersLoadedState(newListOfUsers));
+      emit(UsersDeletedState(result.deleted));
+      emit(UsersLoadedState(result.updated));
     } on PermissionException catch (e) {
+      final previousState = state;
       emit(UsersPermissionFailureState(e.message));
       emit(previousState);
     }
