@@ -7,8 +7,8 @@ sealed class UserEvent {
   const factory UserEvent.update(UpdateUserParams params) = _UpdateUser;
   const factory UserEvent.changePassword(ChangeUserPasswordParams params) = _ChangeUserPassword;
   const factory UserEvent.forceConfirmEmail(User user) = _ForceConfirmEmail;
-  // const factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
-  // const factory UserEvent.confirmEmails(List<User> users) = _ConfirmEmails;
+  const factory UserEvent.resetPassword(String userUuid) = _ResetUserPassword;
+  const factory UserEvent.confirmEmails(List<User> users) = _ConfirmEmails;
 }
 
 final class _GetUser implements UserEvent {
