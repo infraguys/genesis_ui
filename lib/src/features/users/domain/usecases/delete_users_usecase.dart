@@ -7,9 +7,29 @@ class DeleteUsersUseCase {
 
   final IUsersRepository _repository;
 
-  Future<void> call(List<User> users) async {
+  Future<({List<User> updated, List<User> deleted})> call({
+    required List<UserID> ids,
+    required List<User> currentUsers,
+  }) async {
+
+    // 1. Делаем запрос на удаление по id
     await Future.wait(
-      users.map((user) => _repository.deleteUser(DeleteUserParams(user.uuid))),
+      ids.map((id) => _repository.deleteUser(DeleteUserParams(id))),
     );
+
+    // 2. Локально фильтруем список и возвращаем новый
+    final idSet = ids.toSet();
+
+    final updatedUsers = <User>[];
+    final deletedUsers = <User>[];
+
+    for (final user in currentUsers) {
+      if (idSet.contains(user.uuid)) {
+        deletedUsers.add(user);
+      } else {
+        updatedUsers.add(user);
+      }
+    }
+    return (updated: updatedUsers, deleted: deletedUsers);
   }
 }
