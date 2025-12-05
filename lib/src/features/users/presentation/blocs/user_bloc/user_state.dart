@@ -17,10 +17,10 @@ final class UserLoadingState extends UserState {
 final class UserLoadedState extends UserState {
   UserLoadedState(this.user);
 
+  final User user;
+
   @override
   bool get shouldListen => true;
-
-  final User user;
 }
 
 final class UserConfirmedState extends UserState {
@@ -31,28 +31,28 @@ final class UserConfirmedState extends UserState {
 final class UserUpdatedState extends UserState {
   UserUpdatedState(this.user);
 
+  final User user;
+
   @override
   bool get shouldListen => true;
-
-  final User user;
 }
 
 final class UserCreatedState extends UserState {
   UserCreatedState(this.user);
 
+  final User user;
+
   @override
   bool get shouldListen => true;
-
-  final User user;
 }
 
 final class UserDeletedState extends UserState {
   UserDeletedState(this.user);
 
+  final User user;
+
   @override
   bool get shouldListen => true;
-
-  final User user;
 }
 
 /// Failure states
@@ -60,17 +60,17 @@ final class UserDeletedState extends UserState {
 final class UserFailureState extends UserState {
   UserFailureState(this.message);
 
+  final String message;
+
   @override
   bool get shouldListen => false;
-
-  final String message;
 }
 
 final class UserPermissionFailureState extends UserState {
   UserPermissionFailureState(this.message);
 
+  final String message;
+
   @override
   bool get shouldListen => false;
-
-  final String message;
 }
