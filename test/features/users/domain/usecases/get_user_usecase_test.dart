@@ -1,13 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/get_user_params.dart';
-import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/domain/usecases/get_user_usecase.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'get_user_usecase_test.mocks.dart';
 
-@GenerateMocks([IUsersRepository])
+import '../../../../mocks/users_mocks.mocks.dart';
+
 void main() {
   late MockIUsersRepository repository;
   late GetUserUseCase useCase;
@@ -32,8 +30,6 @@ void main() {
 
       expect(result, expectedUser);
     });
-
-
   });
 }
 
