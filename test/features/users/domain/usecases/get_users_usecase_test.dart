@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
-import 'package:genesis/src/features/users/domain/params/get_user_params.dart';
 import 'package:genesis/src/features/users/domain/params/get_users_params.dart';
-import 'package:genesis/src/features/users/domain/usecases/get_user_usecase.dart';
 import 'package:genesis/src/features/users/domain/usecases/get_users_usecase.dart';
 import 'package:mockito/mockito.dart';
 
