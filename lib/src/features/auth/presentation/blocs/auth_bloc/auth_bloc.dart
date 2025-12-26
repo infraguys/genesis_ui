@@ -7,7 +7,6 @@ import 'package:genesis/src/features/auth/domain/params/sign_up_params.dart';
 import 'package:genesis/src/features/iam_client/domain/entities/auth_session.dart';
 import 'package:genesis/src/features/iam_client/domain/params/get_token_params.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
-import 'package:genesis/src/features/iam_client/domain/repositories/i_auth_repository.dart';
 import 'package:genesis/src/features/iam_client/domain/usecases/force_refresh_token_usecase.dart';
 import 'package:genesis/src/features/iam_client/domain/usecases/get_token_usecase.dart';
 import 'package:genesis/src/features/iam_client/domain/usecases/restore_session_usecase.dart';
@@ -15,7 +14,6 @@ import 'package:genesis/src/features/iam_client/domain/usecases/sign_out_usecase
 import 'package:genesis/src/features/permissions/permission_names/permission_names.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
-import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
 import 'package:genesis/src/features/users/domain/usecases/create_user_usecase.dart';
 import 'package:logging/logging.dart';
 
@@ -23,7 +21,18 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._authRepository, this._usersRepository) : super(_InitialState()) {
+  AuthBloc({
+    required GetTokenUseCase getTokenUseCase,
+    required SignOutUseCase signOutUseCase,
+    required RestoreSessionUseCase restoreSessionUseCase,
+    required ForceRefreshTokenUseCase forceRefreshTokenUseCase,
+    required CreateUserUseCase createUserUseCase,
+  }) : _getTokenUseCase = getTokenUseCase,
+       _signOutUseCase = signOutUseCase,
+       _restoreSessionUseCase = restoreSessionUseCase,
+       _forceRefreshTokenUseCase = forceRefreshTokenUseCase,
+       _createUserUseCase = createUserUseCase,
+       super(_InitialState()) {
     on(_onSignIn);
     on(_onSignUp);
     on(_onSignOut);
@@ -35,14 +44,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   static final _log = Logger('AuthBlocLogger');
 
-  final IAuthRepository _authRepository;
-  final IUsersRepository _usersRepository;
+  final GetTokenUseCase _getTokenUseCase;
+  final SignOutUseCase _signOutUseCase;
+  final RestoreSessionUseCase _restoreSessionUseCase;
+  final ForceRefreshTokenUseCase _forceRefreshTokenUseCase;
+  final CreateUserUseCase _createUserUseCase;
 
   Future<void> _onSignIn(_SingIn event, Emitter<AuthState> emit) async {
-    final useCase = GetTokenUseCase(_authRepository);
-
     try {
-      final authSession = await useCase(event.params);
+      final authSession = await _getTokenUseCase(event.params);
       _log.info('authSession obtained: User=${authSession.user.username}, scope=${authSession.scope}');
       emit(AuthenticatedAuthState(authSession));
       _log.info('Emitted AuthenticatedAuthState');
@@ -56,18 +66,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignUp(_SingUp event, Emitter<AuthState> emit) async {
-    final useCase = CreateUserUseCase(_usersRepository);
-
     try {
-      await useCase(
+      await _createUserUseCase(
         CreateUserParams(
           username: event.params.username,
           email: event.params.email,
           password: event.params.password,
         ),
       );
-      final getTokenUseCase = GetTokenUseCase(_authRepository);
-      final authSession = await getTokenUseCase(
+
+      final authSession = await _getTokenUseCase(
         GetTokenParams(username: event.params.username, password: event.params.password),
       );
       emit(AuthenticatedAuthState(authSession));
@@ -81,16 +89,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignOut(_SingOut _, Emitter<AuthState> emit) async {
-    final useCase = SignOutUseCase(_authRepository);
-    await useCase();
+    await _signOutUseCase();
     emit(UnauthenticatedAuthState());
   }
 
   Future<void> _onRestoreSession(_RestoreSession event, Emitter<AuthState> emit) async {
-    final useCase = RestoreSessionUseCase(_authRepository);
     emit(AuthStateLoading());
     try {
-      final authSession = await useCase();
+      final authSession = await _restoreSessionUseCase();
       emit(AuthenticatedAuthState(authSession));
     } on NoTokenException catch (_) {
       emit(UnauthenticatedAuthState());
@@ -104,10 +110,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onRefreshToken(_RefreshToken event, Emitter<AuthState> emit) async {
-    final useCase = ForceRefreshTokenUseCase(_authRepository);
-
     try {
-      final authSession = await useCase(event._params);
+      final authSession = await _forceRefreshTokenUseCase(event._params);
       emit(AuthenticatedAuthState(authSession));
     } on ApiException catch (e) {
       emit(AuthStateFailure(e.message));
