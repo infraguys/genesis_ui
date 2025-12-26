@@ -1,10 +1,7 @@
 part of 'auth_bloc.dart';
 
 sealed class AuthEvent {
-  factory AuthEvent.signIn({
-    required String username,
-    required String password,
-  }) => _SingIn(GetTokenParams(username: username, password: password));
+  factory AuthEvent.getToken(GetTokenParams params) => _SingIn(params);
 
   factory AuthEvent.signUp({
     required String username,
