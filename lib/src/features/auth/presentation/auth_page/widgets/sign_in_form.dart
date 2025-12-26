@@ -5,6 +5,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:genesis/src/features/iam_client/domain/params/get_token_params.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -93,7 +94,9 @@ class _SignInFormState extends State<SignInForm> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    context.read<AuthBloc>().add(AuthEvent.signIn(username: _username, password: _password));
+                    context.read<AuthBloc>().add(
+                      AuthEvent.getToken(GetTokenParams(username: _username, password: _password)),
+                    );
                   }
                 },
                 child: Text('Login'.toUpperCase().hardcoded),
