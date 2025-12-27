@@ -5,9 +5,9 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/nodes/domain/params/update_node_params.dart';
-import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -296,7 +296,7 @@ class NodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NodeBloc(context.read<INodesRepository>())..add(NodeEvent.getNode(id)),
+      create: (context) => MainDiFactory().nodes.createNodeBloc(context)..add(NodeEvent.getNode(id)),
       child: _View(id: id),
     );
   }

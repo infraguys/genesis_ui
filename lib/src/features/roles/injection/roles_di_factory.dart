@@ -6,6 +6,7 @@ import 'package:genesis/src/features/roles/data/repositories/roles_repository.da
 import 'package:genesis/src/features/roles/data/sources/roles_api.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/roles/domain/usecases/get_roles.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
 
@@ -20,10 +21,12 @@ final class RolesDiFactory {
   /// Blocs
 
   RolesBloc createRolesBloc(BuildContext context) {
+    final rolesRepository = context.read<IRolesRepository>();
     return RolesBloc(
-      rolesRepository: context.read<IRolesRepository>(),
+      rolesRepository: rolesRepository,
       permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
       roleBindingsRepository: context.read<IRoleBindingsRepository>(),
+      getRolesUseCase: GetRolesUseCase(rolesRepository)
     );
   }
 
