@@ -22,9 +22,11 @@ class RolesBloc extends Bloc<RolesEvent, RolesState> {
     required IRolesRepository rolesRepository,
     required IPermissionBindingsRepository permissionBindingsRepository,
     required IRoleBindingsRepository roleBindingsRepository,
+    required GetRolesUseCase getRolesUseCase,
   }) : _rolesRepository = rolesRepository,
        _permissionBindingsRepository = permissionBindingsRepository,
        _roleBindingsRepository = roleBindingsRepository,
+        _getRolesUseCase = getRolesUseCase,
        super(RolesState.init()) {
     on(_onGetRoles);
     on(_onDeleteRoles);
@@ -34,11 +36,11 @@ class RolesBloc extends Bloc<RolesEvent, RolesState> {
   final IRolesRepository _rolesRepository;
   final IPermissionBindingsRepository _permissionBindingsRepository;
   final IRoleBindingsRepository _roleBindingsRepository;
+  final GetRolesUseCase _getRolesUseCase;
 
   Future<void> _onGetRoles(_GetRoles event, Emitter<RolesState> emit) async {
-    final usesCase = GetRolesUseCase(_rolesRepository);
     emit(RolesState.loading());
-    final roles = await usesCase(event.params);
+    final roles = await _getRolesUseCase(event.params);
     emit(RolesState.loaded(roles));
   }
 

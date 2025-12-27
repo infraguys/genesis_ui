@@ -8,17 +8,17 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/injection/auth_di_factory.dart';
 import 'package:genesis/src/features/bootstrap/presentation/blocs/server_setup_cubit/domain_setup_cubit.dart';
 import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
+import 'package:genesis/src/features/nodes/injection/nodes_di_factory.dart';
+import 'package:genesis/src/features/roles/injection/roles_di_factory.dart';
 import 'package:genesis/src/features/users/injection/users_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/clusters_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/dbaas_factory.dart';
 import 'package:genesis/src/injection/feat_factories/extensions_di_factory.dart';
-import 'package:genesis/src/injection/feat_factories/nodes_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/organizations_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/permission_bindings_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/permissions_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/projects_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/role_bindings_di_factory.dart';
-import 'package:genesis/src/injection/feat_factories/roles_di_factory.dart';
 
 final class MainDiFactory {
   factory MainDiFactory() => _instance ??= MainDiFactory._();

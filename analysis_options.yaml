@@ -61,6 +61,7 @@ analyzer:
 
   exclude:
     - "**/*.g.dart"
+    - .github
 
 
 # Additional information about this file can be found at

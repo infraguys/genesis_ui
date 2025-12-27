@@ -4,6 +4,11 @@ import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/nodes/data/repositories/nodes_repository.dart';
 import 'package:genesis/src/features/nodes/data/sources/nodes_api.dart';
 import 'package:genesis/src/features/nodes/domain/repositories/i_nodes_repository.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/create_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/delete_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/get_node_usecase.dart';
+import 'package:genesis/src/features/nodes/domain/usecases/update_node_usecase.dart';
+import 'package:genesis/src/features/nodes/presentation/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 
 final class NodesDiFactory {
@@ -18,5 +23,15 @@ final class NodesDiFactory {
   NodesBloc createNodesBloc(BuildContext context) {
     final repository = context.read<INodesRepository>();
     return NodesBloc(repository);
+  }
+
+  NodeBloc createNodeBloc(BuildContext context) {
+    final repository = context.read<INodesRepository>();
+    return NodeBloc(
+      getNodeUseCase: GetNodeUseCase(repository),
+      createNodeUseCase: CreateNodeUseCase(repository),
+      deleteNodeUseCase: DeleteNodeUseCase(repository),
+      updateNodeUseCase: UpdateNodeUseCase(repository),
+    );
   }
 }
