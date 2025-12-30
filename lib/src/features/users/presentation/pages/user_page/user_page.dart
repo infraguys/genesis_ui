@@ -283,7 +283,7 @@ class UserDetailsPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => diFactory.users.createUserBloc(context)..add(UserEvent.getUser(userID)),
+          create: (context) => diFactory.users.makeUserBloc(context)..add(UserEvent.getUser(userID)),
         ),
         BlocProvider(
           create: (context) => UserProjectsBloc(

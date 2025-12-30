@@ -16,14 +16,14 @@ import 'package:genesis/src/features/nodes/presentation/blocs/nodes_selection_cu
 
 final class NodesDiFactory {
   /// Repositories
-  NodesRepository createNodesRepository(BuildContext context) {
+  NodesRepository makeNodesRepository(BuildContext context) {
     final nodesApi = NodesApi(context.read<RestClient>());
     return NodesRepository(nodesApi);
   }
 
   /// Blocs
 
-  NodesBloc createNodesBloc(BuildContext context) {
+  NodesBloc makeNodesBloc(BuildContext context) {
     final repository = context.read<INodesRepository>();
     return NodesBloc(
       getNodesUseCase: GetNodesUseCase(repository),
@@ -31,7 +31,7 @@ final class NodesDiFactory {
     );
   }
 
-  NodeBloc createNodeBloc(BuildContext context) {
+  NodeBloc makeNodeBloc(BuildContext context) {
     final repository = context.read<INodesRepository>();
     return NodeBloc(
       getNodeUseCase: GetNodeUseCase(repository),
@@ -41,7 +41,7 @@ final class NodesDiFactory {
     );
   }
 
-  NodesSelectionCubit createNodesSelectionCubit() {
+  NodesSelectionCubit makeNodesSelectionCubit() {
     return NodesSelectionCubit();
   }
 }

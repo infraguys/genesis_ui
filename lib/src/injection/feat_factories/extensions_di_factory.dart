@@ -6,7 +6,7 @@ import 'package:genesis/src/features/extensions/data/source/extensions_api.dart'
 
 final class ExtensionsDiFactory {
   /// Repositories
-  ExtensionsRepository createExtensionsRepository(BuildContext context) {
+  ExtensionsRepository makeExtensionsRepository(BuildContext context) {
     final extensionApi = ExtensionsApi(context.read<RestClient>());
     return ExtensionsRepository(extensionApi);
   }

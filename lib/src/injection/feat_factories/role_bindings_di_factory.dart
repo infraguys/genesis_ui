@@ -9,14 +9,14 @@ import 'package:genesis/src/features/roles/presentation/blocs/role_bindings_bloc
 final class RoleBindingsDiFactory {
   /// Repositories
 
-  RoleBindingsRepository createRoleBindingsRepository(BuildContext context) {
+  RoleBindingsRepository makeRoleBindingsRepository(BuildContext context) {
     final roleBindingsApi = RoleBindingsApi(context.read<RestClient>());
     return RoleBindingsRepository(roleBindingsApi);
   }
 
   /// Blocs
 
-  RoleBindingsBloc createRoleBindingsBloc(BuildContext context) {
+  RoleBindingsBloc makeRoleBindingsBloc(BuildContext context) {
     return RoleBindingsBloc(context.read<IRoleBindingsRepository>());
   }
 }

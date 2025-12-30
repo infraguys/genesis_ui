@@ -70,7 +70,7 @@ class UserListPage extends StatelessWidget {
     final diFactory = MainDiFactory();
     return BlocProvider(
       create: (_) {
-        return diFactory.users.createUserSelectionCubit();
+        return diFactory.users.makeUserSelectionCubit();
       },
       child: _UserListView(),
     );

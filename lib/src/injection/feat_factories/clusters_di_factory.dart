@@ -9,14 +9,15 @@ import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clus
 final class ClustersDiFactory {
   /// Repositories
 
-  ClustersRepository createClustersRepository(BuildContext context) {
+  ClustersRepository makeClustersRepository(BuildContext context) {
     final clustersApi = ClustersApi(context.read<RestClient>());
     return ClustersRepository(clustersApi);
   }
 
   /// Blocs
 
-  ClustersBloc createClustersBloc(BuildContext context) {
-    return ClustersBloc(context.read<IClustersRepository>());
+  ClustersBloc makeClustersBloc(BuildContext context) {
+    final repository = context.read<IClustersRepository>();
+    return ClustersBloc(repository);
   }
 }

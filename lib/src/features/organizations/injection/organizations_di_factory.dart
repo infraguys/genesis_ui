@@ -11,14 +11,14 @@ import 'package:genesis/src/features/organizations/presentation/blocs/organizati
 final class OrganizationsDiFactory {
   /// Repositories
 
-  OrganizationsRepository createOrganizationsRepository(BuildContext context) {
+  OrganizationsRepository makeOrganizationsRepository(BuildContext context) {
     final organizationsApi = OrganizationsApi(context.read<RestClient>());
     return OrganizationsRepository(organizationsApi);
   }
 
   /// Blocs
 
-  OrganizationsBloc createOrganizationsBloc(BuildContext context) {
+  OrganizationsBloc makeOrganizationsBloc(BuildContext context) {
     final repository = context.read<IOrganizationsRepository>();
     return OrganizationsBloc(
       getOrganizationsUseCase: GetOrganizationsUseCase(repository),

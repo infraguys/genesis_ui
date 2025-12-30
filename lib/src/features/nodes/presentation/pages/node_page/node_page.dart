@@ -296,7 +296,7 @@ class NodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainDiFactory().nodes.createNodeBloc(context)..add(NodeEvent.getNode(id)),
+      create: (context) => MainDiFactory().nodes.makeNodeBloc(context)..add(NodeEvent.getNode(id)),
       child: _View(id: id),
     );
   }

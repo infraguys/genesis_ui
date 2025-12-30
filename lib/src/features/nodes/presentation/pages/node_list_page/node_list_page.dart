@@ -61,7 +61,7 @@ class NodeListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final diFactory = MainDiFactory();
     return BlocProvider(
-      create: (context) => diFactory.nodes.createNodesSelectionCubit(),
+      create: (context) => diFactory.nodes.makeNodesSelectionCubit(),
       child: _NodeListView(),
     );
   }

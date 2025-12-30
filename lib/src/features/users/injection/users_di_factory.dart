@@ -20,23 +20,23 @@ import 'package:genesis/src/features/users/presentation/blocs/user_selection_cub
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 
 final class UsersDiFactory {
-  IUsersRepository createUsersRepository(BuildContext context) {
+  IUsersRepository makeUsersRepository(BuildContext context) {
     final usersApi = UsersApi(context.read<RestClient>());
     return UsersRepository(usersApi);
   }
 
   /// Blocs
 
-  UsersBloc createUsersBloc(BuildContext context) {
-    final usersRepo = context.read<IUsersRepository>();
+  UsersBloc makeUsersBloc(BuildContext context) {
+    final repository = context.read<IUsersRepository>();
     return UsersBloc(
-      GetUsersUseCase(usersRepo),
-      DeleteUsersUseCase(usersRepo),
-      ForceConfirmEmailsUseCase(usersRepo),
+      GetUsersUseCase(repository),
+      DeleteUsersUseCase(repository),
+      ForceConfirmEmailsUseCase(repository),
     );
   }
 
-  UserBloc createUserBloc(BuildContext context) {
+  UserBloc makeUserBloc(BuildContext context) {
     final repository = context.read<IUsersRepository>();
     return UserBloc(
       getUserUseCase: GetUserUseCase(repository),
@@ -50,7 +50,7 @@ final class UsersDiFactory {
     );
   }
 
-  UsersSelectionCubit createUserSelectionCubit() {
+  UsersSelectionCubit makeUserSelectionCubit() {
     return UsersSelectionCubit();
   }
 }

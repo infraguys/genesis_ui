@@ -9,14 +9,14 @@ import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/p
 final class ProjectsDiFactory {
   /// Repositories
 
-  IProjectsRepository createProjectsRepository(BuildContext context) {
+  IProjectsRepository makeProjectsRepository(BuildContext context) {
     final projectsApi = ProjectsApi(context.read<RestClient>());
     return ProjectsRepository(projectsApi);
   }
 
   /// Blocs
 
-  ProjectsBloc createProjectsBloc(BuildContext context) {
+  ProjectsBloc makeProjectsBloc(BuildContext context) {
     final repository = context.read<IProjectsRepository>();
     return ProjectsBloc(repository);
   }

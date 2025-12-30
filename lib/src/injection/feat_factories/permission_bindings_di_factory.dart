@@ -7,7 +7,7 @@ import 'package:genesis/src/features/permissions/data/sources/permission_binding
 final class PermissionBindingsDiFactory {
   /// Repositories
 
-  PermissionBindingsRepository createPermissionBindingsRepository(BuildContext context) {
+  PermissionBindingsRepository makePermissionBindingsRepository(BuildContext context) {
     final permissionBindingsApi = PermissionBindingsApi(context.read<RestClient>());
     return PermissionBindingsRepository(permissionBindingsApi);
   }

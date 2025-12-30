@@ -10,17 +10,17 @@ import 'package:genesis/src/features/dbaas/data/source/remote/pg_users_api.dart'
 
 final class DbaasFactory {
   /// Repositories
-  PgDatabasesRepository createDatabasesRepository(BuildContext context) {
+  PgDatabasesRepository makeDatabasesRepository(BuildContext context) {
     final databasesApi = PgDatabasesApi(context.read<RestClient>());
     return PgDatabasesRepository(databasesApi);
   }
 
-  PgUsersRepository createPgUsersRepository(BuildContext context) {
+  PgUsersRepository makePgUsersRepository(BuildContext context) {
     final pgUsersApi = PgUsersApi(context.read<RestClient>());
     return PgUsersRepository(pgUsersApi);
   }
 
-  DbVersionsRepository createDbVersionsRepository(BuildContext context) {
+  DbVersionsRepository makeDbVersionsRepository(BuildContext context) {
     final dbVersionsApi = DbVersionsApi(context.read<RestClient>());
     return DbVersionsRepository(dbVersionsApi);
   }

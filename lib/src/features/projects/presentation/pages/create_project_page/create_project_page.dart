@@ -195,7 +195,7 @@ class CreateProjectPage extends StatelessWidget {
           create: (_) => OrganizationsSelectionBloc(),
         ),
         BlocProvider(
-          create: (_) => MainDiFactory().users.createUserSelectionCubit(),
+          create: (_) => MainDiFactory().users.makeUserSelectionCubit(),
         ),
         BlocProvider(
           create: (_) => RolesSelectionBloc(),
