@@ -224,7 +224,7 @@ class CreateUserDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final diFactory = MainDiFactory();
     return BlocProvider(
-      create: diFactory.users.createUserBloc,
+      create: diFactory.users.makeUserBloc,
       child: _View(),
     );
   }

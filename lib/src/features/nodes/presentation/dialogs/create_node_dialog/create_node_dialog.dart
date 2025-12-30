@@ -215,7 +215,7 @@ class CreateNodeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: MainDiFactory().nodes.createNodeBloc,
+      create: MainDiFactory().nodes.makeNodeBloc,
       child: _View(),
     );
   }

@@ -53,46 +53,46 @@ class RootDi extends StatelessWidget {
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<IAuthRepository>(
-            create: diFactory.auth.createAuthRepository,
+            create: diFactory.auth.makeAuthRepository,
           ),
           RepositoryProvider<IUsersRepository>(
-            create: diFactory.users.createUsersRepository,
+            create: diFactory.users.makeUsersRepository,
           ),
           RepositoryProvider<IProjectsRepository>(
-            create: diFactory.projects.createProjectsRepository,
+            create: diFactory.projects.makeProjectsRepository,
           ),
           RepositoryProvider<IRolesRepository>(
-            create: diFactory.roles.createRolesRepository,
+            create: diFactory.roles.makeRolesRepository,
           ),
           RepositoryProvider<IOrganizationsRepository>(
-            create: diFactory.organizations.createOrganizationsRepository,
+            create: diFactory.organizations.makeOrganizationsRepository,
           ),
           RepositoryProvider<IPermissionsRepository>(
-            create: diFactory.permissions.createPermissionsRepository,
+            create: diFactory.permissions.makePermissionsRepository,
           ),
           RepositoryProvider<IRoleBindingsRepository>(
-            create: diFactory.roleBindings.createRoleBindingsRepository,
+            create: diFactory.roleBindings.makeRoleBindingsRepository,
           ),
           RepositoryProvider<IPermissionBindingsRepository>(
-            create: diFactory.permissionBindings.createPermissionBindingsRepository,
+            create: diFactory.permissionBindings.makePermissionBindingsRepository,
           ),
           RepositoryProvider<IExtensionsRepository>(
-            create: diFactory.extensions.createExtensionsRepository,
+            create: diFactory.extensions.makeExtensionsRepository,
           ),
           RepositoryProvider<INodesRepository>(
-            create: diFactory.nodes.createNodesRepository,
+            create: diFactory.nodes.makeNodesRepository,
           ),
           RepositoryProvider<IClustersRepository>(
-            create: diFactory.clusters.createClustersRepository,
+            create: diFactory.clusters.makeClustersRepository,
           ),
           RepositoryProvider<IPgUsersRepository>(
-            create: diFactory.dbaas.createPgUsersRepository,
+            create: diFactory.dbaas.makePgUsersRepository,
           ),
           RepositoryProvider<IDatabaseRepository>(
-            create: diFactory.dbaas.createDatabasesRepository,
+            create: diFactory.dbaas.makeDatabasesRepository,
           ),
           RepositoryProvider<IDBVersionsRepository>(
-            create: diFactory.dbaas.createDbVersionsRepository,
+            create: diFactory.dbaas.makeDbVersionsRepository,
           ),
         ],
         child: MultiBlocProvider(
@@ -102,31 +102,31 @@ class RootDi extends StatelessWidget {
               create: diFactory.createDomainSetupCubit,
             ),
             BlocProvider(
-              create: diFactory.auth.createAuthBloc,
+              create: diFactory.auth.makeAuthBloc,
             ),
             BlocProvider(
-              create: diFactory.users.createUsersBloc,
+              create: diFactory.users.makeUsersBloc,
             ),
             BlocProvider(
-              create: diFactory.projects.createProjectsBloc,
+              create: diFactory.projects.makeProjectsBloc,
             ),
             BlocProvider(
-              create: diFactory.roles.createRolesBloc,
+              create: diFactory.roles.makeRolesBloc,
             ),
             BlocProvider(
-              create: diFactory.roles.createUserRolesBloc,
+              create: diFactory.roles.makeUserRolesBloc,
             ),
             BlocProvider(
-              create: diFactory.organizations.createOrganizationsBloc,
+              create: diFactory.organizations.makeOrganizationsBloc,
             ),
             BlocProvider(
-              create: diFactory.roleBindings.createRoleBindingsBloc,
+              create: diFactory.roleBindings.makeRoleBindingsBloc,
             ),
             BlocProvider(
-              create: diFactory.nodes.createNodesBloc,
+              create: diFactory.nodes.makeNodesBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.clusters.createClustersBloc(context)..add(ClustersEvent.getClusters()),
+              create: (context) => diFactory.clusters.makeClustersBloc(context)..add(ClustersEvent.getClusters()),
             ),
             Provider(
               create: createRouter,

@@ -6,6 +6,7 @@ import 'package:genesis/src/features/roles/data/repositories/roles_repository.da
 import 'package:genesis/src/features/roles/data/sources/roles_api.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
+import 'package:genesis/src/features/roles/domain/usecases/delete_roles_usecase.dart';
 import 'package:genesis/src/features/roles/domain/usecases/get_roles.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/user_roles_bloc/user_roles_bloc.dart';
@@ -13,24 +14,24 @@ import 'package:genesis/src/features/roles/presentation/blocs/user_roles_bloc/us
 final class RolesDiFactory {
   /// Repositories
 
-  IRolesRepository createRolesRepository(BuildContext context) {
+  IRolesRepository makeRolesRepository(BuildContext context) {
     final rolesApi = RolesApi(context.read<RestClient>());
     return RolesRepository(rolesApi);
   }
 
   /// Blocs
 
-  RolesBloc createRolesBloc(BuildContext context) {
+  RolesBloc makeRolesBloc(BuildContext context) {
     final rolesRepository = context.read<IRolesRepository>();
     return RolesBloc(
-      rolesRepository: rolesRepository,
       permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
       roleBindingsRepository: context.read<IRoleBindingsRepository>(),
-      getRolesUseCase: GetRolesUseCase(rolesRepository)
+      getRolesUseCase: GetRolesUseCase(rolesRepository),
+      deleteRolesUseCase: DeleteRolesUseCase(rolesRepository),
     );
   }
 
-  UserRolesBloc createUserRolesBloc(BuildContext context) {
+  UserRolesBloc makeUserRolesBloc(BuildContext context) {
     return UserRolesBloc(context.read<IRolesRepository>());
   }
 }

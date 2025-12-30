@@ -7,7 +7,7 @@ import 'package:genesis/src/features/permissions/data/sources/permissions_api.da
 final class PermissionsDiFactory {
   /// Repositories
 
-  PermissionsRepository createPermissionsRepository(BuildContext context) {
+  PermissionsRepository makePermissionsRepository(BuildContext context) {
     final permissionsApi = PermissionsApi(context.read<RestClient>());
     return PermissionsRepository(permissionsApi);
   }
