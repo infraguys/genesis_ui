@@ -2,7 +2,7 @@ part of 'nodes_bloc.dart';
 
 sealed class NodesState {}
 
-final class NodesInitialState implements NodesState {}
+final class _InitialState implements NodesState {}
 
 final class NodesLoadingState implements NodesState {}
 

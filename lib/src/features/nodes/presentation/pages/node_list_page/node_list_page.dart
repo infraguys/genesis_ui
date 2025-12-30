@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
-import 'package:genesis/src/features/nodes/presentation/dialogs/create_node_dialog/create_node_dialog.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
+import 'package:genesis/src/features/nodes/presentation/dialogs/create_node_dialog/create_node_dialog.dart';
 import 'package:genesis/src/features/nodes/presentation/pages/node_list_page/widgets/nodes_table.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/confirmation_dialog.dart';
@@ -58,8 +59,9 @@ class NodeListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = MainDiFactory();
     return BlocProvider(
-      create: (context) => NodesSelectionCubit(),
+      create: (context) => diFactory.nodes.createNodesSelectionCubit(),
       child: _NodeListView(),
     );
   }

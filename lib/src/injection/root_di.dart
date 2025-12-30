@@ -43,91 +43,93 @@ class RootDi extends StatelessWidget {
         Provider<ISimpleStorageClient>.value(
           value: simpleStorageClient,
         ),
-        Provider<ISecureStorageClient>.value(value: secureStorageClient),
+        Provider<ISecureStorageClient>.value(
+          value: secureStorageClient,
+        ),
         Provider<RestClient>(
-          create: (context) => diFactory.createRestClient(context),
+          create: diFactory.createRestClient,
         ),
       ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<IAuthRepository>(
-            create: (context) => diFactory.auth.createAuthRepository(context),
+            create: diFactory.auth.createAuthRepository,
           ),
           RepositoryProvider<IUsersRepository>(
-            create: (context) => diFactory.users.createUsersRepository(context),
+            create: diFactory.users.createUsersRepository,
           ),
           RepositoryProvider<IProjectsRepository>(
-            create: (context) => diFactory.projects.createProjectsRepository(context),
+            create: diFactory.projects.createProjectsRepository,
           ),
           RepositoryProvider<IRolesRepository>(
-            create: (context) => diFactory.roles.createRolesRepository(context),
+            create: diFactory.roles.createRolesRepository,
           ),
           RepositoryProvider<IOrganizationsRepository>(
-            create: (context) => diFactory.organizations.createOrganiztionsRepository(context),
+            create: diFactory.organizations.createOrganizationsRepository,
           ),
           RepositoryProvider<IPermissionsRepository>(
-            create: (context) => diFactory.permissions.createPermissionsRepository(context),
+            create: diFactory.permissions.createPermissionsRepository,
           ),
           RepositoryProvider<IRoleBindingsRepository>(
-            create: (context) => diFactory.roleBindings.createRoleBindingsRepository(context),
+            create: diFactory.roleBindings.createRoleBindingsRepository,
           ),
           RepositoryProvider<IPermissionBindingsRepository>(
-            create: (context) => diFactory.permissionBindings.createPermissionBindingsRepository(context),
+            create: diFactory.permissionBindings.createPermissionBindingsRepository,
           ),
           RepositoryProvider<IExtensionsRepository>(
-            create: (context) => diFactory.extensions.createExtensionsRepository(context),
+            create: diFactory.extensions.createExtensionsRepository,
           ),
           RepositoryProvider<INodesRepository>(
-            create: (context) => diFactory.nodes.createNodesRepository(context),
+            create: diFactory.nodes.createNodesRepository,
           ),
           RepositoryProvider<IClustersRepository>(
-            create: (context) => diFactory.clusters.createClustersRepository(context),
+            create: diFactory.clusters.createClustersRepository,
           ),
           RepositoryProvider<IPgUsersRepository>(
-            create: (context) => diFactory.dbaas.createPgUsersRepository(context),
+            create: diFactory.dbaas.createPgUsersRepository,
           ),
           RepositoryProvider<IDatabaseRepository>(
-            create: (context) => diFactory.dbaas.createDatabasesRepository(context),
+            create: diFactory.dbaas.createDatabasesRepository,
           ),
           RepositoryProvider<IDBVersionsRepository>(
-            create: (context) => diFactory.dbaas.createDbVersionsRepository(context),
+            create: diFactory.dbaas.createDbVersionsRepository,
           ),
         ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
               lazy: false,
-              create: (context) => diFactory.createDomainSetupCubit(context),
+              create: diFactory.createDomainSetupCubit,
             ),
             BlocProvider(
-              create: (context) => diFactory.auth.createAuthBloc(context),
+              create: diFactory.auth.createAuthBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.users.createUsersBloc(context),
+              create: diFactory.users.createUsersBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.projects.createProjectsBloc(context),
+              create: diFactory.projects.createProjectsBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.roles.createRolesBloc(context),
+              create: diFactory.roles.createRolesBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.roles.createUserRolesBloc(context),
+              create: diFactory.roles.createUserRolesBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.organizations.createOrganizationsBloc(context),
+              create: diFactory.organizations.createOrganizationsBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.roleBindings.createRoleBindingsBloc(context),
+              create: diFactory.roleBindings.createRoleBindingsBloc,
             ),
             BlocProvider(
-              create: (context) => diFactory.nodes.createNodesBloc(context),
+              create: diFactory.nodes.createNodesBloc,
             ),
             BlocProvider(
               create: (context) => diFactory.clusters.createClustersBloc(context)..add(ClustersEvent.getClusters()),
             ),
             Provider(
-              create: (context) => createRouter(context),
+              create: createRouter,
             ),
           ],
           child: child,
