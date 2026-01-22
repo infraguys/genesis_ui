@@ -6,6 +6,7 @@ import 'package:genesis/src/features/users/presentation/blocs/user_selection_cub
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/dialogs/create_user_dialog/create_user_dialog.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/widgets/users_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -67,7 +68,7 @@ class UserListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diFactory = MainDiFactory();
+    final diFactory = DiScope.of(context);
     return BlocProvider(
       create: (_) {
         return diFactory.users.makeUserSelectionCubit();

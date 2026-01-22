@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:genesis/src/features/permissions/presentation/widgets/permission_status_widget.dart';
-import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_cubit/permissions_selection_cubit.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,13 +28,11 @@ class PermissionsTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+        BlocBuilder<PermissionsSelectionCubit, List<Permission>>(
           builder: (context, state) {
             return Checkbox(
               tristate: true,
-              onChanged: (_) => context.read<PermissionsSelectionBloc>().add(
-                PermissionsSelectionEvent.toggleAll(permissions),
-              ),
+              onChanged: (_) => context.read<PermissionsSelectionCubit>().onToggleAll(permissions),
               value: switch (state.length) {
                 0 => false,
                 final len when len == permissions.length => true,
@@ -52,13 +50,11 @@ class PermissionsTable extends StatelessWidget {
       cellsBuilder: (index) {
         final permission = permissions[index];
         return [
-          BlocBuilder<PermissionsSelectionBloc, List<Permission>>(
+          BlocBuilder<PermissionsSelectionCubit, List<Permission>>(
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(permission),
-                onChanged: (_) => context.read<PermissionsSelectionBloc>().add(
-                  PermissionsSelectionEvent.toggle(permission),
-                ),
+                onChanged: (_) => context.read<PermissionsSelectionCubit>().onToggle(permission),
               );
             },
           ),

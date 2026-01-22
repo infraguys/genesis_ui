@@ -4,6 +4,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/params/create_user_params.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
@@ -222,7 +223,7 @@ class CreateUserDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diFactory = MainDiFactory();
+    final diFactory = DiScope.of(context);
     return BlocProvider(
       create: diFactory.users.makeUserBloc,
       child: _View(),

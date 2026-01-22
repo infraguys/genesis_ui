@@ -15,7 +15,12 @@ part 'clusters_event.dart';
 part 'clusters_state.dart';
 
 class ClustersBloc extends Bloc<ClustersEvent, ClustersState> with PollingBlocMixin {
-  ClustersBloc(this._repository) : super(_InitialState()) {
+  ClustersBloc({
+    required GetClustersUseCase getClustersUseCase,
+    required DeleteClustersUseCase deleteClustersUseCase,
+  }) : _getClustersUseCase = getClustersUseCase,
+       _deleteClustersUseCase = deleteClustersUseCase,
+       super(_InitialState()) {
     on(_onGetClusters);
     on(_onDeleteClusters);
     on(_onStartPolling);
@@ -23,19 +28,18 @@ class ClustersBloc extends Bloc<ClustersEvent, ClustersState> with PollingBlocMi
     on(_onStopPolling);
   }
 
-  final IClustersRepository _repository;
+  final GetClustersUseCase _getClustersUseCase;
+  final DeleteClustersUseCase _deleteClustersUseCase;
 
   Future<void> _onGetClusters(_GetClusters event, Emitter<ClustersState> emit) async {
-    final useCase = GetClustersUseCase(_repository);
     emit(ClustersLoadingState());
-    final cluster = await useCase(event.params);
+    final cluster = await _getClustersUseCase(event.params);
     emit(ClustersLoadedState(cluster));
   }
 
   Future<void> _onDeleteClusters(_DeleteClusters event, Emitter<ClustersState> emit) async {
-    final useCase = DeleteClustersUseCase(_repository);
     emit(ClustersLoadingState());
-    await useCase(event.clusters.map((it) => ClusterParams(it.id)).toList());
+    await _deleteClustersUseCase(event.clusters.map((it) => ClusterParams(it.id)).toList());
     emit(ClustersDeletedState(event.clusters));
     add(ClustersEvent.getClusters());
   }
@@ -48,8 +52,7 @@ class ClustersBloc extends Bloc<ClustersEvent, ClustersState> with PollingBlocMi
   }
 
   Future<void> _onTick(_Tick event, Emitter<ClustersState> emit) async {
-    final useCase = GetClustersUseCase(_repository);
-    final instances = await useCase(event.params);
+    final instances = await _getClustersUseCase(event.params);
     emit(ClustersLoadedState(instances));
   }
 

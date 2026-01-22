@@ -16,13 +16,14 @@ import 'package:genesis/src/features/nodes/presentation/blocs/nodes_selection_cu
 
 final class NodesDiFactory {
   /// Repositories
+  ///
   NodesRepository makeNodesRepository(BuildContext context) {
     final nodesApi = NodesApi(context.read<RestClient>());
     return NodesRepository(nodesApi);
   }
 
   /// Blocs
-
+  ///
   NodesBloc makeNodesBloc(BuildContext context) {
     final repository = context.read<INodesRepository>();
     return NodesBloc(

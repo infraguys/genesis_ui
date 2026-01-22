@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_cubit/projects_selection_cubit.dart';
 import 'package:genesis/src/features/projects/presentation/pages/project_list_page/widgets/projects_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
@@ -36,13 +36,13 @@ class ProjectsTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+        BlocBuilder<ProjectsSelectionCubit, List<Project>>(
           builder: (context, state) {
             return Checkbox(
               tristate: true,
               onChanged: (_) {
                 if (allowMultiSelect) {
-                  context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggleAll(projects));
+                  context.read<ProjectsSelectionCubit>().add(ProjectsSelectionEvent.toggleAll(projects));
                 }
               },
               value: switch (state.length) {
@@ -62,15 +62,15 @@ class ProjectsTable extends StatelessWidget {
       cellsBuilder: (index) {
         final project = projects[index];
         return [
-          BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+          BlocBuilder<ProjectsSelectionCubit, List<Project>>(
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(project),
                 onChanged: (_) {
                   if (!allowMultiSelect) {
-                    context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+                    context.read<ProjectsSelectionCubit>().add(ProjectsSelectionEvent.clear());
                   }
-                  context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.toggle(project));
+                  context.read<ProjectsSelectionCubit>().add(ProjectsSelectionEvent.toggle(project));
                 },
               );
             },

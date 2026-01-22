@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
-class OrganizationsSelectionBloc extends Cubit<List<Organization>> {
-  OrganizationsSelectionBloc() : super(List.empty());
+class OrganizationsSelectionCubit extends Cubit<List<Organization>> {
+  OrganizationsSelectionCubit() : super(List.empty());
 
   void onToggle(Organization organization) {
     final updatedOrganizations = List.of(state);

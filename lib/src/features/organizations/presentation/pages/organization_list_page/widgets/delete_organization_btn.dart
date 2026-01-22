@@ -5,7 +5,7 @@ class _DeleteOrganizationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
+    return BlocBuilder<OrganizationsSelectionCubit, List<Organization>>(
       builder: (_, state) {
         final message = switch (state.length) {
           1 => context.$.deleteOrgConfirmation(state.single.name),

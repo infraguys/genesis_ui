@@ -18,7 +18,7 @@ import 'package:genesis/src/features/projects/domain/repositories/i_projects_rep
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/features/users/domain/repositories/i_users_repository.dart';
-import 'package:genesis/src/injection/main_di_factory.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/routing/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +36,7 @@ class RootDi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diFactory = MainDiFactory();
+    final diFactory = DiScope.of(context);
 
     return MultiProvider(
       providers: [

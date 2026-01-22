@@ -6,7 +6,7 @@ import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_cubit/roles_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -56,7 +56,7 @@ class _AttachRolesView extends StatelessWidget {
               children: [
                 SaveIconButton(
                   onPressed: () {
-                    final listOfParams = context.read<RolesSelectionBloc>().state.map(
+                    final listOfParams = context.read<RolesSelectionCubit>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
                           userUUID: UserID(GoRouterState.of(context).pathParameters['uuid']!),
@@ -76,7 +76,7 @@ class _AttachRolesView extends StatelessWidget {
               child: BlocConsumer<RolesBloc, RolesState>(
                 listenWhen: (_, current) => current is RolesLoadedState,
                 listener: (context, state) {
-                  context.read<RolesSelectionBloc>().add(RolesSelectionEvent.clear());
+                  context.read<RolesSelectionCubit>().add(RolesSelectionEvent.clear());
                 },
                 builder: (_, state) => switch (state) {
                   RolesLoadedState(:final roles) => RolesTable(roles: roles),
@@ -99,7 +99,7 @@ class AttachRolesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RolesSelectionBloc(),
+      create: (_) => RolesSelectionCubit(),
       child: _AttachRolesView(projectUUID: projectUUID),
     );
   }

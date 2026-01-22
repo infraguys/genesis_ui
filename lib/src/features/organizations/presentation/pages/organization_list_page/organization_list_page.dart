@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_cubit/organizations_selection_cubit.dart';
 import 'package:genesis/src/features/organizations/presentation/pages/create_organization_page/create_organization_page.dart';
 import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -39,7 +40,7 @@ class _OrganizationListViewState extends State<_OrganizationListView> {
             final messenger = ScaffoldMessenger.of(context);
             switch (state) {
               case OrganizationsLoadedState():
-                context.read<OrganizationsSelectionBloc>().onClear();
+                context.read<OrganizationsSelectionCubit>().onClear();
 
               case OrganizationsDeletedState(:final organizations) when organizations.length == 1:
                 messenger.showSnackBar(
@@ -93,8 +94,9 @@ class OrganizationListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return BlocProvider(
-      create: (_) => OrganizationsSelectionBloc(),
+      create: (_) => diFactory.organizations.makeOrganizationSelectionCubit(context),
       child: _OrganizationListView(),
     );
   }

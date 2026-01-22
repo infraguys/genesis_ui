@@ -6,6 +6,7 @@ import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_b
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_selection_cubit/nodes_selection_cubit.dart';
 import 'package:genesis/src/features/nodes/presentation/dialogs/create_node_dialog/create_node_dialog.dart';
 import 'package:genesis/src/features/nodes/presentation/pages/node_list_page/widgets/nodes_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -59,7 +60,7 @@ class NodeListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final diFactory = MainDiFactory();
+    final diFactory = DiScope.of(context);
     return BlocProvider(
       create: (context) => diFactory.nodes.makeNodesSelectionCubit(),
       child: _NodeListView(),

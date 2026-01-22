@@ -7,23 +7,23 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/injection/auth_di_factory.dart';
 import 'package:genesis/src/features/bootstrap/presentation/blocs/server_setup_cubit/domain_setup_cubit.dart';
+import 'package:genesis/src/features/dbaas/injection/clusters_di_factory.dart';
+import 'package:genesis/src/features/extensions/injection/extensions_di_factory.dart';
 import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
 import 'package:genesis/src/features/nodes/injection/nodes_di_factory.dart';
 import 'package:genesis/src/features/organizations/injection/organizations_di_factory.dart';
+import 'package:genesis/src/features/permissions/injection/permissions_di_factory.dart';
+import 'package:genesis/src/features/projects/injection/projects_di_factory.dart';
 import 'package:genesis/src/features/roles/injection/roles_di_factory.dart';
 import 'package:genesis/src/features/users/injection/users_di_factory.dart';
-import 'package:genesis/src/injection/feat_factories/clusters_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/dbaas_factory.dart';
-import 'package:genesis/src/injection/feat_factories/extensions_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/permission_bindings_di_factory.dart';
-import 'package:genesis/src/injection/feat_factories/permissions_di_factory.dart';
-import 'package:genesis/src/injection/feat_factories/projects_di_factory.dart';
 import 'package:genesis/src/injection/feat_factories/role_bindings_di_factory.dart';
 
 final class MainDiFactory {
-  factory MainDiFactory() => _instance ??= MainDiFactory._();
+  // factory MainDiFactory() => _instance ??= MainDiFactory._();
 
-  MainDiFactory._()
+  MainDiFactory()
     : users = UsersDiFactory(),
       projects = ProjectsDiFactory(),
       roles = RolesDiFactory(),
@@ -36,8 +36,6 @@ final class MainDiFactory {
       clusters = ClustersDiFactory(),
       dbaas = DbaasFactory(),
       auth = AuthDiFactory();
-
-  static MainDiFactory? _instance;
 
   final UsersDiFactory users;
   final ProjectsDiFactory projects;

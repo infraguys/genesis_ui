@@ -5,7 +5,7 @@ class _DeleteRolesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RolesSelectionBloc, List<Role>>(
+    return BlocBuilder<RolesSelectionCubit, List<Role>>(
       builder: (context, state) {
         if (state.isEmpty) {
           return const SizedBox.shrink();

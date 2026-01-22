@@ -6,11 +6,12 @@ import 'package:genesis/src/features/projects/domain/params/edit_project_params.
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_cubit/organizations_selection_cubit.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -131,7 +132,7 @@ class _ProjectDetailsViewState extends State<_ProjectDetailsView> {
                   child: BlocBuilder<OrganizationsBloc, OrganizationsState>(
                     builder: (context, state) {
                       if (state is OrganizationsLoadedState) {
-                        context.read<OrganizationsSelectionBloc>().onSetCheckedFromResponse(
+                        context.read<OrganizationsSelectionCubit>().onSetCheckedFromResponse(
                           project: project,
                           organizations: state.organizations,
                         );
@@ -173,16 +174,14 @@ class ProjectDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProjectBloc(
-            projectsRepository: context.read<IProjectsRepository>(),
-            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
-          )..add(ProjectEvent.getProject(uuid)),
+          create: (context) => diFactory.projects.makeProjectBloc(context)..add(ProjectEvent.getProject(uuid)),
         ),
         BlocProvider(
-          create: (_) => OrganizationsSelectionBloc(),
+          create: (_) => diFactory.organizations.makeOrganizationSelectionCubit(context),
         ),
       ],
       child: _ProjectDetailsView(uuid: uuid),

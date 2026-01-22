@@ -3,8 +3,8 @@ import 'package:genesis/src/features/projects/domain/entities/project.dart';
 
 part 'projects_selection_event.dart';
 
-class ProjectsSelectionBloc extends Bloc<ProjectsSelectionEvent, List<Project>> {
-  ProjectsSelectionBloc() : super(List.empty()) {
+class ProjectsSelectionCubit extends Bloc<ProjectsSelectionEvent, List<Project>> {
+  ProjectsSelectionCubit() : super(List.empty()) {
     on(_onToggle);
     on(_onToggleAll);
     on(_onClear);

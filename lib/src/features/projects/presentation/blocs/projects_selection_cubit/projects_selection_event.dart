@@ -1,4 +1,4 @@
-part of 'projects_selection_bloc.dart';
+part of 'projects_selection_cubit.dart';
 
 sealed class ProjectsSelectionEvent {
   factory ProjectsSelectionEvent.toggle(Project project) = _Toggle;

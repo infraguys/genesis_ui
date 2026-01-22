@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
-import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_cubit/organizations_selection_cubit.dart';
 import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
 import 'package:genesis/src/routing/app_router.dart';
@@ -35,13 +35,13 @@ class OrganizationsTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
+        BlocBuilder<OrganizationsSelectionCubit, List<Organization>>(
           builder: (context, state) {
             return Checkbox(
               tristate: true,
               onChanged: (_) {
                 if (allowMultiSelect) {
-                  context.read<OrganizationsSelectionBloc>().onToggleAll(organizations);
+                  context.read<OrganizationsSelectionCubit>().onToggleAll(organizations);
                 }
               },
               value: switch (state.length) {
@@ -61,15 +61,15 @@ class OrganizationsTable extends StatelessWidget {
       cellsBuilder: (index) {
         final organization = organizations[index];
         return [
-          BlocBuilder<OrganizationsSelectionBloc, List<Organization>>(
+          BlocBuilder<OrganizationsSelectionCubit, List<Organization>>(
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(organization),
                 onChanged: (_) {
                   if (!allowMultiSelect) {
-                    context.read<OrganizationsSelectionBloc>().onClear();
+                    context.read<OrganizationsSelectionCubit>().onClear();
                   }
-                  context.read<OrganizationsSelectionBloc>().onToggle(organization);
+                  context.read<OrganizationsSelectionCubit>().onToggle(organization);
                 },
               );
             },

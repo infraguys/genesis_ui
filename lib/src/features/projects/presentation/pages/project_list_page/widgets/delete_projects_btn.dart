@@ -5,7 +5,7 @@ class _DeleteProjectsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProjectsSelectionBloc, List<Project>>(
+    return BlocBuilder<ProjectsSelectionCubit, List<Project>>(
       builder: (_, state) {
         if (state.isEmpty) {
           return SizedBox.shrink();

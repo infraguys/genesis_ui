@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
-import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_cubit/roles_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_action_popup_menu_button.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_table.dart';
@@ -31,11 +31,11 @@ class RolesTable extends StatelessWidget {
         TableSpan(extent: FixedSpanExtent(56.0)),
       ],
       headerCells: [
-        BlocBuilder<RolesSelectionBloc, List<Role>>(
+        BlocBuilder<RolesSelectionCubit, List<Role>>(
           builder: (context, state) {
             return Checkbox(
               tristate: true,
-              onChanged: (_) => context.read<RolesSelectionBloc>().add(
+              onChanged: (_) => context.read<RolesSelectionCubit>().add(
                 RolesSelectionEvent.toggleAll(roles),
               ),
               value: switch (state.length) {
@@ -55,11 +55,11 @@ class RolesTable extends StatelessWidget {
       cellsBuilder: (index) {
         final role = roles[index];
         return [
-          BlocBuilder<RolesSelectionBloc, List<Role>>(
+          BlocBuilder<RolesSelectionCubit, List<Role>>(
             builder: (context, state) {
               return Checkbox(
                 value: state.contains(role),
-                onChanged: (_) => context.read<RolesSelectionBloc>().add(
+                onChanged: (_) => context.read<RolesSelectionCubit>().add(
                   RolesSelectionEvent.toggle(role),
                 ),
               );

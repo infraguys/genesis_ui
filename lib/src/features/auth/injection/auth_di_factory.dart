@@ -19,6 +19,7 @@ import 'package:genesis/src/features/users/domain/usecases/create_user_usecase.d
 
 final class AuthDiFactory {
   /// Repositories
+  ///
   AuthRepository makeAuthRepository(BuildContext context) {
     var tokenDao = TokenDao(context.read<ISecureStorageClient>());
     if (kIsWeb) {
@@ -37,7 +38,7 @@ final class AuthDiFactory {
   }
 
   /// Blocs
-
+  ///
   AuthBloc makeAuthBloc(BuildContext context) {
     final authRepository = context.read<IAuthRepository>();
     final userRepository = context.read<IUsersRepository>();

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_cubit/roles_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_table.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -43,7 +43,7 @@ class _RoleListView extends StatelessWidget {
           child: BlocConsumer<RolesBloc, RolesState>(
             listenWhen: (_, current) => current is RolesLoadedState,
             listener: (context, _) {
-              context.read<RolesSelectionBloc>().add(RolesSelectionEvent.clear());
+              context.read<RolesSelectionCubit>().add(RolesSelectionEvent.clear());
             },
             builder: (context, state) => switch (state) {
               RolesLoadedState(:final roles) => RolesTable(roles: roles),
@@ -62,7 +62,7 @@ class RoleListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RolesSelectionBloc(),
+      create: (_) => RolesSelectionCubit(),
       child: _RoleListView(),
     );
   }

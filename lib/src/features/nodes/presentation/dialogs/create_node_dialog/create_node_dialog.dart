@@ -6,6 +6,7 @@ import 'package:genesis/src/features/nodes/domain/entities/node.dart';
 import 'package:genesis/src/features/nodes/domain/params/create_node_params.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/node_bloc/node_bloc.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/spacing.dart';
@@ -214,8 +215,9 @@ class CreateNodeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return BlocProvider(
-      create: MainDiFactory().nodes.makeNodeBloc,
+      create: diFactory.nodes.makeNodeBloc,
       child: _View(),
     );
   }

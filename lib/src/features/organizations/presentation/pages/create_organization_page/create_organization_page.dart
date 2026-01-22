@@ -5,6 +5,7 @@ import 'package:genesis/src/features/organizations/domain/params/create_organiza
 import 'package:genesis/src/features/organizations/domain/repositories/i_organizations_repository.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organization_bloc/organization_bloc.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_text_from_input.dart';
@@ -130,8 +131,9 @@ class CreateOrganizationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return BlocProvider(
-      create: (_) => OrganizationBloc(context.read<IOrganizationsRepository>()),
+      create: diFactory.organizations.makeOrganizationBloc,
       child: const _CreateOrganizationView(),
     );
   }

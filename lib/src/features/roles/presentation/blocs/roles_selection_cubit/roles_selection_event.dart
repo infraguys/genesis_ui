@@ -1,4 +1,4 @@
-part of 'roles_selection_bloc.dart';
+part of 'roles_selection_cubit.dart';
 
 sealed class RolesSelectionEvent {
   factory RolesSelectionEvent.toggle(Role role) = _Toggle;

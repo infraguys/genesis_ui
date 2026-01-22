@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/organizations/presentation/blocs/organizations_bloc/organizations_bloc.dart';
-import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_bloc/organizations_selection_bloc.dart';
+import 'package:genesis/src/features/organizations/presentation/blocs/organizations_selection_cubit/organizations_selection_cubit.dart';
 import 'package:genesis/src/features/organizations/presentation/pages/organization_list_page/widgets/organizations_table.dart';
 import 'package:genesis/src/features/projects/domain/repositories/i_projects_repository.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/project_bloc/project_bloc.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
 import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_repository.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_cubit/roles_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_table.dart';
 import 'package:genesis/src/features/users/presentation/blocs/user_selection_cubit/users_selection_cubit.dart';
 import 'package:genesis/src/features/users/presentation/blocs/users_bloc/users_bloc.dart';
 import 'package:genesis/src/features/users/presentation/pages/user_list_page/widgets/users_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
@@ -169,9 +170,9 @@ class _CreateProjectViewState extends State<_CreateProjectView> {
         ProjectEvent.create(
           name: _name,
           description: _description,
-          organizationID: context.read<OrganizationsSelectionBloc>().state.first.id,
+          organizationID: context.read<OrganizationsSelectionCubit>().state.first.id,
           userID: context.read<UsersSelectionCubit>().state.firstOrNull?.uuid,
-          roles: context.read<RolesSelectionBloc>().state,
+          roles: context.read<RolesSelectionCubit>().state,
         ),
       );
     }
@@ -183,22 +184,20 @@ class CreateProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProjectBloc(
-            projectsRepository: context.read<IProjectsRepository>(),
-            roleBindingsRepository: context.read<IRoleBindingsRepository>(),
-          ),
+          create: diFactory.projects.makeProjectBloc,
         ),
         BlocProvider(
-          create: (_) => OrganizationsSelectionBloc(),
+          create: (_) => diFactory.organizations.makeOrganizationSelectionCubit(context),
         ),
         BlocProvider(
-          create: (_) => MainDiFactory().users.makeUserSelectionCubit(),
+          create: (_) => diFactory.users.makeUserSelectionCubit(),
         ),
         BlocProvider(
-          create: (_) => RolesSelectionBloc(),
+          create: (_) => RolesSelectionCubit(),
         ),
       ],
       child: _CreateProjectView(),

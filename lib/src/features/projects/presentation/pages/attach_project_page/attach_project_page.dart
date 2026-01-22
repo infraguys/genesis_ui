@@ -4,12 +4,13 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/users/domain/entities/user.dart';
 import 'package:genesis/src/features/roles/domain/params/create_role_binding_params.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_cubit/projects_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/role_bindings_bloc/role_bindings_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
-import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_bloc/roles_selection_bloc.dart';
+import 'package:genesis/src/features/roles/presentation/blocs/roles_selection_cubit/roles_selection_cubit.dart';
 import 'package:genesis/src/features/projects/presentation/pages/project_list_page/widgets/projects_table.dart';
 import 'package:genesis/src/features/roles/presentation/pages/role_list_page/widgets/roles_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -61,12 +62,12 @@ class _AttachProjectViewState extends State<_AttachProjectView> {
               children: [
                 SaveIconButton(
                   onPressed: () {
-                    final listOfParams = context.read<RolesSelectionBloc>().state.map(
+                    final listOfParams = context.read<RolesSelectionCubit>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
                           userUUID: UserID(GoRouterState.of(context).pathParameters['uuid']!),
                           roleUUID: role.uuid,
-                          projectUUID: context.read<ProjectsSelectionBloc>().state.single.id,
+                          projectUUID: context.read<ProjectsSelectionCubit>().state.single.id,
                         );
                       },
                     ).toList();
@@ -81,7 +82,7 @@ class _AttachProjectViewState extends State<_AttachProjectView> {
               child: BlocConsumer<ProjectsBloc, ProjectsState>(
                 listenWhen: (_, current) => current is ProjectsLoadedState,
                 listener: (context, state) {
-                  context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+                  context.read<ProjectsSelectionCubit>().add(ProjectsSelectionEvent.clear());
                 },
                 buildWhen: (previous, current) => previous.runtimeType != current.runtimeType,
                 builder: (_, state) => switch (state) {
@@ -96,7 +97,7 @@ class _AttachProjectViewState extends State<_AttachProjectView> {
               child: BlocConsumer<RolesBloc, RolesState>(
                 listenWhen: (_, current) => current is RolesLoadedState,
                 listener: (context, state) {
-                  context.read<RolesSelectionBloc>().add(RolesSelectionEvent.clear());
+                  context.read<RolesSelectionCubit>().add(RolesSelectionEvent.clear());
                 },
                 builder: (_, state) => switch (state) {
                   RolesLoadedState(:final roles) => RolesTable(roles: roles),
@@ -116,13 +117,15 @@ class AttachProjectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => RolesSelectionBloc(),
+          create: (_) => RolesSelectionCubit(),
         ),
         BlocProvider(
-          create: (_) => ProjectsSelectionBloc(),
+          create: (context) => diFactory.projects.makeProjectsSelectionCubit(context),
         ),
       ],
       child: _AttachProjectView(),

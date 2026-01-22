@@ -19,9 +19,15 @@ part 'project_state.dart';
 
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ProjectBloc({
-    required IProjectsRepository projectsRepository,
+    required GetProjectUseCase getProjectUseCase,
+    required CreateProjectUseCase createProjectUseCase,
+    required UpdateProjectUseCase updateProjectUseCase,
+    required DeleteProjectUseCase deleteProjectUseCase,
     required IRoleBindingsRepository roleBindingsRepository,
-  }) : _projectsRepository = projectsRepository,
+  }) : _getProjectUseCase = getProjectUseCase,
+       _createProjectUseCase = createProjectUseCase,
+       _updateProjectUseCase = updateProjectUseCase,
+       _deleteProjectUseCase = deleteProjectUseCase,
        _roleBindingsRepository = roleBindingsRepository,
        super(ProjectInitialState()) {
     on(_onCreateProject);
@@ -30,22 +36,23 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on(_onGetProject);
   }
 
-  final IProjectsRepository _projectsRepository;
   final IRoleBindingsRepository _roleBindingsRepository;
+  final GetProjectUseCase _getProjectUseCase;
+  final CreateProjectUseCase _createProjectUseCase;
+  final UpdateProjectUseCase _updateProjectUseCase;
+  final DeleteProjectUseCase _deleteProjectUseCase;
 
   Future<void> _onGetProject(_GetProject event, Emitter<ProjectState> emit) async {
-    final useCase = GetProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-    final project = await useCase(event.uuid);
+    final project = await _getProjectUseCase(event.uuid);
     emit(ProjectLoadedState(project));
   }
 
   Future<void> _onCreateProject(_Create event, Emitter<ProjectState> emit) async {
-    final createProjectUseCase = CreateProjectUseCase(_projectsRepository);
     final createRoleBindingUseCase = CreateRoleBindingsUseCase(_roleBindingsRepository);
     emit(ProjectLoadingState());
 
-    final createdProject = await createProjectUseCase(
+    final createdProject = await _createProjectUseCase(
       CreateProjectParams(
         name: event.name,
         description: event.description,
@@ -68,16 +75,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   Future<void> _onDeleteProject(_Delete event, Emitter<ProjectState> emit) async {
-    final useCase = DeleteProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-    await useCase(event.project.id);
+    await _deleteProjectUseCase(event.project.id);
     emit(ProjectDeletedState(event.project));
   }
 
   Future<void> _onUpdateProject(_Update event, Emitter<ProjectState> emit) async {
-    final useCase = UpdateProjectUseCase(_projectsRepository);
     emit(ProjectLoadingState());
-    final updatedProject = await useCase(event.params);
+    final updatedProject = await _updateProjectUseCase(event.params);
     emit(ProjectUpdatedState(updatedProject));
   }
 }

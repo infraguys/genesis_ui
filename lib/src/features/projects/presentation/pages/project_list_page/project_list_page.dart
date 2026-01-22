@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:genesis/src/features/projects/presentation/blocs/projects_bloc/projects_bloc.dart';
-import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_bloc/projects_selection_bloc.dart';
+import 'package:genesis/src/features/projects/presentation/blocs/projects_selection_cubit/projects_selection_cubit.dart';
 import 'package:genesis/src/features/projects/presentation/pages/project_list_page/widgets/projects_table.dart';
+import 'package:genesis/src/injection/di_scope.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/buttons_bar.dart';
@@ -43,7 +44,7 @@ class _ProjectListView extends StatelessWidget {
           child: BlocConsumer<ProjectsBloc, ProjectsState>(
             listenWhen: (_, current) => current is ProjectsLoadedState,
             listener: (context, state) {
-              context.read<ProjectsSelectionBloc>().add(ProjectsSelectionEvent.clear());
+              context.read<ProjectsSelectionCubit>().add(ProjectsSelectionEvent.clear());
             },
             builder: (_, state) => switch (state) {
               ProjectsLoadedState(:final projects) => ProjectsTable(projects: projects),
@@ -61,8 +62,9 @@ class ProjectListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return BlocProvider(
-      create: (_) => ProjectsSelectionBloc(),
+      create: (context) => diFactory.projects.makeProjectsSelectionCubit(context),
       child: _ProjectListView(),
     );
   }

@@ -9,27 +9,31 @@ part 'projects_event.dart';
 part 'projects_state.dart';
 
 class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
-  ProjectsBloc(this._projectsRepository) : super(ProjectsState.initial()) {
+  ProjectsBloc({
+    required GetProjectsUseCase getProjectsUseCase,
+    required DeleteProjectsUseCase deleteProjectsUseCase,
+  }) : _getProjectsUseCase = getProjectsUseCase,
+       _deleteProjectsUseCase = deleteProjectsUseCase,
+       super(ProjectsState.initial()) {
     on(_onGetProjects);
     on(_onDeleteProjects);
     add(ProjectsEvent.getProjects());
   }
 
-  final IProjectsRepository _projectsRepository;
+  final GetProjectsUseCase _getProjectsUseCase;
+  final DeleteProjectsUseCase _deleteProjectsUseCase;
 
   Future<void> _onGetProjects(_Get event, Emitter<ProjectsState> emit) async {
-    final useCase = GetProjectsUseCase(_projectsRepository);
     emit(ProjectsState.loading());
 
-    final projects = await useCase(event.params);
+    final projects = await _getProjectsUseCase(event.params);
     emit(ProjectsState.loaded(projects));
   }
 
   Future<void> _onDeleteProjects(_DeleteProjects event, Emitter<ProjectsState> emit) async {
-    final useCase = DeleteProjectsUseCase(_projectsRepository);
     emit(ProjectsState.loading());
 
-    await useCase(event.projects);
+    await _deleteProjectsUseCase(event.projects);
     add(ProjectsEvent.getProjects());
   }
 }

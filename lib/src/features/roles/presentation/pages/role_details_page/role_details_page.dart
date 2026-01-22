@@ -9,9 +9,11 @@ import 'package:genesis/src/features/roles/domain/repositories/i_role_bindings_r
 import 'package:genesis/src/features/roles/domain/repositories/i_roles_repositories.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permission_bindings_bloc/permission_bindings_bloc.dart';
 import 'package:genesis/src/features/permissions/presentation/blocs/permissions_bloc/permissions_bloc.dart';
-import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_bloc/permissions_selection_bloc.dart';
+import 'package:genesis/src/features/permissions/presentation/blocs/permissions_selection_cubit/permissions_selection_cubit.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/role_bloc/role_bloc.dart';
 import 'package:genesis/src/features/roles/presentation/blocs/roles_bloc/roles_bloc.dart';
+import 'package:genesis/src/injection/di_scope.dart';
+import 'package:genesis/src/injection/main_di_factory.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_progress_indicator.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/app_snackbar.dart';
 import 'package:genesis/src/shared/presentation/ui/widgets/breadcrumbs.dart';
@@ -136,11 +138,9 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
                           listenWhen: (_, current) => current is PermissionBindingsLoaded,
                           listener: (context, state) {
                             if (state is PermissionBindingsLoaded) {
-                              context.read<PermissionsSelectionBloc>().add(
-                                PermissionsSelectionEvent.setCheckedFromResponse(
-                                  bindings: state.bindings,
-                                  allPermissions: permissions,
-                                ),
+                              context.read<PermissionsSelectionCubit>().onSetCheckedFromResponse(
+                                permissions,
+                                state.bindings,
                               );
                             }
                           },
@@ -167,7 +167,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
             id: widget.uuid,
             name: _name,
             description: _description,
-            permissions: context.read<PermissionsSelectionBloc>().state,
+            permissions: context.read<PermissionsSelectionCubit>().state,
           ),
         ),
       );
@@ -182,6 +182,7 @@ class RoleDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final diFactory = DiScope.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -191,13 +192,13 @@ class RoleDetailsPage extends StatelessWidget {
           },
         ),
         BlocProvider(
-          create: (context) => PermissionsBloc(context.read<IPermissionsRepository>()),
+          create: diFactory.permissions.makePermissionsBloc,
         ),
         BlocProvider(
-          create: (_) => PermissionsSelectionBloc(),
+          create: (context) => diFactory.permissions.makePermissionsSelectionCubit(context),
         ),
         BlocProvider(
-          create: (_) => RoleBloc(
+          create: (context) => RoleBloc(
             rolesRepository: context.read<IRolesRepository>(),
             permissionBindingsRepository: context.read<IPermissionBindingsRepository>(),
             roleBindingsRepository: context.read<IRoleBindingsRepository>(),

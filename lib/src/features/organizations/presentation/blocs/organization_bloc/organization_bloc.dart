@@ -13,26 +13,36 @@ part 'organization_event.dart';
 part 'organization_state.dart';
 
 class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
-  OrganizationBloc(this._repository) : super(OrganizationInitialState()) {
+  OrganizationBloc({
+    required GetOrganizationUseCase getOrganizationUseCase,
+    required CreateOrganizationUseCase createOrganizationUseCase,
+    required UpdateOrganizationUseCase updateOrganizationUseCase,
+    required DeleteOrganizationUseCase deleteOrganizationUseCase,
+  }) : _getOrganizationUseCase = getOrganizationUseCase,
+       _createOrganizationUseCase = createOrganizationUseCase,
+       _updateOrganizationUseCase = updateOrganizationUseCase,
+       _deleteOrganizationUseCase = deleteOrganizationUseCase,
+       super(OrganizationInitialState()) {
     on(_onGetOrganization);
     on(_onCreateOrganization);
     on(_onUpdateOrganization);
     on(_onDeleteOrganization);
   }
 
-  final IOrganizationsRepository _repository;
+  final GetOrganizationUseCase _getOrganizationUseCase;
+  final CreateOrganizationUseCase _createOrganizationUseCase;
+  final UpdateOrganizationUseCase _updateOrganizationUseCase;
+  final DeleteOrganizationUseCase _deleteOrganizationUseCase;
 
   Future<void> _onGetOrganization(_Get event, Emitter<OrganizationState> emit) async {
-    final useCase = GetOrganizationUseCase(_repository);
     emit(OrganizationLoadingState());
-    final organization = await useCase(event.id);
+    final organization = await _getOrganizationUseCase(event.id);
     emit(OrganizationLoadedState(organization));
   }
 
   Future<void> _onCreateOrganization(_Create event, Emitter<OrganizationState> emit) async {
-    final useCase = CreateOrganizationUseCase(_repository);
     try {
-      final organization = await useCase(event.params);
+      final organization = await _createOrganizationUseCase(event.params);
       emit(OrganizationCreatedState(organization));
     } on PermissionException catch (e) {
       emit(OrganizationPermissionFailureState(e.message));
@@ -40,9 +50,8 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   }
 
   Future<void> _onUpdateOrganization(_Update event, Emitter<OrganizationState> emit) async {
-    final useCase = UpdateOrganizationUseCase(_repository);
     try {
-      final organization = await useCase(event.params);
+      final organization = await _updateOrganizationUseCase(event.params);
       emit(OrganizationUpdatedState(organization));
     } on PermissionException catch (e) {
       emit(OrganizationPermissionFailureState(e.message));
@@ -50,9 +59,8 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
   }
 
   Future<void> _onDeleteOrganization(_Delete event, Emitter<OrganizationState> emit) async {
-    final useCase = DeleteOrganizationUseCase(_repository);
     try {
-      await useCase(event.organization.id);
+      await _deleteOrganizationUseCase(event.organization.id);
       emit(OrganizationDeletedState(event.organization));
     } on PermissionException catch (e) {
       emit(OrganizationPermissionFailureState(e.message));

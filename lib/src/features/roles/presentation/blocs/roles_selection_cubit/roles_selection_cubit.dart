@@ -3,8 +3,8 @@ import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 part 'roles_selection_event.dart';
 
-class RolesSelectionBloc extends Bloc<RolesSelectionEvent, List<Role>> {
-  RolesSelectionBloc() : super(List.empty()) {
+class RolesSelectionCubit extends Bloc<RolesSelectionEvent, List<Role>> {
+  RolesSelectionCubit() : super(List.empty()) {
     on(_onToggle);
     on(_onToggleAll);
     on(_onClear);
