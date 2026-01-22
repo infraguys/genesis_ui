@@ -45,6 +45,9 @@ untranslated.txt
 app_en.arb
 app_ru.arb
 
+# Env files
+env.json
+
 # Symbolication related
 app.*.symbols
 
