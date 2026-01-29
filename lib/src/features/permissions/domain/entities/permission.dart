@@ -28,8 +28,8 @@ class Permission extends Equatable {
   ];
 }
 
-extension type PermissionID(String value) {
-  bool isEqualTo(PermissionID other) => value == other.value;
+extension type PermissionID(String raw) {
+  bool isEqualTo(PermissionID other) => raw == other.raw;
 }
 
 enum PermissionStatus { active, unknown }

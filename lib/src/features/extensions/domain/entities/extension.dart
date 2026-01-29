@@ -37,8 +37,8 @@ final class Extension extends Equatable {
   ];
 }
 
-extension type ExtensionID(String value) {
-  bool isEqualTo(ExtensionID other) => value == other.value;
+extension type ExtensionID(String raw) {
+  bool isEqualTo(ExtensionID other) => raw == other.raw;
 }
 
 enum ExtensionStatus { newStatus, active, inProgress, unknown }

@@ -1,27 +1,25 @@
-import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
+import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-class ClusterStatusConverter implements JsonConverter<ClusterStatus, String?> {
-  const ClusterStatusConverter();
+class ExtensionStatusConverter implements JsonConverter<ExtensionStatus, String?> {
+  const ExtensionStatusConverter();
 
   @override
-  ClusterStatus fromJson(String? json) {
+  ExtensionStatus fromJson(String? json) {
     return switch (json) {
       'NEW' => .newStatus,
       'ACTIVE' => .active,
       'IN_PROGRESS' => .inProgress,
-      'ERROR' => .error,
       _ => .unknown,
     };
   }
 
   @override
-  String? toJson(ClusterStatus? status) {
+  String? toJson(ExtensionStatus? status) {
     return switch (status) {
       .newStatus => 'NEW',
       .active => 'ACTIVE',
       .inProgress => 'IN_PROGRESS',
-      .error => 'ERROR',
       _ => null,
     };
   }

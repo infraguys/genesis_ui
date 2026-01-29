@@ -1,4 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/extensions/data/json_converters/extension_id_converter.dart';
+import 'package:genesis/src/features/extensions/data/json_converters/extension_status_converter.dart';
 import 'package:genesis/src/features/extensions/domain/entities/extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -20,7 +22,8 @@ final class ExtensionDto implements IDto<Extension> {
 
   factory ExtensionDto.fromJson(Map<String, dynamic> json) => _$ExtensionDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @ExtensionIdConverter()
+  @JsonKey(name: 'uuid')
   final ExtensionID id;
   @JsonKey(name: 'name')
   final String name;
@@ -31,7 +34,8 @@ final class ExtensionDto implements IDto<Extension> {
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   @JsonKey(fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @ExtensionStatusConverter()
+  @JsonKey(name: 'status')
   final ExtensionStatus status;
   @JsonKey(name: 'version')
   final String version;
@@ -39,15 +43,6 @@ final class ExtensionDto implements IDto<Extension> {
   final String installType;
   @JsonKey(name: 'link')
   final String link;
-
-  static ExtensionID _toID(String json) => ExtensionID(json);
-
-  static ExtensionStatus _toStatusFromJson(String json) => switch (json) {
-    'NEW' => ExtensionStatus.newStatus,
-    'ACTIVE' => ExtensionStatus.active,
-    'IN_PROGRESS' => ExtensionStatus.inProgress,
-    _ => ExtensionStatus.unknown,
-  };
 
   @override
   Extension toEntity() {

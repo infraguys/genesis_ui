@@ -18,8 +18,8 @@ final class ExtensionsApi {
   Future<List<ExtensionDto>> getExtensions(GetExtensionsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
       if (data == null) {
         return List.empty();

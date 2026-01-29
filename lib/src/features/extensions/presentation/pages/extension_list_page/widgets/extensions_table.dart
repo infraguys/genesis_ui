@@ -70,7 +70,7 @@ class ExtensionsTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    extension.id.value,
+                    extension.id.raw,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -80,7 +80,7 @@ class ExtensionsTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: extension.id.value));
+                      Clipboard.setData(ClipboardData(text: extension.id.raw));
                       final snack = AppSnackBar.success('Скопировано в буфер обмена: ${extension.id}');
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },

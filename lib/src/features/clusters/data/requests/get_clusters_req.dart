@@ -1,6 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/clusters_endpoints.dart';
-import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
+import 'package:genesis/src/features/clusters/data/json_converters/cluster_status_converter.dart';
 import 'package:genesis/src/features/clusters/domain/params/get_clusters_params.dart';
 
 final class GetClustersReq extends IRequest {
@@ -17,7 +17,7 @@ final class GetClustersReq extends IRequest {
       'project_id': ?_params.projectId,
       'created_at': ?_params.createdAt?.toIso8601String(),
       'updated_at': ?_params.updatedAt?.toIso8601String(),
-      'status': ?_fromStatusToQuery(_params.status),
+      'status': ?ClusterStatusConverter().toJson(_params.status),
       'cpu': ?_params.cores,
       'ram': ?_params.ram,
       'disk_size': ?_params.diskSize,
@@ -26,14 +26,6 @@ final class GetClustersReq extends IRequest {
       'version': ?_params.version,
     };
   }
-
-  String? _fromStatusToQuery(ClusterStatus? status) => switch (status) {
-    ClusterStatus.active => 'ACTIVE',
-    ClusterStatus.error => 'ERROR',
-    ClusterStatus.inProgress => 'IN_PROGRESS',
-    ClusterStatus.newStatus => 'NEW',
-    _ => null,
-  };
 
   @override
   String get path {

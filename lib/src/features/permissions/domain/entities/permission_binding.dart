@@ -21,6 +21,6 @@ class PermissionBinding {
   final String permissionLink;
 }
 
-extension type PermissionBindingID(String value) {
-  bool isEqualTo(PermissionBindingID other) => value == other.value;
+extension type PermissionBindingID(String raw) {
+  bool isEqualTo(PermissionBindingID other) => raw == other.raw;
 }

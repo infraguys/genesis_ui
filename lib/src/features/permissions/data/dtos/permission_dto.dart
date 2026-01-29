@@ -1,4 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/permissions/data/json_converters/permission_id_converter.dart';
+import 'package:genesis/src/features/permissions/data/json_converters/permission_status_converter.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -17,7 +19,8 @@ final class PermissionDto implements IDto<Permission> {
 
   factory PermissionDto.fromJson(Map<String, dynamic> json) => _$PermissionDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @PermissionIdConverter()
+  @JsonKey(name: 'uuid')
   final PermissionID id;
   @JsonKey(name: 'name')
   final String name;
@@ -27,7 +30,8 @@ final class PermissionDto implements IDto<Permission> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @PermissionStatusConverter()
+  @JsonKey(name: 'status')
   final PermissionStatus status;
 
   @override
@@ -41,11 +45,4 @@ final class PermissionDto implements IDto<Permission> {
       status: status,
     );
   }
-
-  static PermissionID _toID(String json) => PermissionID(json);
-
-  static PermissionStatus _toStatusFromJson(String json) => switch (json) {
-    'ACTIVE' => PermissionStatus.active,
-    _ => PermissionStatus.unknown,
-  };
 }

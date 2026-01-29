@@ -66,7 +66,7 @@ class PermissionsTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    permission.id.value,
+                    permission.id.raw,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -76,8 +76,8 @@ class PermissionsTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: permission.id.value));
-                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${permission.id.value}');
+                      Clipboard.setData(ClipboardData(text: permission.id.raw));
+                      final snack = AppSnackBar.success('Скопировано в буфер обмена: ${permission.id.raw}');
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
                   ),
