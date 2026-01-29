@@ -3,7 +3,7 @@ import 'package:genesis/src/core/network/endpoints/nodes_endpoints.dart';
 import 'package:genesis/src/features/nodes/domain/params/get_nodes_params.dart';
 
 final class GetNodesReq extends IRequest {
-  GetNodesReq(this._params);
+  const GetNodesReq(this._params);
 
   final GetNodesParams _params;
 

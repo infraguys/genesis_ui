@@ -6,7 +6,7 @@ abstract class RoleBindingsEndpoints {
     return Endpoint.withCorePrefix('/iam/role_bindings/');
   }
 
-  static Endpoint item(RoleBindingUUID id) {
+  static Endpoint item(RoleBindingID id) {
     return Endpoint.withCorePrefix('/iam/role_bindings/$id');
   }
 }

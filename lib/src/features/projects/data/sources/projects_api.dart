@@ -16,8 +16,8 @@ final class ProjectsApi {
   Future<ProjectDto> createProject(CreateProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return ProjectDto.fromJson(data!);
     } on DioException catch (e) {
@@ -28,7 +28,7 @@ final class ProjectsApi {
   Future<void> deleteProject(DeleteProjectReq req) async {
     try {
       await _client.delete<void>(
-        req.toPath(),
+        req.path,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -38,8 +38,8 @@ final class ProjectsApi {
   Future<ProjectDto> editProject(UpdateProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return ProjectDto.fromJson(data!);
     } on DioException catch (e) {
@@ -50,7 +50,7 @@ final class ProjectsApi {
   Future<ProjectDto> getProject(GetProjectReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
-        req.toPath(),
+        req.path,
       );
       return ProjectDto.fromJson(data!);
     } on DioException catch (e) {
@@ -61,14 +61,14 @@ final class ProjectsApi {
   Future<List<ProjectDto>> getProjects(GetProjectsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
-      if (data != null) {
-        final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
-        return castedData.map((it) => ProjectDto.fromJson(it)).toList();
+      if (data == null) {
+        return List.empty();
       }
-      return List.empty();
+      final castedData = List.castFrom<dynamic, Map<String, dynamic>>(data);
+      return castedData.map((it) => ProjectDto.fromJson(it)).toList();
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

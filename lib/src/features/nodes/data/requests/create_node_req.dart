@@ -4,7 +4,7 @@ import 'package:genesis/src/features/nodes/data/json_converters/node_type_conver
 import 'package:genesis/src/features/nodes/domain/params/create_node_params.dart';
 
 final class CreateNodeReq extends IRequest {
-  CreateNodeReq(this._params);
+  const CreateNodeReq(this._params);
 
   final CreateNodeParams _params;
 

@@ -9,7 +9,7 @@ final class UpdateRoleParams {
     this.description,
   });
 
-  final RoleUUID id;
+  final RoleID id;
   final String name;
   final String? description;
   final List<Permission> permissions;

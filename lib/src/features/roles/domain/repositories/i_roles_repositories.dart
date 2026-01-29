@@ -8,11 +8,11 @@ abstract interface class IRolesRepository {
 
   Future<List<Role>> getRoles(GetRolesParams params);
 
-  Future<Role> getRole(RoleUUID uuid);
+  Future<Role> getRole(RoleID uuid);
 
   Future<Role> createRole(CreateRoleParams params);
 
-  Future<void> deleteRole(RoleUUID uuid);
+  Future<void> deleteRole(RoleID uuid);
 
   Future<Role> updateRole(UpdateRoleParams params);
 }

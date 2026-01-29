@@ -1,21 +1,24 @@
+import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/permission_bindings_endpoints.dart';
 import 'package:genesis/src/core/network/endpoints/permissions_endpoints.dart';
 import 'package:genesis/src/core/network/endpoints/roles_endpoints.dart';
 import 'package:genesis/src/features/permissions/domain/params/create_permission_binding_params.dart';
 
-final class CreatePermissionBindingReq {
-  CreatePermissionBindingReq(this._params);
+final class CreatePermissionBindingReq extends IRequest {
+  const CreatePermissionBindingReq(this._params);
 
   final CreatePermissionBindingParams _params;
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> get body {
     return {
-      'role': RolesEndpoints.item(_params.roleUUID).relativePath,
-      'permission': PermissionsEndpoints.item(_params.permissionUUID).relativePath,
+      'role': RolesEndpoints.item(_params.roleID).relativePath,
+      'permission': PermissionsEndpoints.item(_params.permissionID).relativePath,
     };
   }
 
-  String toPath() {
+  @override
+  String get path {
     return PermissionBindingsEndpoints.items().fullPath;
   }
 }

@@ -33,8 +33,8 @@ final class RolesApi {
   Future<RoleDto> createRole(CreateRoleReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return RoleDto.fromJson(data!);
     } on DioException catch (e) {
@@ -45,8 +45,8 @@ final class RolesApi {
   Future<List<RoleDto>> getRoles(GetRolesReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
       if (data == null) {
         return List.empty();
@@ -61,7 +61,7 @@ final class RolesApi {
   Future<void> deleteRole(DeleteRoleReq req) async {
     try {
       await _client.delete<void>(
-        req.toPath(),
+        req.path,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -71,9 +71,8 @@ final class RolesApi {
   Future<RoleDto> getRole(GetRoleReq req) async {
     try {
       final Response(:data) = await _client.get<Map<String, dynamic>>(
-        req.toPath(),
+        req.path,
       );
-
       return RoleDto.fromJson(data!);
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -83,8 +82,8 @@ final class RolesApi {
   Future<RoleDto> updateRole(UpdateRoleReq req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return RoleDto.fromJson(data!);
     } on DioException catch (e) {

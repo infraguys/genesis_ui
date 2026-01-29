@@ -7,6 +7,6 @@ final class GetRolesParams {
     this.projectUUID,
   });
 
-  final List<RoleUUID>? uuids;
+  final List<RoleID>? uuids;
   final ProjectID? projectUUID;
 }

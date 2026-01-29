@@ -4,7 +4,7 @@ import 'package:genesis/src/features/organizations/data/json_converters/organiza
 import 'package:genesis/src/features/organizations/domain/params/get_organizations_params.dart';
 
 final class GetOrganizationsReq extends IRequest {
-  GetOrganizationsReq(this._params);
+  const GetOrganizationsReq(this._params);
 
   final GetOrganizationsParams _params;
 

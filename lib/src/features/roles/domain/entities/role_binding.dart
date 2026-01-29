@@ -16,7 +16,7 @@ class RoleBinding extends Equatable {
 
   UserID get userId => UserID(userLink.split('/').last);
 
-  RoleUUID get roleId => RoleUUID(roleLink.split('/').last);
+  RoleID get roleId => RoleID(roleLink.split('/').last);
 
   ProjectID? get projectId {
     if (projectLink == null) {
@@ -25,7 +25,7 @@ class RoleBinding extends Equatable {
     return ProjectID(projectLink!.split('/').last);
   }
 
-  final RoleBindingUUID uuid;
+  final RoleBindingID uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String status;
@@ -45,4 +45,4 @@ class RoleBinding extends Equatable {
   ];
 }
 
-extension type RoleBindingUUID(String value) {}
+extension type RoleBindingID(String raw) {}

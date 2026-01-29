@@ -1,5 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
 import 'package:genesis/src/features/projects/data/json_converters/project_id_converter.dart';
+import 'package:genesis/src/features/projects/data/json_converters/project_status_converter.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -30,7 +31,8 @@ class ProjectDto implements IDto<Project> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @ProjectStatusConverter()
+  @JsonKey(name: 'status')
   final ProjectStatus status;
   @JsonKey(name: 'organization')
   final String organizationLink;
@@ -47,11 +49,4 @@ class ProjectDto implements IDto<Project> {
       organizationLink: organizationLink,
     );
   }
-
-  static ProjectStatus _toStatusFromJson(String json) => switch (json) {
-    'NEW' => ProjectStatus.newStatus,
-    'ACTIVE' => ProjectStatus.active,
-    'IN_PROGRESS' => ProjectStatus.inProgress,
-    _ => ProjectStatus.unknown,
-  };
 }

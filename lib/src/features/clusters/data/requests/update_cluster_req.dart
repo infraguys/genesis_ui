@@ -3,7 +3,7 @@ import 'package:genesis/src/core/network/endpoints/clusters_endpoints.dart';
 import 'package:genesis/src/features/clusters/domain/params/update_cluster_params.dart';
 
 final class UpdateClusterReq extends IRequest {
-  UpdateClusterReq(this._params);
+  const UpdateClusterReq(this._params);
 
   final UpdateClusterParams _params;
 

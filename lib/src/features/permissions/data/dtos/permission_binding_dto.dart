@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/permissions/data/json_converters/permission_binding_id_converter.dart';
 import 'package:genesis/src/features/permissions/domain/entities/permission_binding.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -16,7 +17,8 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
 
   factory PermissionBindingDto.fromJson(Map<String, dynamic> json) => _$PermissionBindingDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @PermissionBindingIdConverter()
+  @JsonKey(name: 'uuid',)
   final PermissionBindingID id;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
@@ -26,8 +28,6 @@ class PermissionBindingDto implements IDto<PermissionBinding> {
   final String roleLink;
   @JsonKey(name: 'permission')
   final String permissionLink;
-
-  static PermissionBindingID _toID(String uuid) => PermissionBindingID(uuid);
 
   @override
   PermissionBinding toEntity() {

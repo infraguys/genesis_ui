@@ -8,6 +8,7 @@ import 'package:genesis/src/features/iam_client/sources/token_dao.dart';
 import 'package:genesis/src/features/permissions/permission_names/permission_names.dart';
 import 'package:genesis/src/features/projects/data/requests/get_projects_req.dart';
 import 'package:genesis/src/features/projects/data/sources/projects_api.dart';
+import 'package:genesis/src/features/projects/domain/params/get_projects_params.dart';
 import 'package:genesis/src/features/users/data/dtos/user_dto.dart';
 import 'package:logging/logging.dart';
 
@@ -41,7 +42,7 @@ class AuthRepository implements IAuthRepository {
     userDto = await _iamApi.getCurrentUser();
 
     if (userDto.username.toLowerCase() != 'admin') {
-      final projectDtos = await _projectsApi.getProjects(GetProjectsReq());
+      final projectDtos = await _projectsApi.getProjects(GetProjectsReq(GetProjectsParams()));
       if (projectDtos.isNotEmpty) {
         final projectID = projectDtos.first.id;
 

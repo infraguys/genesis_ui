@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:genesis/src/core/exceptions/base_network_exception.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/permissions/data/dtos/permission_dto.dart';
-import 'package:genesis/src/features/permissions/data/requests/get_permission_req.dart';
+import 'package:genesis/src/features/permissions/data/requests/get_permissions_req.dart';
 
 final class PermissionsApi {
   PermissionsApi(this._client);
@@ -22,8 +22,8 @@ final class PermissionsApi {
   Future<List<PermissionDto>> getPermissions(GetPermissionsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
 
       if (data == null) {

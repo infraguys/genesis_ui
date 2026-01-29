@@ -6,7 +6,7 @@ final class GetRoleUseCase {
 
   final IRolesRepository _repository;
 
-  Future<Role> call(RoleUUID uuid) async {
+  Future<Role> call(RoleID uuid) async {
     return _repository.getRole(uuid);
   }
 }

@@ -6,7 +6,7 @@ final class DeleteRoleUseCase {
 
   final IRolesRepository _repository;
 
-  Future<void> call(RoleUUID uuid) async {
+  Future<void> call(RoleID uuid) async {
     await _repository.deleteRole(uuid);
   }
 }

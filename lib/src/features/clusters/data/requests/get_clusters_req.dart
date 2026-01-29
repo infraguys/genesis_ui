@@ -4,7 +4,7 @@ import 'package:genesis/src/features/clusters/data/json_converters/cluster_statu
 import 'package:genesis/src/features/clusters/domain/params/get_clusters_params.dart';
 
 final class GetClustersReq extends IRequest {
-  GetClustersReq(this._params);
+  const GetClustersReq(this._params);
 
   final GetClustersParams _params;
 

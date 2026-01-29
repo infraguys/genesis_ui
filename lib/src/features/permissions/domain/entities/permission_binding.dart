@@ -10,7 +10,7 @@ class PermissionBinding {
     required this.permissionLink,
   });
 
-  RoleUUID get roleId => RoleUUID(roleLink.split('/').last);
+  RoleID get roleId => RoleID(roleLink.split('/').last);
 
   PermissionID get permissionId => PermissionID(permissionLink.split('/').last);
 

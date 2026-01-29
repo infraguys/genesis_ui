@@ -14,8 +14,8 @@ final class RoleBindingsApi {
   Future<void> createRoleBinding(CreateRoleBindingReq req) async {
     try {
       final Response() = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -25,8 +25,8 @@ final class RoleBindingsApi {
   Future<List<RoleBindingDto>> getRoleBindings(GetRoleBindingsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
       if (data == null) {
         return List.empty();
@@ -41,7 +41,7 @@ final class RoleBindingsApi {
   Future<void> deleteRoleBinding(DeleteRoleBindingReq req) async {
     try {
       await _client.delete<Map<String, dynamic>>(
-        req.toPath(),
+        req.path,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);

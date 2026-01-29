@@ -3,7 +3,7 @@ import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart'
 import 'package:genesis/src/features/organizations/domain/params/update_organization_params.dart';
 
 final class UpdateOrganizationReq extends IRequest {
-  UpdateOrganizationReq(this._params);
+  const UpdateOrganizationReq(this._params);
 
   final UpdateOrganizationParams _params;
 

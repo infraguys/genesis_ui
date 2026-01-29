@@ -1,13 +1,15 @@
+import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
 import 'package:genesis/src/core/network/endpoints/projects_endpoints.dart';
 import 'package:genesis/src/features/projects/domain/params/create_project_params.dart';
 
-final class CreateProjectReq {
-  CreateProjectReq(this._params);
+final class CreateProjectReq extends IRequest {
+  const CreateProjectReq(this._params);
 
   final CreateProjectParams _params;
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> get body {
     return {
       'name': _params.name,
       'description': ?_params.description,
@@ -15,7 +17,8 @@ final class CreateProjectReq {
     };
   }
 
-  String toPath() {
+  @override
+  String get path {
     return ProjectsEndpoints.items().fullPath;
   }
 }

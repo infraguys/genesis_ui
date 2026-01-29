@@ -4,7 +4,7 @@ import 'package:genesis/src/core/network/endpoints/db_versions_endpoints.dart';
 import 'package:genesis/src/features/clusters/domain/params/create_cluster_params.dart';
 
 final class CreateClusterReq extends IRequest {
-  CreateClusterReq(this._params);
+  const CreateClusterReq(this._params);
 
   final CreateClusterParams _params;
 

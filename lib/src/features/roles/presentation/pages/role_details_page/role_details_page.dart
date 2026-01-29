@@ -31,7 +31,7 @@ part 'widgets/search_input.dart';
 class _RoleDetailsView extends StatefulWidget {
   const _RoleDetailsView({required this.uuid});
 
-  final RoleUUID uuid;
+  final RoleID uuid;
 
   @override
   State<_RoleDetailsView> createState() => _RoleDetailsViewState();
@@ -178,7 +178,7 @@ class _RoleDetailsViewState extends State<_RoleDetailsView> {
 class RoleDetailsPage extends StatelessWidget {
   const RoleDetailsPage({required this.uuid, super.key});
 
-  final RoleUUID uuid;
+  final RoleID uuid;
 
   @override
   Widget build(BuildContext context) {

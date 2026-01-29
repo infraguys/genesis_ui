@@ -11,7 +11,7 @@ class Role extends Equatable {
     required this.projectId,
   });
 
-  final RoleUUID uuid;
+  final RoleID uuid;
   final String name;
   final String description;
   final DateTime createdAt;
@@ -55,6 +55,6 @@ class Role extends Equatable {
 //   }
 // }
 
-extension type RoleUUID(String value) {}
+extension type RoleID(String raw) {}
 
-enum RoleStatus { active, unknow }
+enum RoleStatus { active, unknown }

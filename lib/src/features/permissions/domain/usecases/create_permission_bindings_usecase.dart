@@ -18,12 +18,12 @@ final class CreatePermissionBindingsUseCase {
 
   final IPermissionBindingsRepository _repository;
 
-  Future<void> call({required List<Permission> permissions, required RoleUUID roleUUID}) async {
+  Future<void> call({required List<Permission> permissions, required RoleID roleUUID}) async {
     if (permissions.isNotEmpty) {
       await Future.wait(
         permissions.map(
           (permission) => _repository.createPermissionBinding(
-            CreatePermissionBindingParams(permissionUUID: permission.id, roleUUID: roleUUID),
+            CreatePermissionBindingParams(permissionID: permission.id, roleID: roleUUID),
           ),
         ),
       );

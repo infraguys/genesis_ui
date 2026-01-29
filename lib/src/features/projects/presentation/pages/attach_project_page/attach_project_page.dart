@@ -65,9 +65,9 @@ class _AttachProjectViewState extends State<_AttachProjectView> {
                     final listOfParams = context.read<RolesSelectionCubit>().state.map(
                       (role) {
                         return CreateRoleBindingParams(
-                          userUUID: UserID(GoRouterState.of(context).pathParameters['uuid']!),
-                          roleUUID: role.uuid,
-                          projectUUID: context.read<ProjectsSelectionCubit>().state.single.id,
+                          userID: UserID(GoRouterState.of(context).pathParameters['uuid']!),
+                          roleID: role.uuid,
+                          projectID: context.read<ProjectsSelectionCubit>().state.single.id,
                         );
                       },
                     ).toList();

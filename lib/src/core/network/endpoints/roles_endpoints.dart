@@ -6,7 +6,7 @@ abstract class RolesEndpoints {
     return Endpoint.withCorePrefix('/iam/roles/');
   }
 
-  static Endpoint item(RoleUUID id) {
+  static Endpoint item(RoleID id) {
     return Endpoint.withCorePrefix('/iam/roles/$id');
   }
 }

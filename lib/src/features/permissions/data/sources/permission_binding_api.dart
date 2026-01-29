@@ -14,8 +14,8 @@ final class PermissionBindingsApi {
   Future<List<PermissionBindingDto>> getPermissionBindings(GetPermissionBindingsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
 
       if (data == null) {
@@ -31,8 +31,8 @@ final class PermissionBindingsApi {
   Future<PermissionBindingDto> createPermissionBinding(CreatePermissionBindingReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return PermissionBindingDto.fromJson(data!);
     } on DioException catch (e) {
@@ -42,7 +42,9 @@ final class PermissionBindingsApi {
 
   Future<void> deletePermissionBinding(DeletePermissionBindingReq req) async {
     try {
-      await _client.delete<Map<String, dynamic>>(req.toPath());
+      await _client.delete<Map<String, dynamic>>(
+        req.path,
+      );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
     }

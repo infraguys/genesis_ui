@@ -4,7 +4,7 @@ import 'package:genesis/src/features/extensions/data/json_converters/extension_s
 import 'package:genesis/src/features/extensions/domain/params/get_extensions_params.dart';
 
 final class GetExtensionsReq extends IRequest {
-  GetExtensionsReq(this._params);
+  const GetExtensionsReq(this._params);
 
   final GetExtensionsParams _params;
 

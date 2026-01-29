@@ -63,9 +63,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     if (event.userID != null) {
       final listOfParams = event.roles.map(
         (role) => CreateRoleBindingParams(
-          userUUID: event.userID!,
-          roleUUID: role.uuid,
-          projectUUID: createdProject.id,
+          userID: event.userID!,
+          roleID: role.uuid,
+          projectID: createdProject.id,
         ),
       );
       await createRoleBindingUseCase(listOfParams.toList());

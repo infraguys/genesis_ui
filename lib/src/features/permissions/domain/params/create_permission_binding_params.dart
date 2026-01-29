@@ -3,10 +3,10 @@ import 'package:genesis/src/features/roles/domain/entities/role.dart';
 
 final class CreatePermissionBindingParams {
   const CreatePermissionBindingParams({
-    required this.permissionUUID,
-    required this.roleUUID,
+    required this.permissionID,
+    required this.roleID,
   });
 
-  final PermissionID permissionUUID;
-  final RoleUUID roleUUID;
+  final PermissionID permissionID;
+  final RoleID roleID;
 }

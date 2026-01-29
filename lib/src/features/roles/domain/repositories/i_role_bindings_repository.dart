@@ -5,7 +5,7 @@ import 'package:genesis/src/features/roles/domain/params/get_role_bindings_param
 abstract interface class IRoleBindingsRepository {
   Future<void> createRoleBinding(CreateRoleBindingParams params);
 
-  Future<void> deleteRoleBinding(RoleBindingUUID uuid);
+  Future<void> deleteRoleBinding(RoleBindingID uuid);
 
   Future<List<RoleBinding>> getRoleBindings(GetRoleBindingsParams params);
 }

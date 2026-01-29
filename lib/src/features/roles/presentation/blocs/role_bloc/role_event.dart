@@ -1,7 +1,7 @@
 part of 'role_bloc.dart';
 
 sealed class RoleEvent {
-  factory RoleEvent.get(RoleUUID uuid) = _Get;
+  factory RoleEvent.get(RoleID uuid) = _Get;
 
   factory RoleEvent.create(CreateRoleParams params) = _Create;
 
@@ -13,7 +13,7 @@ sealed class RoleEvent {
 final class _Get implements RoleEvent {
   const _Get(this.uuid);
 
-  final RoleUUID uuid;
+  final RoleID uuid;
 }
 
 final class _Create implements RoleEvent {

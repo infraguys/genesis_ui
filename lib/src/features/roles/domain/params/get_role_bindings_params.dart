@@ -13,7 +13,7 @@ final class GetRoleBindingsParams {
 
   final UserID? userUUID;
   final ProjectID? projectUUID;
-  final RoleUUID? roleUUID;
+  final RoleID? roleUUID;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 }

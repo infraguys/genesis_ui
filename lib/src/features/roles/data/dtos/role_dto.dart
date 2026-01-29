@@ -1,4 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/roles/data/json_converters/role_id_converter.dart';
+import 'package:genesis/src/features/roles/data/json_converters/role_status_converter.dart';
 import 'package:genesis/src/features/roles/domain/entities/role.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -6,8 +8,6 @@ part 'role_dto.g.dart';
 
 @JsonSerializable(constructor: '_')
 class RoleDto implements IDto<Role> {
-  factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
-
   RoleDto._({
     required this.id,
     required this.name,
@@ -18,8 +18,11 @@ class RoleDto implements IDto<Role> {
     required this.projectId,
   });
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
-  final RoleUUID id;
+  factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
+
+  @RoleIdConverter()
+  @JsonKey(name: 'uuid')
+  final RoleID id;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'description')
@@ -28,7 +31,8 @@ class RoleDto implements IDto<Role> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @RoleStatusConverter()
+  @JsonKey(name: 'status')
   final RoleStatus status;
   @JsonKey(name: 'project_id')
   final String? projectId;
@@ -45,11 +49,4 @@ class RoleDto implements IDto<Role> {
       projectId: projectId,
     );
   }
-
-  static RoleUUID _toID(String json) => RoleUUID(json);
-
-  static RoleStatus _toStatusFromJson(String json) => switch (json) {
-    'ACTIVE' => RoleStatus.active,
-    _ => RoleStatus.unknow,
-  };
 }

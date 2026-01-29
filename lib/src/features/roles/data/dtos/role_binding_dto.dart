@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/roles/data/json_converters/role_binding_id_converter.dart';
 import 'package:genesis/src/features/roles/domain/entities/role_binding.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,8 +19,9 @@ class RoleBindingDto implements IDto<RoleBinding> {
 
   factory RoleBindingDto.fromJson(Map<String, dynamic> json) => _$RoleBindingDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
-  final RoleBindingUUID id;
+  @RoleBindingIdConverter()
+  @JsonKey(name: 'uuid')
+  final RoleBindingID id;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
@@ -32,8 +34,6 @@ class RoleBindingDto implements IDto<RoleBinding> {
   final String userLink;
   @JsonKey(name: 'role')
   final String roleLink;
-
-  static RoleBindingUUID _toID(String id) => RoleBindingUUID(id);
 
   @override
   RoleBinding toEntity() {

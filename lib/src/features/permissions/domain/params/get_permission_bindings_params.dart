@@ -9,7 +9,7 @@ final class GetPermissionBindingsParams {
   });
 
   final String? permission;
-  final RoleUUID? roleUUID;
+  final RoleID? roleUUID;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 }

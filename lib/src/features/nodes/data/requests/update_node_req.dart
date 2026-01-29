@@ -4,7 +4,7 @@ import 'package:genesis/src/features/nodes/data/json_converters/node_type_conver
 import 'package:genesis/src/features/nodes/domain/params/update_node_params.dart';
 
 final class UpdateNodeReq extends IRequest {
-  UpdateNodeReq(this._params);
+  const UpdateNodeReq(this._params);
 
   final UpdateNodeParams _params;
 
