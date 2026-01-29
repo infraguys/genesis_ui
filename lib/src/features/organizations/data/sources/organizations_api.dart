@@ -16,8 +16,8 @@ final class OrganizationsApi {
   Future<OrganizationDto> createOrganization(CreateOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {
@@ -28,7 +28,7 @@ final class OrganizationsApi {
   Future<void> deleteOrganization(DeleteOrganizationReq req) async {
     try {
       await _client.delete<void>(
-        req.toPath(),
+        req.path,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -38,8 +38,8 @@ final class OrganizationsApi {
   Future<List<OrganizationDto>> getOrganizations(GetOrganizationsReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
       if (data == null) {
         return List.empty();
@@ -54,8 +54,8 @@ final class OrganizationsApi {
   Future<OrganizationDto> updateOrganization(UpdateOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.put<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {
@@ -66,7 +66,7 @@ final class OrganizationsApi {
   Future<OrganizationDto> getOrganization(GetOrganizationReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
-        req.toPath(),
+        req.path,
       );
       return OrganizationDto.fromJson(data!);
     } on DioException catch (e) {

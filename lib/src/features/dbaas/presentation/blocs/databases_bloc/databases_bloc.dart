@@ -1,6 +1,6 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/database_params.dart';
 import 'package:genesis/src/features/dbaas/domain/params/databases/get_databases_params.dart';

@@ -1,8 +1,8 @@
 abstract class Env {
   static const _envString = String.fromEnvironment('env');
 
-  // Iam client config
-
+  /// Iam client config
+  ///
   static const versionApi = String.fromEnvironment('version_api', defaultValue: 'v1');
   static const iamClientUuid = String.fromEnvironment('iam_client_uuid');
   static const clientId = String.fromEnvironment('client_id');
@@ -21,14 +21,16 @@ abstract class Env {
   };
 }
 
+/// Env mode
+///
 enum EnvMode {
   dev,
   stage,
   prod;
 
-  bool get isDev => this == EnvMode.dev;
+  bool get isDev => this == .dev;
 
-  bool get isProd => this == EnvMode.prod;
+  bool get isProd => this == .prod;
 
-  bool get isStage => this == EnvMode.stage;
+  bool get isStage => this == .stage;
 }

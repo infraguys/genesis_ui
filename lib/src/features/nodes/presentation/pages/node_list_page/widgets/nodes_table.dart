@@ -83,7 +83,7 @@ class NodesTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    node.id.value,
+                    node.id.raw,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -93,7 +93,7 @@ class NodesTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: node.id.value));
+                      Clipboard.setData(ClipboardData(text: node.id.raw));
                       final snack = AppSnackBar.success('Скопировано в буфер обмена: ${node.id}');
                       ScaffoldMessenger.of(context).showSnackBar(snack);
                     },
@@ -114,7 +114,7 @@ class NodesTable extends StatelessWidget {
         final node = nodes[index];
         context.goNamed(
           AppRoutes.node.name,
-          pathParameters: {'uuid': node.id.value},
+          pathParameters: {'uuid': node.id.raw},
         );
       },
     );

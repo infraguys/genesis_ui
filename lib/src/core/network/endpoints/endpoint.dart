@@ -10,7 +10,7 @@ final class Endpoint {
   Endpoint.withCorePrefix(String path)
     : this._(
         apiPrefix: Env.apiPrefix,
-        path: path,
+        path: path
       );
 
   Endpoint.withDbaasPrefix(String path)

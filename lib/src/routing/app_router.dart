@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/features/auth/presentation/auth_page/auth_page.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/database.dart';
 import 'package:genesis/src/features/dbaas/domain/entities/pg_user.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/cluster_page/cluster_page.dart';
+import 'package:genesis/src/features/clusters/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/clusters/presentation/pages/cluster_page/cluster_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/database_page/database_page.dart';
-import 'package:genesis/src/features/dbaas/presentation/pages/pg_instance_list_page/cluster_list_page.dart';
+import 'package:genesis/src/features/clusters/presentation/pages/cluster_list_page/cluster_list_page.dart';
 import 'package:genesis/src/features/dbaas/presentation/pages/pg_user_page/pg_user_page.dart';
 import 'package:genesis/src/features/extensions/presentation/pages/extension_list_page/extension_list_page.dart';
 import 'package:genesis/src/features/extensions/presentation/pages/main_page/main_page.dart';
@@ -316,7 +316,7 @@ GoRouter createRouter(BuildContext context) {
                 name: AppRoutes.clusters.name,
                 path: '/clusters',
                 pageBuilder: (_, _) => NoTransitionPage(
-                  child: ClustersListPage(),
+                  child: ClusterListPage(),
                 ),
                 routes: [
                   GoRoute(

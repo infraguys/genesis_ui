@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:genesis/src/core/extensions/localized_build_context.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/clusters/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/shared/presentation/ui/tokens/palette.dart';
 
 class PgClustersCard extends StatelessWidget {

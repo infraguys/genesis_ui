@@ -36,6 +36,6 @@ class Project extends Equatable {
 
 enum ProjectStatus { newStatus, active, inProgress, unknown }
 
-extension type ProjectID(String value) {
-  bool isEqual(ProjectID other) => value == other.value;
+extension type ProjectID(String raw) {
+  bool isEqual(ProjectID other) => raw == other.raw;
 }

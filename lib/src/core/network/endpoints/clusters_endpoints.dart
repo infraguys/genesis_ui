@@ -1,5 +1,5 @@
 import 'package:genesis/src/core/network/endpoints/endpoint.dart';
-import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
 
 abstract class ClustersEndpoints {
   static Endpoint items() {

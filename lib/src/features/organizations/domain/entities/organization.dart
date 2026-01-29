@@ -30,6 +30,6 @@ class Organization extends Equatable {
 
 enum OrganizationStatus { active, unknown }
 
-extension type OrganizationID(String value) {
-  bool isEqualTo(OrganizationID other) => value == other.value;
+extension type OrganizationID(String raw) {
+  bool isEqualTo(OrganizationID other) => raw == other.raw;
 }

@@ -82,7 +82,7 @@ class OrganizationsTable extends StatelessWidget {
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: SelectableText(
-                    organization.id.value,
+                    organization.id.raw,
                     style: TextStyle(color: Colors.white, fontFamily: GoogleFonts.robotoMono().fontFamily),
                   ),
                 ),
@@ -92,7 +92,7 @@ class OrganizationsTable extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.copy, color: Colors.white, size: 18),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: organization.id.value));
+                      Clipboard.setData(ClipboardData(text: organization.id.raw));
                       final snack = SnackBar(
                         backgroundColor: Colors.green,
                         content: Text('Скопировано в буфер обмена: ${organization.id}'),
@@ -115,7 +115,7 @@ class OrganizationsTable extends StatelessWidget {
         final organization = organizations[index];
         context.goNamed(
           AppRoutes.organization.name,
-          pathParameters: {'uuid': organization.id.value},
+          pathParameters: {'uuid': organization.id.raw},
         );
       },
     );

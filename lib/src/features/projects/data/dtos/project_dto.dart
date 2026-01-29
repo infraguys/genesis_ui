@@ -1,4 +1,5 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/projects/data/json_converters/project_id_converter.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,7 +19,8 @@ class ProjectDto implements IDto<Project> {
 
   factory ProjectDto.fromJson(Map<String, dynamic> json) => _$ProjectDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @ProjectIdConverter()
+  @JsonKey(name: 'uuid')
   final ProjectID id;
   @JsonKey(name: 'name')
   final String name;
@@ -45,8 +47,6 @@ class ProjectDto implements IDto<Project> {
       organizationLink: organizationLink,
     );
   }
-
-  static ProjectID _toID(String json) => ProjectID(json);
 
   static ProjectStatus _toStatusFromJson(String json) => switch (json) {
     'NEW' => ProjectStatus.newStatus,

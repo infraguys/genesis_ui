@@ -74,7 +74,7 @@ class ProjectCard extends StatelessWidget {
                   final isCreated = await context.pushNamed<bool>(
                     AppRoutes.attachRoles.name,
                     pathParameters: {
-                      'projectUuid': project.id.value,
+                      'projectUuid': project.id.raw,
                       ...GoRouterState.of(context).pathParameters,
                     },
                   );

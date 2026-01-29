@@ -3,5 +3,5 @@ import 'package:genesis/src/l10n/generated/app_localizations.dart';
 
 extension LocalizedBuildContext on BuildContext {
   /// Shortcut for [AppLocalizations.of(context)]
-  AppLocalizations get $ => AppLocalizations.of(this);
+  AppLocalizations get $ => .of(this);
 }

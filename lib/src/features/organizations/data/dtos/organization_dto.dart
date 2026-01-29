@@ -1,4 +1,6 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/organizations/data/json_converters/organization_id_converter.dart';
+import 'package:genesis/src/features/organizations/data/json_converters/organization_status_converter.dart';
 import 'package:genesis/src/features/organizations/domain/entities/organization.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,7 +20,8 @@ class OrganizationDto implements IDto<Organization> {
 
   factory OrganizationDto.fromJson(Map<String, dynamic> json) => _$OrganizationDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @OrganizationIdConverter()
+  @JsonKey(name: 'uuid')
   final OrganizationID id;
   @JsonKey(name: 'name')
   final String name;
@@ -28,7 +31,8 @@ class OrganizationDto implements IDto<Organization> {
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @OrganizationStatusConverter()
+  @JsonKey(name: 'status')
   final OrganizationStatus status;
   @JsonKey(name: 'info')
   final dynamic info;
@@ -44,11 +48,4 @@ class OrganizationDto implements IDto<Organization> {
       status: status,
     );
   }
-
-  static OrganizationID _toID(String json) => OrganizationID(json);
-
-  static OrganizationStatus _toStatusFromJson(String json) => switch (json) {
-    'ACTIVE' => .active,
-    _ => .unknown,
-  };
 }

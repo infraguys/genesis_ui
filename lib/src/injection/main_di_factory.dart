@@ -7,7 +7,7 @@ import 'package:genesis/src/core/interfaces/i_simple_storage_client.dart';
 import 'package:genesis/src/core/network/rest_client/rest_client.dart';
 import 'package:genesis/src/features/auth/injection/auth_di_factory.dart';
 import 'package:genesis/src/features/bootstrap/presentation/blocs/server_setup_cubit/domain_setup_cubit.dart';
-import 'package:genesis/src/features/dbaas/injection/clusters_di_factory.dart';
+import 'package:genesis/src/features/clusters/injection/clusters_di_factory.dart';
 import 'package:genesis/src/features/extensions/injection/extensions_di_factory.dart';
 import 'package:genesis/src/features/iam_client/sources/api_url_dao.dart';
 import 'package:genesis/src/features/nodes/injection/nodes_di_factory.dart';

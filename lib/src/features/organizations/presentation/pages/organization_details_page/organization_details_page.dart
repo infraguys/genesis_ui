@@ -113,7 +113,7 @@ class _OrganizationDetailsViewState extends State<_OrganizationDetailsView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: gapWidth,
                           children: [
-                            IdWidget(id: organization.id.value),
+                            IdWidget(id: organization.id.raw),
                             SizedBox(
                               width: 500,
                               child: AppTextFormInput(

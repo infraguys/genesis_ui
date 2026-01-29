@@ -1,4 +1,4 @@
-import 'package:genesis/src/features/dbaas/domain/entities/cluster.dart';
+import 'package:genesis/src/features/clusters/domain/entities/cluster.dart';
 
 final class GetPgUsersParams {
   GetPgUsersParams({required this.clusterId});

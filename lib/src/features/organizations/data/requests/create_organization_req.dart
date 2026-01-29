@@ -1,19 +1,22 @@
+import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/organizations_endpoints.dart';
 import 'package:genesis/src/features/organizations/domain/params/create_organization_params.dart';
 
-final class CreateOrganizationReq {
+final class CreateOrganizationReq extends IRequest {
   CreateOrganizationReq(this._params);
 
   final CreateOrganizationParams _params;
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> get body {
     return {
       'name': _params.name,
       'description': ?_params.description,
     };
   }
 
-  String toPath() {
+  @override
+  String get path {
     return OrganizationsEndpoints.items().fullPath;
   }
 }

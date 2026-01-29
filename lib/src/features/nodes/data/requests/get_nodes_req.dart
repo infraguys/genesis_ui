@@ -1,12 +1,14 @@
+import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/nodes_endpoints.dart';
 import 'package:genesis/src/features/nodes/domain/params/get_nodes_params.dart';
 
-final class GetNodesReq {
+final class GetNodesReq extends IRequest {
   GetNodesReq(this._params);
 
   final GetNodesParams _params;
 
-  Map<String, dynamic> toQuery() {
+  @override
+  Map<String, dynamic> get query {
     // TODO(Koretsky): Добавить параметров
     return {
       'uuid': ?_params.id,
@@ -16,7 +18,8 @@ final class GetNodesReq {
     };
   }
 
-  String toPath() {
+  @override
+  String get path {
     return NodesEndpoints.items().fullPath;
   }
 }

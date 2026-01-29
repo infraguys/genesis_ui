@@ -8,7 +8,7 @@ import 'package:genesis/src/core/extensions/localized_build_context.dart';
 import 'package:genesis/src/core/extensions/string_extension.dart';
 import 'package:genesis/src/core/extensions/text_style_extension.dart';
 import 'package:genesis/src/features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:genesis/src/features/dbaas/presentation/blocs/clusters_bloc/clusters_bloc.dart';
+import 'package:genesis/src/features/clusters/presentation/blocs/clusters_bloc/clusters_bloc.dart';
 import 'package:genesis/src/features/iam_client/domain/params/refresh_token_params.dart';
 import 'package:genesis/src/features/nodes/presentation/blocs/nodes_bloc/nodes_bloc.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
@@ -237,7 +237,7 @@ class _Header extends StatelessWidget {
                     requestFocusOnTap: false,
                     // todo(Koretsky): немного переделать
                     initialSelection: projects.isNotEmpty
-                        ? projects.firstWhereOrNull((it) => it.id.value == scope)?.id
+                        ? projects.firstWhereOrNull((it) => it.id.raw == scope)?.id
                         : null,
                     width: double.infinity,
                     menuStyle: MenuStyle(
@@ -248,7 +248,7 @@ class _Header extends StatelessWidget {
                         AuthEvent.refreshToken(
                           RefreshTokenParams(
                             refreshToken: (bloc.state as AuthenticatedAuthState).refreshToken,
-                            scope: value!.value,
+                            scope: value!.raw,
                           ),
                         ),
                       );

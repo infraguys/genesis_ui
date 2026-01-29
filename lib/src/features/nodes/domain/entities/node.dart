@@ -50,8 +50,8 @@ class Node extends Equatable {
   ];
 }
 
-extension type NodeID(String value) {
-  bool isEqualTo(NodeID other) => value == other.value;
+extension type NodeID(String raw) {
+  bool isEqualTo(NodeID other) => raw == other.raw;
 }
 
 enum NodeType {

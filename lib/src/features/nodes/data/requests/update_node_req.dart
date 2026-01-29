@@ -1,25 +1,28 @@
+import 'package:genesis/src/core/interfaces/i_request.dart';
 import 'package:genesis/src/core/network/endpoints/nodes_endpoints.dart';
-import 'package:genesis/src/features/nodes/data/requests/node_type_json_mixin.dart';
+import 'package:genesis/src/features/nodes/data/json_converters/node_type_converter.dart';
 import 'package:genesis/src/features/nodes/domain/params/update_node_params.dart';
 
-final class UpdateNodeReq with NodeTypeJsonMixin {
+final class UpdateNodeReq extends IRequest {
   UpdateNodeReq(this._params);
 
   final UpdateNodeParams _params;
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> get body {
     return {
       'name': _params.name,
       'cores': _params.cores,
       'ram': _params.ram,
       'root_disk_size': _params.rootDiskSize,
       'image': _params.image,
-      'node_type': fromNodeTypeToJson(_params.nodeType),
+      'node_type': NodeTypeConverter().toJson(_params.nodeType),
       'description': _params.description,
     };
   }
 
-  String toPath() {
+  @override
+  String get path {
     return NodesEndpoints.item(_params.id).fullPath;
   }
 }

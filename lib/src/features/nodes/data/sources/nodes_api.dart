@@ -16,8 +16,8 @@ final class NodesApi {
   Future<NodeDto> createNode(CreateNodeReq req) async {
     try {
       final Response(:data) = await _client.post<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.body,
       );
       return NodeDto.fromJson(data!);
     } on DioException catch (e) {
@@ -28,7 +28,7 @@ final class NodesApi {
   Future<void> deleteNode(DeleteNodeReq req) async {
     try {
       await _client.delete<void>(
-        req.toPath(),
+        req.path,
       );
     } on DioException catch (e) {
       throw BaseNetworkException.from(e);
@@ -38,7 +38,7 @@ final class NodesApi {
   Future<NodeDto> getNode(GetNodeReq req) async {
     try {
       final Response(:data, :requestOptions) = await _client.get<Map<String, dynamic>>(
-        req.toPath(),
+        req.path,
       );
       return NodeDto.fromJson(data!);
     } on DioException catch (e) {
@@ -49,8 +49,8 @@ final class NodesApi {
   Future<List<NodeDto>> getNodes(GetNodesReq req) async {
     try {
       final Response(:data) = await _client.get<List<dynamic>>(
-        req.toPath(),
-        queryParameters: req.toQuery(),
+        req.path,
+        queryParameters: req.query,
       );
       if (data == null) {
         return List.empty();
@@ -65,8 +65,8 @@ final class NodesApi {
   Future<NodeDto> updateNode(UpdateNodeReq req) async {
     try {
       final Response(:data) = await _client.put<Map<String, dynamic>>(
-        req.toPath(),
-        data: req.toJson(),
+        req.path,
+        data: req.query,
       );
       return NodeDto.fromJson(data!);
     } on DioException catch (e) {

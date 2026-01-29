@@ -126,7 +126,7 @@ class _ViewState extends State<_View> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: gapWidth,
                           children: [
-                            IdWidget(id: node.id.value),
+                            IdWidget(id: node.id.raw),
                             SizedBox(
                               width: 500,
                               child: AppTextFormInput(
@@ -298,7 +298,7 @@ class NodePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final diFactory = DiScope.of(context);
     return BlocProvider(
-      create: (context) => diFactory.nodes.makeNodeBloc(context)..add(NodeEvent.getNode(id)),
+      create: (context) => diFactory.nodes.makeNodeBloc(context)..add(NodeEvent.get(id)),
       child: _View(id: id),
     );
   }

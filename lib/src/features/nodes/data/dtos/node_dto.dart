@@ -1,5 +1,9 @@
 import 'package:genesis/src/core/interfaces/i_dto.dart';
+import 'package:genesis/src/features/nodes/data/json_converters/node_id_converter.dart';
+import 'package:genesis/src/features/nodes/data/json_converters/node_status_converter.dart';
+import 'package:genesis/src/features/nodes/data/json_converters/node_type_converter.dart';
 import 'package:genesis/src/features/nodes/domain/entities/node.dart';
+import 'package:genesis/src/features/projects/data/json_converters/project_id_converter.dart';
 import 'package:genesis/src/features/projects/domain/entities/project.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -25,13 +29,15 @@ final class NodeDto implements IDto<Node> {
 
   factory NodeDto.fromJson(Map<String, dynamic> json) => _$NodeDtoFromJson(json);
 
-  @JsonKey(name: 'uuid', fromJson: _toID)
+  @NodeIdConverter()
+  @JsonKey(name: 'uuid')
   final NodeID id;
   @JsonKey(name: 'created_at', fromJson: DateTime.parse)
   final DateTime createdAt;
   @JsonKey(name: 'updated_at', fromJson: DateTime.parse)
   final DateTime updatedAt;
-  @JsonKey(name: 'project_id', fromJson: _toProjectID)
+  @ProjectIdConverter()
+  @JsonKey(name: 'project_id')
   final ProjectID projectId;
   @JsonKey(name: 'name')
   final String name;
@@ -45,9 +51,11 @@ final class NodeDto implements IDto<Node> {
   final int rootDiskSize;
   @JsonKey(name: 'image')
   final String image;
-  @JsonKey(name: 'status', fromJson: _toStatusFromJson)
+  @NodeStatusConverter()
+  @JsonKey(name: 'status')
   final NodeStatus status;
-  @JsonKey(name: 'node_type', fromJson: _toNodeTypeFromJson)
+  @NodeTypeConverter()
+  @JsonKey(name: 'node_type')
   final NodeType nodeType;
   @JsonKey(name: 'default_network', fromJson: _ipv4FromDefaultNetwork)
   final String ipv4;
@@ -71,27 +79,8 @@ final class NodeDto implements IDto<Node> {
     );
   }
 
-  static NodeID _toID(String json) => NodeID(json);
-
-  static ProjectID _toProjectID(String json) => ProjectID(json);
-
   static String _ipv4FromDefaultNetwork(Map<String, dynamic> defaultNetwork) {
     return defaultNetwork['ipv4'] as String? ?? '';
   }
 
-  static NodeStatus _toStatusFromJson(String json) => switch (json) {
-    'NEW' => .newStatus,
-    'ACTIVE' => .active,
-    'IN_PROGRESS' => .inProgress,
-    'ERROR' => .error,
-    'SCHEDULED' => .scheduled,
-    'STARTED' => .started,
-    _ => .unknown,
-  };
-
-  static NodeType _toNodeTypeFromJson(String json) => switch (json) {
-    'HW' => .hw,
-    'VM' => .vm,
-    _ => .unknown,
-  };
 }
